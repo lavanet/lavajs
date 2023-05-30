@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgUnjail } from "./tx";
 export const registry = [["/cosmos.slashing.v1beta1.MsgUnjail", MsgUnjail]];
 export const load = protoRegistry => {

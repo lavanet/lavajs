@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { voteOptionFromJSON } from "./gov";
 import { Long } from "../../../helpers";
 export const AminoConverter = {

@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgGrantAllowance, MsgRevokeAllowance } from "./tx";
 export const registry = [["/cosmos.feegrant.v1beta1.MsgGrantAllowance", MsgGrantAllowance], ["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance]];
 export const load = protoRegistry => {

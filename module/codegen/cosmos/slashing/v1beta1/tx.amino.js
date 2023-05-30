@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 export const AminoConverter = {
   "/cosmos.slashing.v1beta1.MsgUnjail": {
     aminoType: "cosmos-sdk/MsgUnjail",

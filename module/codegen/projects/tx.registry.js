@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgAddKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";
 export const registry = [["/lavanet.lava.projects.MsgAddKeys", MsgAddKeys], ["/lavanet.lava.projects.MsgSetPolicy", MsgSetPolicy], ["/lavanet.lava.projects.MsgSetSubscriptionPolicy", MsgSetSubscriptionPolicy]];
 export const load = protoRegistry => {

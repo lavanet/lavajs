@@ -7,6 +7,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
+//@ts-nocheck
+
 var registry = [["/cosmos.bank.v1beta1.MsgSend", _tx.MsgSend], ["/cosmos.bank.v1beta1.MsgMultiSend", _tx.MsgMultiSend]];
 exports.registry = registry;
 var load = function load(protoRegistry) {

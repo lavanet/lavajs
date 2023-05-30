@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { voteOptionFromJSON } from "./types";
 import { Long } from "../../../helpers";
 import { execFromJSON } from "./tx";

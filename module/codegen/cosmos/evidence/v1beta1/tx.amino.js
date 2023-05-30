@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 export const AminoConverter = {
   "/cosmos.evidence.v1beta1.MsgSubmitEvidence": {
     aminoType: "cosmos-sdk/MsgSubmitEvidence",

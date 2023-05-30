@@ -7,6 +7,8 @@ exports.AminoConverter = void 0;
 var _types = require("./types");
 var _helpers = require("../../../helpers");
 var _tx = require("./tx");
+//@ts-nocheck
+
 var AminoConverter = {
   "/cosmos.group.v1.MsgCreateGroup": {
     aminoType: "cosmos-sdk/MsgCreateGroup",

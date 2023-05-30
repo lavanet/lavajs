@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 export const AminoConverter = {
   "/cosmos.bank.v1beta1.MsgSend": {
     aminoType: "cosmos-sdk/MsgSend",

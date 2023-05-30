@@ -7,6 +7,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
+//@ts-nocheck
+
 var registry = [["/lavanet.lava.pairing.MsgStakeProvider", _tx.MsgStakeProvider], ["/lavanet.lava.pairing.MsgStakeClient", _tx.MsgStakeClient], ["/lavanet.lava.pairing.MsgUnstakeProvider", _tx.MsgUnstakeProvider], ["/lavanet.lava.pairing.MsgUnstakeClient", _tx.MsgUnstakeClient], ["/lavanet.lava.pairing.MsgRelayPayment", _tx.MsgRelayPayment], ["/lavanet.lava.pairing.MsgFreezeProvider", _tx.MsgFreezeProvider], ["/lavanet.lava.pairing.MsgUnfreezeProvider", _tx.MsgUnfreezeProvider]];
 exports.registry = registry;
 var load = function load(protoRegistry) {

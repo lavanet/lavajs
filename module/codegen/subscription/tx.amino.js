@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { keyTypeFromJSON } from "../projects/project";
 import { Long } from "../helpers";
 export const AminoConverter = {

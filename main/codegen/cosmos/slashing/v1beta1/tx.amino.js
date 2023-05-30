@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
+//@ts-nocheck
+
 var AminoConverter = {
   "/cosmos.slashing.v1beta1.MsgUnjail": {
     aminoType: "cosmos-sdk/MsgUnjail",

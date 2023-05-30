@@ -7,6 +7,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
+//@ts-nocheck
+
 var registry = [["/cosmos.gov.v1beta1.MsgSubmitProposal", _tx.MsgSubmitProposal], ["/cosmos.gov.v1beta1.MsgVote", _tx.MsgVote], ["/cosmos.gov.v1beta1.MsgVoteWeighted", _tx.MsgVoteWeighted], ["/cosmos.gov.v1beta1.MsgDeposit", _tx.MsgDeposit]];
 exports.registry = registry;
 var load = function load(protoRegistry) {

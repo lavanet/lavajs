@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgSend } from "./tx";
 export const registry = [["/cosmos.nft.v1beta1.MsgSend", MsgSend]];
 export const load = protoRegistry => {

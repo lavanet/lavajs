@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { Long } from "../../../helpers";
 export const AminoConverter = {
   "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade": {

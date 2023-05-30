@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.AminoConverter = void 0;
 var _project = require("../projects/project");
 var _helpers = require("../helpers");
+//@ts-nocheck
+
 var AminoConverter = {
   "/lavanet.lava.subscription.MsgBuy": {
     aminoType: "/lavanet.lava.subscription.MsgBuy",

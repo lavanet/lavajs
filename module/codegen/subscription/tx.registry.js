@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgBuy, MsgAddProject } from "./tx";
 export const registry = [["/lavanet.lava.subscription.MsgBuy", MsgBuy], ["/lavanet.lava.subscription.MsgAddProject", MsgAddProject]];
 export const load = protoRegistry => {

@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AminoConverter = void 0;
 var _helpers = require("../../../helpers");
+//@ts-nocheck
+
 var AminoConverter = {
   "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade": {
     aminoType: "cosmos-sdk/MsgSoftwareUpgrade",

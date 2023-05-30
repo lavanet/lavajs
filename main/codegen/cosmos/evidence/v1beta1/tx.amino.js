@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
+//@ts-nocheck
+
 var AminoConverter = {
   "/cosmos.evidence.v1beta1.MsgSubmitEvidence": {
     aminoType: "cosmos-sdk/MsgSubmitEvidence",

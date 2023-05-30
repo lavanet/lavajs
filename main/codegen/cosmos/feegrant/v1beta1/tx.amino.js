@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
+//@ts-nocheck
+
 var AminoConverter = {
   "/cosmos.feegrant.v1beta1.MsgGrantAllowance": {
     aminoType: "cosmos-sdk/MsgGrantAllowance",

@@ -7,6 +7,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
+//@ts-nocheck
+
 var registry = [["/cosmos.group.v1.MsgCreateGroup", _tx.MsgCreateGroup], ["/cosmos.group.v1.MsgUpdateGroupMembers", _tx.MsgUpdateGroupMembers], ["/cosmos.group.v1.MsgUpdateGroupAdmin", _tx.MsgUpdateGroupAdmin], ["/cosmos.group.v1.MsgUpdateGroupMetadata", _tx.MsgUpdateGroupMetadata], ["/cosmos.group.v1.MsgCreateGroupPolicy", _tx.MsgCreateGroupPolicy], ["/cosmos.group.v1.MsgCreateGroupWithPolicy", _tx.MsgCreateGroupWithPolicy], ["/cosmos.group.v1.MsgUpdateGroupPolicyAdmin", _tx.MsgUpdateGroupPolicyAdmin], ["/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy", _tx.MsgUpdateGroupPolicyDecisionPolicy], ["/cosmos.group.v1.MsgUpdateGroupPolicyMetadata", _tx.MsgUpdateGroupPolicyMetadata], ["/cosmos.group.v1.MsgSubmitProposal", _tx.MsgSubmitProposal], ["/cosmos.group.v1.MsgWithdrawProposal", _tx.MsgWithdrawProposal], ["/cosmos.group.v1.MsgVote", _tx.MsgVote], ["/cosmos.group.v1.MsgExec", _tx.MsgExec], ["/cosmos.group.v1.MsgLeaveGroup", _tx.MsgLeaveGroup]];
 exports.registry = registry;
 var load = function load(protoRegistry) {

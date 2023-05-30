@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgDetection, MsgConflictVoteCommit, MsgConflictVoteReveal } from "./tx";
 export const registry = [["/lavanet.lava.conflict.MsgDetection", MsgDetection], ["/lavanet.lava.conflict.MsgConflictVoteCommit", MsgConflictVoteCommit], ["/lavanet.lava.conflict.MsgConflictVoteReveal", MsgConflictVoteReveal]];
 export const load = protoRegistry => {

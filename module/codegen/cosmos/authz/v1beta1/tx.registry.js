@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgGrant, MsgExec, MsgRevoke } from "./tx";
 export const registry = [["/cosmos.authz.v1beta1.MsgGrant", MsgGrant], ["/cosmos.authz.v1beta1.MsgExec", MsgExec], ["/cosmos.authz.v1beta1.MsgRevoke", MsgRevoke]];
 export const load = protoRegistry => {

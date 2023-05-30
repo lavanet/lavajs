@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgSoftwareUpgrade, MsgCancelUpgrade } from "./tx";
 export const registry = [["/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade", MsgSoftwareUpgrade], ["/cosmos.upgrade.v1beta1.MsgCancelUpgrade", MsgCancelUpgrade]];
 export const load = protoRegistry => {

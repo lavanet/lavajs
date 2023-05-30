@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgVerifyInvariant } from "./tx";
 export const registry = [["/cosmos.crisis.v1beta1.MsgVerifyInvariant", MsgVerifyInvariant]];
 export const load = protoRegistry => {

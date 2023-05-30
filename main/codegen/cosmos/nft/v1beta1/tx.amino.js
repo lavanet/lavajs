@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
+//@ts-nocheck
+
 var AminoConverter = {
   "/cosmos.nft.v1beta1.MsgSend": {
     aminoType: "cosmos-sdk/MsgNFTSend",

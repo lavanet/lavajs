@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MsgSubmitEvidence } from "./tx";
 export const registry = [["/cosmos.evidence.v1beta1.MsgSubmitEvidence", MsgSubmitEvidence]];
 export const load = protoRegistry => {
