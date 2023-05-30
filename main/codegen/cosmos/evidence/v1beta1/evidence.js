@@ -35,7 +35,7 @@ var Equivocation = {
       writer.uint32(8).int64(message.height);
     }
     if (message.time !== undefined) {
-      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.time), writer.uint32(18).fork()).ldelim();
+      _timestamp.Timestamp.encode(message.time, writer.uint32(18).fork()).ldelim();
     }
     if (!message.power.isZero()) {
       writer.uint32(24).int64(message.power);
@@ -56,7 +56,7 @@ var Equivocation = {
           message.height = reader.int64();
           break;
         case 2:
-          message.time = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
+          message.time = _timestamp.Timestamp.decode(reader, reader.uint32());
           break;
         case 3:
           message.power = reader.int64();
@@ -71,11 +71,27 @@ var Equivocation = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
+      time: (0, _helpers.isSet)(object.time) ? (0, _helpers.fromJsonTimestamp)(object.time) : undefined,
+      power: (0, _helpers.isSet)(object.power) ? _helpers.Long.fromValue(object.power) : _helpers.Long.ZERO,
+      consensusAddress: (0, _helpers.isSet)(object.consensusAddress) ? String(object.consensusAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    message.time !== undefined && (obj.time = (0, _helpers.fromTimestamp)(message.time).toISOString());
+    message.power !== undefined && (obj.power = (message.power || _helpers.Long.ZERO).toString());
+    message.consensusAddress !== undefined && (obj.consensusAddress = message.consensusAddress);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
-    var _object$time, _object$consensusAddr;
+    var _object$consensusAddr;
     var message = createBaseEquivocation();
     message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
-    message.time = (_object$time = object.time) !== null && _object$time !== void 0 ? _object$time : undefined;
+    message.time = object.time !== undefined && object.time !== null ? _timestamp.Timestamp.fromPartial(object.time) : undefined;
     message.power = object.power !== undefined && object.power !== null ? _helpers.Long.fromValue(object.power) : _helpers.Long.ZERO;
     message.consensusAddress = (_object$consensusAddr = object.consensusAddress) !== null && _object$consensusAddr !== void 0 ? _object$consensusAddr : "";
     return message;

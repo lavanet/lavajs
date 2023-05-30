@@ -88,6 +88,26 @@ var CommitInfo = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      version: (0, _helpers.isSet)(object.version) ? _helpers.Long.fromValue(object.version) : _helpers.Long.ZERO,
+      storeInfos: Array.isArray(object === null || object === void 0 ? void 0 : object.storeInfos) ? object.storeInfos.map(function (e) {
+        return StoreInfo.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.version !== undefined && (obj.version = (message.version || _helpers.Long.ZERO).toString());
+    if (message.storeInfos) {
+      obj.storeInfos = message.storeInfos.map(function (e) {
+        return e ? StoreInfo.toJSON(e) : undefined;
+      });
+    } else {
+      obj.storeInfos = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$storeInfos;
     var message = createBaseCommitInfo();
@@ -136,6 +156,18 @@ var StoreInfo = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
+      commitId: (0, _helpers.isSet)(object.commitId) ? CommitID.fromJSON(object.commitId) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.commitId !== undefined && (obj.commitId = message.commitId ? CommitID.toJSON(message.commitId) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$name;
     var message = createBaseStoreInfo();
@@ -181,6 +213,18 @@ var CommitID = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      version: (0, _helpers.isSet)(object.version) ? _helpers.Long.fromValue(object.version) : _helpers.Long.ZERO,
+      hash: (0, _helpers.isSet)(object.hash) ? (0, _helpers.bytesFromBase64)(object.hash) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.version !== undefined && (obj.version = (message.version || _helpers.Long.ZERO).toString());
+    message.hash !== undefined && (obj.hash = (0, _helpers.base64FromBytes)(message.hash !== undefined ? message.hash : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$hash;

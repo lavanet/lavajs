@@ -8,6 +8,7 @@ exports.StorageTypeSDKType = exports.StorageType = exports.ModuleSchemaDescripto
 exports.storageTypeFromJSON = storageTypeFromJSON;
 exports.storageTypeToJSON = storageTypeToJSON;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -120,6 +121,26 @@ var ModuleSchemaDescriptor = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      schemaFile: Array.isArray(object === null || object === void 0 ? void 0 : object.schemaFile) ? object.schemaFile.map(function (e) {
+        return ModuleSchemaDescriptor_FileEntry.fromJSON(e);
+      }) : [],
+      prefix: (0, _helpers.isSet)(object.prefix) ? (0, _helpers.bytesFromBase64)(object.prefix) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.schemaFile) {
+      obj.schemaFile = message.schemaFile.map(function (e) {
+        return e ? ModuleSchemaDescriptor_FileEntry.toJSON(e) : undefined;
+      });
+    } else {
+      obj.schemaFile = [];
+    }
+    message.prefix !== undefined && (obj.prefix = (0, _helpers.base64FromBytes)(message.prefix !== undefined ? message.prefix : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$schemaFile, _object$prefix;
     var message = createBaseModuleSchemaDescriptor();
@@ -174,6 +195,20 @@ var ModuleSchemaDescriptor_FileEntry = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      id: (0, _helpers.isSet)(object.id) ? Number(object.id) : 0,
+      protoFileName: (0, _helpers.isSet)(object.protoFileName) ? String(object.protoFileName) : "",
+      storageType: (0, _helpers.isSet)(object.storageType) ? storageTypeFromJSON(object.storageType) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.id !== undefined && (obj.id = Math.round(message.id));
+    message.protoFileName !== undefined && (obj.protoFileName = message.protoFileName);
+    message.storageType !== undefined && (obj.storageType = storageTypeToJSON(message.storageType));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$id, _object$protoFileName, _object$storageType;

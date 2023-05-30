@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.Supply = exports.SendEnabled = exports.Params = exports.Output = exports.Metadata = exports.Input = exports.DenomUnit = void 0;
 var _coin = require("../../base/v1beta1/coin");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -108,6 +109,26 @@ var Params = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      sendEnabled: Array.isArray(object === null || object === void 0 ? void 0 : object.sendEnabled) ? object.sendEnabled.map(function (e) {
+        return SendEnabled.fromJSON(e);
+      }) : [],
+      defaultSendEnabled: (0, _helpers.isSet)(object.defaultSendEnabled) ? Boolean(object.defaultSendEnabled) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.sendEnabled) {
+      obj.sendEnabled = message.sendEnabled.map(function (e) {
+        return e ? SendEnabled.toJSON(e) : undefined;
+      });
+    } else {
+      obj.sendEnabled = [];
+    }
+    message.defaultSendEnabled !== undefined && (obj.defaultSendEnabled = message.defaultSendEnabled);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$sendEnabled, _object$defaultSendEn;
     var message = createBaseParams();
@@ -155,6 +176,18 @@ var SendEnabled = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : "",
+      enabled: (0, _helpers.isSet)(object.enabled) ? Boolean(object.enabled) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.enabled !== undefined && (obj.enabled = message.enabled);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$denom, _object$enabled;
@@ -210,6 +243,26 @@ var Input = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      coins: Array.isArray(object === null || object === void 0 ? void 0 : object.coins) ? object.coins.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    if (message.coins) {
+      obj.coins = message.coins.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.coins = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address, _object$coins;
@@ -268,6 +321,26 @@ var Output = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      coins: Array.isArray(object === null || object === void 0 ? void 0 : object.coins) ? object.coins.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    if (message.coins) {
+      obj.coins = message.coins.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.coins = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$address2, _object$coins2;
     var message = createBaseOutput();
@@ -317,6 +390,24 @@ var Supply = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      total: Array.isArray(object === null || object === void 0 ? void 0 : object.total) ? object.total.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.total) {
+      obj.total = message.total.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.total = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$total;
@@ -380,6 +471,28 @@ var DenomUnit = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : "",
+      exponent: (0, _helpers.isSet)(object.exponent) ? Number(object.exponent) : 0,
+      aliases: Array.isArray(object === null || object === void 0 ? void 0 : object.aliases) ? object.aliases.map(function (e) {
+        return String(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.exponent !== undefined && (obj.exponent = Math.round(message.exponent));
+    if (message.aliases) {
+      obj.aliases = message.aliases.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.aliases = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$denom2, _object$exponent, _object$aliases;
@@ -480,6 +593,38 @@ var Metadata = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
+      denomUnits: Array.isArray(object === null || object === void 0 ? void 0 : object.denomUnits) ? object.denomUnits.map(function (e) {
+        return DenomUnit.fromJSON(e);
+      }) : [],
+      base: (0, _helpers.isSet)(object.base) ? String(object.base) : "",
+      display: (0, _helpers.isSet)(object.display) ? String(object.display) : "",
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
+      symbol: (0, _helpers.isSet)(object.symbol) ? String(object.symbol) : "",
+      uri: (0, _helpers.isSet)(object.uri) ? String(object.uri) : "",
+      uriHash: (0, _helpers.isSet)(object.uriHash) ? String(object.uriHash) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.description !== undefined && (obj.description = message.description);
+    if (message.denomUnits) {
+      obj.denomUnits = message.denomUnits.map(function (e) {
+        return e ? DenomUnit.toJSON(e) : undefined;
+      });
+    } else {
+      obj.denomUnits = [];
+    }
+    message.base !== undefined && (obj.base = message.base);
+    message.display !== undefined && (obj.display = message.display);
+    message.name !== undefined && (obj.name = message.name);
+    message.symbol !== undefined && (obj.symbol = message.symbol);
+    message.uri !== undefined && (obj.uri = message.uri);
+    message.uriHash !== undefined && (obj.uriHash = message.uriHash);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$description, _object$denomUnits, _object$base, _object$display, _object$name, _object$symbol, _object$uri, _object$uriHash;

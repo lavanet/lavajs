@@ -9,6 +9,7 @@ var _pagination = require("../../base/query/v1beta1/pagination");
 var _coin = require("../../base/v1beta1/coin");
 var _bank = require("./bank");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -185,6 +186,18 @@ var QueryBalanceRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$address, _object$denom;
     var message = createBaseQueryBalanceRequest();
@@ -223,6 +236,16 @@ var QueryBalanceResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      balance: (0, _helpers.isSet)(object.balance) ? _coin.Coin.fromJSON(object.balance) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.balance !== undefined && (obj.balance = message.balance ? _coin.Coin.toJSON(message.balance) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryBalanceResponse();
@@ -267,6 +290,18 @@ var QueryAllBalancesRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address2;
@@ -323,6 +358,26 @@ var QueryAllBalancesResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      balances: Array.isArray(object === null || object === void 0 ? void 0 : object.balances) ? object.balances.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.balances) {
+      obj.balances = message.balances.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.balances = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$balances;
     var message = createBaseQueryAllBalancesResponse();
@@ -370,6 +425,18 @@ var QuerySpendableBalancesRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address3;
@@ -426,6 +493,26 @@ var QuerySpendableBalancesResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      balances: Array.isArray(object === null || object === void 0 ? void 0 : object.balances) ? object.balances.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.balances) {
+      obj.balances = message.balances.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.balances = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$balances2;
     var message = createBaseQuerySpendableBalancesResponse();
@@ -466,6 +553,16 @@ var QueryTotalSupplyRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryTotalSupplyRequest();
@@ -520,6 +617,26 @@ var QueryTotalSupplyResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      supply: Array.isArray(object === null || object === void 0 ? void 0 : object.supply) ? object.supply.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.supply) {
+      obj.supply = message.supply.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.supply = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$supply;
     var message = createBaseQueryTotalSupplyResponse();
@@ -561,6 +678,16 @@ var QuerySupplyOfRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$denom2;
     var message = createBaseQuerySupplyOfRequest();
@@ -599,6 +726,16 @@ var QuerySupplyOfResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      amount: (0, _helpers.isSet)(object.amount) ? _coin.Coin.fromJSON(object.amount) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.amount !== undefined && (obj.amount = message.amount ? _coin.Coin.toJSON(message.amount) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQuerySupplyOfResponse();
     message.amount = object.amount !== undefined && object.amount !== null ? _coin.Coin.fromPartial(object.amount) : undefined;
@@ -627,6 +764,13 @@ var QueryParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
@@ -664,6 +808,16 @@ var QueryParamsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      params: (0, _helpers.isSet)(object.params) ? _bank.Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.params !== undefined && (obj.params = message.params ? _bank.Params.toJSON(message.params) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? _bank.Params.fromPartial(object.params) : undefined;
@@ -700,6 +854,16 @@ var QueryDenomsMetadataRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryDenomsMetadataRequest();
@@ -754,6 +918,26 @@ var QueryDenomsMetadataResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      metadatas: Array.isArray(object === null || object === void 0 ? void 0 : object.metadatas) ? object.metadatas.map(function (e) {
+        return _bank.Metadata.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.metadatas) {
+      obj.metadatas = message.metadatas.map(function (e) {
+        return e ? _bank.Metadata.toJSON(e) : undefined;
+      });
+    } else {
+      obj.metadatas = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$metadatas;
     var message = createBaseQueryDenomsMetadataResponse();
@@ -795,6 +979,16 @@ var QueryDenomMetadataRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$denom3;
     var message = createBaseQueryDenomMetadataRequest();
@@ -832,6 +1026,16 @@ var QueryDenomMetadataResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      metadata: (0, _helpers.isSet)(object.metadata) ? _bank.Metadata.fromJSON(object.metadata) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.metadata !== undefined && (obj.metadata = message.metadata ? _bank.Metadata.toJSON(message.metadata) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryDenomMetadataResponse();
@@ -876,6 +1080,18 @@ var QueryDenomOwnersRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : "",
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$denom4;
@@ -922,6 +1138,18 @@ var DenomOwner = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      balance: (0, _helpers.isSet)(object.balance) ? _coin.Coin.fromJSON(object.balance) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.balance !== undefined && (obj.balance = message.balance ? _coin.Coin.toJSON(message.balance) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address4;
@@ -977,6 +1205,26 @@ var QueryDenomOwnersResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      denomOwners: Array.isArray(object === null || object === void 0 ? void 0 : object.denomOwners) ? object.denomOwners.map(function (e) {
+        return DenomOwner.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.denomOwners) {
+      obj.denomOwners = message.denomOwners.map(function (e) {
+        return e ? DenomOwner.toJSON(e) : undefined;
+      });
+    } else {
+      obj.denomOwners = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$denomOwners;

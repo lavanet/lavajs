@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PackageReference = exports.ModuleDescriptor = exports.MigrateFromInfo = void 0;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -91,6 +92,36 @@ var ModuleDescriptor = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      goImport: (0, _helpers.isSet)(object.goImport) ? String(object.goImport) : "",
+      usePackage: Array.isArray(object === null || object === void 0 ? void 0 : object.usePackage) ? object.usePackage.map(function (e) {
+        return PackageReference.fromJSON(e);
+      }) : [],
+      canMigrateFrom: Array.isArray(object === null || object === void 0 ? void 0 : object.canMigrateFrom) ? object.canMigrateFrom.map(function (e) {
+        return MigrateFromInfo.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.goImport !== undefined && (obj.goImport = message.goImport);
+    if (message.usePackage) {
+      obj.usePackage = message.usePackage.map(function (e) {
+        return e ? PackageReference.toJSON(e) : undefined;
+      });
+    } else {
+      obj.usePackage = [];
+    }
+    if (message.canMigrateFrom) {
+      obj.canMigrateFrom = message.canMigrateFrom.map(function (e) {
+        return e ? MigrateFromInfo.toJSON(e) : undefined;
+      });
+    } else {
+      obj.canMigrateFrom = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$goImport, _object$usePackage, _object$canMigrateFro;
     var message = createBaseModuleDescriptor();
@@ -142,6 +173,18 @@ var PackageReference = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
+      revision: (0, _helpers.isSet)(object.revision) ? Number(object.revision) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.revision !== undefined && (obj.revision = Math.round(message.revision));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$name, _object$revision;
     var message = createBasePackageReference();
@@ -180,6 +223,16 @@ var MigrateFromInfo = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      module: (0, _helpers.isSet)(object.module) ? String(object.module) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.module !== undefined && (obj.module = message.module);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$module;

@@ -116,6 +116,52 @@ var GenesisState = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      startingProposalId: (0, _helpers.isSet)(object.startingProposalId) ? _helpers.Long.fromValue(object.startingProposalId) : _helpers.Long.UZERO,
+      deposits: Array.isArray(object === null || object === void 0 ? void 0 : object.deposits) ? object.deposits.map(function (e) {
+        return _gov.Deposit.fromJSON(e);
+      }) : [],
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(function (e) {
+        return _gov.Vote.fromJSON(e);
+      }) : [],
+      proposals: Array.isArray(object === null || object === void 0 ? void 0 : object.proposals) ? object.proposals.map(function (e) {
+        return _gov.Proposal.fromJSON(e);
+      }) : [],
+      depositParams: (0, _helpers.isSet)(object.depositParams) ? _gov.DepositParams.fromJSON(object.depositParams) : undefined,
+      votingParams: (0, _helpers.isSet)(object.votingParams) ? _gov.VotingParams.fromJSON(object.votingParams) : undefined,
+      tallyParams: (0, _helpers.isSet)(object.tallyParams) ? _gov.TallyParams.fromJSON(object.tallyParams) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.startingProposalId !== undefined && (obj.startingProposalId = (message.startingProposalId || _helpers.Long.UZERO).toString());
+    if (message.deposits) {
+      obj.deposits = message.deposits.map(function (e) {
+        return e ? _gov.Deposit.toJSON(e) : undefined;
+      });
+    } else {
+      obj.deposits = [];
+    }
+    if (message.votes) {
+      obj.votes = message.votes.map(function (e) {
+        return e ? _gov.Vote.toJSON(e) : undefined;
+      });
+    } else {
+      obj.votes = [];
+    }
+    if (message.proposals) {
+      obj.proposals = message.proposals.map(function (e) {
+        return e ? _gov.Proposal.toJSON(e) : undefined;
+      });
+    } else {
+      obj.proposals = [];
+    }
+    message.depositParams !== undefined && (obj.depositParams = message.depositParams ? _gov.DepositParams.toJSON(message.depositParams) : undefined);
+    message.votingParams !== undefined && (obj.votingParams = message.votingParams ? _gov.VotingParams.toJSON(message.votingParams) : undefined);
+    message.tallyParams !== undefined && (obj.tallyParams = message.tallyParams ? _gov.TallyParams.toJSON(message.tallyParams) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$deposits, _object$votes, _object$proposals;
     var message = createBaseGenesisState();

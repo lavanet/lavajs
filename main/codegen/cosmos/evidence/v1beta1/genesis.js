@@ -55,6 +55,24 @@ var GenesisState = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      evidence: Array.isArray(object === null || object === void 0 ? void 0 : object.evidence) ? object.evidence.map(function (e) {
+        return _any.Any.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.evidence) {
+      obj.evidence = message.evidence.map(function (e) {
+        return e ? _any.Any.toJSON(e) : undefined;
+      });
+    } else {
+      obj.evidence = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$evidence;
     var message = createBaseGenesisState();

@@ -89,6 +89,34 @@ var MsgStakeProvider = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
+      amount: (0, _helpers.isSet)(object.amount) ? _coin.Coin.fromJSON(object.amount) : undefined,
+      endpoints: Array.isArray(object === null || object === void 0 ? void 0 : object.endpoints) ? object.endpoints.map(function (e) {
+        return _endpoint.Endpoint.fromJSON(e);
+      }) : [],
+      geolocation: (0, _helpers.isSet)(object.geolocation) ? _helpers.Long.fromValue(object.geolocation) : _helpers.Long.UZERO,
+      moniker: (0, _helpers.isSet)(object.moniker) ? String(object.moniker) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.amount !== undefined && (obj.amount = message.amount ? _coin.Coin.toJSON(message.amount) : undefined);
+    if (message.endpoints) {
+      obj.endpoints = message.endpoints.map(function (e) {
+        return e ? _endpoint.Endpoint.toJSON(e) : undefined;
+      });
+    } else {
+      obj.endpoints = [];
+    }
+    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || _helpers.Long.UZERO).toString());
+    message.moniker !== undefined && (obj.moniker = message.moniker);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator, _object$chainID, _object$endpoints, _object$moniker;
     var message = createBaseMsgStakeProvider();
@@ -125,6 +153,13 @@ var MsgStakeProviderResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgStakeProviderResponse();
@@ -183,6 +218,22 @@ var MsgStakeClient = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
+      amount: (0, _helpers.isSet)(object.amount) ? _coin.Coin.fromJSON(object.amount) : undefined,
+      geolocation: (0, _helpers.isSet)(object.geolocation) ? _helpers.Long.fromValue(object.geolocation) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.amount !== undefined && (obj.amount = message.amount ? _coin.Coin.toJSON(message.amount) : undefined);
+    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator2, _object$chainID2;
     var message = createBaseMsgStakeClient();
@@ -215,6 +266,13 @@ var MsgStakeClientResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgStakeClientResponse();
@@ -259,6 +317,18 @@ var MsgUnstakeProvider = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator3, _object$chainID3;
     var message = createBaseMsgUnstakeProvider();
@@ -289,6 +359,13 @@ var MsgUnstakeProviderResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgUnstakeProviderResponse();
@@ -333,6 +410,18 @@ var MsgUnstakeClient = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator4, _object$chainID4;
     var message = createBaseMsgUnstakeClient();
@@ -363,6 +452,13 @@ var MsgUnstakeClientResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgUnstakeClientResponse();
@@ -423,6 +519,28 @@ var MsgRelayPayment = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      relays: Array.isArray(object === null || object === void 0 ? void 0 : object.relays) ? object.relays.map(function (e) {
+        return _relay.RelaySession.fromJSON(e);
+      }) : [],
+      descriptionString: (0, _helpers.isSet)(object.descriptionString) ? String(object.descriptionString) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    if (message.relays) {
+      obj.relays = message.relays.map(function (e) {
+        return e ? _relay.RelaySession.toJSON(e) : undefined;
+      });
+    } else {
+      obj.relays = [];
+    }
+    message.descriptionString !== undefined && (obj.descriptionString = message.descriptionString);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator5, _object$relays, _object$descriptionSt;
     var message = createBaseMsgRelayPayment();
@@ -456,6 +574,13 @@ var MsgRelayPaymentResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgRelayPaymentResponse();
@@ -516,6 +641,28 @@ var MsgFreezeProvider = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      chainIds: Array.isArray(object === null || object === void 0 ? void 0 : object.chainIds) ? object.chainIds.map(function (e) {
+        return String(e);
+      }) : [],
+      reason: (0, _helpers.isSet)(object.reason) ? String(object.reason) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    if (message.chainIds) {
+      obj.chainIds = message.chainIds.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.chainIds = [];
+    }
+    message.reason !== undefined && (obj.reason = message.reason);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator6, _object$chainIds, _object$reason;
     var message = createBaseMsgFreezeProvider();
@@ -549,6 +696,13 @@ var MsgFreezeProviderResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgFreezeProviderResponse();
@@ -602,6 +756,26 @@ var MsgUnfreezeProvider = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      chainIds: Array.isArray(object === null || object === void 0 ? void 0 : object.chainIds) ? object.chainIds.map(function (e) {
+        return String(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    if (message.chainIds) {
+      obj.chainIds = message.chainIds.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.chainIds = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator7, _object$chainIds2;
     var message = createBaseMsgUnfreezeProvider();
@@ -634,6 +808,13 @@ var MsgUnfreezeProviderResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgUnfreezeProviderResponse();

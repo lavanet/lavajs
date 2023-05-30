@@ -1,4 +1,4 @@
-import { Long } from "../../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
 
 /**
@@ -67,6 +67,26 @@ export const Proof = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      total: isSet(object.total) ? Long.fromValue(object.total) : Long.ZERO,
+      index: isSet(object.index) ? Long.fromValue(object.index) : Long.ZERO,
+      leafHash: isSet(object.leafHash) ? bytesFromBase64(object.leafHash) : new Uint8Array(),
+      aunts: Array.isArray(object === null || object === void 0 ? void 0 : object.aunts) ? object.aunts.map(e => bytesFromBase64(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.total !== undefined && (obj.total = (message.total || Long.ZERO).toString());
+    message.index !== undefined && (obj.index = (message.index || Long.ZERO).toString());
+    message.leafHash !== undefined && (obj.leafHash = base64FromBytes(message.leafHash !== undefined ? message.leafHash : new Uint8Array()));
+    if (message.aunts) {
+      obj.aunts = message.aunts.map(e => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+    } else {
+      obj.aunts = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$leafHash, _object$aunts;
     const message = createBaseProof();
@@ -112,6 +132,18 @@ export const ValueOp = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(),
+      proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.key !== undefined && (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.proof !== undefined && (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$key;
@@ -163,6 +195,20 @@ export const DominoOp = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      input: isSet(object.input) ? String(object.input) : "",
+      output: isSet(object.output) ? String(object.output) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.input !== undefined && (obj.input = message.input);
+    message.output !== undefined && (obj.output = message.output);
+    return obj;
   },
   fromPartial(object) {
     var _object$key2, _object$input, _object$output;
@@ -216,6 +262,20 @@ export const ProofOp = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      type: isSet(object.type) ? String(object.type) : "",
+      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(),
+      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array()
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.type !== undefined && (obj.type = message.type);
+    message.key !== undefined && (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
+    return obj;
+  },
   fromPartial(object) {
     var _object$type, _object$key3, _object$data;
     const message = createBaseProofOp();
@@ -253,6 +313,20 @@ export const ProofOps = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      ops: Array.isArray(object === null || object === void 0 ? void 0 : object.ops) ? object.ops.map(e => ProofOp.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.ops) {
+      obj.ops = message.ops.map(e => e ? ProofOp.toJSON(e) : undefined);
+    } else {
+      obj.ops = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$ops;

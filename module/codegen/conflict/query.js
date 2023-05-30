@@ -2,7 +2,7 @@ import { PageRequest, PageResponse } from "../cosmos/base/query/v1beta1/paginati
 import { Params } from "./params";
 import { ConflictVote } from "./conflict_vote";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -31,6 +31,13 @@ export const QueryParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
@@ -66,6 +73,16 @@ export const QueryParamsResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
@@ -100,6 +117,16 @@ export const QueryGetConflictVoteRequest = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? String(object.index) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    return obj;
   },
   fromPartial(object) {
     var _object$index;
@@ -137,6 +164,16 @@ export const QueryGetConflictVoteResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      conflictVote: isSet(object.conflictVote) ? ConflictVote.fromJSON(object.conflictVote) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.conflictVote !== undefined && (obj.conflictVote = message.conflictVote ? ConflictVote.toJSON(message.conflictVote) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryGetConflictVoteResponse();
     message.conflictVote = object.conflictVote !== undefined && object.conflictVote !== null ? ConflictVote.fromPartial(object.conflictVote) : undefined;
@@ -171,6 +208,16 @@ export const QueryAllConflictVoteRequest = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryAllConflictVoteRequest();
@@ -213,6 +260,22 @@ export const QueryAllConflictVoteResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      conflictVote: Array.isArray(object === null || object === void 0 ? void 0 : object.conflictVote) ? object.conflictVote.map(e => ConflictVote.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.conflictVote) {
+      obj.conflictVote = message.conflictVote.map(e => e ? ConflictVote.toJSON(e) : undefined);
+    } else {
+      obj.conflictVote = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$conflictVote;

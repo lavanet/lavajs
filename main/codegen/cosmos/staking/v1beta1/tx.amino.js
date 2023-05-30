@@ -7,6 +7,8 @@ exports.AminoConverter = void 0;
 var _amino = require("@cosmjs/amino");
 var _encoding = require("@cosmjs/encoding");
 var _helpers = require("../../../helpers");
+//@ts-nocheck
+
 var AminoConverter = {
   "/cosmos.staking.v1beta1.MsgCreateValidator": {
     aminoType: "cosmos-sdk/MsgCreateValidator",

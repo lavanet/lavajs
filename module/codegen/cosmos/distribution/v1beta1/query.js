@@ -1,7 +1,7 @@
 import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Params, ValidatorOutstandingRewards, ValidatorAccumulatedCommission, ValidatorSlashEvent, DelegationDelegatorReward } from "./distribution";
 import { DecCoin } from "../../base/v1beta1/coin";
-import { Long } from "../../../helpers";
+import { Long, isSet } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 
@@ -192,6 +192,13 @@ export const QueryParamsRequest = {
     }
     return message;
   },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
+  },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
     return message;
@@ -225,6 +232,16 @@ export const QueryParamsResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
@@ -260,6 +277,16 @@ export const QueryValidatorOutstandingRewardsRequest = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      validatorAddress: isSet(object.validatorAddress) ? String(object.validatorAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
   },
   fromPartial(object) {
     var _object$validatorAddr;
@@ -297,6 +324,16 @@ export const QueryValidatorOutstandingRewardsResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      rewards: isSet(object.rewards) ? ValidatorOutstandingRewards.fromJSON(object.rewards) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.rewards !== undefined && (obj.rewards = message.rewards ? ValidatorOutstandingRewards.toJSON(message.rewards) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryValidatorOutstandingRewardsResponse();
     message.rewards = object.rewards !== undefined && object.rewards !== null ? ValidatorOutstandingRewards.fromPartial(object.rewards) : undefined;
@@ -331,6 +368,16 @@ export const QueryValidatorCommissionRequest = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      validatorAddress: isSet(object.validatorAddress) ? String(object.validatorAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
   },
   fromPartial(object) {
     var _object$validatorAddr2;
@@ -367,6 +414,16 @@ export const QueryValidatorCommissionResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      commission: isSet(object.commission) ? ValidatorAccumulatedCommission.fromJSON(object.commission) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.commission !== undefined && (obj.commission = message.commission ? ValidatorAccumulatedCommission.toJSON(message.commission) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryValidatorCommissionResponse();
@@ -424,6 +481,22 @@ export const QueryValidatorSlashesRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      validatorAddress: isSet(object.validatorAddress) ? String(object.validatorAddress) : "",
+      startingHeight: isSet(object.startingHeight) ? Long.fromValue(object.startingHeight) : Long.UZERO,
+      endingHeight: isSet(object.endingHeight) ? Long.fromValue(object.endingHeight) : Long.UZERO,
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    message.startingHeight !== undefined && (obj.startingHeight = (message.startingHeight || Long.UZERO).toString());
+    message.endingHeight !== undefined && (obj.endingHeight = (message.endingHeight || Long.UZERO).toString());
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$validatorAddr3;
     const message = createBaseQueryValidatorSlashesRequest();
@@ -470,6 +543,22 @@ export const QueryValidatorSlashesResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      slashes: Array.isArray(object === null || object === void 0 ? void 0 : object.slashes) ? object.slashes.map(e => ValidatorSlashEvent.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.slashes) {
+      obj.slashes = message.slashes.map(e => e ? ValidatorSlashEvent.toJSON(e) : undefined);
+    } else {
+      obj.slashes = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$slashes;
     const message = createBaseQueryValidatorSlashesResponse();
@@ -514,6 +603,18 @@ export const QueryDelegationRewardsRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      delegatorAddress: isSet(object.delegatorAddress) ? String(object.delegatorAddress) : "",
+      validatorAddress: isSet(object.validatorAddress) ? String(object.validatorAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
+  },
   fromPartial(object) {
     var _object$delegatorAddr, _object$validatorAddr4;
     const message = createBaseQueryDelegationRewardsRequest();
@@ -551,6 +652,20 @@ export const QueryDelegationRewardsResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(e => DecCoin.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(e => e ? DecCoin.toJSON(e) : undefined);
+    } else {
+      obj.rewards = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$rewards;
     const message = createBaseQueryDelegationRewardsResponse();
@@ -586,6 +701,16 @@ export const QueryDelegationTotalRewardsRequest = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      delegatorAddress: isSet(object.delegatorAddress) ? String(object.delegatorAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
   },
   fromPartial(object) {
     var _object$delegatorAddr2;
@@ -630,6 +755,26 @@ export const QueryDelegationTotalRewardsResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(e => DelegationDelegatorReward.fromJSON(e)) : [],
+      total: Array.isArray(object === null || object === void 0 ? void 0 : object.total) ? object.total.map(e => DecCoin.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(e => e ? DelegationDelegatorReward.toJSON(e) : undefined);
+    } else {
+      obj.rewards = [];
+    }
+    if (message.total) {
+      obj.total = message.total.map(e => e ? DecCoin.toJSON(e) : undefined);
+    } else {
+      obj.total = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$rewards2, _object$total;
     const message = createBaseQueryDelegationTotalRewardsResponse();
@@ -667,6 +812,16 @@ export const QueryDelegatorValidatorsRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      delegatorAddress: isSet(object.delegatorAddress) ? String(object.delegatorAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
+  },
   fromPartial(object) {
     var _object$delegatorAddr3;
     const message = createBaseQueryDelegatorValidatorsRequest();
@@ -702,6 +857,20 @@ export const QueryDelegatorValidatorsResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      validators: Array.isArray(object === null || object === void 0 ? void 0 : object.validators) ? object.validators.map(e => String(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.validators) {
+      obj.validators = message.validators.map(e => e);
+    } else {
+      obj.validators = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$validators;
@@ -739,6 +908,16 @@ export const QueryDelegatorWithdrawAddressRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      delegatorAddress: isSet(object.delegatorAddress) ? String(object.delegatorAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
+  },
   fromPartial(object) {
     var _object$delegatorAddr4;
     const message = createBaseQueryDelegatorWithdrawAddressRequest();
@@ -775,6 +954,16 @@ export const QueryDelegatorWithdrawAddressResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      withdrawAddress: isSet(object.withdrawAddress) ? String(object.withdrawAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
+    return obj;
+  },
   fromPartial(object) {
     var _object$withdrawAddre;
     const message = createBaseQueryDelegatorWithdrawAddressResponse();
@@ -802,6 +991,13 @@ export const QueryCommunityPoolRequest = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryCommunityPoolRequest();
@@ -836,6 +1032,20 @@ export const QueryCommunityPoolResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      pool: Array.isArray(object === null || object === void 0 ? void 0 : object.pool) ? object.pool.map(e => DecCoin.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.pool) {
+      obj.pool = message.pool.map(e => e ? DecCoin.toJSON(e) : undefined);
+    } else {
+      obj.pool = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$pool;

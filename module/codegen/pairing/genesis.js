@@ -3,7 +3,7 @@ import { UniquePaymentStorageClientProvider } from "./unique_payment_storage_cli
 import { ProviderPaymentStorage } from "./provider_payment_storage";
 import { EpochPayments } from "./epoch_payments";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../helpers";
 /** GenesisState defines the pairing module's genesis state. */
 
 /** GenesisState defines the pairing module's genesis state. */
@@ -57,6 +57,34 @@ export const GenesisState = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+      uniquePaymentStorageClientProviderList: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProviderList) ? object.uniquePaymentStorageClientProviderList.map(e => UniquePaymentStorageClientProvider.fromJSON(e)) : [],
+      providerPaymentStorageList: Array.isArray(object === null || object === void 0 ? void 0 : object.providerPaymentStorageList) ? object.providerPaymentStorageList.map(e => ProviderPaymentStorage.fromJSON(e)) : [],
+      epochPaymentsList: Array.isArray(object === null || object === void 0 ? void 0 : object.epochPaymentsList) ? object.epochPaymentsList.map(e => EpochPayments.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.uniquePaymentStorageClientProviderList) {
+      obj.uniquePaymentStorageClientProviderList = message.uniquePaymentStorageClientProviderList.map(e => e ? UniquePaymentStorageClientProvider.toJSON(e) : undefined);
+    } else {
+      obj.uniquePaymentStorageClientProviderList = [];
+    }
+    if (message.providerPaymentStorageList) {
+      obj.providerPaymentStorageList = message.providerPaymentStorageList.map(e => e ? ProviderPaymentStorage.toJSON(e) : undefined);
+    } else {
+      obj.providerPaymentStorageList = [];
+    }
+    if (message.epochPaymentsList) {
+      obj.epochPaymentsList = message.epochPaymentsList.map(e => e ? EpochPayments.toJSON(e) : undefined);
+    } else {
+      obj.epochPaymentsList = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$uniquePayment, _object$providerPayme, _object$epochPayments;

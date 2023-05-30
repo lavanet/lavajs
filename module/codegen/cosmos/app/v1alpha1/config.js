@@ -1,6 +1,6 @@
 import { Any } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../../../helpers";
 /**
  * Config represents the configuration for a Cosmos SDK ABCI app.
  * It is intended that all state machine logic including the version of
@@ -54,6 +54,20 @@ export const Config = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      modules: Array.isArray(object === null || object === void 0 ? void 0 : object.modules) ? object.modules.map(e => ModuleConfig.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.modules) {
+      obj.modules = message.modules.map(e => e ? ModuleConfig.toJSON(e) : undefined);
+    } else {
+      obj.modules = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$modules;
     const message = createBaseConfig();
@@ -96,6 +110,18 @@ export const ModuleConfig = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      config: isSet(object.config) ? Any.fromJSON(object.config) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.config !== undefined && (obj.config = message.config ? Any.toJSON(message.config) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$name;

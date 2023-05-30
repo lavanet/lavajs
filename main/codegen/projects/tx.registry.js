@@ -59,6 +59,46 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    addKeys: function addKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+        value: _tx.MsgAddKeys.toJSON(value)
+      };
+    },
+    setPolicy: function setPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
+        value: _tx.MsgSetPolicy.toJSON(value)
+      };
+    },
+    setSubscriptionPolicy: function setSubscriptionPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
+        value: _tx.MsgSetSubscriptionPolicy.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    addKeys: function addKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+        value: _tx.MsgAddKeys.fromJSON(value)
+      };
+    },
+    setPolicy: function setPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
+        value: _tx.MsgSetPolicy.fromJSON(value)
+      };
+    },
+    setSubscriptionPolicy: function setSubscriptionPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
+        value: _tx.MsgSetSubscriptionPolicy.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     addKeys: function addKeys(value) {
       return {

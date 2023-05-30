@@ -1,4 +1,4 @@
-import { Long } from "../helpers";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseEndpoint() {
   return {
@@ -42,6 +42,20 @@ export const Endpoint = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      iPPORT: isSet(object.iPPORT) ? String(object.iPPORT) : "",
+      useType: isSet(object.useType) ? String(object.useType) : "",
+      geolocation: isSet(object.geolocation) ? Long.fromValue(object.geolocation) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.iPPORT !== undefined && (obj.iPPORT = message.iPPORT);
+    message.useType !== undefined && (obj.useType = message.useType);
+    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || Long.UZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     var _object$iPPORT, _object$useType;

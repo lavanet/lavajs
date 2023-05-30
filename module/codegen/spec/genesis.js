@@ -1,6 +1,6 @@
 import { Params } from "./params";
 import { Spec } from "./spec";
-import { Long } from "../helpers";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the spec module's genesis state. */
 
@@ -48,6 +48,24 @@ export const GenesisState = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+      specList: Array.isArray(object === null || object === void 0 ? void 0 : object.specList) ? object.specList.map(e => Spec.fromJSON(e)) : [],
+      specCount: isSet(object.specCount) ? Long.fromValue(object.specCount) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.specList) {
+      obj.specList = message.specList.map(e => e ? Spec.toJSON(e) : undefined);
+    } else {
+      obj.specList = [];
+    }
+    message.specCount !== undefined && (obj.specCount = (message.specCount || Long.UZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     var _object$specList;

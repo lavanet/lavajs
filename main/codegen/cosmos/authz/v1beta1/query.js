@@ -8,6 +8,7 @@ exports.QueryGrantsResponse = exports.QueryGrantsRequest = exports.QueryGranterG
 var _pagination = require("../../base/query/v1beta1/pagination");
 var _authz = require("./authz");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -88,6 +89,22 @@ var QueryGrantsRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      granter: (0, _helpers.isSet)(object.granter) ? String(object.granter) : "",
+      grantee: (0, _helpers.isSet)(object.grantee) ? String(object.grantee) : "",
+      msgTypeUrl: (0, _helpers.isSet)(object.msgTypeUrl) ? String(object.msgTypeUrl) : "",
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.granter !== undefined && (obj.granter = message.granter);
+    message.grantee !== undefined && (obj.grantee = message.grantee);
+    message.msgTypeUrl !== undefined && (obj.msgTypeUrl = message.msgTypeUrl);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$granter, _object$grantee, _object$msgTypeUrl;
     var message = createBaseQueryGrantsRequest();
@@ -145,6 +162,26 @@ var QueryGrantsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      grants: Array.isArray(object === null || object === void 0 ? void 0 : object.grants) ? object.grants.map(function (e) {
+        return _authz.Grant.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.grants) {
+      obj.grants = message.grants.map(function (e) {
+        return e ? _authz.Grant.toJSON(e) : undefined;
+      });
+    } else {
+      obj.grants = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$grants;
     var message = createBaseQueryGrantsResponse();
@@ -192,6 +229,18 @@ var QueryGranterGrantsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      granter: (0, _helpers.isSet)(object.granter) ? String(object.granter) : "",
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.granter !== undefined && (obj.granter = message.granter);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$granter2;
@@ -248,6 +297,26 @@ var QueryGranterGrantsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      grants: Array.isArray(object === null || object === void 0 ? void 0 : object.grants) ? object.grants.map(function (e) {
+        return _authz.GrantAuthorization.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.grants) {
+      obj.grants = message.grants.map(function (e) {
+        return e ? _authz.GrantAuthorization.toJSON(e) : undefined;
+      });
+    } else {
+      obj.grants = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$grants2;
     var message = createBaseQueryGranterGrantsResponse();
@@ -295,6 +364,18 @@ var QueryGranteeGrantsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      grantee: (0, _helpers.isSet)(object.grantee) ? String(object.grantee) : "",
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.grantee !== undefined && (obj.grantee = message.grantee);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$grantee2;
@@ -350,6 +431,26 @@ var QueryGranteeGrantsResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      grants: Array.isArray(object === null || object === void 0 ? void 0 : object.grants) ? object.grants.map(function (e) {
+        return _authz.GrantAuthorization.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.grants) {
+      obj.grants = message.grants.map(function (e) {
+        return e ? _authz.GrantAuthorization.toJSON(e) : undefined;
+      });
+    } else {
+      obj.grants = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$grants3;

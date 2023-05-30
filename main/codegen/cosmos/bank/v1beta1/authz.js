@@ -65,6 +65,24 @@ var SendAuthorization = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      spendLimit: Array.isArray(object === null || object === void 0 ? void 0 : object.spendLimit) ? object.spendLimit.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.spendLimit) {
+      obj.spendLimit = message.spendLimit.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.spendLimit = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$spendLimit;
     var message = createBaseSendAuthorization();

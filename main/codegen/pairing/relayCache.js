@@ -47,6 +47,18 @@ var CacheUsage = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      CacheHits: (0, _helpers.isSet)(object.CacheHits) ? _helpers.Long.fromValue(object.CacheHits) : _helpers.Long.UZERO,
+      CacheMisses: (0, _helpers.isSet)(object.CacheMisses) ? _helpers.Long.fromValue(object.CacheMisses) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.CacheHits !== undefined && (obj.CacheHits = (message.CacheHits || _helpers.Long.UZERO).toString());
+    message.CacheMisses !== undefined && (obj.CacheMisses = (message.CacheMisses || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseCacheUsage();
     message.CacheHits = object.CacheHits !== undefined && object.CacheHits !== null ? _helpers.Long.fromValue(object.CacheHits) : _helpers.Long.UZERO;
@@ -112,6 +124,24 @@ var RelayCacheGet = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      request: (0, _helpers.isSet)(object.request) ? _relay.RelayRequest.fromJSON(object.request) : undefined,
+      apiInterface: (0, _helpers.isSet)(object.apiInterface) ? String(object.apiInterface) : "",
+      blockHash: (0, _helpers.isSet)(object.blockHash) ? (0, _helpers.bytesFromBase64)(object.blockHash) : new Uint8Array(),
+      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
+      finalized: (0, _helpers.isSet)(object.finalized) ? Boolean(object.finalized) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.request !== undefined && (obj.request = message.request ? _relay.RelayRequest.toJSON(message.request) : undefined);
+    message.apiInterface !== undefined && (obj.apiInterface = message.apiInterface);
+    message.blockHash !== undefined && (obj.blockHash = (0, _helpers.base64FromBytes)(message.blockHash !== undefined ? message.blockHash : new Uint8Array()));
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.finalized !== undefined && (obj.finalized = message.finalized);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$apiInterface, _object$blockHash, _object$chainID, _object$finalized;
@@ -196,6 +226,28 @@ var RelayCacheSet = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      request: (0, _helpers.isSet)(object.request) ? _relay.RelayRequest.fromJSON(object.request) : undefined,
+      apiInterface: (0, _helpers.isSet)(object.apiInterface) ? String(object.apiInterface) : "",
+      blockHash: (0, _helpers.isSet)(object.blockHash) ? (0, _helpers.bytesFromBase64)(object.blockHash) : new Uint8Array(),
+      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
+      bucketID: (0, _helpers.isSet)(object.bucketID) ? String(object.bucketID) : "",
+      response: (0, _helpers.isSet)(object.response) ? _relay.RelayReply.fromJSON(object.response) : undefined,
+      finalized: (0, _helpers.isSet)(object.finalized) ? Boolean(object.finalized) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.request !== undefined && (obj.request = message.request ? _relay.RelayRequest.toJSON(message.request) : undefined);
+    message.apiInterface !== undefined && (obj.apiInterface = message.apiInterface);
+    message.blockHash !== undefined && (obj.blockHash = (0, _helpers.base64FromBytes)(message.blockHash !== undefined ? message.blockHash : new Uint8Array()));
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.bucketID !== undefined && (obj.bucketID = message.bucketID);
+    message.response !== undefined && (obj.response = message.response ? _relay.RelayReply.toJSON(message.response) : undefined);
+    message.finalized !== undefined && (obj.finalized = message.finalized);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$apiInterface2, _object$blockHash2, _object$chainID2, _object$bucketID, _object$finalized2;

@@ -46,6 +46,46 @@ export const MessageComposer = {
       };
     }
   },
+  toJSON: {
+    grant(value) {
+      return {
+        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+        value: MsgGrant.toJSON(value)
+      };
+    },
+    exec(value) {
+      return {
+        typeUrl: "/cosmos.authz.v1beta1.MsgExec",
+        value: MsgExec.toJSON(value)
+      };
+    },
+    revoke(value) {
+      return {
+        typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
+        value: MsgRevoke.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    grant(value) {
+      return {
+        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+        value: MsgGrant.fromJSON(value)
+      };
+    },
+    exec(value) {
+      return {
+        typeUrl: "/cosmos.authz.v1beta1.MsgExec",
+        value: MsgExec.fromJSON(value)
+      };
+    },
+    revoke(value) {
+      return {
+        typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
+        value: MsgRevoke.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     grant(value) {
       return {

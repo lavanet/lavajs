@@ -1,6 +1,6 @@
 import { Coin } from "../cosmos/base/v1beta1/coin";
 import { Endpoint } from "./endpoint";
-import { Long } from "../helpers";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseStakeEntry() {
   return {
@@ -72,6 +72,32 @@ export const StakeEntry = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      stake: isSet(object.stake) ? Coin.fromJSON(object.stake) : undefined,
+      address: isSet(object.address) ? String(object.address) : "",
+      stakeAppliedBlock: isSet(object.stakeAppliedBlock) ? Long.fromValue(object.stakeAppliedBlock) : Long.UZERO,
+      endpoints: Array.isArray(object === null || object === void 0 ? void 0 : object.endpoints) ? object.endpoints.map(e => Endpoint.fromJSON(e)) : [],
+      geolocation: isSet(object.geolocation) ? Long.fromValue(object.geolocation) : Long.UZERO,
+      chain: isSet(object.chain) ? String(object.chain) : "",
+      moniker: isSet(object.moniker) ? String(object.moniker) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.stake !== undefined && (obj.stake = message.stake ? Coin.toJSON(message.stake) : undefined);
+    message.address !== undefined && (obj.address = message.address);
+    message.stakeAppliedBlock !== undefined && (obj.stakeAppliedBlock = (message.stakeAppliedBlock || Long.UZERO).toString());
+    if (message.endpoints) {
+      obj.endpoints = message.endpoints.map(e => e ? Endpoint.toJSON(e) : undefined);
+    } else {
+      obj.endpoints = [];
+    }
+    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || Long.UZERO).toString());
+    message.chain !== undefined && (obj.chain = message.chain);
+    message.moniker !== undefined && (obj.moniker = message.moniker);
+    return obj;
   },
   fromPartial(object) {
     var _object$address, _object$endpoints, _object$chain, _object$moniker;

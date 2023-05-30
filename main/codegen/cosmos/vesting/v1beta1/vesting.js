@@ -161,6 +161,48 @@ var BaseVestingAccount = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      baseAccount: (0, _helpers.isSet)(object.baseAccount) ? _auth.BaseAccount.fromJSON(object.baseAccount) : undefined,
+      originalVesting: Array.isArray(object === null || object === void 0 ? void 0 : object.originalVesting) ? object.originalVesting.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : [],
+      delegatedFree: Array.isArray(object === null || object === void 0 ? void 0 : object.delegatedFree) ? object.delegatedFree.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : [],
+      delegatedVesting: Array.isArray(object === null || object === void 0 ? void 0 : object.delegatedVesting) ? object.delegatedVesting.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : [],
+      endTime: (0, _helpers.isSet)(object.endTime) ? _helpers.Long.fromValue(object.endTime) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.baseAccount !== undefined && (obj.baseAccount = message.baseAccount ? _auth.BaseAccount.toJSON(message.baseAccount) : undefined);
+    if (message.originalVesting) {
+      obj.originalVesting = message.originalVesting.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.originalVesting = [];
+    }
+    if (message.delegatedFree) {
+      obj.delegatedFree = message.delegatedFree.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.delegatedFree = [];
+    }
+    if (message.delegatedVesting) {
+      obj.delegatedVesting = message.delegatedVesting.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.delegatedVesting = [];
+    }
+    message.endTime !== undefined && (obj.endTime = (message.endTime || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$originalVesti, _object$delegatedFree, _object$delegatedVest;
     var message = createBaseBaseVestingAccount();
@@ -216,6 +258,18 @@ var ContinuousVestingAccount = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      baseVestingAccount: (0, _helpers.isSet)(object.baseVestingAccount) ? BaseVestingAccount.fromJSON(object.baseVestingAccount) : undefined,
+      startTime: (0, _helpers.isSet)(object.startTime) ? _helpers.Long.fromValue(object.startTime) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.baseVestingAccount !== undefined && (obj.baseVestingAccount = message.baseVestingAccount ? BaseVestingAccount.toJSON(message.baseVestingAccount) : undefined);
+    message.startTime !== undefined && (obj.startTime = (message.startTime || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseContinuousVestingAccount();
     message.baseVestingAccount = object.baseVestingAccount !== undefined && object.baseVestingAccount !== null ? BaseVestingAccount.fromPartial(object.baseVestingAccount) : undefined;
@@ -253,6 +307,16 @@ var DelayedVestingAccount = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      baseVestingAccount: (0, _helpers.isSet)(object.baseVestingAccount) ? BaseVestingAccount.fromJSON(object.baseVestingAccount) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.baseVestingAccount !== undefined && (obj.baseVestingAccount = message.baseVestingAccount ? BaseVestingAccount.toJSON(message.baseVestingAccount) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseDelayedVestingAccount();
@@ -306,6 +370,26 @@ var Period = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      length: (0, _helpers.isSet)(object.length) ? _helpers.Long.fromValue(object.length) : _helpers.Long.ZERO,
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.length !== undefined && (obj.length = (message.length || _helpers.Long.ZERO).toString());
+    if (message.amount) {
+      obj.amount = message.amount.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.amount = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$amount;
@@ -371,6 +455,28 @@ var PeriodicVestingAccount = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      baseVestingAccount: (0, _helpers.isSet)(object.baseVestingAccount) ? BaseVestingAccount.fromJSON(object.baseVestingAccount) : undefined,
+      startTime: (0, _helpers.isSet)(object.startTime) ? _helpers.Long.fromValue(object.startTime) : _helpers.Long.ZERO,
+      vestingPeriods: Array.isArray(object === null || object === void 0 ? void 0 : object.vestingPeriods) ? object.vestingPeriods.map(function (e) {
+        return Period.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.baseVestingAccount !== undefined && (obj.baseVestingAccount = message.baseVestingAccount ? BaseVestingAccount.toJSON(message.baseVestingAccount) : undefined);
+    message.startTime !== undefined && (obj.startTime = (message.startTime || _helpers.Long.ZERO).toString());
+    if (message.vestingPeriods) {
+      obj.vestingPeriods = message.vestingPeriods.map(function (e) {
+        return e ? Period.toJSON(e) : undefined;
+      });
+    } else {
+      obj.vestingPeriods = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$vestingPeriod;
     var message = createBasePeriodicVestingAccount();
@@ -412,6 +518,16 @@ var PermanentLockedAccount = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      baseVestingAccount: (0, _helpers.isSet)(object.baseVestingAccount) ? BaseVestingAccount.fromJSON(object.baseVestingAccount) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.baseVestingAccount !== undefined && (obj.baseVestingAccount = message.baseVestingAccount ? BaseVestingAccount.toJSON(message.baseVestingAccount) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBasePermanentLockedAccount();

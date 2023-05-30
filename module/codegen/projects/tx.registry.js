@@ -46,6 +46,46 @@ export const MessageComposer = {
       };
     }
   },
+  toJSON: {
+    addKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+        value: MsgAddKeys.toJSON(value)
+      };
+    },
+    setPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
+        value: MsgSetPolicy.toJSON(value)
+      };
+    },
+    setSubscriptionPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
+        value: MsgSetSubscriptionPolicy.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    addKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+        value: MsgAddKeys.fromJSON(value)
+      };
+    },
+    setPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
+        value: MsgSetPolicy.fromJSON(value)
+      };
+    },
+    setSubscriptionPolicy(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
+        value: MsgSetSubscriptionPolicy.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     addKeys(value) {
       return {

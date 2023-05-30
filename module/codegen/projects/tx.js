@@ -1,5 +1,6 @@
 import { ProjectKey, Policy } from "./project";
 import * as _m0 from "protobufjs/minimal";
+import { isSet } from "../helpers";
 function createBaseMsgAddKeys() {
   return {
     creator: "",
@@ -43,6 +44,24 @@ export const MsgAddKeys = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      project: isSet(object.project) ? String(object.project) : "",
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(e => ProjectKey.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.project !== undefined && (obj.project = message.project);
+    if (message.projectKeys) {
+      obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toJSON(e) : undefined);
+    } else {
+      obj.projectKeys = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$creator, _object$project, _object$projectKeys;
     const message = createBaseMsgAddKeys();
@@ -72,6 +91,13 @@ export const MsgAddKeysResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgAddKeysResponse();
@@ -121,6 +147,20 @@ export const MsgSetPolicy = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      project: isSet(object.project) ? String(object.project) : "",
+      policy: isSet(object.policy) ? Policy.fromJSON(object.policy) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.project !== undefined && (obj.project = message.project);
+    message.policy !== undefined && (obj.policy = message.policy ? Policy.toJSON(message.policy) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$creator2, _object$project2;
     const message = createBaseMsgSetPolicy();
@@ -150,6 +190,13 @@ export const MsgSetPolicyResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgSetPolicyResponse();
@@ -199,6 +246,24 @@ export const MsgSetSubscriptionPolicy = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      projects: Array.isArray(object === null || object === void 0 ? void 0 : object.projects) ? object.projects.map(e => String(e)) : [],
+      policy: isSet(object.policy) ? Policy.fromJSON(object.policy) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    if (message.projects) {
+      obj.projects = message.projects.map(e => e);
+    } else {
+      obj.projects = [];
+    }
+    message.policy !== undefined && (obj.policy = message.policy ? Policy.toJSON(message.policy) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$creator3, _object$projects;
     const message = createBaseMsgSetSubscriptionPolicy();
@@ -228,6 +293,13 @@ export const MsgSetSubscriptionPolicyResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgSetSubscriptionPolicyResponse();

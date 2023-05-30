@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../../../helpers";
 /**
  * Coin defines a token with a denomination and an amount.
  * 
@@ -72,6 +72,18 @@ export const Coin = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      denom: isSet(object.denom) ? String(object.denom) : "",
+      amount: isSet(object.amount) ? String(object.amount) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.amount !== undefined && (obj.amount = message.amount);
+    return obj;
+  },
   fromPartial(object) {
     var _object$denom, _object$amount;
     const message = createBaseCoin();
@@ -116,6 +128,18 @@ export const DecCoin = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      denom: isSet(object.denom) ? String(object.denom) : "",
+      amount: isSet(object.amount) ? String(object.amount) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.amount !== undefined && (obj.amount = message.amount);
+    return obj;
+  },
   fromPartial(object) {
     var _object$denom2, _object$amount2;
     const message = createBaseDecCoin();
@@ -153,6 +177,16 @@ export const IntProto = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      int: isSet(object.int) ? String(object.int) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.int !== undefined && (obj.int = message.int);
+    return obj;
+  },
   fromPartial(object) {
     var _object$int;
     const message = createBaseIntProto();
@@ -188,6 +222,16 @@ export const DecProto = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      dec: isSet(object.dec) ? String(object.dec) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.dec !== undefined && (obj.dec = message.dec);
+    return obj;
   },
   fromPartial(object) {
     var _object$dec;

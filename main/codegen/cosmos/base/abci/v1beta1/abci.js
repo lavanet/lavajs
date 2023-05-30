@@ -218,6 +218,56 @@ var TxResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
+      txhash: (0, _helpers.isSet)(object.txhash) ? String(object.txhash) : "",
+      codespace: (0, _helpers.isSet)(object.codespace) ? String(object.codespace) : "",
+      code: (0, _helpers.isSet)(object.code) ? Number(object.code) : 0,
+      data: (0, _helpers.isSet)(object.data) ? String(object.data) : "",
+      rawLog: (0, _helpers.isSet)(object.rawLog) ? String(object.rawLog) : "",
+      logs: Array.isArray(object === null || object === void 0 ? void 0 : object.logs) ? object.logs.map(function (e) {
+        return ABCIMessageLog.fromJSON(e);
+      }) : [],
+      info: (0, _helpers.isSet)(object.info) ? String(object.info) : "",
+      gasWanted: (0, _helpers.isSet)(object.gasWanted) ? _helpers.Long.fromValue(object.gasWanted) : _helpers.Long.ZERO,
+      gasUsed: (0, _helpers.isSet)(object.gasUsed) ? _helpers.Long.fromValue(object.gasUsed) : _helpers.Long.ZERO,
+      tx: (0, _helpers.isSet)(object.tx) ? _any.Any.fromJSON(object.tx) : undefined,
+      timestamp: (0, _helpers.isSet)(object.timestamp) ? String(object.timestamp) : "",
+      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(function (e) {
+        return _types.Event.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    message.txhash !== undefined && (obj.txhash = message.txhash);
+    message.codespace !== undefined && (obj.codespace = message.codespace);
+    message.code !== undefined && (obj.code = Math.round(message.code));
+    message.data !== undefined && (obj.data = message.data);
+    message.rawLog !== undefined && (obj.rawLog = message.rawLog);
+    if (message.logs) {
+      obj.logs = message.logs.map(function (e) {
+        return e ? ABCIMessageLog.toJSON(e) : undefined;
+      });
+    } else {
+      obj.logs = [];
+    }
+    message.info !== undefined && (obj.info = message.info);
+    message.gasWanted !== undefined && (obj.gasWanted = (message.gasWanted || _helpers.Long.ZERO).toString());
+    message.gasUsed !== undefined && (obj.gasUsed = (message.gasUsed || _helpers.Long.ZERO).toString());
+    message.tx !== undefined && (obj.tx = message.tx ? _any.Any.toJSON(message.tx) : undefined);
+    message.timestamp !== undefined && (obj.timestamp = message.timestamp);
+    if (message.events) {
+      obj.events = message.events.map(function (e) {
+        return e ? _types.Event.toJSON(e) : undefined;
+      });
+    } else {
+      obj.events = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$txhash, _object$codespace, _object$code, _object$data, _object$rawLog, _object$logs, _object$info, _object$timestamp, _object$events;
     var message = createBaseTxResponse();
@@ -295,6 +345,28 @@ var ABCIMessageLog = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      msgIndex: (0, _helpers.isSet)(object.msgIndex) ? Number(object.msgIndex) : 0,
+      log: (0, _helpers.isSet)(object.log) ? String(object.log) : "",
+      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(function (e) {
+        return StringEvent.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.msgIndex !== undefined && (obj.msgIndex = Math.round(message.msgIndex));
+    message.log !== undefined && (obj.log = message.log);
+    if (message.events) {
+      obj.events = message.events.map(function (e) {
+        return e ? StringEvent.toJSON(e) : undefined;
+      });
+    } else {
+      obj.events = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$msgIndex, _object$log, _object$events2;
     var message = createBaseABCIMessageLog();
@@ -353,6 +425,26 @@ var StringEvent = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      type: (0, _helpers.isSet)(object.type) ? String(object.type) : "",
+      attributes: Array.isArray(object === null || object === void 0 ? void 0 : object.attributes) ? object.attributes.map(function (e) {
+        return Attribute.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.type !== undefined && (obj.type = message.type);
+    if (message.attributes) {
+      obj.attributes = message.attributes.map(function (e) {
+        return e ? Attribute.toJSON(e) : undefined;
+      });
+    } else {
+      obj.attributes = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$type, _object$attributes;
     var message = createBaseStringEvent();
@@ -401,6 +493,18 @@ var Attribute = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      key: (0, _helpers.isSet)(object.key) ? String(object.key) : "",
+      value: (0, _helpers.isSet)(object.value) ? String(object.value) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$key, _object$value;
     var message = createBaseAttribute();
@@ -446,6 +550,18 @@ var GasInfo = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      gasWanted: (0, _helpers.isSet)(object.gasWanted) ? _helpers.Long.fromValue(object.gasWanted) : _helpers.Long.UZERO,
+      gasUsed: (0, _helpers.isSet)(object.gasUsed) ? _helpers.Long.fromValue(object.gasUsed) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.gasWanted !== undefined && (obj.gasWanted = (message.gasWanted || _helpers.Long.UZERO).toString());
+    message.gasUsed !== undefined && (obj.gasUsed = (message.gasUsed || _helpers.Long.UZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseGasInfo();
@@ -524,6 +640,38 @@ var Result = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
+      log: (0, _helpers.isSet)(object.log) ? String(object.log) : "",
+      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(function (e) {
+        return _types.Event.fromJSON(e);
+      }) : [],
+      msgResponses: Array.isArray(object === null || object === void 0 ? void 0 : object.msgResponses) ? object.msgResponses.map(function (e) {
+        return _any.Any.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    message.log !== undefined && (obj.log = message.log);
+    if (message.events) {
+      obj.events = message.events.map(function (e) {
+        return e ? _types.Event.toJSON(e) : undefined;
+      });
+    } else {
+      obj.events = [];
+    }
+    if (message.msgResponses) {
+      obj.msgResponses = message.msgResponses.map(function (e) {
+        return e ? _any.Any.toJSON(e) : undefined;
+      });
+    } else {
+      obj.msgResponses = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$data2, _object$log2, _object$events3, _object$msgResponses;
     var message = createBaseResult();
@@ -576,6 +724,18 @@ var SimulationResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      gasInfo: (0, _helpers.isSet)(object.gasInfo) ? GasInfo.fromJSON(object.gasInfo) : undefined,
+      result: (0, _helpers.isSet)(object.result) ? Result.fromJSON(object.result) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.gasInfo !== undefined && (obj.gasInfo = message.gasInfo ? GasInfo.toJSON(message.gasInfo) : undefined);
+    message.result !== undefined && (obj.result = message.result ? Result.toJSON(message.result) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseSimulationResponse();
     message.gasInfo = object.gasInfo !== undefined && object.gasInfo !== null ? GasInfo.fromPartial(object.gasInfo) : undefined;
@@ -620,6 +780,18 @@ var MsgData = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      msgType: (0, _helpers.isSet)(object.msgType) ? String(object.msgType) : "",
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.msgType !== undefined && (obj.msgType = message.msgType);
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$msgType, _object$data3;
@@ -684,6 +856,34 @@ var TxMsgData = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      data: Array.isArray(object === null || object === void 0 ? void 0 : object.data) ? object.data.map(function (e) {
+        return MsgData.fromJSON(e);
+      }) : [],
+      msgResponses: Array.isArray(object === null || object === void 0 ? void 0 : object.msgResponses) ? object.msgResponses.map(function (e) {
+        return _any.Any.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.data) {
+      obj.data = message.data.map(function (e) {
+        return e ? MsgData.toJSON(e) : undefined;
+      });
+    } else {
+      obj.data = [];
+    }
+    if (message.msgResponses) {
+      obj.msgResponses = message.msgResponses.map(function (e) {
+        return e ? _any.Any.toJSON(e) : undefined;
+      });
+    } else {
+      obj.msgResponses = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$data4, _object$msgResponses2;
@@ -771,6 +971,34 @@ var SearchTxsResult = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      totalCount: (0, _helpers.isSet)(object.totalCount) ? _helpers.Long.fromValue(object.totalCount) : _helpers.Long.UZERO,
+      count: (0, _helpers.isSet)(object.count) ? _helpers.Long.fromValue(object.count) : _helpers.Long.UZERO,
+      pageNumber: (0, _helpers.isSet)(object.pageNumber) ? _helpers.Long.fromValue(object.pageNumber) : _helpers.Long.UZERO,
+      pageTotal: (0, _helpers.isSet)(object.pageTotal) ? _helpers.Long.fromValue(object.pageTotal) : _helpers.Long.UZERO,
+      limit: (0, _helpers.isSet)(object.limit) ? _helpers.Long.fromValue(object.limit) : _helpers.Long.UZERO,
+      txs: Array.isArray(object === null || object === void 0 ? void 0 : object.txs) ? object.txs.map(function (e) {
+        return TxResponse.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.totalCount !== undefined && (obj.totalCount = (message.totalCount || _helpers.Long.UZERO).toString());
+    message.count !== undefined && (obj.count = (message.count || _helpers.Long.UZERO).toString());
+    message.pageNumber !== undefined && (obj.pageNumber = (message.pageNumber || _helpers.Long.UZERO).toString());
+    message.pageTotal !== undefined && (obj.pageTotal = (message.pageTotal || _helpers.Long.UZERO).toString());
+    message.limit !== undefined && (obj.limit = (message.limit || _helpers.Long.UZERO).toString());
+    if (message.txs) {
+      obj.txs = message.txs.map(function (e) {
+        return e ? TxResponse.toJSON(e) : undefined;
+      });
+    } else {
+      obj.txs = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$txs;

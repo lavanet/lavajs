@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.QueryParamsResponse = exports.QueryParamsRequest = exports.QueryInflationResponse = exports.QueryInflationRequest = exports.QueryAnnualProvisionsResponse = exports.QueryAnnualProvisionsRequest = void 0;
 var _mint = require("./mint");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
@@ -73,6 +74,13 @@ var QueryParamsRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
     return message;
@@ -109,6 +117,16 @@ var QueryParamsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      params: (0, _helpers.isSet)(object.params) ? _mint.Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.params !== undefined && (obj.params = message.params ? _mint.Params.toJSON(message.params) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? _mint.Params.fromPartial(object.params) : undefined;
@@ -137,6 +155,13 @@ var QueryInflationRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryInflationRequest();
@@ -174,6 +199,16 @@ var QueryInflationResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      inflation: (0, _helpers.isSet)(object.inflation) ? (0, _helpers.bytesFromBase64)(object.inflation) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.inflation !== undefined && (obj.inflation = (0, _helpers.base64FromBytes)(message.inflation !== undefined ? message.inflation : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$inflation;
     var message = createBaseQueryInflationResponse();
@@ -203,6 +238,13 @@ var QueryAnnualProvisionsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryAnnualProvisionsRequest();
@@ -239,6 +281,16 @@ var QueryAnnualProvisionsResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      annualProvisions: (0, _helpers.isSet)(object.annualProvisions) ? (0, _helpers.bytesFromBase64)(object.annualProvisions) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.annualProvisions !== undefined && (obj.annualProvisions = (0, _helpers.base64FromBytes)(message.annualProvisions !== undefined ? message.annualProvisions : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$annualProvisi;

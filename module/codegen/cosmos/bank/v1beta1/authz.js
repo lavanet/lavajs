@@ -1,6 +1,5 @@
 import { Coin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
-
 /**
  * SendAuthorization allows the grantee to spend up to spend_limit coins from
  * the granter's account.
@@ -43,6 +42,20 @@ export const SendAuthorization = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      spendLimit: Array.isArray(object === null || object === void 0 ? void 0 : object.spendLimit) ? object.spendLimit.map(e => Coin.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.spendLimit) {
+      obj.spendLimit = message.spendLimit.map(e => e ? Coin.toJSON(e) : undefined);
+    } else {
+      obj.spendLimit = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$spendLimit;

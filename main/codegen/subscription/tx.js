@@ -61,6 +61,22 @@ var MsgBuy = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      consumer: (0, _helpers.isSet)(object.consumer) ? String(object.consumer) : "",
+      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
+      duration: (0, _helpers.isSet)(object.duration) ? _helpers.Long.fromValue(object.duration) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.consumer !== undefined && (obj.consumer = message.consumer);
+    message.index !== undefined && (obj.index = message.index);
+    message.duration !== undefined && (obj.duration = (message.duration || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator, _object$consumer, _object$index;
     var message = createBaseMsgBuy();
@@ -93,6 +109,13 @@ var MsgBuyResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgBuyResponse();
@@ -137,6 +160,18 @@ var MsgAddProject = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      projectData: (0, _helpers.isSet)(object.projectData) ? _project.ProjectData.fromJSON(object.projectData) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.projectData !== undefined && (obj.projectData = message.projectData ? _project.ProjectData.toJSON(message.projectData) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator2;
     var message = createBaseMsgAddProject();
@@ -167,6 +202,13 @@ var MsgAddProjectResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgAddProjectResponse();

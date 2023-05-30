@@ -139,6 +139,13 @@ var QueryCurrentPlanRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryCurrentPlanRequest();
     return message;
@@ -174,6 +181,16 @@ var QueryCurrentPlanResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      plan: (0, _helpers.isSet)(object.plan) ? _upgrade.Plan.fromJSON(object.plan) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.plan !== undefined && (obj.plan = message.plan ? _upgrade.Plan.toJSON(message.plan) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryCurrentPlanResponse();
@@ -211,6 +228,16 @@ var QueryAppliedPlanRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.name !== undefined && (obj.name = message.name);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$name;
@@ -250,6 +277,16 @@ var QueryAppliedPlanResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAppliedPlanResponse();
     message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
@@ -286,6 +323,16 @@ var QueryUpgradedConsensusStateRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      lastHeight: (0, _helpers.isSet)(object.lastHeight) ? _helpers.Long.fromValue(object.lastHeight) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.lastHeight !== undefined && (obj.lastHeight = (message.lastHeight || _helpers.Long.ZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryUpgradedConsensusStateRequest();
@@ -324,6 +371,16 @@ var QueryUpgradedConsensusStateResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      upgradedConsensusState: (0, _helpers.isSet)(object.upgradedConsensusState) ? (0, _helpers.bytesFromBase64)(object.upgradedConsensusState) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.upgradedConsensusState !== undefined && (obj.upgradedConsensusState = (0, _helpers.base64FromBytes)(message.upgradedConsensusState !== undefined ? message.upgradedConsensusState : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$upgradedConse;
     var message = createBaseQueryUpgradedConsensusStateResponse();
@@ -361,6 +418,16 @@ var QueryModuleVersionsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      moduleName: (0, _helpers.isSet)(object.moduleName) ? String(object.moduleName) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.moduleName !== undefined && (obj.moduleName = message.moduleName);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$moduleName;
@@ -409,6 +476,24 @@ var QueryModuleVersionsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      moduleVersions: Array.isArray(object === null || object === void 0 ? void 0 : object.moduleVersions) ? object.moduleVersions.map(function (e) {
+        return _upgrade.ModuleVersion.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.moduleVersions) {
+      obj.moduleVersions = message.moduleVersions.map(function (e) {
+        return e ? _upgrade.ModuleVersion.toJSON(e) : undefined;
+      });
+    } else {
+      obj.moduleVersions = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$moduleVersion;
     var message = createBaseQueryModuleVersionsResponse();
@@ -440,6 +525,13 @@ var QueryAuthorityRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryAuthorityRequest();
@@ -476,6 +568,16 @@ var QueryAuthorityResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address;

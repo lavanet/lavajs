@@ -8,6 +8,7 @@ exports.QueryParamsResponse = exports.QueryParamsRequest = exports.QueryInfoResp
 var _params = require("./params");
 var _project = require("./project");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -39,6 +40,13 @@ var QueryParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
@@ -76,6 +84,16 @@ var QueryParamsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      params: (0, _helpers.isSet)(object.params) ? _params.Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.params !== undefined && (obj.params = message.params ? _params.Params.toJSON(message.params) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? _params.Params.fromPartial(object.params) : undefined;
@@ -112,6 +130,16 @@ var QueryInfoRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      project: (0, _helpers.isSet)(object.project) ? String(object.project) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.project !== undefined && (obj.project = message.project);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$project;
@@ -151,6 +179,16 @@ var QueryInfoResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      project: (0, _helpers.isSet)(object.project) ? _project.Project.fromJSON(object.project) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.project !== undefined && (obj.project = message.project ? _project.Project.toJSON(message.project) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryInfoResponse();
     message.project = object.project !== undefined && object.project !== null ? _project.Project.fromPartial(object.project) : undefined;
@@ -187,6 +225,16 @@ var QueryDeveloperRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      developer: (0, _helpers.isSet)(object.developer) ? String(object.developer) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.developer !== undefined && (obj.developer = message.developer);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$developer;
@@ -225,6 +273,16 @@ var QueryDeveloperResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      project: (0, _helpers.isSet)(object.project) ? _project.Project.fromJSON(object.project) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.project !== undefined && (obj.project = message.project ? _project.Project.toJSON(message.project) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryDeveloperResponse();

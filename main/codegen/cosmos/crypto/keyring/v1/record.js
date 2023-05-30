@@ -8,6 +8,7 @@ exports.Record_Offline = exports.Record_Multi = exports.Record_Local = exports.R
 var _any = require("../../../../google/protobuf/any");
 var _hd = require("../../hd/v1/hd");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** Record is used for representing a key in the keyring. */
@@ -101,6 +102,26 @@ var Record = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
+      pubKey: (0, _helpers.isSet)(object.pubKey) ? _any.Any.fromJSON(object.pubKey) : undefined,
+      local: (0, _helpers.isSet)(object.local) ? Record_Local.fromJSON(object.local) : undefined,
+      ledger: (0, _helpers.isSet)(object.ledger) ? Record_Ledger.fromJSON(object.ledger) : undefined,
+      multi: (0, _helpers.isSet)(object.multi) ? Record_Multi.fromJSON(object.multi) : undefined,
+      offline: (0, _helpers.isSet)(object.offline) ? Record_Offline.fromJSON(object.offline) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.pubKey !== undefined && (obj.pubKey = message.pubKey ? _any.Any.toJSON(message.pubKey) : undefined);
+    message.local !== undefined && (obj.local = message.local ? Record_Local.toJSON(message.local) : undefined);
+    message.ledger !== undefined && (obj.ledger = message.ledger ? Record_Ledger.toJSON(message.ledger) : undefined);
+    message.multi !== undefined && (obj.multi = message.multi ? Record_Multi.toJSON(message.multi) : undefined);
+    message.offline !== undefined && (obj.offline = message.offline ? Record_Offline.toJSON(message.offline) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$name;
     var message = createBaseRecord();
@@ -151,6 +172,18 @@ var Record_Local = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      privKey: (0, _helpers.isSet)(object.privKey) ? _any.Any.fromJSON(object.privKey) : undefined,
+      privKeyType: (0, _helpers.isSet)(object.privKeyType) ? String(object.privKeyType) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.privKey !== undefined && (obj.privKey = message.privKey ? _any.Any.toJSON(message.privKey) : undefined);
+    message.privKeyType !== undefined && (obj.privKeyType = message.privKeyType);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$privKeyType;
     var message = createBaseRecord_Local();
@@ -190,6 +223,16 @@ var Record_Ledger = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      path: (0, _helpers.isSet)(object.path) ? _hd.BIP44Params.fromJSON(object.path) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.path !== undefined && (obj.path = message.path ? _hd.BIP44Params.toJSON(message.path) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseRecord_Ledger();
     message.path = object.path !== undefined && object.path !== null ? _hd.BIP44Params.fromPartial(object.path) : undefined;
@@ -219,6 +262,13 @@ var Record_Multi = {
     }
     return message;
   },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
   fromPartial: function fromPartial(_) {
     var message = createBaseRecord_Multi();
     return message;
@@ -246,6 +296,13 @@ var Record_Offline = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseRecord_Offline();

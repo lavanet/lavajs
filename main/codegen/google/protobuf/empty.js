@@ -54,6 +54,13 @@ var Empty = {
     }
     return message;
   },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
   fromPartial: function fromPartial(_) {
     var message = createBaseEmpty();
     return message;

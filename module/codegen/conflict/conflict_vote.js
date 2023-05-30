@@ -1,4 +1,4 @@
-import { Long } from "../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseProvider() {
   return {
@@ -35,6 +35,18 @@ export const Provider = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      account: isSet(object.account) ? String(object.account) : "",
+      response: isSet(object.response) ? bytesFromBase64(object.response) : new Uint8Array()
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.account !== undefined && (obj.account = message.account);
+    message.response !== undefined && (obj.response = base64FromBytes(message.response !== undefined ? message.response : new Uint8Array()));
+    return obj;
   },
   fromPartial(object) {
     var _object$account, _object$response;
@@ -86,6 +98,20 @@ export const Vote = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      address: isSet(object.address) ? String(object.address) : "",
+      Hash: isSet(object.Hash) ? bytesFromBase64(object.Hash) : new Uint8Array(),
+      Result: isSet(object.Result) ? Long.fromValue(object.Result) : Long.ZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.Hash !== undefined && (obj.Hash = base64FromBytes(message.Hash !== undefined ? message.Hash : new Uint8Array()));
+    message.Result !== undefined && (obj.Result = (message.Result || Long.ZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     var _object$address, _object$Hash;
@@ -201,6 +227,42 @@ export const ConflictVote = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      clientAddress: isSet(object.clientAddress) ? String(object.clientAddress) : "",
+      voteDeadline: isSet(object.voteDeadline) ? Long.fromValue(object.voteDeadline) : Long.UZERO,
+      voteStartBlock: isSet(object.voteStartBlock) ? Long.fromValue(object.voteStartBlock) : Long.UZERO,
+      voteState: isSet(object.voteState) ? Long.fromValue(object.voteState) : Long.ZERO,
+      chainID: isSet(object.chainID) ? String(object.chainID) : "",
+      apiUrl: isSet(object.apiUrl) ? String(object.apiUrl) : "",
+      requestData: isSet(object.requestData) ? bytesFromBase64(object.requestData) : new Uint8Array(),
+      requestBlock: isSet(object.requestBlock) ? Long.fromValue(object.requestBlock) : Long.UZERO,
+      firstProvider: isSet(object.firstProvider) ? Provider.fromJSON(object.firstProvider) : undefined,
+      secondProvider: isSet(object.secondProvider) ? Provider.fromJSON(object.secondProvider) : undefined,
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(e => Vote.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.clientAddress !== undefined && (obj.clientAddress = message.clientAddress);
+    message.voteDeadline !== undefined && (obj.voteDeadline = (message.voteDeadline || Long.UZERO).toString());
+    message.voteStartBlock !== undefined && (obj.voteStartBlock = (message.voteStartBlock || Long.UZERO).toString());
+    message.voteState !== undefined && (obj.voteState = (message.voteState || Long.ZERO).toString());
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.apiUrl !== undefined && (obj.apiUrl = message.apiUrl);
+    message.requestData !== undefined && (obj.requestData = base64FromBytes(message.requestData !== undefined ? message.requestData : new Uint8Array()));
+    message.requestBlock !== undefined && (obj.requestBlock = (message.requestBlock || Long.UZERO).toString());
+    message.firstProvider !== undefined && (obj.firstProvider = message.firstProvider ? Provider.toJSON(message.firstProvider) : undefined);
+    message.secondProvider !== undefined && (obj.secondProvider = message.secondProvider ? Provider.toJSON(message.secondProvider) : undefined);
+    if (message.votes) {
+      obj.votes = message.votes.map(e => e ? Vote.toJSON(e) : undefined);
+    } else {
+      obj.votes = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$index, _object$clientAddress, _object$chainID, _object$apiUrl, _object$requestData, _object$votes;

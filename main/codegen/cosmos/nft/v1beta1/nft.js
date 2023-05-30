@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.NFT = exports.Class = void 0;
 var _any = require("../../../google/protobuf/any");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** Class defines the class of the nft type. */
@@ -89,6 +90,28 @@ var Class = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      id: (0, _helpers.isSet)(object.id) ? String(object.id) : "",
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
+      symbol: (0, _helpers.isSet)(object.symbol) ? String(object.symbol) : "",
+      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
+      uri: (0, _helpers.isSet)(object.uri) ? String(object.uri) : "",
+      uriHash: (0, _helpers.isSet)(object.uriHash) ? String(object.uriHash) : "",
+      data: (0, _helpers.isSet)(object.data) ? _any.Any.fromJSON(object.data) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.name !== undefined && (obj.name = message.name);
+    message.symbol !== undefined && (obj.symbol = message.symbol);
+    message.description !== undefined && (obj.description = message.description);
+    message.uri !== undefined && (obj.uri = message.uri);
+    message.uriHash !== undefined && (obj.uriHash = message.uriHash);
+    message.data !== undefined && (obj.data = message.data ? _any.Any.toJSON(message.data) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$id, _object$name, _object$symbol, _object$description, _object$uri, _object$uriHash;
     var message = createBaseClass();
@@ -160,6 +183,24 @@ var NFT = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : "",
+      id: (0, _helpers.isSet)(object.id) ? String(object.id) : "",
+      uri: (0, _helpers.isSet)(object.uri) ? String(object.uri) : "",
+      uriHash: (0, _helpers.isSet)(object.uriHash) ? String(object.uriHash) : "",
+      data: (0, _helpers.isSet)(object.data) ? _any.Any.fromJSON(object.data) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.classId !== undefined && (obj.classId = message.classId);
+    message.id !== undefined && (obj.id = message.id);
+    message.uri !== undefined && (obj.uri = message.uri);
+    message.uriHash !== undefined && (obj.uriHash = message.uriHash);
+    message.data !== undefined && (obj.data = message.data ? _any.Any.toJSON(message.data) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$classId, _object$id2, _object$uri2, _object$uriHash2;

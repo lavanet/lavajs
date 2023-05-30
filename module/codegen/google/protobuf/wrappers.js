@@ -1,4 +1,4 @@
-import { Long } from "../../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
  * Wrapper message for `double`.
@@ -137,6 +137,16 @@ export const DoubleValue = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
   fromPartial(object) {
     var _object$value;
     const message = createBaseDoubleValue();
@@ -172,6 +182,16 @@ export const FloatValue = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
   },
   fromPartial(object) {
     var _object$value2;
@@ -209,6 +229,16 @@ export const Int64Value = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? Long.fromValue(object.value) : Long.ZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = (message.value || Long.ZERO).toString());
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseInt64Value();
     message.value = object.value !== undefined && object.value !== null ? Long.fromValue(object.value) : Long.ZERO;
@@ -244,6 +274,16 @@ export const UInt64Value = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? Long.fromValue(object.value) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = (message.value || Long.UZERO).toString());
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseUInt64Value();
     message.value = object.value !== undefined && object.value !== null ? Long.fromValue(object.value) : Long.UZERO;
@@ -278,6 +318,16 @@ export const Int32Value = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
   },
   fromPartial(object) {
     var _object$value3;
@@ -315,6 +365,16 @@ export const UInt32Value = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
+  },
   fromPartial(object) {
     var _object$value4;
     const message = createBaseUInt32Value();
@@ -350,6 +410,16 @@ export const BoolValue = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? Boolean(object.value) : false
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
   },
   fromPartial(object) {
     var _object$value5;
@@ -387,6 +457,16 @@ export const StringValue = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? String(object.value) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
   fromPartial(object) {
     var _object$value6;
     const message = createBaseStringValue();
@@ -422,6 +502,16 @@ export const BytesValue = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array()
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.value !== undefined && (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
+    return obj;
   },
   fromPartial(object) {
     var _object$value7;

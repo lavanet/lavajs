@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.ResponseConflict = exports.FinalizationConflict = exports.ConflictRelayData = void 0;
 var _relay = require("../pairing/relay");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function createBaseResponseConflict() {
@@ -45,6 +46,18 @@ var ResponseConflict = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      conflictRelayData0: (0, _helpers.isSet)(object.conflictRelayData0) ? ConflictRelayData.fromJSON(object.conflictRelayData0) : undefined,
+      conflictRelayData1: (0, _helpers.isSet)(object.conflictRelayData1) ? ConflictRelayData.fromJSON(object.conflictRelayData1) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.conflictRelayData0 !== undefined && (obj.conflictRelayData0 = message.conflictRelayData0 ? ConflictRelayData.toJSON(message.conflictRelayData0) : undefined);
+    message.conflictRelayData1 !== undefined && (obj.conflictRelayData1 = message.conflictRelayData1 ? ConflictRelayData.toJSON(message.conflictRelayData1) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseResponseConflict();
@@ -91,6 +104,18 @@ var ConflictRelayData = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      request: (0, _helpers.isSet)(object.request) ? _relay.RelayRequest.fromJSON(object.request) : undefined,
+      reply: (0, _helpers.isSet)(object.reply) ? _relay.RelayReply.fromJSON(object.reply) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.request !== undefined && (obj.request = message.request ? _relay.RelayRequest.toJSON(message.request) : undefined);
+    message.reply !== undefined && (obj.reply = message.reply ? _relay.RelayReply.toJSON(message.reply) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseConflictRelayData();
     message.request = object.request !== undefined && object.request !== null ? _relay.RelayRequest.fromPartial(object.request) : undefined;
@@ -135,6 +160,18 @@ var FinalizationConflict = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      relayReply0: (0, _helpers.isSet)(object.relayReply0) ? _relay.RelayReply.fromJSON(object.relayReply0) : undefined,
+      relayReply1: (0, _helpers.isSet)(object.relayReply1) ? _relay.RelayReply.fromJSON(object.relayReply1) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.relayReply0 !== undefined && (obj.relayReply0 = message.relayReply0 ? _relay.RelayReply.toJSON(message.relayReply0) : undefined);
+    message.relayReply1 !== undefined && (obj.relayReply1 = message.relayReply1 ? _relay.RelayReply.toJSON(message.relayReply1) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseFinalizationConflict();

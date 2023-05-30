@@ -74,6 +74,28 @@ var EpochDetails = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      startBlock: (0, _helpers.isSet)(object.startBlock) ? _helpers.Long.fromValue(object.startBlock) : _helpers.Long.UZERO,
+      earliestStart: (0, _helpers.isSet)(object.earliestStart) ? _helpers.Long.fromValue(object.earliestStart) : _helpers.Long.UZERO,
+      deletedEpochs: Array.isArray(object === null || object === void 0 ? void 0 : object.deletedEpochs) ? object.deletedEpochs.map(function (e) {
+        return _helpers.Long.fromValue(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.startBlock !== undefined && (obj.startBlock = (message.startBlock || _helpers.Long.UZERO).toString());
+    message.earliestStart !== undefined && (obj.earliestStart = (message.earliestStart || _helpers.Long.UZERO).toString());
+    if (message.deletedEpochs) {
+      obj.deletedEpochs = message.deletedEpochs.map(function (e) {
+        return (e || _helpers.Long.UZERO).toString();
+      });
+    } else {
+      obj.deletedEpochs = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$deletedEpochs;
     var message = createBaseEpochDetails();

@@ -64,6 +64,22 @@ var Params = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      majorityPercent: (0, _helpers.isSet)(object.majorityPercent) ? String(object.majorityPercent) : "",
+      voteStartSpan: (0, _helpers.isSet)(object.voteStartSpan) ? _helpers.Long.fromValue(object.voteStartSpan) : _helpers.Long.UZERO,
+      votePeriod: (0, _helpers.isSet)(object.votePeriod) ? _helpers.Long.fromValue(object.votePeriod) : _helpers.Long.UZERO,
+      Rewards: (0, _helpers.isSet)(object.Rewards) ? Rewards.fromJSON(object.Rewards) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.majorityPercent !== undefined && (obj.majorityPercent = message.majorityPercent);
+    message.voteStartSpan !== undefined && (obj.voteStartSpan = (message.voteStartSpan || _helpers.Long.UZERO).toString());
+    message.votePeriod !== undefined && (obj.votePeriod = (message.votePeriod || _helpers.Long.UZERO).toString());
+    message.Rewards !== undefined && (obj.Rewards = message.Rewards ? Rewards.toJSON(message.Rewards) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$majorityPerce;
     var message = createBaseParams();
@@ -118,6 +134,20 @@ var Rewards = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      winnerRewardPercent: (0, _helpers.isSet)(object.winnerRewardPercent) ? String(object.winnerRewardPercent) : "",
+      clientRewardPercent: (0, _helpers.isSet)(object.clientRewardPercent) ? String(object.clientRewardPercent) : "",
+      votersRewardPercent: (0, _helpers.isSet)(object.votersRewardPercent) ? String(object.votersRewardPercent) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.winnerRewardPercent !== undefined && (obj.winnerRewardPercent = message.winnerRewardPercent);
+    message.clientRewardPercent !== undefined && (obj.clientRewardPercent = message.clientRewardPercent);
+    message.votersRewardPercent !== undefined && (obj.votersRewardPercent = message.votersRewardPercent);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$winnerRewardP, _object$clientRewardP, _object$votersRewardP;

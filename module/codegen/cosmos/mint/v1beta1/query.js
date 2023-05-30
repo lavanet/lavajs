@@ -1,6 +1,6 @@
 import { Params } from "./mint";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
@@ -64,6 +64,13 @@ export const QueryParamsRequest = {
     }
     return message;
   },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
+  },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
     return message;
@@ -98,6 +105,16 @@ export const QueryParamsResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
@@ -124,6 +141,13 @@ export const QueryInflationRequest = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryInflationRequest();
@@ -159,6 +183,16 @@ export const QueryInflationResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      inflation: isSet(object.inflation) ? bytesFromBase64(object.inflation) : new Uint8Array()
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.inflation !== undefined && (obj.inflation = base64FromBytes(message.inflation !== undefined ? message.inflation : new Uint8Array()));
+    return obj;
+  },
   fromPartial(object) {
     var _object$inflation;
     const message = createBaseQueryInflationResponse();
@@ -186,6 +220,13 @@ export const QueryAnnualProvisionsRequest = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryAnnualProvisionsRequest();
@@ -220,6 +261,16 @@ export const QueryAnnualProvisionsResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      annualProvisions: isSet(object.annualProvisions) ? bytesFromBase64(object.annualProvisions) : new Uint8Array()
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.annualProvisions !== undefined && (obj.annualProvisions = base64FromBytes(message.annualProvisions !== undefined ? message.annualProvisions : new Uint8Array()));
+    return obj;
   },
   fromPartial(object) {
     var _object$annualProvisi;

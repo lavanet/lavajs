@@ -10,6 +10,7 @@ var _unique_payment_storage_client_provider = require("./unique_payment_storage_
 var _provider_payment_storage = require("./provider_payment_storage");
 var _epoch_payments = require("./epoch_payments");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -96,6 +97,46 @@ var GenesisState = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      params: (0, _helpers.isSet)(object.params) ? _params.Params.fromJSON(object.params) : undefined,
+      uniquePaymentStorageClientProviderList: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProviderList) ? object.uniquePaymentStorageClientProviderList.map(function (e) {
+        return _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.fromJSON(e);
+      }) : [],
+      providerPaymentStorageList: Array.isArray(object === null || object === void 0 ? void 0 : object.providerPaymentStorageList) ? object.providerPaymentStorageList.map(function (e) {
+        return _provider_payment_storage.ProviderPaymentStorage.fromJSON(e);
+      }) : [],
+      epochPaymentsList: Array.isArray(object === null || object === void 0 ? void 0 : object.epochPaymentsList) ? object.epochPaymentsList.map(function (e) {
+        return _epoch_payments.EpochPayments.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.params !== undefined && (obj.params = message.params ? _params.Params.toJSON(message.params) : undefined);
+    if (message.uniquePaymentStorageClientProviderList) {
+      obj.uniquePaymentStorageClientProviderList = message.uniquePaymentStorageClientProviderList.map(function (e) {
+        return e ? _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.toJSON(e) : undefined;
+      });
+    } else {
+      obj.uniquePaymentStorageClientProviderList = [];
+    }
+    if (message.providerPaymentStorageList) {
+      obj.providerPaymentStorageList = message.providerPaymentStorageList.map(function (e) {
+        return e ? _provider_payment_storage.ProviderPaymentStorage.toJSON(e) : undefined;
+      });
+    } else {
+      obj.providerPaymentStorageList = [];
+    }
+    if (message.epochPaymentsList) {
+      obj.epochPaymentsList = message.epochPaymentsList.map(function (e) {
+        return e ? _epoch_payments.EpochPayments.toJSON(e) : undefined;
+      });
+    } else {
+      obj.epochPaymentsList = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$uniquePayment, _object$providerPayme, _object$epochPayments;

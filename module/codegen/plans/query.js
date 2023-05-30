@@ -2,7 +2,7 @@ import { Params } from "./params";
 import { Coin } from "../cosmos/base/v1beta1/coin";
 import { Plan } from "./plan";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -31,6 +31,13 @@ export const QueryParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
@@ -66,6 +73,16 @@ export const QueryParamsResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
@@ -92,6 +109,13 @@ export const QueryListRequest = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryListRequest();
@@ -126,6 +150,20 @@ export const QueryListResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      plansInfo: Array.isArray(object === null || object === void 0 ? void 0 : object.plansInfo) ? object.plansInfo.map(e => ListInfoStruct.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.plansInfo) {
+      obj.plansInfo = message.plansInfo.map(e => e ? ListInfoStruct.toJSON(e) : undefined);
+    } else {
+      obj.plansInfo = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$plansInfo;
@@ -177,6 +215,20 @@ export const ListInfoStruct = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      description: isSet(object.description) ? String(object.description) : "",
+      price: isSet(object.price) ? Coin.fromJSON(object.price) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.description !== undefined && (obj.description = message.description);
+    message.price !== undefined && (obj.price = message.price ? Coin.toJSON(message.price) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$index, _object$description;
     const message = createBaseListInfoStruct();
@@ -215,6 +267,16 @@ export const QueryInfoRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      planIndex: isSet(object.planIndex) ? String(object.planIndex) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.planIndex !== undefined && (obj.planIndex = message.planIndex);
+    return obj;
+  },
   fromPartial(object) {
     var _object$planIndex;
     const message = createBaseQueryInfoRequest();
@@ -250,6 +312,16 @@ export const QueryInfoResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      planInfo: isSet(object.planInfo) ? Plan.fromJSON(object.planInfo) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.planInfo !== undefined && (obj.planInfo = message.planInfo ? Plan.toJSON(message.planInfo) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryInfoResponse();

@@ -1,4 +1,4 @@
-import { Long } from "../../../../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
  * PageRequest is to be embedded in gRPC request messages for efficient
@@ -97,6 +97,24 @@ export const PageRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(),
+      offset: isSet(object.offset) ? Long.fromValue(object.offset) : Long.UZERO,
+      limit: isSet(object.limit) ? Long.fromValue(object.limit) : Long.UZERO,
+      countTotal: isSet(object.countTotal) ? Boolean(object.countTotal) : false,
+      reverse: isSet(object.reverse) ? Boolean(object.reverse) : false
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.key !== undefined && (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.offset !== undefined && (obj.offset = (message.offset || Long.UZERO).toString());
+    message.limit !== undefined && (obj.limit = (message.limit || Long.UZERO).toString());
+    message.countTotal !== undefined && (obj.countTotal = message.countTotal);
+    message.reverse !== undefined && (obj.reverse = message.reverse);
+    return obj;
+  },
   fromPartial(object) {
     var _object$key, _object$countTotal, _object$reverse;
     const message = createBasePageRequest();
@@ -143,6 +161,18 @@ export const PageResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      nextKey: isSet(object.nextKey) ? bytesFromBase64(object.nextKey) : new Uint8Array(),
+      total: isSet(object.total) ? Long.fromValue(object.total) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.nextKey !== undefined && (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
+    message.total !== undefined && (obj.total = (message.total || Long.UZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     var _object$nextKey;

@@ -107,6 +107,24 @@ var PageRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      key: (0, _helpers.isSet)(object.key) ? (0, _helpers.bytesFromBase64)(object.key) : new Uint8Array(),
+      offset: (0, _helpers.isSet)(object.offset) ? _helpers.Long.fromValue(object.offset) : _helpers.Long.UZERO,
+      limit: (0, _helpers.isSet)(object.limit) ? _helpers.Long.fromValue(object.limit) : _helpers.Long.UZERO,
+      countTotal: (0, _helpers.isSet)(object.countTotal) ? Boolean(object.countTotal) : false,
+      reverse: (0, _helpers.isSet)(object.reverse) ? Boolean(object.reverse) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.key !== undefined && (obj.key = (0, _helpers.base64FromBytes)(message.key !== undefined ? message.key : new Uint8Array()));
+    message.offset !== undefined && (obj.offset = (message.offset || _helpers.Long.UZERO).toString());
+    message.limit !== undefined && (obj.limit = (message.limit || _helpers.Long.UZERO).toString());
+    message.countTotal !== undefined && (obj.countTotal = message.countTotal);
+    message.reverse !== undefined && (obj.reverse = message.reverse);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$key, _object$countTotal, _object$reverse;
     var message = createBasePageRequest();
@@ -155,6 +173,18 @@ var PageResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      nextKey: (0, _helpers.isSet)(object.nextKey) ? (0, _helpers.bytesFromBase64)(object.nextKey) : new Uint8Array(),
+      total: (0, _helpers.isSet)(object.total) ? _helpers.Long.fromValue(object.total) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.nextKey !== undefined && (obj.nextKey = (0, _helpers.base64FromBytes)(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
+    message.total !== undefined && (obj.total = (message.total || _helpers.Long.UZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$nextKey;

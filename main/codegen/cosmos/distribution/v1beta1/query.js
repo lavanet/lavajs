@@ -205,6 +205,13 @@ var QueryParamsRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
     return message;
@@ -240,6 +247,16 @@ var QueryParamsResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      params: (0, _helpers.isSet)(object.params) ? _distribution.Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.params !== undefined && (obj.params = message.params ? _distribution.Params.toJSON(message.params) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
@@ -277,6 +294,16 @@ var QueryValidatorOutstandingRewardsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$validatorAddr;
@@ -316,6 +343,16 @@ var QueryValidatorOutstandingRewardsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      rewards: (0, _helpers.isSet)(object.rewards) ? _distribution.ValidatorOutstandingRewards.fromJSON(object.rewards) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.rewards !== undefined && (obj.rewards = message.rewards ? _distribution.ValidatorOutstandingRewards.toJSON(message.rewards) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryValidatorOutstandingRewardsResponse();
     message.rewards = object.rewards !== undefined && object.rewards !== null ? _distribution.ValidatorOutstandingRewards.fromPartial(object.rewards) : undefined;
@@ -352,6 +389,16 @@ var QueryValidatorCommissionRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$validatorAddr2;
@@ -390,6 +437,16 @@ var QueryValidatorCommissionResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      commission: (0, _helpers.isSet)(object.commission) ? _distribution.ValidatorAccumulatedCommission.fromJSON(object.commission) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.commission !== undefined && (obj.commission = message.commission ? _distribution.ValidatorAccumulatedCommission.toJSON(message.commission) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryValidatorCommissionResponse();
@@ -449,6 +506,22 @@ var QueryValidatorSlashesRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
+      startingHeight: (0, _helpers.isSet)(object.startingHeight) ? _helpers.Long.fromValue(object.startingHeight) : _helpers.Long.UZERO,
+      endingHeight: (0, _helpers.isSet)(object.endingHeight) ? _helpers.Long.fromValue(object.endingHeight) : _helpers.Long.UZERO,
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    message.startingHeight !== undefined && (obj.startingHeight = (message.startingHeight || _helpers.Long.UZERO).toString());
+    message.endingHeight !== undefined && (obj.endingHeight = (message.endingHeight || _helpers.Long.UZERO).toString());
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$validatorAddr3;
     var message = createBaseQueryValidatorSlashesRequest();
@@ -506,6 +579,26 @@ var QueryValidatorSlashesResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      slashes: Array.isArray(object === null || object === void 0 ? void 0 : object.slashes) ? object.slashes.map(function (e) {
+        return _distribution.ValidatorSlashEvent.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.slashes) {
+      obj.slashes = message.slashes.map(function (e) {
+        return e ? _distribution.ValidatorSlashEvent.toJSON(e) : undefined;
+      });
+    } else {
+      obj.slashes = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$slashes;
     var message = createBaseQueryValidatorSlashesResponse();
@@ -553,6 +646,18 @@ var QueryDelegationRewardsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
+      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr, _object$validatorAddr4;
@@ -602,6 +707,24 @@ var QueryDelegationRewardsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.rewards = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$rewards;
     var message = createBaseQueryDelegationRewardsResponse();
@@ -641,6 +764,16 @@ var QueryDelegationTotalRewardsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr2;
@@ -705,6 +838,34 @@ var QueryDelegationTotalRewardsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(function (e) {
+        return _distribution.DelegationDelegatorReward.fromJSON(e);
+      }) : [],
+      total: Array.isArray(object === null || object === void 0 ? void 0 : object.total) ? object.total.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(function (e) {
+        return e ? _distribution.DelegationDelegatorReward.toJSON(e) : undefined;
+      });
+    } else {
+      obj.rewards = [];
+    }
+    if (message.total) {
+      obj.total = message.total.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.total = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$rewards2, _object$total;
     var message = createBaseQueryDelegationTotalRewardsResponse();
@@ -747,6 +908,16 @@ var QueryDelegatorValidatorsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr3;
@@ -795,6 +966,24 @@ var QueryDelegatorValidatorsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      validators: Array.isArray(object === null || object === void 0 ? void 0 : object.validators) ? object.validators.map(function (e) {
+        return String(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.validators) {
+      obj.validators = message.validators.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.validators = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$validators;
     var message = createBaseQueryDelegatorValidatorsResponse();
@@ -835,6 +1024,16 @@ var QueryDelegatorWithdrawAddressRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr4;
     var message = createBaseQueryDelegatorWithdrawAddressRequest();
@@ -873,6 +1072,16 @@ var QueryDelegatorWithdrawAddressResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      withdrawAddress: (0, _helpers.isSet)(object.withdrawAddress) ? String(object.withdrawAddress) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$withdrawAddre;
     var message = createBaseQueryDelegatorWithdrawAddressResponse();
@@ -902,6 +1111,13 @@ var QueryCommunityPoolRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryCommunityPoolRequest();
@@ -947,6 +1163,24 @@ var QueryCommunityPoolResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      pool: Array.isArray(object === null || object === void 0 ? void 0 : object.pool) ? object.pool.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.pool) {
+      obj.pool = message.pool.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.pool = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$pool;

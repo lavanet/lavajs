@@ -1,7 +1,7 @@
 import { Coin } from "../../base/v1beta1/coin";
 import { Input, Output } from "./bank";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../../../helpers";
 /** MsgSend represents a message to send coins from one account to another. */
 
 /** MsgSend represents a message to send coins from one account to another. */
@@ -61,6 +61,24 @@ export const MsgSend = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      fromAddress: isSet(object.fromAddress) ? String(object.fromAddress) : "",
+      toAddress: isSet(object.toAddress) ? String(object.toAddress) : "",
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(e => Coin.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
+    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
+    if (message.amount) {
+      obj.amount = message.amount.map(e => e ? Coin.toJSON(e) : undefined);
+    } else {
+      obj.amount = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$fromAddress, _object$toAddress, _object$amount;
     const message = createBaseMsgSend();
@@ -90,6 +108,13 @@ export const MsgSendResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgSendResponse();
@@ -132,6 +157,26 @@ export const MsgMultiSend = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      inputs: Array.isArray(object === null || object === void 0 ? void 0 : object.inputs) ? object.inputs.map(e => Input.fromJSON(e)) : [],
+      outputs: Array.isArray(object === null || object === void 0 ? void 0 : object.outputs) ? object.outputs.map(e => Output.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.inputs) {
+      obj.inputs = message.inputs.map(e => e ? Input.toJSON(e) : undefined);
+    } else {
+      obj.inputs = [];
+    }
+    if (message.outputs) {
+      obj.outputs = message.outputs.map(e => e ? Output.toJSON(e) : undefined);
+    } else {
+      obj.outputs = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$inputs, _object$outputs;
     const message = createBaseMsgMultiSend();
@@ -160,6 +205,13 @@ export const MsgMultiSendResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgMultiSendResponse();

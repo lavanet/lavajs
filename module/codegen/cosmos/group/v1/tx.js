@@ -1,6 +1,6 @@
-import { Member } from "./types";
+import { Member, voteOptionFromJSON, voteOptionToJSON } from "./types";
 import { Any } from "../../../google/protobuf/any";
-import { Long } from "../../../helpers";
+import { Long, isSet } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** Exec defines modes of execution of a proposal on creation or on new vote. */
 export let Exec = /*#__PURE__*/function (Exec) {
@@ -190,6 +190,24 @@ export const MsgCreateGroup = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      members: Array.isArray(object === null || object === void 0 ? void 0 : object.members) ? object.members.map(e => Member.fromJSON(e)) : [],
+      metadata: isSet(object.metadata) ? String(object.metadata) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    if (message.members) {
+      obj.members = message.members.map(e => e ? Member.toJSON(e) : undefined);
+    } else {
+      obj.members = [];
+    }
+    message.metadata !== undefined && (obj.metadata = message.metadata);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin, _object$members, _object$metadata;
     const message = createBaseMsgCreateGroup();
@@ -227,6 +245,16 @@ export const MsgCreateGroupResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseMsgCreateGroupResponse();
@@ -277,6 +305,24 @@ export const MsgUpdateGroupMembers = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO,
+      memberUpdates: Array.isArray(object === null || object === void 0 ? void 0 : object.memberUpdates) ? object.memberUpdates.map(e => Member.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    if (message.memberUpdates) {
+      obj.memberUpdates = message.memberUpdates.map(e => e ? Member.toJSON(e) : undefined);
+    } else {
+      obj.memberUpdates = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin2, _object$memberUpdates;
     const message = createBaseMsgUpdateGroupMembers();
@@ -306,6 +352,13 @@ export const MsgUpdateGroupMembersResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUpdateGroupMembersResponse();
@@ -355,6 +408,20 @@ export const MsgUpdateGroupAdmin = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO,
+      newAdmin: isSet(object.newAdmin) ? String(object.newAdmin) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.newAdmin !== undefined && (obj.newAdmin = message.newAdmin);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin3, _object$newAdmin;
     const message = createBaseMsgUpdateGroupAdmin();
@@ -384,6 +451,13 @@ export const MsgUpdateGroupAdminResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUpdateGroupAdminResponse();
@@ -433,6 +507,20 @@ export const MsgUpdateGroupMetadata = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO,
+      metadata: isSet(object.metadata) ? String(object.metadata) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.metadata !== undefined && (obj.metadata = message.metadata);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin4, _object$metadata2;
     const message = createBaseMsgUpdateGroupMetadata();
@@ -462,6 +550,13 @@ export const MsgUpdateGroupMetadataResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUpdateGroupMetadataResponse();
@@ -518,6 +613,22 @@ export const MsgCreateGroupPolicy = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO,
+      metadata: isSet(object.metadata) ? String(object.metadata) : "",
+      decisionPolicy: isSet(object.decisionPolicy) ? Any.fromJSON(object.decisionPolicy) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.metadata !== undefined && (obj.metadata = message.metadata);
+    message.decisionPolicy !== undefined && (obj.decisionPolicy = message.decisionPolicy ? Any.toJSON(message.decisionPolicy) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin5, _object$metadata3;
     const message = createBaseMsgCreateGroupPolicy();
@@ -556,6 +667,16 @@ export const MsgCreateGroupPolicyResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      address: isSet(object.address) ? String(object.address) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    return obj;
   },
   fromPartial(object) {
     var _object$address;
@@ -606,6 +727,20 @@ export const MsgUpdateGroupPolicyAdmin = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      address: isSet(object.address) ? String(object.address) : "",
+      newAdmin: isSet(object.newAdmin) ? String(object.newAdmin) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.address !== undefined && (obj.address = message.address);
+    message.newAdmin !== undefined && (obj.newAdmin = message.newAdmin);
+    return obj;
   },
   fromPartial(object) {
     var _object$admin6, _object$address2, _object$newAdmin2;
@@ -680,6 +815,30 @@ export const MsgCreateGroupWithPolicy = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      members: Array.isArray(object === null || object === void 0 ? void 0 : object.members) ? object.members.map(e => Member.fromJSON(e)) : [],
+      groupMetadata: isSet(object.groupMetadata) ? String(object.groupMetadata) : "",
+      groupPolicyMetadata: isSet(object.groupPolicyMetadata) ? String(object.groupPolicyMetadata) : "",
+      groupPolicyAsAdmin: isSet(object.groupPolicyAsAdmin) ? Boolean(object.groupPolicyAsAdmin) : false,
+      decisionPolicy: isSet(object.decisionPolicy) ? Any.fromJSON(object.decisionPolicy) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    if (message.members) {
+      obj.members = message.members.map(e => e ? Member.toJSON(e) : undefined);
+    } else {
+      obj.members = [];
+    }
+    message.groupMetadata !== undefined && (obj.groupMetadata = message.groupMetadata);
+    message.groupPolicyMetadata !== undefined && (obj.groupPolicyMetadata = message.groupPolicyMetadata);
+    message.groupPolicyAsAdmin !== undefined && (obj.groupPolicyAsAdmin = message.groupPolicyAsAdmin);
+    message.decisionPolicy !== undefined && (obj.decisionPolicy = message.decisionPolicy ? Any.toJSON(message.decisionPolicy) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin7, _object$members2, _object$groupMetadata, _object$groupPolicyMe, _object$groupPolicyAs;
     const message = createBaseMsgCreateGroupWithPolicy();
@@ -728,6 +887,18 @@ export const MsgCreateGroupWithPolicyResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO,
+      groupPolicyAddress: isSet(object.groupPolicyAddress) ? String(object.groupPolicyAddress) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.groupPolicyAddress !== undefined && (obj.groupPolicyAddress = message.groupPolicyAddress);
+    return obj;
+  },
   fromPartial(object) {
     var _object$groupPolicyAd;
     const message = createBaseMsgCreateGroupWithPolicyResponse();
@@ -756,6 +927,13 @@ export const MsgUpdateGroupPolicyAdminResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUpdateGroupPolicyAdminResponse();
@@ -805,6 +983,20 @@ export const MsgUpdateGroupPolicyDecisionPolicy = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      address: isSet(object.address) ? String(object.address) : "",
+      decisionPolicy: isSet(object.decisionPolicy) ? Any.fromJSON(object.decisionPolicy) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.address !== undefined && (obj.address = message.address);
+    message.decisionPolicy !== undefined && (obj.decisionPolicy = message.decisionPolicy ? Any.toJSON(message.decisionPolicy) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin8, _object$address3;
     const message = createBaseMsgUpdateGroupPolicyDecisionPolicy();
@@ -834,6 +1026,13 @@ export const MsgUpdateGroupPolicyDecisionPolicyResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUpdateGroupPolicyDecisionPolicyResponse();
@@ -883,6 +1082,20 @@ export const MsgUpdateGroupPolicyMetadata = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      address: isSet(object.address) ? String(object.address) : "",
+      metadata: isSet(object.metadata) ? String(object.metadata) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.address !== undefined && (obj.address = message.address);
+    message.metadata !== undefined && (obj.metadata = message.metadata);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin9, _object$address4, _object$metadata4;
     const message = createBaseMsgUpdateGroupPolicyMetadata();
@@ -912,6 +1125,13 @@ export const MsgUpdateGroupPolicyMetadataResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUpdateGroupPolicyMetadataResponse();
@@ -975,6 +1195,32 @@ export const MsgSubmitProposal = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      address: isSet(object.address) ? String(object.address) : "",
+      proposers: Array.isArray(object === null || object === void 0 ? void 0 : object.proposers) ? object.proposers.map(e => String(e)) : [],
+      metadata: isSet(object.metadata) ? String(object.metadata) : "",
+      messages: Array.isArray(object === null || object === void 0 ? void 0 : object.messages) ? object.messages.map(e => Any.fromJSON(e)) : [],
+      exec: isSet(object.exec) ? execFromJSON(object.exec) : 0
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    if (message.proposers) {
+      obj.proposers = message.proposers.map(e => e);
+    } else {
+      obj.proposers = [];
+    }
+    message.metadata !== undefined && (obj.metadata = message.metadata);
+    if (message.messages) {
+      obj.messages = message.messages.map(e => e ? Any.toJSON(e) : undefined);
+    } else {
+      obj.messages = [];
+    }
+    message.exec !== undefined && (obj.exec = execToJSON(message.exec));
+    return obj;
+  },
   fromPartial(object) {
     var _object$address5, _object$proposers, _object$metadata5, _object$messages, _object$exec;
     const message = createBaseMsgSubmitProposal();
@@ -1014,6 +1260,16 @@ export const MsgSubmitProposalResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseMsgSubmitProposalResponse();
@@ -1057,6 +1313,18 @@ export const MsgWithdrawProposal = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO,
+      address: isSet(object.address) ? String(object.address) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.address !== undefined && (obj.address = message.address);
+    return obj;
+  },
   fromPartial(object) {
     var _object$address6;
     const message = createBaseMsgWithdrawProposal();
@@ -1085,6 +1353,13 @@ export const MsgWithdrawProposalResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgWithdrawProposalResponse();
@@ -1148,6 +1423,24 @@ export const MsgVote = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO,
+      voter: isSet(object.voter) ? String(object.voter) : "",
+      option: isSet(object.option) ? voteOptionFromJSON(object.option) : 0,
+      metadata: isSet(object.metadata) ? String(object.metadata) : "",
+      exec: isSet(object.exec) ? execFromJSON(object.exec) : 0
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.voter !== undefined && (obj.voter = message.voter);
+    message.option !== undefined && (obj.option = voteOptionToJSON(message.option));
+    message.metadata !== undefined && (obj.metadata = message.metadata);
+    message.exec !== undefined && (obj.exec = execToJSON(message.exec));
+    return obj;
+  },
   fromPartial(object) {
     var _object$voter, _object$option, _object$metadata6, _object$exec2;
     const message = createBaseMsgVote();
@@ -1179,6 +1472,13 @@ export const MsgVoteResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgVoteResponse();
@@ -1221,6 +1521,18 @@ export const MsgExec = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO,
+      signer: isSet(object.signer) ? String(object.signer) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.signer !== undefined && (obj.signer = message.signer);
+    return obj;
+  },
   fromPartial(object) {
     var _object$signer;
     const message = createBaseMsgExec();
@@ -1249,6 +1561,13 @@ export const MsgExecResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgExecResponse();
@@ -1291,6 +1610,18 @@ export const MsgLeaveGroup = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      address: isSet(object.address) ? String(object.address) : "",
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    return obj;
+  },
   fromPartial(object) {
     var _object$address7;
     const message = createBaseMsgLeaveGroup();
@@ -1319,6 +1650,13 @@ export const MsgLeaveGroupResponse = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgLeaveGroupResponse();

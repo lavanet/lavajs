@@ -116,6 +116,38 @@ var Subscription = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      consumer: (0, _helpers.isSet)(object.consumer) ? String(object.consumer) : "",
+      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
+      planIndex: (0, _helpers.isSet)(object.planIndex) ? String(object.planIndex) : "",
+      planBlock: (0, _helpers.isSet)(object.planBlock) ? _helpers.Long.fromValue(object.planBlock) : _helpers.Long.UZERO,
+      durationTotal: (0, _helpers.isSet)(object.durationTotal) ? _helpers.Long.fromValue(object.durationTotal) : _helpers.Long.UZERO,
+      durationLeft: (0, _helpers.isSet)(object.durationLeft) ? _helpers.Long.fromValue(object.durationLeft) : _helpers.Long.UZERO,
+      monthExpiryTime: (0, _helpers.isSet)(object.monthExpiryTime) ? _helpers.Long.fromValue(object.monthExpiryTime) : _helpers.Long.UZERO,
+      prevExpiryBlock: (0, _helpers.isSet)(object.prevExpiryBlock) ? _helpers.Long.fromValue(object.prevExpiryBlock) : _helpers.Long.UZERO,
+      monthCuTotal: (0, _helpers.isSet)(object.monthCuTotal) ? _helpers.Long.fromValue(object.monthCuTotal) : _helpers.Long.UZERO,
+      monthCuLeft: (0, _helpers.isSet)(object.monthCuLeft) ? _helpers.Long.fromValue(object.monthCuLeft) : _helpers.Long.UZERO,
+      prevCuLeft: (0, _helpers.isSet)(object.prevCuLeft) ? _helpers.Long.fromValue(object.prevCuLeft) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.consumer !== undefined && (obj.consumer = message.consumer);
+    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
+    message.planIndex !== undefined && (obj.planIndex = message.planIndex);
+    message.planBlock !== undefined && (obj.planBlock = (message.planBlock || _helpers.Long.UZERO).toString());
+    message.durationTotal !== undefined && (obj.durationTotal = (message.durationTotal || _helpers.Long.UZERO).toString());
+    message.durationLeft !== undefined && (obj.durationLeft = (message.durationLeft || _helpers.Long.UZERO).toString());
+    message.monthExpiryTime !== undefined && (obj.monthExpiryTime = (message.monthExpiryTime || _helpers.Long.UZERO).toString());
+    message.prevExpiryBlock !== undefined && (obj.prevExpiryBlock = (message.prevExpiryBlock || _helpers.Long.UZERO).toString());
+    message.monthCuTotal !== undefined && (obj.monthCuTotal = (message.monthCuTotal || _helpers.Long.UZERO).toString());
+    message.monthCuLeft !== undefined && (obj.monthCuLeft = (message.monthCuLeft || _helpers.Long.UZERO).toString());
+    message.prevCuLeft !== undefined && (obj.prevCuLeft = (message.prevCuLeft || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator, _object$consumer, _object$planIndex;
     var message = createBaseSubscription();

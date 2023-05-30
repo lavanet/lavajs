@@ -35,6 +35,22 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    verifyInvariant: function verifyInvariant(value) {
+      return {
+        typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
+        value: _tx.MsgVerifyInvariant.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    verifyInvariant: function verifyInvariant(value) {
+      return {
+        typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
+        value: _tx.MsgVerifyInvariant.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     verifyInvariant: function verifyInvariant(value) {
       return {

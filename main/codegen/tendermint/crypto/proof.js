@@ -88,6 +88,30 @@ var Proof = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      total: (0, _helpers.isSet)(object.total) ? _helpers.Long.fromValue(object.total) : _helpers.Long.ZERO,
+      index: (0, _helpers.isSet)(object.index) ? _helpers.Long.fromValue(object.index) : _helpers.Long.ZERO,
+      leafHash: (0, _helpers.isSet)(object.leafHash) ? (0, _helpers.bytesFromBase64)(object.leafHash) : new Uint8Array(),
+      aunts: Array.isArray(object === null || object === void 0 ? void 0 : object.aunts) ? object.aunts.map(function (e) {
+        return (0, _helpers.bytesFromBase64)(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.total !== undefined && (obj.total = (message.total || _helpers.Long.ZERO).toString());
+    message.index !== undefined && (obj.index = (message.index || _helpers.Long.ZERO).toString());
+    message.leafHash !== undefined && (obj.leafHash = (0, _helpers.base64FromBytes)(message.leafHash !== undefined ? message.leafHash : new Uint8Array()));
+    if (message.aunts) {
+      obj.aunts = message.aunts.map(function (e) {
+        return (0, _helpers.base64FromBytes)(e !== undefined ? e : new Uint8Array());
+      });
+    } else {
+      obj.aunts = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$leafHash, _object$aunts;
     var message = createBaseProof();
@@ -137,6 +161,18 @@ var ValueOp = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      key: (0, _helpers.isSet)(object.key) ? (0, _helpers.bytesFromBase64)(object.key) : new Uint8Array(),
+      proof: (0, _helpers.isSet)(object.proof) ? Proof.fromJSON(object.proof) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.key !== undefined && (obj.key = (0, _helpers.base64FromBytes)(message.key !== undefined ? message.key : new Uint8Array()));
+    message.proof !== undefined && (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$key;
@@ -190,6 +226,20 @@ var DominoOp = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      key: (0, _helpers.isSet)(object.key) ? String(object.key) : "",
+      input: (0, _helpers.isSet)(object.input) ? String(object.input) : "",
+      output: (0, _helpers.isSet)(object.output) ? String(object.output) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.input !== undefined && (obj.input = message.input);
+    message.output !== undefined && (obj.output = message.output);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$key2, _object$input, _object$output;
@@ -245,6 +295,20 @@ var ProofOp = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      type: (0, _helpers.isSet)(object.type) ? String(object.type) : "",
+      key: (0, _helpers.isSet)(object.key) ? (0, _helpers.bytesFromBase64)(object.key) : new Uint8Array(),
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.type !== undefined && (obj.type = message.type);
+    message.key !== undefined && (obj.key = (0, _helpers.base64FromBytes)(message.key !== undefined ? message.key : new Uint8Array()));
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$type, _object$key3, _object$data;
     var message = createBaseProofOp();
@@ -293,6 +357,24 @@ var ProofOps = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      ops: Array.isArray(object === null || object === void 0 ? void 0 : object.ops) ? object.ops.map(function (e) {
+        return ProofOp.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.ops) {
+      obj.ops = message.ops.map(function (e) {
+        return e ? ProofOp.toJSON(e) : undefined;
+      });
+    } else {
+      obj.ops = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$ops;

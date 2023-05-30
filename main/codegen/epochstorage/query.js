@@ -11,6 +11,7 @@ var _stake_storage = require("./stake_storage");
 var _epoch_details = require("./epoch_details");
 var _fixated_params = require("./fixated_params");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -45,6 +46,13 @@ var QueryParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
@@ -82,6 +90,16 @@ var QueryParamsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      params: (0, _helpers.isSet)(object.params) ? _params.Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.params !== undefined && (obj.params = message.params ? _params.Params.toJSON(message.params) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? _params.Params.fromPartial(object.params) : undefined;
@@ -118,6 +136,16 @@ var QueryGetStakeStorageRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? String(object.index) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$index;
@@ -157,6 +185,16 @@ var QueryGetStakeStorageResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      stakeStorage: (0, _helpers.isSet)(object.stakeStorage) ? _stake_storage.StakeStorage.fromJSON(object.stakeStorage) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.stakeStorage !== undefined && (obj.stakeStorage = message.stakeStorage ? _stake_storage.StakeStorage.toJSON(message.stakeStorage) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryGetStakeStorageResponse();
     message.stakeStorage = object.stakeStorage !== undefined && object.stakeStorage !== null ? _stake_storage.StakeStorage.fromPartial(object.stakeStorage) : undefined;
@@ -193,6 +231,16 @@ var QueryAllStakeStorageRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAllStakeStorageRequest();
@@ -247,6 +295,26 @@ var QueryAllStakeStorageResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      stakeStorage: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeStorage) ? object.stakeStorage.map(function (e) {
+        return _stake_storage.StakeStorage.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.stakeStorage) {
+      obj.stakeStorage = message.stakeStorage.map(function (e) {
+        return e ? _stake_storage.StakeStorage.toJSON(e) : undefined;
+      });
+    } else {
+      obj.stakeStorage = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$stakeStorage;
     var message = createBaseQueryAllStakeStorageResponse();
@@ -279,6 +347,13 @@ var QueryGetEpochDetailsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryGetEpochDetailsRequest();
@@ -316,6 +391,16 @@ var QueryGetEpochDetailsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      EpochDetails: (0, _helpers.isSet)(object.EpochDetails) ? _epoch_details.EpochDetails.fromJSON(object.EpochDetails) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.EpochDetails !== undefined && (obj.EpochDetails = message.EpochDetails ? _epoch_details.EpochDetails.toJSON(message.EpochDetails) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryGetEpochDetailsResponse();
     message.EpochDetails = object.EpochDetails !== undefined && object.EpochDetails !== null ? _epoch_details.EpochDetails.fromPartial(object.EpochDetails) : undefined;
@@ -352,6 +437,16 @@ var QueryGetFixatedParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? String(object.index) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$index2;
@@ -391,6 +486,16 @@ var QueryGetFixatedParamsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      fixatedParams: (0, _helpers.isSet)(object.fixatedParams) ? _fixated_params.FixatedParams.fromJSON(object.fixatedParams) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.fixatedParams !== undefined && (obj.fixatedParams = message.fixatedParams ? _fixated_params.FixatedParams.toJSON(message.fixatedParams) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryGetFixatedParamsResponse();
     message.fixatedParams = object.fixatedParams !== undefined && object.fixatedParams !== null ? _fixated_params.FixatedParams.fromPartial(object.fixatedParams) : undefined;
@@ -427,6 +532,16 @@ var QueryAllFixatedParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAllFixatedParamsRequest();
@@ -480,6 +595,26 @@ var QueryAllFixatedParamsResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      fixatedParams: Array.isArray(object === null || object === void 0 ? void 0 : object.fixatedParams) ? object.fixatedParams.map(function (e) {
+        return _fixated_params.FixatedParams.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.fixatedParams) {
+      obj.fixatedParams = message.fixatedParams.map(function (e) {
+        return e ? _fixated_params.FixatedParams.toJSON(e) : undefined;
+      });
+    } else {
+      obj.fixatedParams = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$fixatedParams;

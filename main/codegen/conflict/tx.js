@@ -65,6 +65,22 @@ var MsgDetection = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      finalizationConflict: (0, _helpers.isSet)(object.finalizationConflict) ? _conflict_data.FinalizationConflict.fromJSON(object.finalizationConflict) : undefined,
+      responseConflict: (0, _helpers.isSet)(object.responseConflict) ? _conflict_data.ResponseConflict.fromJSON(object.responseConflict) : undefined,
+      sameProviderConflict: (0, _helpers.isSet)(object.sameProviderConflict) ? _conflict_data.FinalizationConflict.fromJSON(object.sameProviderConflict) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.finalizationConflict !== undefined && (obj.finalizationConflict = message.finalizationConflict ? _conflict_data.FinalizationConflict.toJSON(message.finalizationConflict) : undefined);
+    message.responseConflict !== undefined && (obj.responseConflict = message.responseConflict ? _conflict_data.ResponseConflict.toJSON(message.responseConflict) : undefined);
+    message.sameProviderConflict !== undefined && (obj.sameProviderConflict = message.sameProviderConflict ? _conflict_data.FinalizationConflict.toJSON(message.sameProviderConflict) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator;
     var message = createBaseMsgDetection();
@@ -97,6 +113,13 @@ var MsgDetectionResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgDetectionResponse();
@@ -148,6 +171,20 @@ var MsgConflictVoteCommit = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      voteID: (0, _helpers.isSet)(object.voteID) ? String(object.voteID) : "",
+      hash: (0, _helpers.isSet)(object.hash) ? (0, _helpers.bytesFromBase64)(object.hash) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.voteID !== undefined && (obj.voteID = message.voteID);
+    message.hash !== undefined && (obj.hash = (0, _helpers.base64FromBytes)(message.hash !== undefined ? message.hash : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator2, _object$voteID, _object$hash;
     var message = createBaseMsgConflictVoteCommit();
@@ -179,6 +216,13 @@ var MsgConflictVoteCommitResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgConflictVoteCommitResponse();
@@ -237,6 +281,22 @@ var MsgConflictVoteReveal = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      voteID: (0, _helpers.isSet)(object.voteID) ? String(object.voteID) : "",
+      nonce: (0, _helpers.isSet)(object.nonce) ? _helpers.Long.fromValue(object.nonce) : _helpers.Long.ZERO,
+      hash: (0, _helpers.isSet)(object.hash) ? (0, _helpers.bytesFromBase64)(object.hash) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.voteID !== undefined && (obj.voteID = message.voteID);
+    message.nonce !== undefined && (obj.nonce = (message.nonce || _helpers.Long.ZERO).toString());
+    message.hash !== undefined && (obj.hash = (0, _helpers.base64FromBytes)(message.hash !== undefined ? message.hash : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$creator3, _object$voteID2, _object$hash2;
     var message = createBaseMsgConflictVoteReveal();
@@ -269,6 +329,13 @@ var MsgConflictVoteRevealResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgConflictVoteRevealResponse();

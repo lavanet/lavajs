@@ -78,6 +78,16 @@ var GenericAuthorization = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      msg: (0, _helpers.isSet)(object.msg) ? String(object.msg) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.msg !== undefined && (obj.msg = message.msg);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$msg;
     var message = createBaseGenericAuthorization();
@@ -99,7 +109,7 @@ var Grant = {
       _any.Any.encode(message.authorization, writer.uint32(10).fork()).ldelim();
     }
     if (message.expiration !== undefined) {
-      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.expiration), writer.uint32(18).fork()).ldelim();
+      _timestamp.Timestamp.encode(message.expiration, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -114,7 +124,7 @@ var Grant = {
           message.authorization = _any.Any.decode(reader, reader.uint32());
           break;
         case 2:
-          message.expiration = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
+          message.expiration = _timestamp.Timestamp.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -123,11 +133,22 @@ var Grant = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      authorization: (0, _helpers.isSet)(object.authorization) ? _any.Any.fromJSON(object.authorization) : undefined,
+      expiration: (0, _helpers.isSet)(object.expiration) ? (0, _helpers.fromJsonTimestamp)(object.expiration) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.authorization !== undefined && (obj.authorization = message.authorization ? _any.Any.toJSON(message.authorization) : undefined);
+    message.expiration !== undefined && (obj.expiration = (0, _helpers.fromTimestamp)(message.expiration).toISOString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
-    var _object$expiration;
     var message = createBaseGrant();
     message.authorization = object.authorization !== undefined && object.authorization !== null ? _any.Any.fromPartial(object.authorization) : undefined;
-    message.expiration = (_object$expiration = object.expiration) !== null && _object$expiration !== void 0 ? _object$expiration : undefined;
+    message.expiration = object.expiration !== undefined && object.expiration !== null ? _timestamp.Timestamp.fromPartial(object.expiration) : undefined;
     return message;
   }
 };
@@ -153,7 +174,7 @@ var GrantAuthorization = {
       _any.Any.encode(message.authorization, writer.uint32(26).fork()).ldelim();
     }
     if (message.expiration !== undefined) {
-      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.expiration), writer.uint32(34).fork()).ldelim();
+      _timestamp.Timestamp.encode(message.expiration, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -174,7 +195,7 @@ var GrantAuthorization = {
           message.authorization = _any.Any.decode(reader, reader.uint32());
           break;
         case 4:
-          message.expiration = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
+          message.expiration = _timestamp.Timestamp.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -183,13 +204,29 @@ var GrantAuthorization = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      granter: (0, _helpers.isSet)(object.granter) ? String(object.granter) : "",
+      grantee: (0, _helpers.isSet)(object.grantee) ? String(object.grantee) : "",
+      authorization: (0, _helpers.isSet)(object.authorization) ? _any.Any.fromJSON(object.authorization) : undefined,
+      expiration: (0, _helpers.isSet)(object.expiration) ? (0, _helpers.fromJsonTimestamp)(object.expiration) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.granter !== undefined && (obj.granter = message.granter);
+    message.grantee !== undefined && (obj.grantee = message.grantee);
+    message.authorization !== undefined && (obj.authorization = message.authorization ? _any.Any.toJSON(message.authorization) : undefined);
+    message.expiration !== undefined && (obj.expiration = (0, _helpers.fromTimestamp)(message.expiration).toISOString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
-    var _object$granter, _object$grantee, _object$expiration2;
+    var _object$granter, _object$grantee;
     var message = createBaseGrantAuthorization();
     message.granter = (_object$granter = object.granter) !== null && _object$granter !== void 0 ? _object$granter : "";
     message.grantee = (_object$grantee = object.grantee) !== null && _object$grantee !== void 0 ? _object$grantee : "";
     message.authorization = object.authorization !== undefined && object.authorization !== null ? _any.Any.fromPartial(object.authorization) : undefined;
-    message.expiration = (_object$expiration2 = object.expiration) !== null && _object$expiration2 !== void 0 ? _object$expiration2 : undefined;
+    message.expiration = object.expiration !== undefined && object.expiration !== null ? _timestamp.Timestamp.fromPartial(object.expiration) : undefined;
     return message;
   }
 };
@@ -232,6 +269,24 @@ var GrantQueueItem = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      msgTypeUrls: Array.isArray(object === null || object === void 0 ? void 0 : object.msgTypeUrls) ? object.msgTypeUrls.map(function (e) {
+        return String(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.msgTypeUrls) {
+      obj.msgTypeUrls = message.msgTypeUrls.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.msgTypeUrls = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$msgTypeUrls;

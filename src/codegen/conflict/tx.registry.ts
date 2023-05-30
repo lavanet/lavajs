@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgDetection, MsgConflictVoteCommit, MsgConflictVoteReveal } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/lavanet.lava.conflict.MsgDetection", MsgDetection], ["/lavanet.lava.conflict.MsgConflictVoteCommit", MsgConflictVoteCommit], ["/lavanet.lava.conflict.MsgConflictVoteReveal", MsgConflictVoteReveal]];

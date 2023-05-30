@@ -71,6 +71,58 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    submitProposal: function submitProposal(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+        value: _tx.MsgSubmitProposal.toJSON(value)
+      };
+    },
+    vote: function vote(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+        value: _tx.MsgVote.toJSON(value)
+      };
+    },
+    voteWeighted: function voteWeighted(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
+        value: _tx.MsgVoteWeighted.toJSON(value)
+      };
+    },
+    deposit: function deposit(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
+        value: _tx.MsgDeposit.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    submitProposal: function submitProposal(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+        value: _tx.MsgSubmitProposal.fromJSON(value)
+      };
+    },
+    vote: function vote(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+        value: _tx.MsgVote.fromJSON(value)
+      };
+    },
+    voteWeighted: function voteWeighted(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
+        value: _tx.MsgVoteWeighted.fromJSON(value)
+      };
+    },
+    deposit: function deposit(value) {
+      return {
+        typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
+        value: _tx.MsgDeposit.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     submitProposal: function submitProposal(value) {
       return {

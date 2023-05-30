@@ -35,6 +35,22 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    send: function send(value) {
+      return {
+        typeUrl: "/cosmos.nft.v1beta1.MsgSend",
+        value: _tx.MsgSend.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    send: function send(value) {
+      return {
+        typeUrl: "/cosmos.nft.v1beta1.MsgSend",
+        value: _tx.MsgSend.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     send: function send(value) {
       return {

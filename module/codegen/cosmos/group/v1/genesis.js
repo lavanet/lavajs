@@ -1,5 +1,5 @@
 import { GroupInfo, GroupMember, GroupPolicyInfo, Proposal, Vote } from "./types";
-import { Long } from "../../../helpers";
+import { Long, isSet } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the group module's genesis state. */
 
@@ -82,6 +82,50 @@ export const GenesisState = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      groupSeq: isSet(object.groupSeq) ? Long.fromValue(object.groupSeq) : Long.UZERO,
+      groups: Array.isArray(object === null || object === void 0 ? void 0 : object.groups) ? object.groups.map(e => GroupInfo.fromJSON(e)) : [],
+      groupMembers: Array.isArray(object === null || object === void 0 ? void 0 : object.groupMembers) ? object.groupMembers.map(e => GroupMember.fromJSON(e)) : [],
+      groupPolicySeq: isSet(object.groupPolicySeq) ? Long.fromValue(object.groupPolicySeq) : Long.UZERO,
+      groupPolicies: Array.isArray(object === null || object === void 0 ? void 0 : object.groupPolicies) ? object.groupPolicies.map(e => GroupPolicyInfo.fromJSON(e)) : [],
+      proposalSeq: isSet(object.proposalSeq) ? Long.fromValue(object.proposalSeq) : Long.UZERO,
+      proposals: Array.isArray(object === null || object === void 0 ? void 0 : object.proposals) ? object.proposals.map(e => Proposal.fromJSON(e)) : [],
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(e => Vote.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.groupSeq !== undefined && (obj.groupSeq = (message.groupSeq || Long.UZERO).toString());
+    if (message.groups) {
+      obj.groups = message.groups.map(e => e ? GroupInfo.toJSON(e) : undefined);
+    } else {
+      obj.groups = [];
+    }
+    if (message.groupMembers) {
+      obj.groupMembers = message.groupMembers.map(e => e ? GroupMember.toJSON(e) : undefined);
+    } else {
+      obj.groupMembers = [];
+    }
+    message.groupPolicySeq !== undefined && (obj.groupPolicySeq = (message.groupPolicySeq || Long.UZERO).toString());
+    if (message.groupPolicies) {
+      obj.groupPolicies = message.groupPolicies.map(e => e ? GroupPolicyInfo.toJSON(e) : undefined);
+    } else {
+      obj.groupPolicies = [];
+    }
+    message.proposalSeq !== undefined && (obj.proposalSeq = (message.proposalSeq || Long.UZERO).toString());
+    if (message.proposals) {
+      obj.proposals = message.proposals.map(e => e ? Proposal.toJSON(e) : undefined);
+    } else {
+      obj.proposals = [];
+    }
+    if (message.votes) {
+      obj.votes = message.votes.map(e => e ? Vote.toJSON(e) : undefined);
+    } else {
+      obj.votes = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$groups, _object$groupMembers, _object$groupPolicies, _object$proposals, _object$votes;

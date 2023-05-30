@@ -58,6 +58,18 @@ var GenesisOwners = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? _helpers.Long.fromValue(object.index) : _helpers.Long.UZERO,
+      indexOwners: (0, _helpers.isSet)(object.indexOwners) ? _capability.CapabilityOwners.fromJSON(object.indexOwners) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = (message.index || _helpers.Long.UZERO).toString());
+    message.indexOwners !== undefined && (obj.indexOwners = message.indexOwners ? _capability.CapabilityOwners.toJSON(message.indexOwners) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseGenesisOwners();
     message.index = object.index !== undefined && object.index !== null ? _helpers.Long.fromValue(object.index) : _helpers.Long.UZERO;
@@ -111,6 +123,26 @@ var GenesisState = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? _helpers.Long.fromValue(object.index) : _helpers.Long.UZERO,
+      owners: Array.isArray(object === null || object === void 0 ? void 0 : object.owners) ? object.owners.map(function (e) {
+        return GenesisOwners.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = (message.index || _helpers.Long.UZERO).toString());
+    if (message.owners) {
+      obj.owners = message.owners.map(function (e) {
+        return e ? GenesisOwners.toJSON(e) : undefined;
+      });
+    } else {
+      obj.owners = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$owners;

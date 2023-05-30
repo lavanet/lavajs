@@ -202,6 +202,22 @@ var Params = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      communityTax: (0, _helpers.isSet)(object.communityTax) ? String(object.communityTax) : "",
+      baseProposerReward: (0, _helpers.isSet)(object.baseProposerReward) ? String(object.baseProposerReward) : "",
+      bonusProposerReward: (0, _helpers.isSet)(object.bonusProposerReward) ? String(object.bonusProposerReward) : "",
+      withdrawAddrEnabled: (0, _helpers.isSet)(object.withdrawAddrEnabled) ? Boolean(object.withdrawAddrEnabled) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.communityTax !== undefined && (obj.communityTax = message.communityTax);
+    message.baseProposerReward !== undefined && (obj.baseProposerReward = message.baseProposerReward);
+    message.bonusProposerReward !== undefined && (obj.bonusProposerReward = message.bonusProposerReward);
+    message.withdrawAddrEnabled !== undefined && (obj.withdrawAddrEnabled = message.withdrawAddrEnabled);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$communityTax, _object$baseProposerR, _object$bonusProposer, _object$withdrawAddrE;
     var message = createBaseParams();
@@ -258,6 +274,26 @@ var ValidatorHistoricalRewards = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      cumulativeRewardRatio: Array.isArray(object === null || object === void 0 ? void 0 : object.cumulativeRewardRatio) ? object.cumulativeRewardRatio.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : [],
+      referenceCount: (0, _helpers.isSet)(object.referenceCount) ? Number(object.referenceCount) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.cumulativeRewardRatio) {
+      obj.cumulativeRewardRatio = message.cumulativeRewardRatio.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.cumulativeRewardRatio = [];
+    }
+    message.referenceCount !== undefined && (obj.referenceCount = Math.round(message.referenceCount));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$cumulativeRew, _object$referenceCoun;
@@ -316,6 +352,26 @@ var ValidatorCurrentRewards = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : [],
+      period: (0, _helpers.isSet)(object.period) ? _helpers.Long.fromValue(object.period) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.rewards = [];
+    }
+    message.period !== undefined && (obj.period = (message.period || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$rewards;
     var message = createBaseValidatorCurrentRewards();
@@ -366,6 +422,24 @@ var ValidatorAccumulatedCommission = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      commission: Array.isArray(object === null || object === void 0 ? void 0 : object.commission) ? object.commission.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.commission) {
+      obj.commission = message.commission.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.commission = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$commission;
     var message = createBaseValidatorAccumulatedCommission();
@@ -415,6 +489,24 @@ var ValidatorOutstandingRewards = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.rewards = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$rewards2;
     var message = createBaseValidatorOutstandingRewards();
@@ -461,6 +553,18 @@ var ValidatorSlashEvent = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      validatorPeriod: (0, _helpers.isSet)(object.validatorPeriod) ? _helpers.Long.fromValue(object.validatorPeriod) : _helpers.Long.UZERO,
+      fraction: (0, _helpers.isSet)(object.fraction) ? String(object.fraction) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.validatorPeriod !== undefined && (obj.validatorPeriod = (message.validatorPeriod || _helpers.Long.UZERO).toString());
+    message.fraction !== undefined && (obj.fraction = message.fraction);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$fraction;
@@ -510,6 +614,24 @@ var ValidatorSlashEvents = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      validatorSlashEvents: Array.isArray(object === null || object === void 0 ? void 0 : object.validatorSlashEvents) ? object.validatorSlashEvents.map(function (e) {
+        return ValidatorSlashEvent.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.validatorSlashEvents) {
+      obj.validatorSlashEvents = message.validatorSlashEvents.map(function (e) {
+        return e ? ValidatorSlashEvent.toJSON(e) : undefined;
+      });
+    } else {
+      obj.validatorSlashEvents = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$validatorSlas;
     var message = createBaseValidatorSlashEvents();
@@ -558,6 +680,24 @@ var FeePool = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      communityPool: Array.isArray(object === null || object === void 0 ? void 0 : object.communityPool) ? object.communityPool.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.communityPool) {
+      obj.communityPool = message.communityPool.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.communityPool = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$communityPool;
@@ -629,6 +769,30 @@ var CommunityPoolSpendProposal = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      title: (0, _helpers.isSet)(object.title) ? String(object.title) : "",
+      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
+      recipient: (0, _helpers.isSet)(object.recipient) ? String(object.recipient) : "",
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
+        return _coin.Coin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.title !== undefined && (obj.title = message.title);
+    message.description !== undefined && (obj.description = message.description);
+    message.recipient !== undefined && (obj.recipient = message.recipient);
+    if (message.amount) {
+      obj.amount = message.amount.map(function (e) {
+        return e ? _coin.Coin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.amount = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$title, _object$description, _object$recipient, _object$amount;
     var message = createBaseCommunityPoolSpendProposal();
@@ -686,6 +850,20 @@ var DelegatorStartingInfo = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      previousPeriod: (0, _helpers.isSet)(object.previousPeriod) ? _helpers.Long.fromValue(object.previousPeriod) : _helpers.Long.UZERO,
+      stake: (0, _helpers.isSet)(object.stake) ? String(object.stake) : "",
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.previousPeriod !== undefined && (obj.previousPeriod = (message.previousPeriod || _helpers.Long.UZERO).toString());
+    message.stake !== undefined && (obj.stake = message.stake);
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$stake;
     var message = createBaseDelegatorStartingInfo();
@@ -741,6 +919,26 @@ var DelegationDelegatorReward = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
+      reward: Array.isArray(object === null || object === void 0 ? void 0 : object.reward) ? object.reward.map(function (e) {
+        return _coin.DecCoin.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    if (message.reward) {
+      obj.reward = message.reward.map(function (e) {
+        return e ? _coin.DecCoin.toJSON(e) : undefined;
+      });
+    } else {
+      obj.reward = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$validatorAddr, _object$reward;
@@ -810,6 +1008,24 @@ var CommunityPoolSpendProposalWithDeposit = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      title: (0, _helpers.isSet)(object.title) ? String(object.title) : "",
+      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
+      recipient: (0, _helpers.isSet)(object.recipient) ? String(object.recipient) : "",
+      amount: (0, _helpers.isSet)(object.amount) ? String(object.amount) : "",
+      deposit: (0, _helpers.isSet)(object.deposit) ? String(object.deposit) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.title !== undefined && (obj.title = message.title);
+    message.description !== undefined && (obj.description = message.description);
+    message.recipient !== undefined && (obj.recipient = message.recipient);
+    message.amount !== undefined && (obj.amount = message.amount);
+    message.deposit !== undefined && (obj.deposit = message.deposit);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$title2, _object$description2, _object$recipient2, _object$amount2, _object$deposit;

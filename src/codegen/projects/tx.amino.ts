@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { keyTypeFromJSON } from "./project";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";

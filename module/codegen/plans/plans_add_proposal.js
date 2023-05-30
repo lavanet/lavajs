@@ -1,5 +1,6 @@
 import { Plan } from "./plan";
 import * as _m0 from "protobufjs/minimal";
+import { isSet } from "../helpers";
 function createBasePlansAddProposal() {
   return {
     title: "",
@@ -42,6 +43,24 @@ export const PlansAddProposal = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      title: isSet(object.title) ? String(object.title) : "",
+      description: isSet(object.description) ? String(object.description) : "",
+      plans: Array.isArray(object === null || object === void 0 ? void 0 : object.plans) ? object.plans.map(e => Plan.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.title !== undefined && (obj.title = message.title);
+    message.description !== undefined && (obj.description = message.description);
+    if (message.plans) {
+      obj.plans = message.plans.map(e => e ? Plan.toJSON(e) : undefined);
+    } else {
+      obj.plans = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$title, _object$description, _object$plans;

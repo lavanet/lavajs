@@ -3,7 +3,7 @@ import { StakeStorage } from "./stake_storage";
 import { EpochDetails } from "./epoch_details";
 import { FixatedParams } from "./fixated_params";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../helpers";
 /** GenesisState defines the epochstorage module's genesis state. */
 
 /** GenesisState defines the epochstorage module's genesis state. */
@@ -57,6 +57,30 @@ export const GenesisState = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+      stakeStorageList: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeStorageList) ? object.stakeStorageList.map(e => StakeStorage.fromJSON(e)) : [],
+      epochDetails: isSet(object.epochDetails) ? EpochDetails.fromJSON(object.epochDetails) : undefined,
+      fixatedParamsList: Array.isArray(object === null || object === void 0 ? void 0 : object.fixatedParamsList) ? object.fixatedParamsList.map(e => FixatedParams.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.stakeStorageList) {
+      obj.stakeStorageList = message.stakeStorageList.map(e => e ? StakeStorage.toJSON(e) : undefined);
+    } else {
+      obj.stakeStorageList = [];
+    }
+    message.epochDetails !== undefined && (obj.epochDetails = message.epochDetails ? EpochDetails.toJSON(message.epochDetails) : undefined);
+    if (message.fixatedParamsList) {
+      obj.fixatedParamsList = message.fixatedParamsList.map(e => e ? FixatedParams.toJSON(e) : undefined);
+    } else {
+      obj.fixatedParamsList = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$stakeStorageL, _object$fixatedParams;

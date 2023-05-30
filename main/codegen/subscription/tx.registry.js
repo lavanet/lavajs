@@ -47,6 +47,34 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    buy: function buy(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgBuy",
+        value: _tx.MsgBuy.toJSON(value)
+      };
+    },
+    addProject: function addProject(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgAddProject",
+        value: _tx.MsgAddProject.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    buy: function buy(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgBuy",
+        value: _tx.MsgBuy.fromJSON(value)
+      };
+    },
+    addProject: function addProject(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgAddProject",
+        value: _tx.MsgAddProject.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     buy: function buy(value) {
       return {

@@ -11,13 +11,15 @@ telescope({
   protoDirs,
   outPath,
   options: {
+    removeUnusedImports: true,
     tsDisable: {
-      files: [
-        'cosmos/authz/v1beta1/tx.amino.ts',
-        'cosmos/staking/v1beta1/tx.amino.ts'
-      ]
+          patterns: ['**/*amino.ts', '**/*registry.ts']
     },
     prototypes: {
+      excluded: {
+        packages: [
+        ]
+      },
       includePackageVar: false,
       typingsFormat: {
         useDeepPartial: false,

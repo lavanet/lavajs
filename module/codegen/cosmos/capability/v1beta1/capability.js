@@ -1,4 +1,4 @@
-import { Long } from "../../../helpers";
+import { Long, isSet } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
  * Capability defines an implementation of an object capability. The index
@@ -59,6 +59,16 @@ export const Capability = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? Long.fromValue(object.index) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = (message.index || Long.UZERO).toString());
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseCapability();
     message.index = object.index !== undefined && object.index !== null ? Long.fromValue(object.index) : Long.UZERO;
@@ -101,6 +111,18 @@ export const Owner = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      module: isSet(object.module) ? String(object.module) : "",
+      name: isSet(object.name) ? String(object.name) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.module !== undefined && (obj.module = message.module);
+    message.name !== undefined && (obj.name = message.name);
+    return obj;
+  },
   fromPartial(object) {
     var _object$module, _object$name;
     const message = createBaseOwner();
@@ -137,6 +159,20 @@ export const CapabilityOwners = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      owners: Array.isArray(object === null || object === void 0 ? void 0 : object.owners) ? object.owners.map(e => Owner.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.owners) {
+      obj.owners = message.owners.map(e => e ? Owner.toJSON(e) : undefined);
+    } else {
+      obj.owners = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$owners;

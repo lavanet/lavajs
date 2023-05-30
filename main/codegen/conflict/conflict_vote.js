@@ -49,6 +49,18 @@ var Provider = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      account: (0, _helpers.isSet)(object.account) ? String(object.account) : "",
+      response: (0, _helpers.isSet)(object.response) ? (0, _helpers.bytesFromBase64)(object.response) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.account !== undefined && (obj.account = message.account);
+    message.response !== undefined && (obj.response = (0, _helpers.base64FromBytes)(message.response !== undefined ? message.response : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$account, _object$response;
     var message = createBaseProvider();
@@ -101,6 +113,20 @@ var Vote = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      Hash: (0, _helpers.isSet)(object.Hash) ? (0, _helpers.bytesFromBase64)(object.Hash) : new Uint8Array(),
+      Result: (0, _helpers.isSet)(object.Result) ? _helpers.Long.fromValue(object.Result) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.Hash !== undefined && (obj.Hash = (0, _helpers.base64FromBytes)(message.Hash !== undefined ? message.Hash : new Uint8Array()));
+    message.Result !== undefined && (obj.Result = (message.Result || _helpers.Long.ZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address, _object$Hash;
@@ -227,6 +253,46 @@ var ConflictVote = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
+      clientAddress: (0, _helpers.isSet)(object.clientAddress) ? String(object.clientAddress) : "",
+      voteDeadline: (0, _helpers.isSet)(object.voteDeadline) ? _helpers.Long.fromValue(object.voteDeadline) : _helpers.Long.UZERO,
+      voteStartBlock: (0, _helpers.isSet)(object.voteStartBlock) ? _helpers.Long.fromValue(object.voteStartBlock) : _helpers.Long.UZERO,
+      voteState: (0, _helpers.isSet)(object.voteState) ? _helpers.Long.fromValue(object.voteState) : _helpers.Long.ZERO,
+      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
+      apiUrl: (0, _helpers.isSet)(object.apiUrl) ? String(object.apiUrl) : "",
+      requestData: (0, _helpers.isSet)(object.requestData) ? (0, _helpers.bytesFromBase64)(object.requestData) : new Uint8Array(),
+      requestBlock: (0, _helpers.isSet)(object.requestBlock) ? _helpers.Long.fromValue(object.requestBlock) : _helpers.Long.UZERO,
+      firstProvider: (0, _helpers.isSet)(object.firstProvider) ? Provider.fromJSON(object.firstProvider) : undefined,
+      secondProvider: (0, _helpers.isSet)(object.secondProvider) ? Provider.fromJSON(object.secondProvider) : undefined,
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(function (e) {
+        return Vote.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.clientAddress !== undefined && (obj.clientAddress = message.clientAddress);
+    message.voteDeadline !== undefined && (obj.voteDeadline = (message.voteDeadline || _helpers.Long.UZERO).toString());
+    message.voteStartBlock !== undefined && (obj.voteStartBlock = (message.voteStartBlock || _helpers.Long.UZERO).toString());
+    message.voteState !== undefined && (obj.voteState = (message.voteState || _helpers.Long.ZERO).toString());
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.apiUrl !== undefined && (obj.apiUrl = message.apiUrl);
+    message.requestData !== undefined && (obj.requestData = (0, _helpers.base64FromBytes)(message.requestData !== undefined ? message.requestData : new Uint8Array()));
+    message.requestBlock !== undefined && (obj.requestBlock = (message.requestBlock || _helpers.Long.UZERO).toString());
+    message.firstProvider !== undefined && (obj.firstProvider = message.firstProvider ? Provider.toJSON(message.firstProvider) : undefined);
+    message.secondProvider !== undefined && (obj.secondProvider = message.secondProvider ? Provider.toJSON(message.secondProvider) : undefined);
+    if (message.votes) {
+      obj.votes = message.votes.map(function (e) {
+        return e ? Vote.toJSON(e) : undefined;
+      });
+    } else {
+      obj.votes = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$clientAddress, _object$chainID, _object$apiUrl, _object$requestData, _object$votes;

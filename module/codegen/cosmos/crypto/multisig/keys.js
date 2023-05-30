@@ -1,6 +1,6 @@
 import { Any } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../../../helpers";
 /**
  * LegacyAminoPubKey specifies a public key type
  * which nests multiple public keys and a threshold,
@@ -48,6 +48,22 @@ export const LegacyAminoPubKey = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      threshold: isSet(object.threshold) ? Number(object.threshold) : 0,
+      publicKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.publicKeys) ? object.publicKeys.map(e => Any.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.threshold !== undefined && (obj.threshold = Math.round(message.threshold));
+    if (message.publicKeys) {
+      obj.publicKeys = message.publicKeys.map(e => e ? Any.toJSON(e) : undefined);
+    } else {
+      obj.publicKeys = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$threshold, _object$publicKeys;

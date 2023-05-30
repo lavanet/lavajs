@@ -147,6 +147,24 @@ var SignatureDescriptors = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      signatures: Array.isArray(object === null || object === void 0 ? void 0 : object.signatures) ? object.signatures.map(function (e) {
+        return SignatureDescriptor.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.signatures) {
+      obj.signatures = message.signatures.map(function (e) {
+        return e ? SignatureDescriptor.toJSON(e) : undefined;
+      });
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$signatures;
     var message = createBaseSignatureDescriptors();
@@ -201,6 +219,20 @@ var SignatureDescriptor = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      publicKey: (0, _helpers.isSet)(object.publicKey) ? _any.Any.fromJSON(object.publicKey) : undefined,
+      data: (0, _helpers.isSet)(object.data) ? SignatureDescriptor_Data.fromJSON(object.data) : undefined,
+      sequence: (0, _helpers.isSet)(object.sequence) ? _helpers.Long.fromValue(object.sequence) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.publicKey !== undefined && (obj.publicKey = message.publicKey ? _any.Any.toJSON(message.publicKey) : undefined);
+    message.data !== undefined && (obj.data = message.data ? SignatureDescriptor_Data.toJSON(message.data) : undefined);
+    message.sequence !== undefined && (obj.sequence = (message.sequence || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseSignatureDescriptor();
     message.publicKey = object.publicKey !== undefined && object.publicKey !== null ? _any.Any.fromPartial(object.publicKey) : undefined;
@@ -247,6 +279,18 @@ var SignatureDescriptor_Data = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      single: (0, _helpers.isSet)(object.single) ? SignatureDescriptor_Data_Single.fromJSON(object.single) : undefined,
+      multi: (0, _helpers.isSet)(object.multi) ? SignatureDescriptor_Data_Multi.fromJSON(object.multi) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.single !== undefined && (obj.single = message.single ? SignatureDescriptor_Data_Single.toJSON(message.single) : undefined);
+    message.multi !== undefined && (obj.multi = message.multi ? SignatureDescriptor_Data_Multi.toJSON(message.multi) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseSignatureDescriptor_Data();
     message.single = object.single !== undefined && object.single !== null ? SignatureDescriptor_Data_Single.fromPartial(object.single) : undefined;
@@ -291,6 +335,18 @@ var SignatureDescriptor_Data_Single = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      mode: (0, _helpers.isSet)(object.mode) ? signModeFromJSON(object.mode) : 0,
+      signature: (0, _helpers.isSet)(object.signature) ? (0, _helpers.bytesFromBase64)(object.signature) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.mode !== undefined && (obj.mode = signModeToJSON(message.mode));
+    message.signature !== undefined && (obj.signature = (0, _helpers.base64FromBytes)(message.signature !== undefined ? message.signature : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$mode, _object$signature;
@@ -346,6 +402,26 @@ var SignatureDescriptor_Data_Multi = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      bitarray: (0, _helpers.isSet)(object.bitarray) ? _multisig.CompactBitArray.fromJSON(object.bitarray) : undefined,
+      signatures: Array.isArray(object === null || object === void 0 ? void 0 : object.signatures) ? object.signatures.map(function (e) {
+        return SignatureDescriptor_Data.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.bitarray !== undefined && (obj.bitarray = message.bitarray ? _multisig.CompactBitArray.toJSON(message.bitarray) : undefined);
+    if (message.signatures) {
+      obj.signatures = message.signatures.map(function (e) {
+        return e ? SignatureDescriptor_Data.toJSON(e) : undefined;
+      });
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$signatures2;

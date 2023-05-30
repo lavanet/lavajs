@@ -1,7 +1,7 @@
 import { Params } from "./params";
 import { Subscription } from "./subscription";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -30,6 +30,13 @@ export const QueryParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
@@ -64,6 +71,16 @@ export const QueryParamsResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
@@ -100,6 +117,16 @@ export const QueryCurrentRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      consumer: isSet(object.consumer) ? String(object.consumer) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.consumer !== undefined && (obj.consumer = message.consumer);
+    return obj;
+  },
   fromPartial(object) {
     var _object$consumer;
     const message = createBaseQueryCurrentRequest();
@@ -135,6 +162,16 @@ export const QueryCurrentResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      sub: isSet(object.sub) ? Subscription.fromJSON(object.sub) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.sub !== undefined && (obj.sub = message.sub ? Subscription.toJSON(message.sub) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryCurrentResponse();

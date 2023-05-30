@@ -35,6 +35,22 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    submitEvidence: function submitEvidence(value) {
+      return {
+        typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
+        value: _tx.MsgSubmitEvidence.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    submitEvidence: function submitEvidence(value) {
+      return {
+        typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
+        value: _tx.MsgSubmitEvidence.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     submitEvidence: function submitEvidence(value) {
       return {

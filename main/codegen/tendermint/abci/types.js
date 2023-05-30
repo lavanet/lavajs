@@ -426,6 +426,44 @@ var Request = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      echo: (0, _helpers.isSet)(object.echo) ? RequestEcho.fromJSON(object.echo) : undefined,
+      flush: (0, _helpers.isSet)(object.flush) ? RequestFlush.fromJSON(object.flush) : undefined,
+      info: (0, _helpers.isSet)(object.info) ? RequestInfo.fromJSON(object.info) : undefined,
+      setOption: (0, _helpers.isSet)(object.setOption) ? RequestSetOption.fromJSON(object.setOption) : undefined,
+      initChain: (0, _helpers.isSet)(object.initChain) ? RequestInitChain.fromJSON(object.initChain) : undefined,
+      query: (0, _helpers.isSet)(object.query) ? RequestQuery.fromJSON(object.query) : undefined,
+      beginBlock: (0, _helpers.isSet)(object.beginBlock) ? RequestBeginBlock.fromJSON(object.beginBlock) : undefined,
+      checkTx: (0, _helpers.isSet)(object.checkTx) ? RequestCheckTx.fromJSON(object.checkTx) : undefined,
+      deliverTx: (0, _helpers.isSet)(object.deliverTx) ? RequestDeliverTx.fromJSON(object.deliverTx) : undefined,
+      endBlock: (0, _helpers.isSet)(object.endBlock) ? RequestEndBlock.fromJSON(object.endBlock) : undefined,
+      commit: (0, _helpers.isSet)(object.commit) ? RequestCommit.fromJSON(object.commit) : undefined,
+      listSnapshots: (0, _helpers.isSet)(object.listSnapshots) ? RequestListSnapshots.fromJSON(object.listSnapshots) : undefined,
+      offerSnapshot: (0, _helpers.isSet)(object.offerSnapshot) ? RequestOfferSnapshot.fromJSON(object.offerSnapshot) : undefined,
+      loadSnapshotChunk: (0, _helpers.isSet)(object.loadSnapshotChunk) ? RequestLoadSnapshotChunk.fromJSON(object.loadSnapshotChunk) : undefined,
+      applySnapshotChunk: (0, _helpers.isSet)(object.applySnapshotChunk) ? RequestApplySnapshotChunk.fromJSON(object.applySnapshotChunk) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.echo !== undefined && (obj.echo = message.echo ? RequestEcho.toJSON(message.echo) : undefined);
+    message.flush !== undefined && (obj.flush = message.flush ? RequestFlush.toJSON(message.flush) : undefined);
+    message.info !== undefined && (obj.info = message.info ? RequestInfo.toJSON(message.info) : undefined);
+    message.setOption !== undefined && (obj.setOption = message.setOption ? RequestSetOption.toJSON(message.setOption) : undefined);
+    message.initChain !== undefined && (obj.initChain = message.initChain ? RequestInitChain.toJSON(message.initChain) : undefined);
+    message.query !== undefined && (obj.query = message.query ? RequestQuery.toJSON(message.query) : undefined);
+    message.beginBlock !== undefined && (obj.beginBlock = message.beginBlock ? RequestBeginBlock.toJSON(message.beginBlock) : undefined);
+    message.checkTx !== undefined && (obj.checkTx = message.checkTx ? RequestCheckTx.toJSON(message.checkTx) : undefined);
+    message.deliverTx !== undefined && (obj.deliverTx = message.deliverTx ? RequestDeliverTx.toJSON(message.deliverTx) : undefined);
+    message.endBlock !== undefined && (obj.endBlock = message.endBlock ? RequestEndBlock.toJSON(message.endBlock) : undefined);
+    message.commit !== undefined && (obj.commit = message.commit ? RequestCommit.toJSON(message.commit) : undefined);
+    message.listSnapshots !== undefined && (obj.listSnapshots = message.listSnapshots ? RequestListSnapshots.toJSON(message.listSnapshots) : undefined);
+    message.offerSnapshot !== undefined && (obj.offerSnapshot = message.offerSnapshot ? RequestOfferSnapshot.toJSON(message.offerSnapshot) : undefined);
+    message.loadSnapshotChunk !== undefined && (obj.loadSnapshotChunk = message.loadSnapshotChunk ? RequestLoadSnapshotChunk.toJSON(message.loadSnapshotChunk) : undefined);
+    message.applySnapshotChunk !== undefined && (obj.applySnapshotChunk = message.applySnapshotChunk ? RequestApplySnapshotChunk.toJSON(message.applySnapshotChunk) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseRequest();
     message.echo = object.echo !== undefined && object.echo !== null ? RequestEcho.fromPartial(object.echo) : undefined;
@@ -477,6 +515,16 @@ var RequestEcho = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      message: (0, _helpers.isSet)(object.message) ? String(object.message) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.message !== undefined && (obj.message = message.message);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$message;
     var message = createBaseRequestEcho();
@@ -506,6 +554,13 @@ var RequestFlush = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseRequestFlush();
@@ -557,6 +612,20 @@ var RequestInfo = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      version: (0, _helpers.isSet)(object.version) ? String(object.version) : "",
+      blockVersion: (0, _helpers.isSet)(object.blockVersion) ? _helpers.Long.fromValue(object.blockVersion) : _helpers.Long.UZERO,
+      p2pVersion: (0, _helpers.isSet)(object.p2pVersion) ? _helpers.Long.fromValue(object.p2pVersion) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.version !== undefined && (obj.version = message.version);
+    message.blockVersion !== undefined && (obj.blockVersion = (message.blockVersion || _helpers.Long.UZERO).toString());
+    message.p2pVersion !== undefined && (obj.p2pVersion = (message.p2pVersion || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$version;
     var message = createBaseRequestInfo();
@@ -604,6 +673,18 @@ var RequestSetOption = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      key: (0, _helpers.isSet)(object.key) ? String(object.key) : "",
+      value: (0, _helpers.isSet)(object.value) ? String(object.value) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$key, _object$value;
     var message = createBaseRequestSetOption();
@@ -627,7 +708,7 @@ var RequestInitChain = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
     if (message.time !== undefined) {
-      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.time), writer.uint32(10).fork()).ldelim();
+      _timestamp.Timestamp.encode(message.time, writer.uint32(10).fork()).ldelim();
     }
     if (message.chainId !== "") {
       writer.uint32(18).string(message.chainId);
@@ -663,7 +744,7 @@ var RequestInitChain = {
       var tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.time = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
+          message.time = _timestamp.Timestamp.decode(reader, reader.uint32());
           break;
         case 2:
           message.chainId = reader.string();
@@ -687,10 +768,38 @@ var RequestInitChain = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      time: (0, _helpers.isSet)(object.time) ? (0, _helpers.fromJsonTimestamp)(object.time) : undefined,
+      chainId: (0, _helpers.isSet)(object.chainId) ? String(object.chainId) : "",
+      consensusParams: (0, _helpers.isSet)(object.consensusParams) ? ConsensusParams.fromJSON(object.consensusParams) : undefined,
+      validators: Array.isArray(object === null || object === void 0 ? void 0 : object.validators) ? object.validators.map(function (e) {
+        return ValidatorUpdate.fromJSON(e);
+      }) : [],
+      appStateBytes: (0, _helpers.isSet)(object.appStateBytes) ? (0, _helpers.bytesFromBase64)(object.appStateBytes) : new Uint8Array(),
+      initialHeight: (0, _helpers.isSet)(object.initialHeight) ? _helpers.Long.fromValue(object.initialHeight) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.time !== undefined && (obj.time = (0, _helpers.fromTimestamp)(message.time).toISOString());
+    message.chainId !== undefined && (obj.chainId = message.chainId);
+    message.consensusParams !== undefined && (obj.consensusParams = message.consensusParams ? ConsensusParams.toJSON(message.consensusParams) : undefined);
+    if (message.validators) {
+      obj.validators = message.validators.map(function (e) {
+        return e ? ValidatorUpdate.toJSON(e) : undefined;
+      });
+    } else {
+      obj.validators = [];
+    }
+    message.appStateBytes !== undefined && (obj.appStateBytes = (0, _helpers.base64FromBytes)(message.appStateBytes !== undefined ? message.appStateBytes : new Uint8Array()));
+    message.initialHeight !== undefined && (obj.initialHeight = (message.initialHeight || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
-    var _object$time, _object$chainId, _object$validators, _object$appStateBytes;
+    var _object$chainId, _object$validators, _object$appStateBytes;
     var message = createBaseRequestInitChain();
-    message.time = (_object$time = object.time) !== null && _object$time !== void 0 ? _object$time : undefined;
+    message.time = object.time !== undefined && object.time !== null ? _timestamp.Timestamp.fromPartial(object.time) : undefined;
     message.chainId = (_object$chainId = object.chainId) !== null && _object$chainId !== void 0 ? _object$chainId : "";
     message.consensusParams = object.consensusParams !== undefined && object.consensusParams !== null ? ConsensusParams.fromPartial(object.consensusParams) : undefined;
     message.validators = ((_object$validators = object.validators) === null || _object$validators === void 0 ? void 0 : _object$validators.map(function (e) {
@@ -752,6 +861,22 @@ var RequestQuery = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
+      path: (0, _helpers.isSet)(object.path) ? String(object.path) : "",
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
+      prove: (0, _helpers.isSet)(object.prove) ? Boolean(object.prove) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    message.path !== undefined && (obj.path = message.path);
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    message.prove !== undefined && (obj.prove = message.prove);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$data, _object$path, _object$prove;
@@ -824,6 +949,30 @@ var RequestBeginBlock = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      hash: (0, _helpers.isSet)(object.hash) ? (0, _helpers.bytesFromBase64)(object.hash) : new Uint8Array(),
+      header: (0, _helpers.isSet)(object.header) ? _types.Header.fromJSON(object.header) : undefined,
+      lastCommitInfo: (0, _helpers.isSet)(object.lastCommitInfo) ? LastCommitInfo.fromJSON(object.lastCommitInfo) : undefined,
+      byzantineValidators: Array.isArray(object === null || object === void 0 ? void 0 : object.byzantineValidators) ? object.byzantineValidators.map(function (e) {
+        return Evidence.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.hash !== undefined && (obj.hash = (0, _helpers.base64FromBytes)(message.hash !== undefined ? message.hash : new Uint8Array()));
+    message.header !== undefined && (obj.header = message.header ? _types.Header.toJSON(message.header) : undefined);
+    message.lastCommitInfo !== undefined && (obj.lastCommitInfo = message.lastCommitInfo ? LastCommitInfo.toJSON(message.lastCommitInfo) : undefined);
+    if (message.byzantineValidators) {
+      obj.byzantineValidators = message.byzantineValidators.map(function (e) {
+        return e ? Evidence.toJSON(e) : undefined;
+      });
+    } else {
+      obj.byzantineValidators = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$hash, _object$byzantineVali;
     var message = createBaseRequestBeginBlock();
@@ -874,6 +1023,18 @@ var RequestCheckTx = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      tx: (0, _helpers.isSet)(object.tx) ? (0, _helpers.bytesFromBase64)(object.tx) : new Uint8Array(),
+      type: (0, _helpers.isSet)(object.type) ? checkTxTypeFromJSON(object.type) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.tx !== undefined && (obj.tx = (0, _helpers.base64FromBytes)(message.tx !== undefined ? message.tx : new Uint8Array()));
+    message.type !== undefined && (obj.type = checkTxTypeToJSON(message.type));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$tx, _object$type;
     var message = createBaseRequestCheckTx();
@@ -913,6 +1074,16 @@ var RequestDeliverTx = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      tx: (0, _helpers.isSet)(object.tx) ? (0, _helpers.bytesFromBase64)(object.tx) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.tx !== undefined && (obj.tx = (0, _helpers.base64FromBytes)(message.tx !== undefined ? message.tx : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$tx2;
     var message = createBaseRequestDeliverTx();
@@ -951,6 +1122,16 @@ var RequestEndBlock = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseRequestEndBlock();
     message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
@@ -980,6 +1161,13 @@ var RequestCommit = {
     }
     return message;
   },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
   fromPartial: function fromPartial(_) {
     var message = createBaseRequestCommit();
     return message;
@@ -1007,6 +1195,13 @@ var RequestListSnapshots = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseRequestListSnapshots();
@@ -1050,6 +1245,18 @@ var RequestOfferSnapshot = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      snapshot: (0, _helpers.isSet)(object.snapshot) ? Snapshot.fromJSON(object.snapshot) : undefined,
+      appHash: (0, _helpers.isSet)(object.appHash) ? (0, _helpers.bytesFromBase64)(object.appHash) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.snapshot !== undefined && (obj.snapshot = message.snapshot ? Snapshot.toJSON(message.snapshot) : undefined);
+    message.appHash !== undefined && (obj.appHash = (0, _helpers.base64FromBytes)(message.appHash !== undefined ? message.appHash : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$appHash;
@@ -1104,6 +1311,20 @@ var RequestLoadSnapshotChunk = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.UZERO,
+      format: (0, _helpers.isSet)(object.format) ? Number(object.format) : 0,
+      chunk: (0, _helpers.isSet)(object.chunk) ? Number(object.chunk) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.UZERO).toString());
+    message.format !== undefined && (obj.format = Math.round(message.format));
+    message.chunk !== undefined && (obj.chunk = Math.round(message.chunk));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$format, _object$chunk;
     var message = createBaseRequestLoadSnapshotChunk();
@@ -1157,6 +1378,20 @@ var RequestApplySnapshotChunk = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? Number(object.index) : 0,
+      chunk: (0, _helpers.isSet)(object.chunk) ? (0, _helpers.bytesFromBase64)(object.chunk) : new Uint8Array(),
+      sender: (0, _helpers.isSet)(object.sender) ? String(object.sender) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = Math.round(message.index));
+    message.chunk !== undefined && (obj.chunk = (0, _helpers.base64FromBytes)(message.chunk !== undefined ? message.chunk : new Uint8Array()));
+    message.sender !== undefined && (obj.sender = message.sender);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$chunk2, _object$sender;
@@ -1303,6 +1538,46 @@ var Response = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      exception: (0, _helpers.isSet)(object.exception) ? ResponseException.fromJSON(object.exception) : undefined,
+      echo: (0, _helpers.isSet)(object.echo) ? ResponseEcho.fromJSON(object.echo) : undefined,
+      flush: (0, _helpers.isSet)(object.flush) ? ResponseFlush.fromJSON(object.flush) : undefined,
+      info: (0, _helpers.isSet)(object.info) ? ResponseInfo.fromJSON(object.info) : undefined,
+      setOption: (0, _helpers.isSet)(object.setOption) ? ResponseSetOption.fromJSON(object.setOption) : undefined,
+      initChain: (0, _helpers.isSet)(object.initChain) ? ResponseInitChain.fromJSON(object.initChain) : undefined,
+      query: (0, _helpers.isSet)(object.query) ? ResponseQuery.fromJSON(object.query) : undefined,
+      beginBlock: (0, _helpers.isSet)(object.beginBlock) ? ResponseBeginBlock.fromJSON(object.beginBlock) : undefined,
+      checkTx: (0, _helpers.isSet)(object.checkTx) ? ResponseCheckTx.fromJSON(object.checkTx) : undefined,
+      deliverTx: (0, _helpers.isSet)(object.deliverTx) ? ResponseDeliverTx.fromJSON(object.deliverTx) : undefined,
+      endBlock: (0, _helpers.isSet)(object.endBlock) ? ResponseEndBlock.fromJSON(object.endBlock) : undefined,
+      commit: (0, _helpers.isSet)(object.commit) ? ResponseCommit.fromJSON(object.commit) : undefined,
+      listSnapshots: (0, _helpers.isSet)(object.listSnapshots) ? ResponseListSnapshots.fromJSON(object.listSnapshots) : undefined,
+      offerSnapshot: (0, _helpers.isSet)(object.offerSnapshot) ? ResponseOfferSnapshot.fromJSON(object.offerSnapshot) : undefined,
+      loadSnapshotChunk: (0, _helpers.isSet)(object.loadSnapshotChunk) ? ResponseLoadSnapshotChunk.fromJSON(object.loadSnapshotChunk) : undefined,
+      applySnapshotChunk: (0, _helpers.isSet)(object.applySnapshotChunk) ? ResponseApplySnapshotChunk.fromJSON(object.applySnapshotChunk) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.exception !== undefined && (obj.exception = message.exception ? ResponseException.toJSON(message.exception) : undefined);
+    message.echo !== undefined && (obj.echo = message.echo ? ResponseEcho.toJSON(message.echo) : undefined);
+    message.flush !== undefined && (obj.flush = message.flush ? ResponseFlush.toJSON(message.flush) : undefined);
+    message.info !== undefined && (obj.info = message.info ? ResponseInfo.toJSON(message.info) : undefined);
+    message.setOption !== undefined && (obj.setOption = message.setOption ? ResponseSetOption.toJSON(message.setOption) : undefined);
+    message.initChain !== undefined && (obj.initChain = message.initChain ? ResponseInitChain.toJSON(message.initChain) : undefined);
+    message.query !== undefined && (obj.query = message.query ? ResponseQuery.toJSON(message.query) : undefined);
+    message.beginBlock !== undefined && (obj.beginBlock = message.beginBlock ? ResponseBeginBlock.toJSON(message.beginBlock) : undefined);
+    message.checkTx !== undefined && (obj.checkTx = message.checkTx ? ResponseCheckTx.toJSON(message.checkTx) : undefined);
+    message.deliverTx !== undefined && (obj.deliverTx = message.deliverTx ? ResponseDeliverTx.toJSON(message.deliverTx) : undefined);
+    message.endBlock !== undefined && (obj.endBlock = message.endBlock ? ResponseEndBlock.toJSON(message.endBlock) : undefined);
+    message.commit !== undefined && (obj.commit = message.commit ? ResponseCommit.toJSON(message.commit) : undefined);
+    message.listSnapshots !== undefined && (obj.listSnapshots = message.listSnapshots ? ResponseListSnapshots.toJSON(message.listSnapshots) : undefined);
+    message.offerSnapshot !== undefined && (obj.offerSnapshot = message.offerSnapshot ? ResponseOfferSnapshot.toJSON(message.offerSnapshot) : undefined);
+    message.loadSnapshotChunk !== undefined && (obj.loadSnapshotChunk = message.loadSnapshotChunk ? ResponseLoadSnapshotChunk.toJSON(message.loadSnapshotChunk) : undefined);
+    message.applySnapshotChunk !== undefined && (obj.applySnapshotChunk = message.applySnapshotChunk ? ResponseApplySnapshotChunk.toJSON(message.applySnapshotChunk) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseResponse();
     message.exception = object.exception !== undefined && object.exception !== null ? ResponseException.fromPartial(object.exception) : undefined;
@@ -1355,6 +1630,16 @@ var ResponseException = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      error: (0, _helpers.isSet)(object.error) ? String(object.error) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$error;
     var message = createBaseResponseException();
@@ -1393,6 +1678,16 @@ var ResponseEcho = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      message: (0, _helpers.isSet)(object.message) ? String(object.message) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.message !== undefined && (obj.message = message.message);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$message2;
     var message = createBaseResponseEcho();
@@ -1422,6 +1717,13 @@ var ResponseFlush = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseResponseFlush();
@@ -1487,6 +1789,24 @@ var ResponseInfo = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      data: (0, _helpers.isSet)(object.data) ? String(object.data) : "",
+      version: (0, _helpers.isSet)(object.version) ? String(object.version) : "",
+      appVersion: (0, _helpers.isSet)(object.appVersion) ? _helpers.Long.fromValue(object.appVersion) : _helpers.Long.UZERO,
+      lastBlockHeight: (0, _helpers.isSet)(object.lastBlockHeight) ? _helpers.Long.fromValue(object.lastBlockHeight) : _helpers.Long.ZERO,
+      lastBlockAppHash: (0, _helpers.isSet)(object.lastBlockAppHash) ? (0, _helpers.bytesFromBase64)(object.lastBlockAppHash) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.data !== undefined && (obj.data = message.data);
+    message.version !== undefined && (obj.version = message.version);
+    message.appVersion !== undefined && (obj.appVersion = (message.appVersion || _helpers.Long.UZERO).toString());
+    message.lastBlockHeight !== undefined && (obj.lastBlockHeight = (message.lastBlockHeight || _helpers.Long.ZERO).toString());
+    message.lastBlockAppHash !== undefined && (obj.lastBlockAppHash = (0, _helpers.base64FromBytes)(message.lastBlockAppHash !== undefined ? message.lastBlockAppHash : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$data2, _object$version2, _object$lastBlockAppH;
     var message = createBaseResponseInfo();
@@ -1542,6 +1862,20 @@ var ResponseSetOption = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      code: (0, _helpers.isSet)(object.code) ? Number(object.code) : 0,
+      log: (0, _helpers.isSet)(object.log) ? String(object.log) : "",
+      info: (0, _helpers.isSet)(object.info) ? String(object.info) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.code !== undefined && (obj.code = Math.round(message.code));
+    message.log !== undefined && (obj.log = message.log);
+    message.info !== undefined && (obj.info = message.info);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$code, _object$log, _object$info;
@@ -1605,6 +1939,28 @@ var ResponseInitChain = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      consensusParams: (0, _helpers.isSet)(object.consensusParams) ? ConsensusParams.fromJSON(object.consensusParams) : undefined,
+      validators: Array.isArray(object === null || object === void 0 ? void 0 : object.validators) ? object.validators.map(function (e) {
+        return ValidatorUpdate.fromJSON(e);
+      }) : [],
+      appHash: (0, _helpers.isSet)(object.appHash) ? (0, _helpers.bytesFromBase64)(object.appHash) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.consensusParams !== undefined && (obj.consensusParams = message.consensusParams ? ConsensusParams.toJSON(message.consensusParams) : undefined);
+    if (message.validators) {
+      obj.validators = message.validators.map(function (e) {
+        return e ? ValidatorUpdate.toJSON(e) : undefined;
+      });
+    } else {
+      obj.validators = [];
+    }
+    message.appHash !== undefined && (obj.appHash = (0, _helpers.base64FromBytes)(message.appHash !== undefined ? message.appHash : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$validators2, _object$appHash2;
@@ -1704,6 +2060,32 @@ var ResponseQuery = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      code: (0, _helpers.isSet)(object.code) ? Number(object.code) : 0,
+      log: (0, _helpers.isSet)(object.log) ? String(object.log) : "",
+      info: (0, _helpers.isSet)(object.info) ? String(object.info) : "",
+      index: (0, _helpers.isSet)(object.index) ? _helpers.Long.fromValue(object.index) : _helpers.Long.ZERO,
+      key: (0, _helpers.isSet)(object.key) ? (0, _helpers.bytesFromBase64)(object.key) : new Uint8Array(),
+      value: (0, _helpers.isSet)(object.value) ? (0, _helpers.bytesFromBase64)(object.value) : new Uint8Array(),
+      proofOps: (0, _helpers.isSet)(object.proofOps) ? _proof.ProofOps.fromJSON(object.proofOps) : undefined,
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
+      codespace: (0, _helpers.isSet)(object.codespace) ? String(object.codespace) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.code !== undefined && (obj.code = Math.round(message.code));
+    message.log !== undefined && (obj.log = message.log);
+    message.info !== undefined && (obj.info = message.info);
+    message.index !== undefined && (obj.index = (message.index || _helpers.Long.ZERO).toString());
+    message.key !== undefined && (obj.key = (0, _helpers.base64FromBytes)(message.key !== undefined ? message.key : new Uint8Array()));
+    message.value !== undefined && (obj.value = (0, _helpers.base64FromBytes)(message.value !== undefined ? message.value : new Uint8Array()));
+    message.proofOps !== undefined && (obj.proofOps = message.proofOps ? _proof.ProofOps.toJSON(message.proofOps) : undefined);
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    message.codespace !== undefined && (obj.codespace = message.codespace);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$code2, _object$log2, _object$info2, _object$key2, _object$value2, _object$codespace;
     var message = createBaseResponseQuery();
@@ -1758,6 +2140,24 @@ var ResponseBeginBlock = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(function (e) {
+        return Event.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.events) {
+      obj.events = message.events.map(function (e) {
+        return e ? Event.toJSON(e) : undefined;
+      });
+    } else {
+      obj.events = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$events;
@@ -1856,6 +2256,38 @@ var ResponseCheckTx = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      code: (0, _helpers.isSet)(object.code) ? Number(object.code) : 0,
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
+      log: (0, _helpers.isSet)(object.log) ? String(object.log) : "",
+      info: (0, _helpers.isSet)(object.info) ? String(object.info) : "",
+      gasWanted: (0, _helpers.isSet)(object.gas_wanted) ? _helpers.Long.fromValue(object.gas_wanted) : _helpers.Long.ZERO,
+      gasUsed: (0, _helpers.isSet)(object.gas_used) ? _helpers.Long.fromValue(object.gas_used) : _helpers.Long.ZERO,
+      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(function (e) {
+        return Event.fromJSON(e);
+      }) : [],
+      codespace: (0, _helpers.isSet)(object.codespace) ? String(object.codespace) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.code !== undefined && (obj.code = Math.round(message.code));
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    message.log !== undefined && (obj.log = message.log);
+    message.info !== undefined && (obj.info = message.info);
+    message.gasWanted !== undefined && (obj.gas_wanted = (message.gasWanted || _helpers.Long.ZERO).toString());
+    message.gasUsed !== undefined && (obj.gas_used = (message.gasUsed || _helpers.Long.ZERO).toString());
+    if (message.events) {
+      obj.events = message.events.map(function (e) {
+        return e ? Event.toJSON(e) : undefined;
+      });
+    } else {
+      obj.events = [];
+    }
+    message.codespace !== undefined && (obj.codespace = message.codespace);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$code3, _object$data3, _object$log3, _object$info3, _object$events2, _object$codespace2;
@@ -1962,6 +2394,38 @@ var ResponseDeliverTx = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      code: (0, _helpers.isSet)(object.code) ? Number(object.code) : 0,
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
+      log: (0, _helpers.isSet)(object.log) ? String(object.log) : "",
+      info: (0, _helpers.isSet)(object.info) ? String(object.info) : "",
+      gasWanted: (0, _helpers.isSet)(object.gas_wanted) ? _helpers.Long.fromValue(object.gas_wanted) : _helpers.Long.ZERO,
+      gasUsed: (0, _helpers.isSet)(object.gas_used) ? _helpers.Long.fromValue(object.gas_used) : _helpers.Long.ZERO,
+      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(function (e) {
+        return Event.fromJSON(e);
+      }) : [],
+      codespace: (0, _helpers.isSet)(object.codespace) ? String(object.codespace) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.code !== undefined && (obj.code = Math.round(message.code));
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    message.log !== undefined && (obj.log = message.log);
+    message.info !== undefined && (obj.info = message.info);
+    message.gasWanted !== undefined && (obj.gas_wanted = (message.gasWanted || _helpers.Long.ZERO).toString());
+    message.gasUsed !== undefined && (obj.gas_used = (message.gasUsed || _helpers.Long.ZERO).toString());
+    if (message.events) {
+      obj.events = message.events.map(function (e) {
+        return e ? Event.toJSON(e) : undefined;
+      });
+    } else {
+      obj.events = [];
+    }
+    message.codespace !== undefined && (obj.codespace = message.codespace);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$code4, _object$data4, _object$log4, _object$info4, _object$events3, _object$codespace3;
     var message = createBaseResponseDeliverTx();
@@ -2041,6 +2505,36 @@ var ResponseEndBlock = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      validatorUpdates: Array.isArray(object === null || object === void 0 ? void 0 : object.validatorUpdates) ? object.validatorUpdates.map(function (e) {
+        return ValidatorUpdate.fromJSON(e);
+      }) : [],
+      consensusParamUpdates: (0, _helpers.isSet)(object.consensusParamUpdates) ? ConsensusParams.fromJSON(object.consensusParamUpdates) : undefined,
+      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(function (e) {
+        return Event.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.validatorUpdates) {
+      obj.validatorUpdates = message.validatorUpdates.map(function (e) {
+        return e ? ValidatorUpdate.toJSON(e) : undefined;
+      });
+    } else {
+      obj.validatorUpdates = [];
+    }
+    message.consensusParamUpdates !== undefined && (obj.consensusParamUpdates = message.consensusParamUpdates ? ConsensusParams.toJSON(message.consensusParamUpdates) : undefined);
+    if (message.events) {
+      obj.events = message.events.map(function (e) {
+        return e ? Event.toJSON(e) : undefined;
+      });
+    } else {
+      obj.events = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$validatorUpda, _object$events4;
     var message = createBaseResponseEndBlock();
@@ -2092,6 +2586,18 @@ var ResponseCommit = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
+      retainHeight: (0, _helpers.isSet)(object.retainHeight) ? _helpers.Long.fromValue(object.retainHeight) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    message.retainHeight !== undefined && (obj.retainHeight = (message.retainHeight || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$data5;
     var message = createBaseResponseCommit();
@@ -2140,6 +2646,24 @@ var ResponseListSnapshots = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      snapshots: Array.isArray(object === null || object === void 0 ? void 0 : object.snapshots) ? object.snapshots.map(function (e) {
+        return Snapshot.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.snapshots) {
+      obj.snapshots = message.snapshots.map(function (e) {
+        return e ? Snapshot.toJSON(e) : undefined;
+      });
+    } else {
+      obj.snapshots = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$snapshots;
     var message = createBaseResponseListSnapshots();
@@ -2180,6 +2704,16 @@ var ResponseOfferSnapshot = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      result: (0, _helpers.isSet)(object.result) ? responseOfferSnapshot_ResultFromJSON(object.result) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.result !== undefined && (obj.result = responseOfferSnapshot_ResultToJSON(message.result));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$result;
     var message = createBaseResponseOfferSnapshot();
@@ -2217,6 +2751,16 @@ var ResponseLoadSnapshotChunk = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      chunk: (0, _helpers.isSet)(object.chunk) ? (0, _helpers.bytesFromBase64)(object.chunk) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.chunk !== undefined && (obj.chunk = (0, _helpers.base64FromBytes)(message.chunk !== undefined ? message.chunk : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$chunk3;
@@ -2297,6 +2841,36 @@ var ResponseApplySnapshotChunk = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      result: (0, _helpers.isSet)(object.result) ? responseApplySnapshotChunk_ResultFromJSON(object.result) : 0,
+      refetchChunks: Array.isArray(object === null || object === void 0 ? void 0 : object.refetchChunks) ? object.refetchChunks.map(function (e) {
+        return Number(e);
+      }) : [],
+      rejectSenders: Array.isArray(object === null || object === void 0 ? void 0 : object.rejectSenders) ? object.rejectSenders.map(function (e) {
+        return String(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.result !== undefined && (obj.result = responseApplySnapshotChunk_ResultToJSON(message.result));
+    if (message.refetchChunks) {
+      obj.refetchChunks = message.refetchChunks.map(function (e) {
+        return Math.round(e);
+      });
+    } else {
+      obj.refetchChunks = [];
+    }
+    if (message.rejectSenders) {
+      obj.rejectSenders = message.rejectSenders.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.rejectSenders = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$result2, _object$refetchChunks, _object$rejectSenders;
     var message = createBaseResponseApplySnapshotChunk();
@@ -2362,6 +2936,22 @@ var ConsensusParams = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      block: (0, _helpers.isSet)(object.block) ? BlockParams.fromJSON(object.block) : undefined,
+      evidence: (0, _helpers.isSet)(object.evidence) ? _params.EvidenceParams.fromJSON(object.evidence) : undefined,
+      validator: (0, _helpers.isSet)(object.validator) ? _params.ValidatorParams.fromJSON(object.validator) : undefined,
+      version: (0, _helpers.isSet)(object.version) ? _params.VersionParams.fromJSON(object.version) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.block !== undefined && (obj.block = message.block ? BlockParams.toJSON(message.block) : undefined);
+    message.evidence !== undefined && (obj.evidence = message.evidence ? _params.EvidenceParams.toJSON(message.evidence) : undefined);
+    message.validator !== undefined && (obj.validator = message.validator ? _params.ValidatorParams.toJSON(message.validator) : undefined);
+    message.version !== undefined && (obj.version = message.version ? _params.VersionParams.toJSON(message.version) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseConsensusParams();
     message.block = object.block !== undefined && object.block !== null ? BlockParams.fromPartial(object.block) : undefined;
@@ -2408,6 +2998,18 @@ var BlockParams = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      maxBytes: (0, _helpers.isSet)(object.maxBytes) ? _helpers.Long.fromValue(object.maxBytes) : _helpers.Long.ZERO,
+      maxGas: (0, _helpers.isSet)(object.maxGas) ? _helpers.Long.fromValue(object.maxGas) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.maxBytes !== undefined && (obj.maxBytes = (message.maxBytes || _helpers.Long.ZERO).toString());
+    message.maxGas !== undefined && (obj.maxGas = (message.maxGas || _helpers.Long.ZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseBlockParams();
@@ -2462,6 +3064,26 @@ var LastCommitInfo = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      round: (0, _helpers.isSet)(object.round) ? Number(object.round) : 0,
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(function (e) {
+        return VoteInfo.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.round !== undefined && (obj.round = Math.round(message.round));
+    if (message.votes) {
+      obj.votes = message.votes.map(function (e) {
+        return e ? VoteInfo.toJSON(e) : undefined;
+      });
+    } else {
+      obj.votes = [];
+    }
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$round, _object$votes;
@@ -2520,6 +3142,26 @@ var Event = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      type: (0, _helpers.isSet)(object.type) ? String(object.type) : "",
+      attributes: Array.isArray(object === null || object === void 0 ? void 0 : object.attributes) ? object.attributes.map(function (e) {
+        return EventAttribute.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.type !== undefined && (obj.type = message.type);
+    if (message.attributes) {
+      obj.attributes = message.attributes.map(function (e) {
+        return e ? EventAttribute.toJSON(e) : undefined;
+      });
+    } else {
+      obj.attributes = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$type2, _object$attributes;
     var message = createBaseEvent();
@@ -2574,6 +3216,20 @@ var EventAttribute = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      key: (0, _helpers.isSet)(object.key) ? (0, _helpers.bytesFromBase64)(object.key) : new Uint8Array(),
+      value: (0, _helpers.isSet)(object.value) ? (0, _helpers.bytesFromBase64)(object.value) : new Uint8Array(),
+      index: (0, _helpers.isSet)(object.index) ? Boolean(object.index) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.key !== undefined && (obj.key = (0, _helpers.base64FromBytes)(message.key !== undefined ? message.key : new Uint8Array()));
+    message.value !== undefined && (obj.value = (0, _helpers.base64FromBytes)(message.value !== undefined ? message.value : new Uint8Array()));
+    message.index !== undefined && (obj.index = message.index);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$key3, _object$value3, _object$index2;
@@ -2636,6 +3292,22 @@ var TxResult = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
+      index: (0, _helpers.isSet)(object.index) ? Number(object.index) : 0,
+      tx: (0, _helpers.isSet)(object.tx) ? (0, _helpers.bytesFromBase64)(object.tx) : new Uint8Array(),
+      result: (0, _helpers.isSet)(object.result) ? ResponseDeliverTx.fromJSON(object.result) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    message.index !== undefined && (obj.index = Math.round(message.index));
+    message.tx !== undefined && (obj.tx = (0, _helpers.base64FromBytes)(message.tx !== undefined ? message.tx : new Uint8Array()));
+    message.result !== undefined && (obj.result = message.result ? ResponseDeliverTx.toJSON(message.result) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$index3, _object$tx3;
     var message = createBaseTxResult();
@@ -2684,6 +3356,18 @@ var Validator = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? (0, _helpers.bytesFromBase64)(object.address) : new Uint8Array(),
+      power: (0, _helpers.isSet)(object.power) ? _helpers.Long.fromValue(object.power) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = (0, _helpers.base64FromBytes)(message.address !== undefined ? message.address : new Uint8Array()));
+    message.power !== undefined && (obj.power = (message.power || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$address;
     var message = createBaseValidator();
@@ -2730,6 +3414,18 @@ var ValidatorUpdate = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      pubKey: (0, _helpers.isSet)(object.pubKey) ? _keys.PublicKey.fromJSON(object.pubKey) : undefined,
+      power: (0, _helpers.isSet)(object.power) ? _helpers.Long.fromValue(object.power) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.pubKey !== undefined && (obj.pubKey = message.pubKey ? _keys.PublicKey.toJSON(message.pubKey) : undefined);
+    message.power !== undefined && (obj.power = (message.power || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseValidatorUpdate();
     message.pubKey = object.pubKey !== undefined && object.pubKey !== null ? _keys.PublicKey.fromPartial(object.pubKey) : undefined;
@@ -2775,6 +3471,18 @@ var VoteInfo = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      validator: (0, _helpers.isSet)(object.validator) ? Validator.fromJSON(object.validator) : undefined,
+      signedLastBlock: (0, _helpers.isSet)(object.signedLastBlock) ? Boolean(object.signedLastBlock) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.validator !== undefined && (obj.validator = message.validator ? Validator.toJSON(message.validator) : undefined);
+    message.signedLastBlock !== undefined && (obj.signedLastBlock = message.signedLastBlock);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$signedLastBlo;
     var message = createBaseVoteInfo();
@@ -2806,7 +3514,7 @@ var Evidence = {
       writer.uint32(24).int64(message.height);
     }
     if (message.time !== undefined) {
-      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.time), writer.uint32(34).fork()).ldelim();
+      _timestamp.Timestamp.encode(message.time, writer.uint32(34).fork()).ldelim();
     }
     if (!message.totalVotingPower.isZero()) {
       writer.uint32(40).int64(message.totalVotingPower);
@@ -2830,7 +3538,7 @@ var Evidence = {
           message.height = reader.int64();
           break;
         case 4:
-          message.time = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
+          message.time = _timestamp.Timestamp.decode(reader, reader.uint32());
           break;
         case 5:
           message.totalVotingPower = reader.int64();
@@ -2842,13 +3550,31 @@ var Evidence = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      type: (0, _helpers.isSet)(object.type) ? evidenceTypeFromJSON(object.type) : 0,
+      validator: (0, _helpers.isSet)(object.validator) ? Validator.fromJSON(object.validator) : undefined,
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
+      time: (0, _helpers.isSet)(object.time) ? (0, _helpers.fromJsonTimestamp)(object.time) : undefined,
+      totalVotingPower: (0, _helpers.isSet)(object.totalVotingPower) ? _helpers.Long.fromValue(object.totalVotingPower) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.type !== undefined && (obj.type = evidenceTypeToJSON(message.type));
+    message.validator !== undefined && (obj.validator = message.validator ? Validator.toJSON(message.validator) : undefined);
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
+    message.time !== undefined && (obj.time = (0, _helpers.fromTimestamp)(message.time).toISOString());
+    message.totalVotingPower !== undefined && (obj.totalVotingPower = (message.totalVotingPower || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
-    var _object$type3, _object$time2;
+    var _object$type3;
     var message = createBaseEvidence();
     message.type = (_object$type3 = object.type) !== null && _object$type3 !== void 0 ? _object$type3 : 0;
     message.validator = object.validator !== undefined && object.validator !== null ? Validator.fromPartial(object.validator) : undefined;
     message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
-    message.time = (_object$time2 = object.time) !== null && _object$time2 !== void 0 ? _object$time2 : undefined;
+    message.time = object.time !== undefined && object.time !== null ? _timestamp.Timestamp.fromPartial(object.time) : undefined;
     message.totalVotingPower = object.totalVotingPower !== undefined && object.totalVotingPower !== null ? _helpers.Long.fromValue(object.totalVotingPower) : _helpers.Long.ZERO;
     return message;
   }
@@ -2911,6 +3637,24 @@ var Snapshot = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.UZERO,
+      format: (0, _helpers.isSet)(object.format) ? Number(object.format) : 0,
+      chunks: (0, _helpers.isSet)(object.chunks) ? Number(object.chunks) : 0,
+      hash: (0, _helpers.isSet)(object.hash) ? (0, _helpers.bytesFromBase64)(object.hash) : new Uint8Array(),
+      metadata: (0, _helpers.isSet)(object.metadata) ? (0, _helpers.bytesFromBase64)(object.metadata) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.height !== undefined && (obj.height = (message.height || _helpers.Long.UZERO).toString());
+    message.format !== undefined && (obj.format = Math.round(message.format));
+    message.chunks !== undefined && (obj.chunks = Math.round(message.chunks));
+    message.hash !== undefined && (obj.hash = (0, _helpers.base64FromBytes)(message.hash !== undefined ? message.hash : new Uint8Array()));
+    message.metadata !== undefined && (obj.metadata = (0, _helpers.base64FromBytes)(message.metadata !== undefined ? message.metadata : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$format2, _object$chunks, _object$hash2, _object$metadata;

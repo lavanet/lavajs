@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.IntProto = exports.DecProto = exports.DecCoin = exports.Coin = void 0;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /**
@@ -81,6 +82,18 @@ var Coin = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : "",
+      amount: (0, _helpers.isSet)(object.amount) ? String(object.amount) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.amount !== undefined && (obj.amount = message.amount);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$denom, _object$amount;
     var message = createBaseCoin();
@@ -127,6 +140,18 @@ var DecCoin = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      denom: (0, _helpers.isSet)(object.denom) ? String(object.denom) : "",
+      amount: (0, _helpers.isSet)(object.amount) ? String(object.amount) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.amount !== undefined && (obj.amount = message.amount);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$denom2, _object$amount2;
     var message = createBaseDecCoin();
@@ -166,6 +191,16 @@ var IntProto = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      "int": (0, _helpers.isSet)(object["int"]) ? String(object["int"]) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message["int"] !== undefined && (obj["int"] = message["int"]);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$int;
     var message = createBaseIntProto();
@@ -203,6 +238,16 @@ var DecProto = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      dec: (0, _helpers.isSet)(object.dec) ? String(object.dec) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.dec !== undefined && (obj.dec = message.dec);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$dec;

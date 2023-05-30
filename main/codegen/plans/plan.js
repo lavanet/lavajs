@@ -97,6 +97,32 @@ var Plan = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
+      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
+      price: (0, _helpers.isSet)(object.price) ? _coin.Coin.fromJSON(object.price) : undefined,
+      allowOveruse: (0, _helpers.isSet)(object.allowOveruse) ? Boolean(object.allowOveruse) : false,
+      overuseRate: (0, _helpers.isSet)(object.overuseRate) ? _helpers.Long.fromValue(object.overuseRate) : _helpers.Long.UZERO,
+      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
+      type: (0, _helpers.isSet)(object.type) ? String(object.type) : "",
+      annualDiscountPercentage: (0, _helpers.isSet)(object.annualDiscountPercentage) ? _helpers.Long.fromValue(object.annualDiscountPercentage) : _helpers.Long.UZERO,
+      planPolicy: (0, _helpers.isSet)(object.planPolicy) ? _project.Policy.fromJSON(object.planPolicy) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
+    message.price !== undefined && (obj.price = message.price ? _coin.Coin.toJSON(message.price) : undefined);
+    message.allowOveruse !== undefined && (obj.allowOveruse = message.allowOveruse);
+    message.overuseRate !== undefined && (obj.overuseRate = (message.overuseRate || _helpers.Long.UZERO).toString());
+    message.description !== undefined && (obj.description = message.description);
+    message.type !== undefined && (obj.type = message.type);
+    message.annualDiscountPercentage !== undefined && (obj.annualDiscountPercentage = (message.annualDiscountPercentage || _helpers.Long.UZERO).toString());
+    message.planPolicy !== undefined && (obj.planPolicy = message.planPolicy ? _project.Policy.toJSON(message.planPolicy) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$allowOveruse, _object$description, _object$type;
     var message = createBasePlan();

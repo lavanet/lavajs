@@ -147,6 +147,16 @@ var DoubleValue = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$value;
     var message = createBaseDoubleValue();
@@ -184,6 +194,16 @@ var FloatValue = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$value2;
@@ -223,6 +243,16 @@ var Int64Value = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? _helpers.Long.fromValue(object.value) : _helpers.Long.ZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = (message.value || _helpers.Long.ZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseInt64Value();
     message.value = object.value !== undefined && object.value !== null ? _helpers.Long.fromValue(object.value) : _helpers.Long.ZERO;
@@ -260,6 +290,16 @@ var UInt64Value = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? _helpers.Long.fromValue(object.value) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = (message.value || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseUInt64Value();
     message.value = object.value !== undefined && object.value !== null ? _helpers.Long.fromValue(object.value) : _helpers.Long.UZERO;
@@ -296,6 +336,16 @@ var Int32Value = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$value3;
@@ -335,6 +385,16 @@ var UInt32Value = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$value4;
     var message = createBaseUInt32Value();
@@ -372,6 +432,16 @@ var BoolValue = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? Boolean(object.value) : false
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$value5;
@@ -411,6 +481,16 @@ var StringValue = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? String(object.value) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$value6;
     var message = createBaseStringValue();
@@ -448,6 +528,16 @@ var BytesValue = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      value: (0, _helpers.isSet)(object.value) ? (0, _helpers.bytesFromBase64)(object.value) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.value !== undefined && (obj.value = (0, _helpers.base64FromBytes)(message.value !== undefined ? message.value : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$value7;

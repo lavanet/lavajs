@@ -107,6 +107,18 @@ var QueryBalanceRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : "",
+      owner: (0, _helpers.isSet)(object.owner) ? String(object.owner) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.classId !== undefined && (obj.classId = message.classId);
+    message.owner !== undefined && (obj.owner = message.owner);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$classId, _object$owner;
     var message = createBaseQueryBalanceRequest();
@@ -145,6 +157,16 @@ var QueryBalanceResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      amount: (0, _helpers.isSet)(object.amount) ? _helpers.Long.fromValue(object.amount) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.amount !== undefined && (obj.amount = (message.amount || _helpers.Long.UZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryBalanceResponse();
@@ -190,6 +212,18 @@ var QueryOwnerRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : "",
+      id: (0, _helpers.isSet)(object.id) ? String(object.id) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.classId !== undefined && (obj.classId = message.classId);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$classId2, _object$id;
     var message = createBaseQueryOwnerRequest();
@@ -229,6 +263,16 @@ var QueryOwnerResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      owner: (0, _helpers.isSet)(object.owner) ? String(object.owner) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.owner !== undefined && (obj.owner = message.owner);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$owner2;
     var message = createBaseQueryOwnerResponse();
@@ -267,6 +311,16 @@ var QuerySupplyRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.classId !== undefined && (obj.classId = message.classId);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$classId3;
     var message = createBaseQuerySupplyRequest();
@@ -304,6 +358,16 @@ var QuerySupplyResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      amount: (0, _helpers.isSet)(object.amount) ? _helpers.Long.fromValue(object.amount) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.amount !== undefined && (obj.amount = (message.amount || _helpers.Long.UZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQuerySupplyResponse();
@@ -355,6 +419,20 @@ var QueryNFTsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : "",
+      owner: (0, _helpers.isSet)(object.owner) ? String(object.owner) : "",
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.classId !== undefined && (obj.classId = message.classId);
+    message.owner !== undefined && (obj.owner = message.owner);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$classId4, _object$owner3;
@@ -412,6 +490,26 @@ var QueryNFTsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      nfts: Array.isArray(object === null || object === void 0 ? void 0 : object.nfts) ? object.nfts.map(function (e) {
+        return _nft.NFT.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.nfts) {
+      obj.nfts = message.nfts.map(function (e) {
+        return e ? _nft.NFT.toJSON(e) : undefined;
+      });
+    } else {
+      obj.nfts = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$nfts;
     var message = createBaseQueryNFTsResponse();
@@ -460,6 +558,18 @@ var QueryNFTRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : "",
+      id: (0, _helpers.isSet)(object.id) ? String(object.id) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.classId !== undefined && (obj.classId = message.classId);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$classId5, _object$id2;
     var message = createBaseQueryNFTRequest();
@@ -499,6 +609,16 @@ var QueryNFTResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      nft: (0, _helpers.isSet)(object.nft) ? _nft.NFT.fromJSON(object.nft) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.nft !== undefined && (obj.nft = message.nft ? _nft.NFT.toJSON(message.nft) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryNFTResponse();
     message.nft = object.nft !== undefined && object.nft !== null ? _nft.NFT.fromPartial(object.nft) : undefined;
@@ -535,6 +655,16 @@ var QueryClassRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.classId !== undefined && (obj.classId = message.classId);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$classId6;
@@ -574,6 +704,16 @@ var QueryClassResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      "class": (0, _helpers.isSet)(object["class"]) ? _nft.Class.fromJSON(object["class"]) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message["class"] !== undefined && (obj["class"] = message["class"] ? _nft.Class.toJSON(message["class"]) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryClassResponse();
     message["class"] = object["class"] !== undefined && object["class"] !== null ? _nft.Class.fromPartial(object["class"]) : undefined;
@@ -610,6 +750,16 @@ var QueryClassesRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryClassesRequest();
@@ -663,6 +813,26 @@ var QueryClassesResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      classes: Array.isArray(object === null || object === void 0 ? void 0 : object.classes) ? object.classes.map(function (e) {
+        return _nft.Class.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.classes) {
+      obj.classes = message.classes.map(function (e) {
+        return e ? _nft.Class.toJSON(e) : undefined;
+      });
+    } else {
+      obj.classes = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$classes;

@@ -1,5 +1,6 @@
 import { Coin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
+import { isSet } from "../../../helpers";
 /**
  * AuthorizationType defines the type of staking module authorization type
  * 
@@ -115,6 +116,22 @@ export const StakeAuthorization = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      maxTokens: isSet(object.maxTokens) ? Coin.fromJSON(object.maxTokens) : undefined,
+      allowList: isSet(object.allowList) ? StakeAuthorization_Validators.fromJSON(object.allowList) : undefined,
+      denyList: isSet(object.denyList) ? StakeAuthorization_Validators.fromJSON(object.denyList) : undefined,
+      authorizationType: isSet(object.authorizationType) ? authorizationTypeFromJSON(object.authorizationType) : 0
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.maxTokens !== undefined && (obj.maxTokens = message.maxTokens ? Coin.toJSON(message.maxTokens) : undefined);
+    message.allowList !== undefined && (obj.allowList = message.allowList ? StakeAuthorization_Validators.toJSON(message.allowList) : undefined);
+    message.denyList !== undefined && (obj.denyList = message.denyList ? StakeAuthorization_Validators.toJSON(message.denyList) : undefined);
+    message.authorizationType !== undefined && (obj.authorizationType = authorizationTypeToJSON(message.authorizationType));
+    return obj;
+  },
   fromPartial(object) {
     var _object$authorization;
     const message = createBaseStakeAuthorization();
@@ -153,6 +170,20 @@ export const StakeAuthorization_Validators = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      address: Array.isArray(object === null || object === void 0 ? void 0 : object.address) ? object.address.map(e => String(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.address) {
+      obj.address = message.address.map(e => e);
+    } else {
+      obj.address = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$address;

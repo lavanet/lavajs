@@ -1,4 +1,4 @@
-import { Long } from "../helpers";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseProviderPaymentStorage() {
   return {
@@ -49,6 +49,26 @@ export const ProviderPaymentStorage = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      epoch: isSet(object.epoch) ? Long.fromValue(object.epoch) : Long.UZERO,
+      uniquePaymentStorageClientProviderKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProviderKeys) ? object.uniquePaymentStorageClientProviderKeys.map(e => String(e)) : [],
+      complainersTotalCu: isSet(object.complainersTotalCu) ? Long.fromValue(object.complainersTotalCu) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.epoch !== undefined && (obj.epoch = (message.epoch || Long.UZERO).toString());
+    if (message.uniquePaymentStorageClientProviderKeys) {
+      obj.uniquePaymentStorageClientProviderKeys = message.uniquePaymentStorageClientProviderKeys.map(e => e);
+    } else {
+      obj.uniquePaymentStorageClientProviderKeys = [];
+    }
+    message.complainersTotalCu !== undefined && (obj.complainersTotalCu = (message.complainersTotalCu || Long.UZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     var _object$index, _object$uniquePayment;

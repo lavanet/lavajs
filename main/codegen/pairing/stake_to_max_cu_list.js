@@ -52,6 +52,24 @@ var StakeToMaxCUList = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      List: Array.isArray(object === null || object === void 0 ? void 0 : object.List) ? object.List.map(function (e) {
+        return StakeToMaxCU.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.List) {
+      obj.List = message.List.map(function (e) {
+        return e ? StakeToMaxCU.toJSON(e) : undefined;
+      });
+    } else {
+      obj.List = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$List;
     var message = createBaseStakeToMaxCUList();
@@ -98,6 +116,18 @@ var StakeToMaxCU = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      StakeThreshold: (0, _helpers.isSet)(object.StakeThreshold) ? _coin.Coin.fromJSON(object.StakeThreshold) : undefined,
+      MaxComputeUnits: (0, _helpers.isSet)(object.MaxComputeUnits) ? _helpers.Long.fromValue(object.MaxComputeUnits) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.StakeThreshold !== undefined && (obj.StakeThreshold = message.StakeThreshold ? _coin.Coin.toJSON(message.StakeThreshold) : undefined);
+    message.MaxComputeUnits !== undefined && (obj.MaxComputeUnits = (message.MaxComputeUnits || _helpers.Long.UZERO).toString());
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseStakeToMaxCU();

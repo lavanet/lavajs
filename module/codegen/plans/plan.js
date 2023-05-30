@@ -1,6 +1,6 @@
 import { Coin } from "../cosmos/base/v1beta1/coin";
 import { Policy } from "../projects/project";
-import { Long } from "../helpers";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBasePlan() {
   return {
@@ -86,6 +86,32 @@ export const Plan = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO,
+      price: isSet(object.price) ? Coin.fromJSON(object.price) : undefined,
+      allowOveruse: isSet(object.allowOveruse) ? Boolean(object.allowOveruse) : false,
+      overuseRate: isSet(object.overuseRate) ? Long.fromValue(object.overuseRate) : Long.UZERO,
+      description: isSet(object.description) ? String(object.description) : "",
+      type: isSet(object.type) ? String(object.type) : "",
+      annualDiscountPercentage: isSet(object.annualDiscountPercentage) ? Long.fromValue(object.annualDiscountPercentage) : Long.UZERO,
+      planPolicy: isSet(object.planPolicy) ? Policy.fromJSON(object.planPolicy) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
+    message.price !== undefined && (obj.price = message.price ? Coin.toJSON(message.price) : undefined);
+    message.allowOveruse !== undefined && (obj.allowOveruse = message.allowOveruse);
+    message.overuseRate !== undefined && (obj.overuseRate = (message.overuseRate || Long.UZERO).toString());
+    message.description !== undefined && (obj.description = message.description);
+    message.type !== undefined && (obj.type = message.type);
+    message.annualDiscountPercentage !== undefined && (obj.annualDiscountPercentage = (message.annualDiscountPercentage || Long.UZERO).toString());
+    message.planPolicy !== undefined && (obj.planPolicy = message.planPolicy ? Policy.toJSON(message.planPolicy) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$index, _object$allowOveruse, _object$description, _object$type;

@@ -1,6 +1,6 @@
 import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { GroupInfo, GroupPolicyInfo, GroupMember, Proposal, Vote, TallyResult } from "./types";
-import { Long } from "../../../helpers";
+import { Long, isSet } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** QueryGroupInfoRequest is the Query/GroupInfo request type. */
 
@@ -135,6 +135,16 @@ export const QueryGroupInfoRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryGroupInfoRequest();
     message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
@@ -169,6 +179,16 @@ export const QueryGroupInfoResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      info: isSet(object.info) ? GroupInfo.fromJSON(object.info) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.info !== undefined && (obj.info = message.info ? GroupInfo.toJSON(message.info) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryGroupInfoResponse();
@@ -205,6 +225,16 @@ export const QueryGroupPolicyInfoRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      address: isSet(object.address) ? String(object.address) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    return obj;
+  },
   fromPartial(object) {
     var _object$address;
     const message = createBaseQueryGroupPolicyInfoRequest();
@@ -240,6 +270,16 @@ export const QueryGroupPolicyInfoResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      info: isSet(object.info) ? GroupPolicyInfo.fromJSON(object.info) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.info !== undefined && (obj.info = message.info ? GroupPolicyInfo.toJSON(message.info) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryGroupPolicyInfoResponse();
@@ -283,6 +323,18 @@ export const QueryGroupMembersRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO,
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryGroupMembersRequest();
     message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
@@ -325,6 +377,22 @@ export const QueryGroupMembersResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      members: Array.isArray(object === null || object === void 0 ? void 0 : object.members) ? object.members.map(e => GroupMember.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.members) {
+      obj.members = message.members.map(e => e ? GroupMember.toJSON(e) : undefined);
+    } else {
+      obj.members = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$members;
@@ -370,6 +438,18 @@ export const QueryGroupsByAdminRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin;
     const message = createBaseQueryGroupsByAdminRequest();
@@ -413,6 +493,22 @@ export const QueryGroupsByAdminResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      groups: Array.isArray(object === null || object === void 0 ? void 0 : object.groups) ? object.groups.map(e => GroupInfo.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.groups) {
+      obj.groups = message.groups.map(e => e ? GroupInfo.toJSON(e) : undefined);
+    } else {
+      obj.groups = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$groups;
@@ -458,6 +554,18 @@ export const QueryGroupPoliciesByGroupRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      groupId: isSet(object.groupId) ? Long.fromValue(object.groupId) : Long.UZERO,
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.groupId !== undefined && (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryGroupPoliciesByGroupRequest();
     message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
@@ -500,6 +608,22 @@ export const QueryGroupPoliciesByGroupResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      groupPolicies: Array.isArray(object === null || object === void 0 ? void 0 : object.groupPolicies) ? object.groupPolicies.map(e => GroupPolicyInfo.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.groupPolicies) {
+      obj.groupPolicies = message.groupPolicies.map(e => e ? GroupPolicyInfo.toJSON(e) : undefined);
+    } else {
+      obj.groupPolicies = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$groupPolicies;
@@ -545,6 +669,18 @@ export const QueryGroupPoliciesByAdminRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      admin: isSet(object.admin) ? String(object.admin) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.admin !== undefined && (obj.admin = message.admin);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$admin2;
     const message = createBaseQueryGroupPoliciesByAdminRequest();
@@ -589,6 +725,22 @@ export const QueryGroupPoliciesByAdminResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      groupPolicies: Array.isArray(object === null || object === void 0 ? void 0 : object.groupPolicies) ? object.groupPolicies.map(e => GroupPolicyInfo.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.groupPolicies) {
+      obj.groupPolicies = message.groupPolicies.map(e => e ? GroupPolicyInfo.toJSON(e) : undefined);
+    } else {
+      obj.groupPolicies = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$groupPolicies2;
     const message = createBaseQueryGroupPoliciesByAdminResponse();
@@ -626,6 +778,16 @@ export const QueryProposalRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryProposalRequest();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
@@ -660,6 +822,16 @@ export const QueryProposalResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      proposal: isSet(object.proposal) ? Proposal.fromJSON(object.proposal) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposal !== undefined && (obj.proposal = message.proposal ? Proposal.toJSON(message.proposal) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryProposalResponse();
@@ -702,6 +874,18 @@ export const QueryProposalsByGroupPolicyRequest = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      address: isSet(object.address) ? String(object.address) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$address2;
@@ -747,6 +931,22 @@ export const QueryProposalsByGroupPolicyResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposals: Array.isArray(object === null || object === void 0 ? void 0 : object.proposals) ? object.proposals.map(e => Proposal.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.proposals) {
+      obj.proposals = message.proposals.map(e => e ? Proposal.toJSON(e) : undefined);
+    } else {
+      obj.proposals = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$proposals;
     const message = createBaseQueryProposalsByGroupPolicyResponse();
@@ -791,6 +991,18 @@ export const QueryVoteByProposalVoterRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO,
+      voter: isSet(object.voter) ? String(object.voter) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.voter !== undefined && (obj.voter = message.voter);
+    return obj;
+  },
   fromPartial(object) {
     var _object$voter;
     const message = createBaseQueryVoteByProposalVoterRequest();
@@ -827,6 +1039,16 @@ export const QueryVoteByProposalVoterResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      vote: isSet(object.vote) ? Vote.fromJSON(object.vote) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.vote !== undefined && (obj.vote = message.vote ? Vote.toJSON(message.vote) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryVoteByProposalVoterResponse();
@@ -870,6 +1092,18 @@ export const QueryVotesByProposalRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO,
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryVotesByProposalRequest();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
@@ -912,6 +1146,22 @@ export const QueryVotesByProposalResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(e => Vote.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.votes) {
+      obj.votes = message.votes.map(e => e ? Vote.toJSON(e) : undefined);
+    } else {
+      obj.votes = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$votes;
@@ -957,6 +1207,18 @@ export const QueryVotesByVoterRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      voter: isSet(object.voter) ? String(object.voter) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.voter !== undefined && (obj.voter = message.voter);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$voter2;
     const message = createBaseQueryVotesByVoterRequest();
@@ -1000,6 +1262,22 @@ export const QueryVotesByVoterResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(e => Vote.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.votes) {
+      obj.votes = message.votes.map(e => e ? Vote.toJSON(e) : undefined);
+    } else {
+      obj.votes = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
   },
   fromPartial(object) {
     var _object$votes2;
@@ -1045,6 +1323,18 @@ export const QueryGroupsByMemberRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      address: isSet(object.address) ? String(object.address) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$address3;
     const message = createBaseQueryGroupsByMemberRequest();
@@ -1089,6 +1379,22 @@ export const QueryGroupsByMemberResponse = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      groups: Array.isArray(object === null || object === void 0 ? void 0 : object.groups) ? object.groups.map(e => GroupInfo.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.groups) {
+      obj.groups = message.groups.map(e => e ? GroupInfo.toJSON(e) : undefined);
+    } else {
+      obj.groups = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial(object) {
     var _object$groups2;
     const message = createBaseQueryGroupsByMemberResponse();
@@ -1126,6 +1432,16 @@ export const QueryTallyResultRequest = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      proposalId: isSet(object.proposalId) ? Long.fromValue(object.proposalId) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    return obj;
+  },
   fromPartial(object) {
     const message = createBaseQueryTallyResultRequest();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
@@ -1160,6 +1476,16 @@ export const QueryTallyResultResponse = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      tally: isSet(object.tally) ? TallyResult.fromJSON(object.tally) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.tally !== undefined && (obj.tally = message.tally ? TallyResult.toJSON(message.tally) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryTallyResultResponse();

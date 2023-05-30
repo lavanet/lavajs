@@ -53,6 +53,20 @@ var FixatedParams = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
+      parameter: (0, _helpers.isSet)(object.parameter) ? (0, _helpers.bytesFromBase64)(object.parameter) : new Uint8Array(),
+      fixationBlock: (0, _helpers.isSet)(object.fixationBlock) ? _helpers.Long.fromValue(object.fixationBlock) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.parameter !== undefined && (obj.parameter = (0, _helpers.base64FromBytes)(message.parameter !== undefined ? message.parameter : new Uint8Array()));
+    message.fixationBlock !== undefined && (obj.fixationBlock = (message.fixationBlock || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$parameter;
     var message = createBaseFixatedParams();

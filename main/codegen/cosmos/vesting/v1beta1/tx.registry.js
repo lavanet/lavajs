@@ -59,6 +59,46 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    createVestingAccount: function createVestingAccount(value) {
+      return {
+        typeUrl: "/cosmos.vesting.v1beta1.MsgCreateVestingAccount",
+        value: _tx.MsgCreateVestingAccount.toJSON(value)
+      };
+    },
+    createPermanentLockedAccount: function createPermanentLockedAccount(value) {
+      return {
+        typeUrl: "/cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccount",
+        value: _tx.MsgCreatePermanentLockedAccount.toJSON(value)
+      };
+    },
+    createPeriodicVestingAccount: function createPeriodicVestingAccount(value) {
+      return {
+        typeUrl: "/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount",
+        value: _tx.MsgCreatePeriodicVestingAccount.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    createVestingAccount: function createVestingAccount(value) {
+      return {
+        typeUrl: "/cosmos.vesting.v1beta1.MsgCreateVestingAccount",
+        value: _tx.MsgCreateVestingAccount.fromJSON(value)
+      };
+    },
+    createPermanentLockedAccount: function createPermanentLockedAccount(value) {
+      return {
+        typeUrl: "/cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccount",
+        value: _tx.MsgCreatePermanentLockedAccount.fromJSON(value)
+      };
+    },
+    createPeriodicVestingAccount: function createPeriodicVestingAccount(value) {
+      return {
+        typeUrl: "/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount",
+        value: _tx.MsgCreatePeriodicVestingAccount.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     createVestingAccount: function createVestingAccount(value) {
       return {

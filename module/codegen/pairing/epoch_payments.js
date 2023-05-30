@@ -1,4 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
+import { isSet } from "../helpers";
 function createBaseEpochPayments() {
   return {
     index: "",
@@ -34,6 +35,22 @@ export const EpochPayments = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      providerPaymentStorageKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.providerPaymentStorageKeys) ? object.providerPaymentStorageKeys.map(e => String(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    if (message.providerPaymentStorageKeys) {
+      obj.providerPaymentStorageKeys = message.providerPaymentStorageKeys.map(e => e);
+    } else {
+      obj.providerPaymentStorageKeys = [];
+    }
+    return obj;
   },
   fromPartial(object) {
     var _object$index, _object$providerPayme;

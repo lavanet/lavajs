@@ -67,6 +67,24 @@ var Entry = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
+      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
+      staleAt: (0, _helpers.isSet)(object.staleAt) ? _helpers.Long.fromValue(object.staleAt) : _helpers.Long.UZERO,
+      refcount: (0, _helpers.isSet)(object.refcount) ? _helpers.Long.fromValue(object.refcount) : _helpers.Long.UZERO,
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
+    message.staleAt !== undefined && (obj.staleAt = (message.staleAt || _helpers.Long.UZERO).toString());
+    message.refcount !== undefined && (obj.refcount = (message.refcount || _helpers.Long.UZERO).toString());
+    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$data;
     var message = createBaseEntry();

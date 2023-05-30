@@ -71,6 +71,24 @@ var Params = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      unstakeHoldBlocks: (0, _helpers.isSet)(object.unstakeHoldBlocks) ? _helpers.Long.fromValue(object.unstakeHoldBlocks) : _helpers.Long.UZERO,
+      epochBlocks: (0, _helpers.isSet)(object.epochBlocks) ? _helpers.Long.fromValue(object.epochBlocks) : _helpers.Long.UZERO,
+      epochsToSave: (0, _helpers.isSet)(object.epochsToSave) ? _helpers.Long.fromValue(object.epochsToSave) : _helpers.Long.UZERO,
+      latestParamChange: (0, _helpers.isSet)(object.latestParamChange) ? _helpers.Long.fromValue(object.latestParamChange) : _helpers.Long.UZERO,
+      unstakeHoldBlocksStatic: (0, _helpers.isSet)(object.unstakeHoldBlocksStatic) ? _helpers.Long.fromValue(object.unstakeHoldBlocksStatic) : _helpers.Long.UZERO
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.unstakeHoldBlocks !== undefined && (obj.unstakeHoldBlocks = (message.unstakeHoldBlocks || _helpers.Long.UZERO).toString());
+    message.epochBlocks !== undefined && (obj.epochBlocks = (message.epochBlocks || _helpers.Long.UZERO).toString());
+    message.epochsToSave !== undefined && (obj.epochsToSave = (message.epochsToSave || _helpers.Long.UZERO).toString());
+    message.latestParamChange !== undefined && (obj.latestParamChange = (message.latestParamChange || _helpers.Long.UZERO).toString());
+    message.unstakeHoldBlocksStatic !== undefined && (obj.unstakeHoldBlocksStatic = (message.unstakeHoldBlocksStatic || _helpers.Long.UZERO).toString());
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseParams();
     message.unstakeHoldBlocks = object.unstakeHoldBlocks !== undefined && object.unstakeHoldBlocks !== null ? _helpers.Long.fromValue(object.unstakeHoldBlocks) : _helpers.Long.UZERO;

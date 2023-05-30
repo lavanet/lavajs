@@ -9,6 +9,7 @@ var _pagination = require("../../base/query/v1beta1/pagination");
 var _any = require("../../../google/protobuf/any");
 var _auth = require("./auth");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -116,6 +117,16 @@ var QueryAccountsRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAccountsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageRequest.fromPartial(object.pagination) : undefined;
@@ -169,6 +180,26 @@ var QueryAccountsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      accounts: Array.isArray(object === null || object === void 0 ? void 0 : object.accounts) ? object.accounts.map(function (e) {
+        return _any.Any.fromJSON(e);
+      }) : [],
+      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.accounts) {
+      obj.accounts = message.accounts.map(function (e) {
+        return e ? _any.Any.toJSON(e) : undefined;
+      });
+    } else {
+      obj.accounts = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$accounts;
     var message = createBaseQueryAccountsResponse();
@@ -210,6 +241,16 @@ var QueryAccountRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.address !== undefined && (obj.address = message.address);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$address;
     var message = createBaseQueryAccountRequest();
@@ -239,6 +280,13 @@ var QueryModuleAccountsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryModuleAccountsRequest();
@@ -275,6 +323,16 @@ var QueryParamsResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      params: (0, _helpers.isSet)(object.params) ? _auth.Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.params !== undefined && (obj.params = message.params ? _auth.Params.toJSON(message.params) : undefined);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
@@ -313,6 +371,16 @@ var QueryAccountResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      account: (0, _helpers.isSet)(object.account) ? _any.Any.fromJSON(object.account) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.account !== undefined && (obj.account = message.account ? _any.Any.toJSON(message.account) : undefined);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAccountResponse();
     message.account = object.account !== undefined && object.account !== null ? _any.Any.fromPartial(object.account) : undefined;
@@ -341,6 +409,13 @@ var QueryParamsRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
@@ -387,6 +462,24 @@ var QueryModuleAccountsResponse = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      accounts: Array.isArray(object === null || object === void 0 ? void 0 : object.accounts) ? object.accounts.map(function (e) {
+        return _any.Any.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.accounts) {
+      obj.accounts = message.accounts.map(function (e) {
+        return e ? _any.Any.toJSON(e) : undefined;
+      });
+    } else {
+      obj.accounts = [];
+    }
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$accounts2;
     var message = createBaseQueryModuleAccountsResponse();
@@ -418,6 +511,13 @@ var Bech32PrefixRequest = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseBech32PrefixRequest();
@@ -454,6 +554,16 @@ var Bech32PrefixResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      bech32Prefix: (0, _helpers.isSet)(object.bech32Prefix) ? String(object.bech32Prefix) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.bech32Prefix !== undefined && (obj.bech32Prefix = message.bech32Prefix);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$bech32Prefix;
@@ -493,6 +603,16 @@ var AddressBytesToStringRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      addressBytes: (0, _helpers.isSet)(object.addressBytes) ? (0, _helpers.bytesFromBase64)(object.addressBytes) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.addressBytes !== undefined && (obj.addressBytes = (0, _helpers.base64FromBytes)(message.addressBytes !== undefined ? message.addressBytes : new Uint8Array()));
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$addressBytes;
     var message = createBaseAddressBytesToStringRequest();
@@ -530,6 +650,16 @@ var AddressBytesToStringResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      addressString: (0, _helpers.isSet)(object.addressString) ? String(object.addressString) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.addressString !== undefined && (obj.addressString = message.addressString);
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$addressString;
@@ -569,6 +699,16 @@ var AddressStringToBytesRequest = {
     }
     return message;
   },
+  fromJSON: function fromJSON(object) {
+    return {
+      addressString: (0, _helpers.isSet)(object.addressString) ? String(object.addressString) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.addressString !== undefined && (obj.addressString = message.addressString);
+    return obj;
+  },
   fromPartial: function fromPartial(object) {
     var _object$addressString2;
     var message = createBaseAddressStringToBytesRequest();
@@ -606,6 +746,16 @@ var AddressStringToBytesResponse = {
       }
     }
     return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      addressBytes: (0, _helpers.isSet)(object.addressBytes) ? (0, _helpers.bytesFromBase64)(object.addressBytes) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.addressBytes !== undefined && (obj.addressBytes = (0, _helpers.base64FromBytes)(message.addressBytes !== undefined ? message.addressBytes : new Uint8Array()));
+    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$addressBytes2;

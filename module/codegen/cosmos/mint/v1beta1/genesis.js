@@ -1,6 +1,6 @@
 import { Minter, Params } from "./mint";
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../../../helpers";
 /** GenesisState defines the mint module's genesis state. */
 
 /** GenesisState defines the mint module's genesis state. */
@@ -40,6 +40,18 @@ export const GenesisState = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      minter: isSet(object.minter) ? Minter.fromJSON(object.minter) : undefined,
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.minter !== undefined && (obj.minter = message.minter ? Minter.toJSON(message.minter) : undefined);
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseGenesisState();

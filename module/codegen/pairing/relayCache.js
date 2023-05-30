@@ -1,5 +1,5 @@
 import { RelayRequest, RelayReply } from "./relay";
-import { Long } from "../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseCacheUsage() {
   return {
@@ -36,6 +36,18 @@ export const CacheUsage = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      CacheHits: isSet(object.CacheHits) ? Long.fromValue(object.CacheHits) : Long.UZERO,
+      CacheMisses: isSet(object.CacheMisses) ? Long.fromValue(object.CacheMisses) : Long.UZERO
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.CacheHits !== undefined && (obj.CacheHits = (message.CacheHits || Long.UZERO).toString());
+    message.CacheMisses !== undefined && (obj.CacheMisses = (message.CacheMisses || Long.UZERO).toString());
+    return obj;
   },
   fromPartial(object) {
     const message = createBaseCacheUsage();
@@ -100,6 +112,24 @@ export const RelayCacheGet = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      request: isSet(object.request) ? RelayRequest.fromJSON(object.request) : undefined,
+      apiInterface: isSet(object.apiInterface) ? String(object.apiInterface) : "",
+      blockHash: isSet(object.blockHash) ? bytesFromBase64(object.blockHash) : new Uint8Array(),
+      chainID: isSet(object.chainID) ? String(object.chainID) : "",
+      finalized: isSet(object.finalized) ? Boolean(object.finalized) : false
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.request !== undefined && (obj.request = message.request ? RelayRequest.toJSON(message.request) : undefined);
+    message.apiInterface !== undefined && (obj.apiInterface = message.apiInterface);
+    message.blockHash !== undefined && (obj.blockHash = base64FromBytes(message.blockHash !== undefined ? message.blockHash : new Uint8Array()));
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.finalized !== undefined && (obj.finalized = message.finalized);
+    return obj;
   },
   fromPartial(object) {
     var _object$apiInterface, _object$blockHash, _object$chainID, _object$finalized;
@@ -182,6 +212,28 @@ export const RelayCacheSet = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      request: isSet(object.request) ? RelayRequest.fromJSON(object.request) : undefined,
+      apiInterface: isSet(object.apiInterface) ? String(object.apiInterface) : "",
+      blockHash: isSet(object.blockHash) ? bytesFromBase64(object.blockHash) : new Uint8Array(),
+      chainID: isSet(object.chainID) ? String(object.chainID) : "",
+      bucketID: isSet(object.bucketID) ? String(object.bucketID) : "",
+      response: isSet(object.response) ? RelayReply.fromJSON(object.response) : undefined,
+      finalized: isSet(object.finalized) ? Boolean(object.finalized) : false
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.request !== undefined && (obj.request = message.request ? RelayRequest.toJSON(message.request) : undefined);
+    message.apiInterface !== undefined && (obj.apiInterface = message.apiInterface);
+    message.blockHash !== undefined && (obj.blockHash = base64FromBytes(message.blockHash !== undefined ? message.blockHash : new Uint8Array()));
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    message.bucketID !== undefined && (obj.bucketID = message.bucketID);
+    message.response !== undefined && (obj.response = message.response ? RelayReply.toJSON(message.response) : undefined);
+    message.finalized !== undefined && (obj.finalized = message.finalized);
+    return obj;
   },
   fromPartial(object) {
     var _object$apiInterface2, _object$blockHash2, _object$chainID2, _object$bucketID, _object$finalized2;

@@ -34,6 +34,34 @@ export const MessageComposer = {
       };
     }
   },
+  toJSON: {
+    send(value) {
+      return {
+        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+        value: MsgSend.toJSON(value)
+      };
+    },
+    multiSend(value) {
+      return {
+        typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
+        value: MsgMultiSend.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    send(value) {
+      return {
+        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+        value: MsgSend.fromJSON(value)
+      };
+    },
+    multiSend(value) {
+      return {
+        typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
+        value: MsgMultiSend.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     send(value) {
       return {

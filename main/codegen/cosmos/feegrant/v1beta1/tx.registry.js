@@ -47,6 +47,34 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    grantAllowance: function grantAllowance(value) {
+      return {
+        typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
+        value: _tx.MsgGrantAllowance.toJSON(value)
+      };
+    },
+    revokeAllowance: function revokeAllowance(value) {
+      return {
+        typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
+        value: _tx.MsgRevokeAllowance.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    grantAllowance: function grantAllowance(value) {
+      return {
+        typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
+        value: _tx.MsgGrantAllowance.fromJSON(value)
+      };
+    },
+    revokeAllowance: function revokeAllowance(value) {
+      return {
+        typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
+        value: _tx.MsgRevokeAllowance.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     grantAllowance: function grantAllowance(value) {
       return {

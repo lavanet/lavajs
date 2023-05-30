@@ -22,6 +22,22 @@ export const MessageComposer = {
       };
     }
   },
+  toJSON: {
+    unjail(value) {
+      return {
+        typeUrl: "/cosmos.slashing.v1beta1.MsgUnjail",
+        value: MsgUnjail.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    unjail(value) {
+      return {
+        typeUrl: "/cosmos.slashing.v1beta1.MsgUnjail",
+        value: MsgUnjail.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     unjail(value) {
       return {

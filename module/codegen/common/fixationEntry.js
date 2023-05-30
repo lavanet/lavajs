@@ -1,4 +1,4 @@
-import { Long } from "../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseEntry() {
   return {
@@ -56,6 +56,24 @@ export const Entry = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO,
+      staleAt: isSet(object.staleAt) ? Long.fromValue(object.staleAt) : Long.UZERO,
+      refcount: isSet(object.refcount) ? Long.fromValue(object.refcount) : Long.UZERO,
+      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array()
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
+    message.staleAt !== undefined && (obj.staleAt = (message.staleAt || Long.UZERO).toString());
+    message.refcount !== undefined && (obj.refcount = (message.refcount || Long.UZERO).toString());
+    message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
+    return obj;
   },
   fromPartial(object) {
     var _object$index, _object$data;

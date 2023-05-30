@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-
+import { bytesFromBase64, base64FromBytes, isSet } from "../../../../helpers";
 /**
  * MultiSignature wraps the signatures from a multisig.LegacyAminoPubKey.
  * See cosmos.tx.v1betata1.ModeInfo.Multi for how to specify which signers
@@ -55,6 +55,20 @@ export const MultiSignature = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      signatures: Array.isArray(object === null || object === void 0 ? void 0 : object.signatures) ? object.signatures.map(e => bytesFromBase64(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.signatures) {
+      obj.signatures = message.signatures.map(e => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$signatures;
     const message = createBaseMultiSignature();
@@ -97,6 +111,18 @@ export const CompactBitArray = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      extraBitsStored: isSet(object.extraBitsStored) ? Number(object.extraBitsStored) : 0,
+      elems: isSet(object.elems) ? bytesFromBase64(object.elems) : new Uint8Array()
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.extraBitsStored !== undefined && (obj.extraBitsStored = Math.round(message.extraBitsStored));
+    message.elems !== undefined && (obj.elems = base64FromBytes(message.elems !== undefined ? message.elems : new Uint8Array()));
+    return obj;
   },
   fromPartial(object) {
     var _object$extraBitsStor, _object$elems;

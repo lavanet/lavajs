@@ -71,6 +71,58 @@ var MessageComposer = {
       };
     }
   },
+  toJSON: {
+    setWithdrawAddress: function setWithdrawAddress(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
+        value: _tx.MsgSetWithdrawAddress.toJSON(value)
+      };
+    },
+    withdrawDelegatorReward: function withdrawDelegatorReward(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+        value: _tx.MsgWithdrawDelegatorReward.toJSON(value)
+      };
+    },
+    withdrawValidatorCommission: function withdrawValidatorCommission(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
+        value: _tx.MsgWithdrawValidatorCommission.toJSON(value)
+      };
+    },
+    fundCommunityPool: function fundCommunityPool(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
+        value: _tx.MsgFundCommunityPool.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    setWithdrawAddress: function setWithdrawAddress(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
+        value: _tx.MsgSetWithdrawAddress.fromJSON(value)
+      };
+    },
+    withdrawDelegatorReward: function withdrawDelegatorReward(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+        value: _tx.MsgWithdrawDelegatorReward.fromJSON(value)
+      };
+    },
+    withdrawValidatorCommission: function withdrawValidatorCommission(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
+        value: _tx.MsgWithdrawValidatorCommission.fromJSON(value)
+      };
+    },
+    fundCommunityPool: function fundCommunityPool(value) {
+      return {
+        typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
+        value: _tx.MsgFundCommunityPool.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     setWithdrawAddress: function setWithdrawAddress(value) {
       return {

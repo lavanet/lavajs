@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../../helpers";
 /**
  * Defines the HTTP configuration for an API service. It contains a list of
  * [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method
@@ -596,6 +596,22 @@ export const Http = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      rules: Array.isArray(object === null || object === void 0 ? void 0 : object.rules) ? object.rules.map(e => HttpRule.fromJSON(e)) : [],
+      fullyDecodeReservedExpansion: isSet(object.fullyDecodeReservedExpansion) ? Boolean(object.fullyDecodeReservedExpansion) : false
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.rules) {
+      obj.rules = message.rules.map(e => e ? HttpRule.toJSON(e) : undefined);
+    } else {
+      obj.rules = [];
+    }
+    message.fullyDecodeReservedExpansion !== undefined && (obj.fullyDecodeReservedExpansion = message.fullyDecodeReservedExpansion);
+    return obj;
+  },
   fromPartial(object) {
     var _object$rules, _object$fullyDecodeRe;
     const message = createBaseHttp();
@@ -696,6 +712,38 @@ export const HttpRule = {
     }
     return message;
   },
+  fromJSON(object) {
+    return {
+      selector: isSet(object.selector) ? String(object.selector) : "",
+      get: isSet(object.get) ? String(object.get) : undefined,
+      put: isSet(object.put) ? String(object.put) : undefined,
+      post: isSet(object.post) ? String(object.post) : undefined,
+      delete: isSet(object.delete) ? String(object.delete) : undefined,
+      patch: isSet(object.patch) ? String(object.patch) : undefined,
+      custom: isSet(object.custom) ? CustomHttpPattern.fromJSON(object.custom) : undefined,
+      body: isSet(object.body) ? String(object.body) : "",
+      responseBody: isSet(object.responseBody) ? String(object.responseBody) : "",
+      additionalBindings: Array.isArray(object === null || object === void 0 ? void 0 : object.additionalBindings) ? object.additionalBindings.map(e => HttpRule.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.selector !== undefined && (obj.selector = message.selector);
+    message.get !== undefined && (obj.get = message.get);
+    message.put !== undefined && (obj.put = message.put);
+    message.post !== undefined && (obj.post = message.post);
+    message.delete !== undefined && (obj.delete = message.delete);
+    message.patch !== undefined && (obj.patch = message.patch);
+    message.custom !== undefined && (obj.custom = message.custom ? CustomHttpPattern.toJSON(message.custom) : undefined);
+    message.body !== undefined && (obj.body = message.body);
+    message.responseBody !== undefined && (obj.responseBody = message.responseBody);
+    if (message.additionalBindings) {
+      obj.additionalBindings = message.additionalBindings.map(e => e ? HttpRule.toJSON(e) : undefined);
+    } else {
+      obj.additionalBindings = [];
+    }
+    return obj;
+  },
   fromPartial(object) {
     var _object$selector, _object$get, _object$put, _object$post, _object$delete, _object$patch, _object$body, _object$responseBody, _object$additionalBin;
     const message = createBaseHttpRule();
@@ -747,6 +795,18 @@ export const CustomHttpPattern = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      kind: isSet(object.kind) ? String(object.kind) : "",
+      path: isSet(object.path) ? String(object.path) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.kind !== undefined && (obj.kind = message.kind);
+    message.path !== undefined && (obj.path = message.path);
+    return obj;
   },
   fromPartial(object) {
     var _object$kind, _object$path;

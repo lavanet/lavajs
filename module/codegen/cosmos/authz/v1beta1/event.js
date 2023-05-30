@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-
+import { isSet } from "../../../helpers";
 /** EventGrant is emitted on Msg/Grant */
 
 /** EventGrant is emitted on Msg/Grant */
@@ -50,6 +50,20 @@ export const EventGrant = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      msgTypeUrl: isSet(object.msgTypeUrl) ? String(object.msgTypeUrl) : "",
+      granter: isSet(object.granter) ? String(object.granter) : "",
+      grantee: isSet(object.grantee) ? String(object.grantee) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.msgTypeUrl !== undefined && (obj.msgTypeUrl = message.msgTypeUrl);
+    message.granter !== undefined && (obj.granter = message.granter);
+    message.grantee !== undefined && (obj.grantee = message.grantee);
+    return obj;
   },
   fromPartial(object) {
     var _object$msgTypeUrl, _object$granter, _object$grantee;
@@ -102,6 +116,20 @@ export const EventRevoke = {
       }
     }
     return message;
+  },
+  fromJSON(object) {
+    return {
+      msgTypeUrl: isSet(object.msgTypeUrl) ? String(object.msgTypeUrl) : "",
+      granter: isSet(object.granter) ? String(object.granter) : "",
+      grantee: isSet(object.grantee) ? String(object.grantee) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.msgTypeUrl !== undefined && (obj.msgTypeUrl = message.msgTypeUrl);
+    message.granter !== undefined && (obj.granter = message.granter);
+    message.grantee !== undefined && (obj.grantee = message.grantee);
+    return obj;
   },
   fromPartial(object) {
     var _object$msgTypeUrl2, _object$granter2, _object$grantee2;
