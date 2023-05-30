@@ -6,11 +6,9 @@
         "isolatedModules": true,
         "esModuleInterop": true,
         "allowJs": true,
-        "lib": ["dom"],   
+        "lib": ["dom"], 
         "target": "es2016",
-        "outDir": "./main",
         "module": "commonjs",
-        "resolveJsonModule": true, 
     },
     "include": [
         "src/**/*"
