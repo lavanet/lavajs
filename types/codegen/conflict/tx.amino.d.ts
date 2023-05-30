@@ -12,6 +12,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                 latest_block: string;
                 finalized_blocks_hashes: Uint8Array;
                 sig_blocks: Uint8Array;
+                metadata: {
+                    name: string;
+                    value: string;
+                }[];
             };
             relayReply1: {
                 data: Uint8Array;
@@ -20,6 +24,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                 latest_block: string;
                 finalized_blocks_hashes: Uint8Array;
                 sig_blocks: Uint8Array;
+                metadata: {
+                    name: string;
+                    value: string;
+                }[];
             };
         };
         responseConflict: {
@@ -56,6 +64,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                         request_block: string;
                         api_interface: string;
                         salt: Uint8Array;
+                        metadata: {
+                            name: string;
+                            value: string;
+                        }[];
                     };
                 };
                 reply: {
@@ -65,6 +77,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
             };
             conflictRelayData1: {
@@ -100,6 +116,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                         request_block: string;
                         api_interface: string;
                         salt: Uint8Array;
+                        metadata: {
+                            name: string;
+                            value: string;
+                        }[];
                     };
                 };
                 reply: {
@@ -109,6 +129,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
             };
         };
@@ -120,6 +144,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                 latest_block: string;
                 finalized_blocks_hashes: Uint8Array;
                 sig_blocks: Uint8Array;
+                metadata: {
+                    name: string;
+                    value: string;
+                }[];
             };
             relayReply1: {
                 data: Uint8Array;
@@ -128,6 +156,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
                 latest_block: string;
                 finalized_blocks_hashes: Uint8Array;
                 sig_blocks: Uint8Array;
+                metadata: {
+                    name: string;
+                    value: string;
+                }[];
             };
         };
     };

@@ -1,3 +1,4 @@
+import { StakeEntry, StakeEntrySDKType } from "../epochstorage/stake_entry";
 import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 export interface RelaySession {
@@ -37,6 +38,7 @@ export interface RelayPrivateData {
     requestBlock: Long;
     apiInterface: string;
     salt: Uint8Array;
+    metadata: Metadata[];
 }
 export interface RelayPrivateDataSDKType {
     connection_type: string;
@@ -45,6 +47,15 @@ export interface RelayPrivateDataSDKType {
     request_block: Long;
     api_interface: string;
     salt: Uint8Array;
+    metadata: MetadataSDKType[];
+}
+export interface Metadata {
+    name: string;
+    value: string;
+}
+export interface MetadataSDKType {
+    name: string;
+    value: string;
 }
 export interface RelayRequest {
     relaySession?: RelaySession;
@@ -68,6 +79,24 @@ export interface BadgeSDKType {
     lava_chain_id: string;
     project_sig: Uint8Array;
 }
+export interface GenerateBadgeRequest {
+    badgeAddress: string;
+    projectId: string;
+    specId: string;
+}
+export interface GenerateBadgeRequestSDKType {
+    badge_address: string;
+    project_id: string;
+    spec_id: string;
+}
+export interface GenerateBadgeResponse {
+    badge?: Badge;
+    pairingList: StakeEntry[];
+}
+export interface GenerateBadgeResponseSDKType {
+    badge?: BadgeSDKType;
+    pairing_list: StakeEntrySDKType[];
+}
 export interface RelayReply {
     data: Uint8Array;
     /** sign the data hash+query hash+nonce */
@@ -77,6 +106,7 @@ export interface RelayReply {
     finalizedBlocksHashes: Uint8Array;
     /** sign latest_block+finalized_blocks_hashes+session_id+block_height+relay_num */
     sigBlocks: Uint8Array;
+    metadata: Metadata[];
 }
 export interface RelayReplySDKType {
     data: Uint8Array;
@@ -85,6 +115,7 @@ export interface RelayReplySDKType {
     latest_block: Long;
     finalized_blocks_hashes: Uint8Array;
     sig_blocks: Uint8Array;
+    metadata: MetadataSDKType[];
 }
 export interface QualityOfServiceReport {
     latency: string;
@@ -110,6 +141,13 @@ export declare const RelayPrivateData: {
     toJSON(message: RelayPrivateData): unknown;
     fromPartial(object: Partial<RelayPrivateData>): RelayPrivateData;
 };
+export declare const Metadata: {
+    encode(message: Metadata, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): Metadata;
+    fromJSON(object: any): Metadata;
+    toJSON(message: Metadata): unknown;
+    fromPartial(object: Partial<Metadata>): Metadata;
+};
 export declare const RelayRequest: {
     encode(message: RelayRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): RelayRequest;
@@ -123,6 +161,20 @@ export declare const Badge: {
     fromJSON(object: any): Badge;
     toJSON(message: Badge): unknown;
     fromPartial(object: Partial<Badge>): Badge;
+};
+export declare const GenerateBadgeRequest: {
+    encode(message: GenerateBadgeRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): GenerateBadgeRequest;
+    fromJSON(object: any): GenerateBadgeRequest;
+    toJSON(message: GenerateBadgeRequest): unknown;
+    fromPartial(object: Partial<GenerateBadgeRequest>): GenerateBadgeRequest;
+};
+export declare const GenerateBadgeResponse: {
+    encode(message: GenerateBadgeResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): GenerateBadgeResponse;
+    fromJSON(object: any): GenerateBadgeResponse;
+    toJSON(message: GenerateBadgeResponse): unknown;
+    fromPartial(object: Partial<GenerateBadgeResponse>): GenerateBadgeResponse;
 };
 export declare const RelayReply: {
     encode(message: RelayReply, writer?: _m0.Writer): _m0.Writer;

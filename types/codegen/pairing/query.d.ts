@@ -4,6 +4,8 @@ import { StakeEntry, StakeEntrySDKType } from "../epochstorage/stake_entry";
 import { UniquePaymentStorageClientProvider, UniquePaymentStorageClientProviderSDKType } from "./unique_payment_storage_client_provider";
 import { ProviderPaymentStorage, ProviderPaymentStorageSDKType } from "./provider_payment_storage";
 import { EpochPayments, EpochPaymentsSDKType } from "./epoch_payments";
+import { Subscription, SubscriptionSDKType } from "../subscription/subscription";
+import { Project, ProjectSDKType } from "../projects/project";
 import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -203,6 +205,22 @@ export interface QueryStaticProvidersListResponse {
 export interface QueryStaticProvidersListResponseSDKType {
     providers: StakeEntrySDKType[];
 }
+export interface QueryAccountInfoResponse {
+    provider: StakeEntry[];
+    frozen: StakeEntry[];
+    consumer: StakeEntry[];
+    unstaked: StakeEntry[];
+    subscription?: Subscription;
+    project?: Project;
+}
+export interface QueryAccountInfoResponseSDKType {
+    provider: StakeEntrySDKType[];
+    frozen: StakeEntrySDKType[];
+    consumer: StakeEntrySDKType[];
+    unstaked: StakeEntrySDKType[];
+    subscription?: SubscriptionSDKType;
+    project?: ProjectSDKType;
+}
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest;
@@ -384,4 +402,11 @@ export declare const QueryStaticProvidersListResponse: {
     fromJSON(object: any): QueryStaticProvidersListResponse;
     toJSON(message: QueryStaticProvidersListResponse): unknown;
     fromPartial(object: Partial<QueryStaticProvidersListResponse>): QueryStaticProvidersListResponse;
+};
+export declare const QueryAccountInfoResponse: {
+    encode(message: QueryAccountInfoResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountInfoResponse;
+    fromJSON(object: any): QueryAccountInfoResponse;
+    toJSON(message: QueryAccountInfoResponse): unknown;
+    fromPartial(object: Partial<QueryAccountInfoResponse>): QueryAccountInfoResponse;
 };

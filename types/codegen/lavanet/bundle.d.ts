@@ -28,7 +28,6 @@ import * as _61 from "../proto/plans/params";
 import * as _62 from "../proto/plans/plan";
 import * as _63 from "../proto/plans/plans_add_proposal";
 import * as _64 from "../proto/plans/query";
-import * as _68 from "../projects/project";
 import * as _71 from "../proto/projects/genesis";
 import * as _72 from "../proto/projects/params";
 import * as _73 from "../proto/projects/project";
@@ -40,7 +39,6 @@ import * as _85 from "../spec/query";
 import * as _86 from "../spec/service_api";
 import * as _87 from "../spec/spec_add_proposal";
 import * as _88 from "../spec/spec";
-import * as _92 from "../proto/subscription/query";
 import * as _95 from "../subscription/genesis";
 import * as _96 from "../subscription/params";
 import * as _97 from "../subscription/query";
@@ -163,6 +161,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                             relayReply1: {
                                 data: Uint8Array;
@@ -171,6 +173,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                         };
                         responseConflict: {
@@ -207,6 +213,10 @@ export declare namespace lavanet {
                                         request_block: string;
                                         api_interface: string;
                                         salt: Uint8Array;
+                                        metadata: {
+                                            name: string;
+                                            value: string;
+                                        }[];
                                     };
                                 };
                                 reply: {
@@ -216,6 +226,10 @@ export declare namespace lavanet {
                                     latest_block: string;
                                     finalized_blocks_hashes: Uint8Array;
                                     sig_blocks: Uint8Array;
+                                    metadata: {
+                                        name: string;
+                                        value: string;
+                                    }[];
                                 };
                             };
                             conflictRelayData1: {
@@ -251,6 +265,10 @@ export declare namespace lavanet {
                                         request_block: string;
                                         api_interface: string;
                                         salt: Uint8Array;
+                                        metadata: {
+                                            name: string;
+                                            value: string;
+                                        }[];
                                     };
                                 };
                                 reply: {
@@ -260,6 +278,10 @@ export declare namespace lavanet {
                                     latest_block: string;
                                     finalized_blocks_hashes: Uint8Array;
                                     sig_blocks: Uint8Array;
+                                    metadata: {
+                                        name: string;
+                                        value: string;
+                                    }[];
                                 };
                             };
                         };
@@ -271,6 +293,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                             relayReply1: {
                                 data: Uint8Array;
@@ -279,6 +305,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                         };
                     };
@@ -292,6 +322,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                             relayReply1: {
                                 data: Uint8Array;
@@ -300,6 +334,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                         };
                         responseConflict: {
@@ -336,6 +374,10 @@ export declare namespace lavanet {
                                         request_block: string;
                                         api_interface: string;
                                         salt: Uint8Array;
+                                        metadata: {
+                                            name: string;
+                                            value: string;
+                                        }[];
                                     };
                                 };
                                 reply: {
@@ -345,6 +387,10 @@ export declare namespace lavanet {
                                     latest_block: string;
                                     finalized_blocks_hashes: Uint8Array;
                                     sig_blocks: Uint8Array;
+                                    metadata: {
+                                        name: string;
+                                        value: string;
+                                    }[];
                                 };
                             };
                             conflictRelayData1: {
@@ -380,6 +426,10 @@ export declare namespace lavanet {
                                         request_block: string;
                                         api_interface: string;
                                         salt: Uint8Array;
+                                        metadata: {
+                                            name: string;
+                                            value: string;
+                                        }[];
                                     };
                                 };
                                 reply: {
@@ -389,6 +439,10 @@ export declare namespace lavanet {
                                     latest_block: string;
                                     finalized_blocks_hashes: Uint8Array;
                                     sig_blocks: Uint8Array;
+                                    metadata: {
+                                        name: string;
+                                        value: string;
+                                    }[];
                                 };
                             };
                         };
@@ -400,6 +454,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                             relayReply1: {
                                 data: Uint8Array;
@@ -408,6 +466,10 @@ export declare namespace lavanet {
                                 latest_block: string;
                                 finalized_blocks_hashes: Uint8Array;
                                 sig_blocks: Uint8Array;
+                                metadata: {
+                                    name: string;
+                                    value: string;
+                                }[];
                             };
                         };
                     }) => _14.MsgDetection;
@@ -1669,9 +1731,7 @@ export declare namespace lavanet {
                         project: string;
                         project_keys: {
                             key: string;
-                            types: {
-                                types: number;
-                            }[];
+                            kinds: number;
                         }[];
                     };
                     fromAmino: ({ creator, project, project_keys }: {
@@ -1679,9 +1739,7 @@ export declare namespace lavanet {
                         project: string;
                         project_keys: {
                             key: string;
-                            types: {
-                                types: number;
-                            }[];
+                            kinds: number;
                         }[];
                     }) => _75.MsgAddKeys;
                 };
@@ -1892,17 +1950,6 @@ export declare namespace lavanet {
                 toJSON(message: _71.GenesisState): unknown;
                 fromPartial(object: Partial<_71.GenesisState>): _71.GenesisState;
             };
-            keyTypeFromJSON(object: any): _68.KeyType;
-            keyTypeToJSON(object: _68.KeyType): string;
-            KeyType: typeof _68.KeyType;
-            KeyTypeSDKType: typeof _68.KeyType;
-            KeyTypeObject: {
-                encode(message: _68.KeyTypeObject, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-                decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _68.KeyTypeObject;
-                fromJSON(object: any): _68.KeyTypeObject;
-                toJSON(message: _68.KeyTypeObject): unknown;
-                fromPartial(object: Partial<_68.KeyTypeObject>): _68.KeyTypeObject;
-            };
         };
         const spec: {
             QueryClientImpl: typeof _241.QueryClientImpl;
@@ -2077,6 +2124,7 @@ export declare namespace lavanet {
             createRpcQueryExtension: (base: import("@cosmjs/stargate").QueryClient) => {
                 params(request?: _97.QueryParamsRequest): Promise<_97.QueryParamsResponse>;
                 current(request: _97.QueryCurrentRequest): Promise<_97.QueryCurrentResponse>;
+                listProjects(request: _97.QueryListProjectsRequest): Promise<_97.QueryListProjectsResponse>;
             };
             registry: readonly [string, import("@cosmjs/proto-signing").GeneratedType][];
             load: (protoRegistry: import("@cosmjs/proto-signing").Registry) => void;
@@ -2158,9 +2206,7 @@ export declare namespace lavanet {
                             enabled: boolean;
                             projectKeys: {
                                 key: string;
-                                types: {
-                                    types: number;
-                                }[];
+                                kinds: number;
                             }[];
                             policy: {
                                 chain_policies: {
@@ -2182,9 +2228,7 @@ export declare namespace lavanet {
                             enabled: boolean;
                             projectKeys: {
                                 key: string;
-                                types: {
-                                    types: number;
-                                }[];
+                                kinds: number;
                             }[];
                             policy: {
                                 chain_policies: {
@@ -2263,6 +2307,20 @@ export declare namespace lavanet {
                 toJSON(message: _97.QueryCurrentResponse): unknown;
                 fromPartial(object: Partial<_97.QueryCurrentResponse>): _97.QueryCurrentResponse;
             };
+            QueryListProjectsRequest: {
+                encode(message: _97.QueryListProjectsRequest, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+                decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _97.QueryListProjectsRequest;
+                fromJSON(object: any): _97.QueryListProjectsRequest;
+                toJSON(message: _97.QueryListProjectsRequest): unknown;
+                fromPartial(object: Partial<_97.QueryListProjectsRequest>): _97.QueryListProjectsRequest;
+            };
+            QueryListProjectsResponse: {
+                encode(message: _97.QueryListProjectsResponse, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+                decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _97.QueryListProjectsResponse;
+                fromJSON(object: any): _97.QueryListProjectsResponse;
+                toJSON(message: _97.QueryListProjectsResponse): unknown;
+                fromPartial(object: Partial<_97.QueryListProjectsResponse>): _97.QueryListProjectsResponse;
+            };
             Params: {
                 encode(_: _96.Params, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
                 decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _96.Params;
@@ -2276,20 +2334,6 @@ export declare namespace lavanet {
                 fromJSON(object: any): _95.GenesisState;
                 toJSON(message: _95.GenesisState): unknown;
                 fromPartial(object: Partial<_95.GenesisState>): _95.GenesisState;
-            };
-            QueryListProjectsRequest: {
-                encode(message: _92.QueryListProjectsRequest, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-                decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _92.QueryListProjectsRequest;
-                fromJSON(object: any): _92.QueryListProjectsRequest;
-                toJSON(message: _92.QueryListProjectsRequest): unknown;
-                fromPartial(object: Partial<_92.QueryListProjectsRequest>): _92.QueryListProjectsRequest;
-            };
-            QueryListProjectsResponse: {
-                encode(message: _92.QueryListProjectsResponse, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-                decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _92.QueryListProjectsResponse;
-                fromJSON(object: any): _92.QueryListProjectsResponse;
-                toJSON(message: _92.QueryListProjectsResponse): unknown;
-                fromPartial(object: Partial<_92.QueryListProjectsResponse>): _92.QueryListProjectsResponse;
             };
         };
     }
@@ -2403,6 +2447,7 @@ export declare namespace lavanet {
                     subscription: {
                         params(request?: _97.QueryParamsRequest): Promise<_97.QueryParamsResponse>;
                         current(request: _97.QueryCurrentRequest): Promise<_97.QueryCurrentResponse>;
+                        listProjects(request: _97.QueryListProjectsRequest): Promise<_97.QueryListProjectsResponse>;
                     };
                 };
             };

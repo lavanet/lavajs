@@ -1,5 +1,4 @@
 //@ts-nocheck
-import { keyTypeFromJSON } from "./project";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
 import { MsgAddKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";
@@ -10,9 +9,7 @@ export interface MsgAddKeysAminoType extends AminoMsg {
     project: string;
     project_keys: {
       key: string;
-      types: {
-        types: number;
-      }[];
+      kinds: number;
     }[];
   };
 }
@@ -63,9 +60,7 @@ export const AminoConverter = {
         project,
         project_keys: projectKeys.map(el0 => ({
           key: el0.key,
-          types: el0.types.map(el1 => ({
-            types: el1.types
-          }))
+          kinds: el0.kinds
         }))
       };
     },
@@ -79,9 +74,7 @@ export const AminoConverter = {
         project,
         projectKeys: project_keys.map(el0 => ({
           key: el0.key,
-          types: el0.types.map(el1 => ({
-            types: keyTypeFromJSON(el1.types)
-          }))
+          kinds: el0.kinds
         }))
       };
     }

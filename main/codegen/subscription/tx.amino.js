@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-var _project = require("../projects/project");
 var _helpers = require("../helpers");
 //@ts-nocheck
 
@@ -50,11 +49,7 @@ var AminoConverter = {
           projectKeys: projectData.projectKeys.map(function (el0) {
             return {
               key: el0.key,
-              types: el0.types.map(function (el1) {
-                return {
-                  types: el1.types
-                };
-              })
+              kinds: el0.kinds
             };
           }),
           policy: {
@@ -84,11 +79,7 @@ var AminoConverter = {
           projectKeys: project_data.projectKeys.map(function (el1) {
             return {
               key: el1.key,
-              types: el1.types.map(function (el2) {
-                return {
-                  types: (0, _project.keyTypeFromJSON)(el2.types)
-                };
-              })
+              kinds: el1.kinds
             };
           }),
           policy: {

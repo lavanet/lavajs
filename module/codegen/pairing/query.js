@@ -4,6 +4,8 @@ import { StakeEntry } from "../epochstorage/stake_entry";
 import { UniquePaymentStorageClientProvider } from "./unique_payment_storage_client_provider";
 import { ProviderPaymentStorage } from "./provider_payment_storage";
 import { EpochPayments } from "./epoch_payments";
+import { Subscription } from "../subscription/subscription";
+import { Project } from "../projects/project";
 import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -1404,6 +1406,118 @@ export const QueryStaticProvidersListResponse = {
     var _object$providers2;
     const message = createBaseQueryStaticProvidersListResponse();
     message.providers = ((_object$providers2 = object.providers) === null || _object$providers2 === void 0 ? void 0 : _object$providers2.map(e => StakeEntry.fromPartial(e))) || [];
+    return message;
+  }
+};
+function createBaseQueryAccountInfoResponse() {
+  return {
+    provider: [],
+    frozen: [],
+    consumer: [],
+    unstaked: [],
+    subscription: undefined,
+    project: undefined
+  };
+}
+export const QueryAccountInfoResponse = {
+  encode(message, writer = _m0.Writer.create()) {
+    for (const v of message.provider) {
+      StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.frozen) {
+      StakeEntry.encode(v, writer.uint32(18).fork()).ldelim();
+    }
+    for (const v of message.consumer) {
+      StakeEntry.encode(v, writer.uint32(26).fork()).ldelim();
+    }
+    for (const v of message.unstaked) {
+      StakeEntry.encode(v, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.subscription !== undefined) {
+      Subscription.encode(message.subscription, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.project !== undefined) {
+      Project.encode(message.project, writer.uint32(50).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryAccountInfoResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.provider.push(StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.frozen.push(StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 3:
+          message.consumer.push(StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 4:
+          message.unstaked.push(StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 5:
+          message.subscription = Subscription.decode(reader, reader.uint32());
+          break;
+        case 6:
+          message.project = Project.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object) {
+    return {
+      provider: Array.isArray(object === null || object === void 0 ? void 0 : object.provider) ? object.provider.map(e => StakeEntry.fromJSON(e)) : [],
+      frozen: Array.isArray(object === null || object === void 0 ? void 0 : object.frozen) ? object.frozen.map(e => StakeEntry.fromJSON(e)) : [],
+      consumer: Array.isArray(object === null || object === void 0 ? void 0 : object.consumer) ? object.consumer.map(e => StakeEntry.fromJSON(e)) : [],
+      unstaked: Array.isArray(object === null || object === void 0 ? void 0 : object.unstaked) ? object.unstaked.map(e => StakeEntry.fromJSON(e)) : [],
+      subscription: isSet(object.subscription) ? Subscription.fromJSON(object.subscription) : undefined,
+      project: isSet(object.project) ? Project.fromJSON(object.project) : undefined
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.provider) {
+      obj.provider = message.provider.map(e => e ? StakeEntry.toJSON(e) : undefined);
+    } else {
+      obj.provider = [];
+    }
+    if (message.frozen) {
+      obj.frozen = message.frozen.map(e => e ? StakeEntry.toJSON(e) : undefined);
+    } else {
+      obj.frozen = [];
+    }
+    if (message.consumer) {
+      obj.consumer = message.consumer.map(e => e ? StakeEntry.toJSON(e) : undefined);
+    } else {
+      obj.consumer = [];
+    }
+    if (message.unstaked) {
+      obj.unstaked = message.unstaked.map(e => e ? StakeEntry.toJSON(e) : undefined);
+    } else {
+      obj.unstaked = [];
+    }
+    message.subscription !== undefined && (obj.subscription = message.subscription ? Subscription.toJSON(message.subscription) : undefined);
+    message.project !== undefined && (obj.project = message.project ? Project.toJSON(message.project) : undefined);
+    return obj;
+  },
+  fromPartial(object) {
+    var _object$provider2, _object$frozen, _object$consumer, _object$unstaked;
+    const message = createBaseQueryAccountInfoResponse();
+    message.provider = ((_object$provider2 = object.provider) === null || _object$provider2 === void 0 ? void 0 : _object$provider2.map(e => StakeEntry.fromPartial(e))) || [];
+    message.frozen = ((_object$frozen = object.frozen) === null || _object$frozen === void 0 ? void 0 : _object$frozen.map(e => StakeEntry.fromPartial(e))) || [];
+    message.consumer = ((_object$consumer = object.consumer) === null || _object$consumer === void 0 ? void 0 : _object$consumer.map(e => StakeEntry.fromPartial(e))) || [];
+    message.unstaked = ((_object$unstaked = object.unstaked) === null || _object$unstaked === void 0 ? void 0 : _object$unstaked.map(e => StakeEntry.fromPartial(e))) || [];
+    message.subscription = object.subscription !== undefined && object.subscription !== null ? Subscription.fromPartial(object.subscription) : undefined;
+    message.project = object.project !== undefined && object.project !== null ? Project.fromPartial(object.project) : undefined;
     return message;
   }
 };

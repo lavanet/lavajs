@@ -15,7 +15,8 @@ function createBaseEntry() {
     block: _helpers.Long.UZERO,
     staleAt: _helpers.Long.UZERO,
     refcount: _helpers.Long.UZERO,
-    data: new Uint8Array()
+    data: new Uint8Array(),
+    deleteAt: _helpers.Long.UZERO
   };
 }
 var Entry = {
@@ -35,6 +36,9 @@ var Entry = {
     }
     if (message.data.length !== 0) {
       writer.uint32(42).bytes(message.data);
+    }
+    if (!message.deleteAt.isZero()) {
+      writer.uint32(48).uint64(message.deleteAt);
     }
     return writer;
   },
@@ -60,6 +64,9 @@ var Entry = {
         case 5:
           message.data = reader.bytes();
           break;
+        case 6:
+          message.deleteAt = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -73,7 +80,8 @@ var Entry = {
       block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
       staleAt: (0, _helpers.isSet)(object.staleAt) ? _helpers.Long.fromValue(object.staleAt) : _helpers.Long.UZERO,
       refcount: (0, _helpers.isSet)(object.refcount) ? _helpers.Long.fromValue(object.refcount) : _helpers.Long.UZERO,
-      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array()
+      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
+      deleteAt: (0, _helpers.isSet)(object.deleteAt) ? _helpers.Long.fromValue(object.deleteAt) : _helpers.Long.UZERO
     };
   },
   toJSON: function toJSON(message) {
@@ -83,6 +91,7 @@ var Entry = {
     message.staleAt !== undefined && (obj.staleAt = (message.staleAt || _helpers.Long.UZERO).toString());
     message.refcount !== undefined && (obj.refcount = (message.refcount || _helpers.Long.UZERO).toString());
     message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
+    message.deleteAt !== undefined && (obj.deleteAt = (message.deleteAt || _helpers.Long.UZERO).toString());
     return obj;
   },
   fromPartial: function fromPartial(object) {
@@ -93,6 +102,7 @@ var Entry = {
     message.staleAt = object.staleAt !== undefined && object.staleAt !== null ? _helpers.Long.fromValue(object.staleAt) : _helpers.Long.UZERO;
     message.refcount = object.refcount !== undefined && object.refcount !== null ? _helpers.Long.fromValue(object.refcount) : _helpers.Long.UZERO;
     message.data = (_object$data = object.data) !== null && _object$data !== void 0 ? _object$data : new Uint8Array();
+    message.deleteAt = object.deleteAt !== undefined && object.deleteAt !== null ? _helpers.Long.fromValue(object.deleteAt) : _helpers.Long.UZERO;
     return message;
   }
 };

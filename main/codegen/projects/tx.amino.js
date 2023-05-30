@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-var _project = require("./project");
 var _helpers = require("../helpers");
 //@ts-nocheck
 
@@ -21,11 +20,7 @@ var AminoConverter = {
         project_keys: projectKeys.map(function (el0) {
           return {
             key: el0.key,
-            types: el0.types.map(function (el1) {
-              return {
-                types: el1.types
-              };
-            })
+            kinds: el0.kinds
           };
         })
       };
@@ -40,11 +35,7 @@ var AminoConverter = {
         projectKeys: project_keys.map(function (el0) {
           return {
             key: el0.key,
-            types: el0.types.map(function (el1) {
-              return {
-                types: (0, _project.keyTypeFromJSON)(el1.types)
-              };
-            })
+            kinds: el0.kinds
           };
         })
       };

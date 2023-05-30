@@ -7,9 +7,7 @@ export interface MsgAddKeysAminoType extends AminoMsg {
         project: string;
         project_keys: {
             key: string;
-            types: {
-                types: number;
-            }[];
+            kinds: number;
         }[];
     };
 }

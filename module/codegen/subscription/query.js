@@ -179,3 +179,99 @@ export const QueryCurrentResponse = {
     return message;
   }
 };
+function createBaseQueryListProjectsRequest() {
+  return {
+    subscription: ""
+  };
+}
+export const QueryListProjectsRequest = {
+  encode(message, writer = _m0.Writer.create()) {
+    if (message.subscription !== "") {
+      writer.uint32(10).string(message.subscription);
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryListProjectsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.subscription = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object) {
+    return {
+      subscription: isSet(object.subscription) ? String(object.subscription) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.subscription !== undefined && (obj.subscription = message.subscription);
+    return obj;
+  },
+  fromPartial(object) {
+    var _object$subscription;
+    const message = createBaseQueryListProjectsRequest();
+    message.subscription = (_object$subscription = object.subscription) !== null && _object$subscription !== void 0 ? _object$subscription : "";
+    return message;
+  }
+};
+function createBaseQueryListProjectsResponse() {
+  return {
+    projects: []
+  };
+}
+export const QueryListProjectsResponse = {
+  encode(message, writer = _m0.Writer.create()) {
+    for (const v of message.projects) {
+      writer.uint32(10).string(v);
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryListProjectsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.projects.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object) {
+    return {
+      projects: Array.isArray(object === null || object === void 0 ? void 0 : object.projects) ? object.projects.map(e => String(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.projects) {
+      obj.projects = message.projects.map(e => e);
+    } else {
+      obj.projects = [];
+    }
+    return obj;
+  },
+  fromPartial(object) {
+    var _object$projects;
+    const message = createBaseQueryListProjectsResponse();
+    message.projects = ((_object$projects = object.projects) === null || _object$projects === void 0 ? void 0 : _object$projects.map(e => e)) || [];
+    return message;
+  }
+};

@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { keyTypeFromJSON } from "../projects/project";
+
 import { Long } from "../helpers";
 export const AminoConverter = {
   "/lavanet.lava.subscription.MsgBuy": {
@@ -45,9 +45,7 @@ export const AminoConverter = {
           enabled: projectData.enabled,
           projectKeys: projectData.projectKeys.map(el0 => ({
             key: el0.key,
-            types: el0.types.map(el1 => ({
-              types: el1.types
-            }))
+            kinds: el0.kinds
           })),
           policy: {
             chain_policies: projectData.policy.chainPolicies.map(el0 => ({
@@ -74,9 +72,7 @@ export const AminoConverter = {
           enabled: project_data.enabled,
           projectKeys: project_data.projectKeys.map(el1 => ({
             key: el1.key,
-            types: el1.types.map(el2 => ({
-              types: keyTypeFromJSON(el2.types)
-            }))
+            kinds: el1.kinds
           })),
           policy: {
             chainPolicies: project_data.policy.chain_policies.map(el2 => ({

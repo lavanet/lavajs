@@ -14,6 +14,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
         latest_block: string;
         finalized_blocks_hashes: Uint8Array;
         sig_blocks: Uint8Array;
+        metadata: {
+          name: string;
+          value: string;
+        }[];
       };
       relayReply1: {
         data: Uint8Array;
@@ -22,6 +26,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
         latest_block: string;
         finalized_blocks_hashes: Uint8Array;
         sig_blocks: Uint8Array;
+        metadata: {
+          name: string;
+          value: string;
+        }[];
       };
     };
     responseConflict: {
@@ -58,6 +66,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
             request_block: string;
             api_interface: string;
             salt: Uint8Array;
+            metadata: {
+              name: string;
+              value: string;
+            }[];
           };
         };
         reply: {
@@ -67,6 +79,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
           latest_block: string;
           finalized_blocks_hashes: Uint8Array;
           sig_blocks: Uint8Array;
+          metadata: {
+            name: string;
+            value: string;
+          }[];
         };
       };
       conflictRelayData1: {
@@ -102,6 +118,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
             request_block: string;
             api_interface: string;
             salt: Uint8Array;
+            metadata: {
+              name: string;
+              value: string;
+            }[];
           };
         };
         reply: {
@@ -111,6 +131,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
           latest_block: string;
           finalized_blocks_hashes: Uint8Array;
           sig_blocks: Uint8Array;
+          metadata: {
+            name: string;
+            value: string;
+          }[];
         };
       };
     };
@@ -122,6 +146,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
         latest_block: string;
         finalized_blocks_hashes: Uint8Array;
         sig_blocks: Uint8Array;
+        metadata: {
+          name: string;
+          value: string;
+        }[];
       };
       relayReply1: {
         data: Uint8Array;
@@ -130,6 +158,10 @@ export interface MsgDetectionAminoType extends AminoMsg {
         latest_block: string;
         finalized_blocks_hashes: Uint8Array;
         sig_blocks: Uint8Array;
+        metadata: {
+          name: string;
+          value: string;
+        }[];
       };
     };
   };
@@ -169,7 +201,11 @@ export const AminoConverter = {
             nonce: finalizationConflict.relayReply0.nonce,
             latest_block: finalizationConflict.relayReply0.latestBlock.toString(),
             finalized_blocks_hashes: finalizationConflict.relayReply0.finalizedBlocksHashes,
-            sig_blocks: finalizationConflict.relayReply0.sigBlocks
+            sig_blocks: finalizationConflict.relayReply0.sigBlocks,
+            metadata: finalizationConflict.relayReply0.metadata.map(el0 => ({
+              name: el0.name,
+              value: el0.value
+            }))
           },
           relayReply1: {
             data: finalizationConflict.relayReply1.data,
@@ -177,7 +213,11 @@ export const AminoConverter = {
             nonce: finalizationConflict.relayReply1.nonce,
             latest_block: finalizationConflict.relayReply1.latestBlock.toString(),
             finalized_blocks_hashes: finalizationConflict.relayReply1.finalizedBlocksHashes,
-            sig_blocks: finalizationConflict.relayReply1.sigBlocks
+            sig_blocks: finalizationConflict.relayReply1.sigBlocks,
+            metadata: finalizationConflict.relayReply1.metadata.map(el0 => ({
+              name: el0.name,
+              value: el0.value
+            }))
           }
         },
         responseConflict: {
@@ -213,7 +253,11 @@ export const AminoConverter = {
                 data: responseConflict.conflictRelayData0.request.relayData.data,
                 request_block: responseConflict.conflictRelayData0.request.relayData.requestBlock.toString(),
                 api_interface: responseConflict.conflictRelayData0.request.relayData.apiInterface,
-                salt: responseConflict.conflictRelayData0.request.relayData.salt
+                salt: responseConflict.conflictRelayData0.request.relayData.salt,
+                metadata: responseConflict.conflictRelayData0.request.relayData.metadata.map(el0 => ({
+                  name: el0.name,
+                  value: el0.value
+                }))
               }
             },
             reply: {
@@ -222,7 +266,11 @@ export const AminoConverter = {
               nonce: responseConflict.conflictRelayData0.reply.nonce,
               latest_block: responseConflict.conflictRelayData0.reply.latestBlock.toString(),
               finalized_blocks_hashes: responseConflict.conflictRelayData0.reply.finalizedBlocksHashes,
-              sig_blocks: responseConflict.conflictRelayData0.reply.sigBlocks
+              sig_blocks: responseConflict.conflictRelayData0.reply.sigBlocks,
+              metadata: responseConflict.conflictRelayData0.reply.metadata.map(el0 => ({
+                name: el0.name,
+                value: el0.value
+              }))
             }
           },
           conflictRelayData1: {
@@ -257,7 +305,11 @@ export const AminoConverter = {
                 data: responseConflict.conflictRelayData1.request.relayData.data,
                 request_block: responseConflict.conflictRelayData1.request.relayData.requestBlock.toString(),
                 api_interface: responseConflict.conflictRelayData1.request.relayData.apiInterface,
-                salt: responseConflict.conflictRelayData1.request.relayData.salt
+                salt: responseConflict.conflictRelayData1.request.relayData.salt,
+                metadata: responseConflict.conflictRelayData1.request.relayData.metadata.map(el0 => ({
+                  name: el0.name,
+                  value: el0.value
+                }))
               }
             },
             reply: {
@@ -266,7 +318,11 @@ export const AminoConverter = {
               nonce: responseConflict.conflictRelayData1.reply.nonce,
               latest_block: responseConflict.conflictRelayData1.reply.latestBlock.toString(),
               finalized_blocks_hashes: responseConflict.conflictRelayData1.reply.finalizedBlocksHashes,
-              sig_blocks: responseConflict.conflictRelayData1.reply.sigBlocks
+              sig_blocks: responseConflict.conflictRelayData1.reply.sigBlocks,
+              metadata: responseConflict.conflictRelayData1.reply.metadata.map(el0 => ({
+                name: el0.name,
+                value: el0.value
+              }))
             }
           }
         },
@@ -277,7 +333,11 @@ export const AminoConverter = {
             nonce: sameProviderConflict.relayReply0.nonce,
             latest_block: sameProviderConflict.relayReply0.latestBlock.toString(),
             finalized_blocks_hashes: sameProviderConflict.relayReply0.finalizedBlocksHashes,
-            sig_blocks: sameProviderConflict.relayReply0.sigBlocks
+            sig_blocks: sameProviderConflict.relayReply0.sigBlocks,
+            metadata: sameProviderConflict.relayReply0.metadata.map(el0 => ({
+              name: el0.name,
+              value: el0.value
+            }))
           },
           relayReply1: {
             data: sameProviderConflict.relayReply1.data,
@@ -285,7 +345,11 @@ export const AminoConverter = {
             nonce: sameProviderConflict.relayReply1.nonce,
             latest_block: sameProviderConflict.relayReply1.latestBlock.toString(),
             finalized_blocks_hashes: sameProviderConflict.relayReply1.finalizedBlocksHashes,
-            sig_blocks: sameProviderConflict.relayReply1.sigBlocks
+            sig_blocks: sameProviderConflict.relayReply1.sigBlocks,
+            metadata: sameProviderConflict.relayReply1.metadata.map(el0 => ({
+              name: el0.name,
+              value: el0.value
+            }))
           }
         }
       };
@@ -305,7 +369,11 @@ export const AminoConverter = {
             nonce: finalizationConflict.relayReply0.nonce,
             latestBlock: Long.fromString(finalizationConflict.relayReply0.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply0.finalized_blocks_hashes,
-            sigBlocks: finalizationConflict.relayReply0.sig_blocks
+            sigBlocks: finalizationConflict.relayReply0.sig_blocks,
+            metadata: finalizationConflict.relayReply0.metadata.map(el2 => ({
+              name: el2.name,
+              value: el2.value
+            }))
           },
           relayReply1: {
             data: finalizationConflict.relayReply1.data,
@@ -313,7 +381,11 @@ export const AminoConverter = {
             nonce: finalizationConflict.relayReply1.nonce,
             latestBlock: Long.fromString(finalizationConflict.relayReply1.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply1.finalized_blocks_hashes,
-            sigBlocks: finalizationConflict.relayReply1.sig_blocks
+            sigBlocks: finalizationConflict.relayReply1.sig_blocks,
+            metadata: finalizationConflict.relayReply1.metadata.map(el2 => ({
+              name: el2.name,
+              value: el2.value
+            }))
           }
         },
         responseConflict: {
@@ -349,7 +421,11 @@ export const AminoConverter = {
                 data: responseConflict.conflictRelayData0.request.relay_data.data,
                 requestBlock: Long.fromString(responseConflict.conflictRelayData0.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData0.request.relay_data.api_interface,
-                salt: responseConflict.conflictRelayData0.request.relay_data.salt
+                salt: responseConflict.conflictRelayData0.request.relay_data.salt,
+                metadata: responseConflict.conflictRelayData0.request.relay_data.metadata.map(el4 => ({
+                  name: el4.name,
+                  value: el4.value
+                }))
               }
             },
             reply: {
@@ -358,7 +434,11 @@ export const AminoConverter = {
               nonce: responseConflict.conflictRelayData0.reply.nonce,
               latestBlock: Long.fromString(responseConflict.conflictRelayData0.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData0.reply.finalized_blocks_hashes,
-              sigBlocks: responseConflict.conflictRelayData0.reply.sig_blocks
+              sigBlocks: responseConflict.conflictRelayData0.reply.sig_blocks,
+              metadata: responseConflict.conflictRelayData0.reply.metadata.map(el3 => ({
+                name: el3.name,
+                value: el3.value
+              }))
             }
           },
           conflictRelayData1: {
@@ -393,7 +473,11 @@ export const AminoConverter = {
                 data: responseConflict.conflictRelayData1.request.relay_data.data,
                 requestBlock: Long.fromString(responseConflict.conflictRelayData1.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData1.request.relay_data.api_interface,
-                salt: responseConflict.conflictRelayData1.request.relay_data.salt
+                salt: responseConflict.conflictRelayData1.request.relay_data.salt,
+                metadata: responseConflict.conflictRelayData1.request.relay_data.metadata.map(el4 => ({
+                  name: el4.name,
+                  value: el4.value
+                }))
               }
             },
             reply: {
@@ -402,7 +486,11 @@ export const AminoConverter = {
               nonce: responseConflict.conflictRelayData1.reply.nonce,
               latestBlock: Long.fromString(responseConflict.conflictRelayData1.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData1.reply.finalized_blocks_hashes,
-              sigBlocks: responseConflict.conflictRelayData1.reply.sig_blocks
+              sigBlocks: responseConflict.conflictRelayData1.reply.sig_blocks,
+              metadata: responseConflict.conflictRelayData1.reply.metadata.map(el3 => ({
+                name: el3.name,
+                value: el3.value
+              }))
             }
           }
         },
@@ -413,7 +501,11 @@ export const AminoConverter = {
             nonce: sameProviderConflict.relayReply0.nonce,
             latestBlock: Long.fromString(sameProviderConflict.relayReply0.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply0.finalized_blocks_hashes,
-            sigBlocks: sameProviderConflict.relayReply0.sig_blocks
+            sigBlocks: sameProviderConflict.relayReply0.sig_blocks,
+            metadata: sameProviderConflict.relayReply0.metadata.map(el2 => ({
+              name: el2.name,
+              value: el2.value
+            }))
           },
           relayReply1: {
             data: sameProviderConflict.relayReply1.data,
@@ -421,7 +513,11 @@ export const AminoConverter = {
             nonce: sameProviderConflict.relayReply1.nonce,
             latestBlock: Long.fromString(sameProviderConflict.relayReply1.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply1.finalized_blocks_hashes,
-            sigBlocks: sameProviderConflict.relayReply1.sig_blocks
+            sigBlocks: sameProviderConflict.relayReply1.sig_blocks,
+            metadata: sameProviderConflict.relayReply1.metadata.map(el2 => ({
+              name: el2.name,
+              value: el2.value
+            }))
           }
         }
       };

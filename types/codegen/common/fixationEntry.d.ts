@@ -11,6 +11,8 @@ export interface Entry {
     refcount: Long;
     /** the data saved in the entry */
     data: Uint8Array;
+    /** block when the entry becomes deleted */
+    deleteAt: Long;
 }
 export interface EntrySDKType {
     index: string;
@@ -18,6 +20,7 @@ export interface EntrySDKType {
     stale_at: Long;
     refcount: Long;
     data: Uint8Array;
+    delete_at: Long;
 }
 export declare const Entry: {
     encode(message: Entry, writer?: _m0.Writer): _m0.Writer;

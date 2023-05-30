@@ -1,7 +1,7 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import * as _m0 from "protobufjs/minimal";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryCurrentRequest, QueryCurrentResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryCurrentRequest, QueryCurrentResponse, QueryListProjectsRequest, QueryListProjectsResponse } from "./query";
 /** Query defines the gRPC querier service. */
 
 export class QueryClientImpl {
@@ -10,6 +10,7 @@ export class QueryClientImpl {
     this.rpc = rpc;
     this.params = this.params.bind(this);
     this.current = this.current.bind(this);
+    this.listProjects = this.listProjects.bind(this);
   }
   params(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
@@ -21,6 +22,11 @@ export class QueryClientImpl {
     const promise = this.rpc.request("lavanet.lava.subscription.Query", "Current", data);
     return promise.then(data => QueryCurrentResponse.decode(new _m0.Reader(data)));
   }
+  listProjects(request) {
+    const data = QueryListProjectsRequest.encode(request).finish();
+    const promise = this.rpc.request("lavanet.lava.subscription.Query", "ListProjects", data);
+    return promise.then(data => QueryListProjectsResponse.decode(new _m0.Reader(data)));
+  }
 }
 export const createRpcQueryExtension = base => {
   const rpc = createProtobufRpcClient(base);
@@ -31,6 +37,9 @@ export const createRpcQueryExtension = base => {
     },
     current(request) {
       return queryService.current(request);
+    },
+    listProjects(request) {
+      return queryService.listProjects(request);
     }
   };
 };

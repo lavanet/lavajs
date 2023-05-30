@@ -24,7 +24,13 @@ var AminoConverter = {
             nonce: finalizationConflict.relayReply0.nonce,
             latest_block: finalizationConflict.relayReply0.latestBlock.toString(),
             finalized_blocks_hashes: finalizationConflict.relayReply0.finalizedBlocksHashes,
-            sig_blocks: finalizationConflict.relayReply0.sigBlocks
+            sig_blocks: finalizationConflict.relayReply0.sigBlocks,
+            metadata: finalizationConflict.relayReply0.metadata.map(function (el0) {
+              return {
+                name: el0.name,
+                value: el0.value
+              };
+            })
           },
           relayReply1: {
             data: finalizationConflict.relayReply1.data,
@@ -32,7 +38,13 @@ var AminoConverter = {
             nonce: finalizationConflict.relayReply1.nonce,
             latest_block: finalizationConflict.relayReply1.latestBlock.toString(),
             finalized_blocks_hashes: finalizationConflict.relayReply1.finalizedBlocksHashes,
-            sig_blocks: finalizationConflict.relayReply1.sigBlocks
+            sig_blocks: finalizationConflict.relayReply1.sigBlocks,
+            metadata: finalizationConflict.relayReply1.metadata.map(function (el0) {
+              return {
+                name: el0.name,
+                value: el0.value
+              };
+            })
           }
         },
         responseConflict: {
@@ -68,7 +80,13 @@ var AminoConverter = {
                 data: responseConflict.conflictRelayData0.request.relayData.data,
                 request_block: responseConflict.conflictRelayData0.request.relayData.requestBlock.toString(),
                 api_interface: responseConflict.conflictRelayData0.request.relayData.apiInterface,
-                salt: responseConflict.conflictRelayData0.request.relayData.salt
+                salt: responseConflict.conflictRelayData0.request.relayData.salt,
+                metadata: responseConflict.conflictRelayData0.request.relayData.metadata.map(function (el0) {
+                  return {
+                    name: el0.name,
+                    value: el0.value
+                  };
+                })
               }
             },
             reply: {
@@ -77,7 +95,13 @@ var AminoConverter = {
               nonce: responseConflict.conflictRelayData0.reply.nonce,
               latest_block: responseConflict.conflictRelayData0.reply.latestBlock.toString(),
               finalized_blocks_hashes: responseConflict.conflictRelayData0.reply.finalizedBlocksHashes,
-              sig_blocks: responseConflict.conflictRelayData0.reply.sigBlocks
+              sig_blocks: responseConflict.conflictRelayData0.reply.sigBlocks,
+              metadata: responseConflict.conflictRelayData0.reply.metadata.map(function (el0) {
+                return {
+                  name: el0.name,
+                  value: el0.value
+                };
+              })
             }
           },
           conflictRelayData1: {
@@ -112,7 +136,13 @@ var AminoConverter = {
                 data: responseConflict.conflictRelayData1.request.relayData.data,
                 request_block: responseConflict.conflictRelayData1.request.relayData.requestBlock.toString(),
                 api_interface: responseConflict.conflictRelayData1.request.relayData.apiInterface,
-                salt: responseConflict.conflictRelayData1.request.relayData.salt
+                salt: responseConflict.conflictRelayData1.request.relayData.salt,
+                metadata: responseConflict.conflictRelayData1.request.relayData.metadata.map(function (el0) {
+                  return {
+                    name: el0.name,
+                    value: el0.value
+                  };
+                })
               }
             },
             reply: {
@@ -121,7 +151,13 @@ var AminoConverter = {
               nonce: responseConflict.conflictRelayData1.reply.nonce,
               latest_block: responseConflict.conflictRelayData1.reply.latestBlock.toString(),
               finalized_blocks_hashes: responseConflict.conflictRelayData1.reply.finalizedBlocksHashes,
-              sig_blocks: responseConflict.conflictRelayData1.reply.sigBlocks
+              sig_blocks: responseConflict.conflictRelayData1.reply.sigBlocks,
+              metadata: responseConflict.conflictRelayData1.reply.metadata.map(function (el0) {
+                return {
+                  name: el0.name,
+                  value: el0.value
+                };
+              })
             }
           }
         },
@@ -132,7 +168,13 @@ var AminoConverter = {
             nonce: sameProviderConflict.relayReply0.nonce,
             latest_block: sameProviderConflict.relayReply0.latestBlock.toString(),
             finalized_blocks_hashes: sameProviderConflict.relayReply0.finalizedBlocksHashes,
-            sig_blocks: sameProviderConflict.relayReply0.sigBlocks
+            sig_blocks: sameProviderConflict.relayReply0.sigBlocks,
+            metadata: sameProviderConflict.relayReply0.metadata.map(function (el0) {
+              return {
+                name: el0.name,
+                value: el0.value
+              };
+            })
           },
           relayReply1: {
             data: sameProviderConflict.relayReply1.data,
@@ -140,7 +182,13 @@ var AminoConverter = {
             nonce: sameProviderConflict.relayReply1.nonce,
             latest_block: sameProviderConflict.relayReply1.latestBlock.toString(),
             finalized_blocks_hashes: sameProviderConflict.relayReply1.finalizedBlocksHashes,
-            sig_blocks: sameProviderConflict.relayReply1.sigBlocks
+            sig_blocks: sameProviderConflict.relayReply1.sigBlocks,
+            metadata: sameProviderConflict.relayReply1.metadata.map(function (el0) {
+              return {
+                name: el0.name,
+                value: el0.value
+              };
+            })
           }
         }
       };
@@ -159,7 +207,13 @@ var AminoConverter = {
             nonce: finalizationConflict.relayReply0.nonce,
             latestBlock: _helpers.Long.fromString(finalizationConflict.relayReply0.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply0.finalized_blocks_hashes,
-            sigBlocks: finalizationConflict.relayReply0.sig_blocks
+            sigBlocks: finalizationConflict.relayReply0.sig_blocks,
+            metadata: finalizationConflict.relayReply0.metadata.map(function (el2) {
+              return {
+                name: el2.name,
+                value: el2.value
+              };
+            })
           },
           relayReply1: {
             data: finalizationConflict.relayReply1.data,
@@ -167,7 +221,13 @@ var AminoConverter = {
             nonce: finalizationConflict.relayReply1.nonce,
             latestBlock: _helpers.Long.fromString(finalizationConflict.relayReply1.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply1.finalized_blocks_hashes,
-            sigBlocks: finalizationConflict.relayReply1.sig_blocks
+            sigBlocks: finalizationConflict.relayReply1.sig_blocks,
+            metadata: finalizationConflict.relayReply1.metadata.map(function (el2) {
+              return {
+                name: el2.name,
+                value: el2.value
+              };
+            })
           }
         },
         responseConflict: {
@@ -203,7 +263,13 @@ var AminoConverter = {
                 data: responseConflict.conflictRelayData0.request.relay_data.data,
                 requestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData0.request.relay_data.api_interface,
-                salt: responseConflict.conflictRelayData0.request.relay_data.salt
+                salt: responseConflict.conflictRelayData0.request.relay_data.salt,
+                metadata: responseConflict.conflictRelayData0.request.relay_data.metadata.map(function (el4) {
+                  return {
+                    name: el4.name,
+                    value: el4.value
+                  };
+                })
               }
             },
             reply: {
@@ -212,7 +278,13 @@ var AminoConverter = {
               nonce: responseConflict.conflictRelayData0.reply.nonce,
               latestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData0.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData0.reply.finalized_blocks_hashes,
-              sigBlocks: responseConflict.conflictRelayData0.reply.sig_blocks
+              sigBlocks: responseConflict.conflictRelayData0.reply.sig_blocks,
+              metadata: responseConflict.conflictRelayData0.reply.metadata.map(function (el3) {
+                return {
+                  name: el3.name,
+                  value: el3.value
+                };
+              })
             }
           },
           conflictRelayData1: {
@@ -247,7 +319,13 @@ var AminoConverter = {
                 data: responseConflict.conflictRelayData1.request.relay_data.data,
                 requestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData1.request.relay_data.api_interface,
-                salt: responseConflict.conflictRelayData1.request.relay_data.salt
+                salt: responseConflict.conflictRelayData1.request.relay_data.salt,
+                metadata: responseConflict.conflictRelayData1.request.relay_data.metadata.map(function (el4) {
+                  return {
+                    name: el4.name,
+                    value: el4.value
+                  };
+                })
               }
             },
             reply: {
@@ -256,7 +334,13 @@ var AminoConverter = {
               nonce: responseConflict.conflictRelayData1.reply.nonce,
               latestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData1.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData1.reply.finalized_blocks_hashes,
-              sigBlocks: responseConflict.conflictRelayData1.reply.sig_blocks
+              sigBlocks: responseConflict.conflictRelayData1.reply.sig_blocks,
+              metadata: responseConflict.conflictRelayData1.reply.metadata.map(function (el3) {
+                return {
+                  name: el3.name,
+                  value: el3.value
+                };
+              })
             }
           }
         },
@@ -267,7 +351,13 @@ var AminoConverter = {
             nonce: sameProviderConflict.relayReply0.nonce,
             latestBlock: _helpers.Long.fromString(sameProviderConflict.relayReply0.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply0.finalized_blocks_hashes,
-            sigBlocks: sameProviderConflict.relayReply0.sig_blocks
+            sigBlocks: sameProviderConflict.relayReply0.sig_blocks,
+            metadata: sameProviderConflict.relayReply0.metadata.map(function (el2) {
+              return {
+                name: el2.name,
+                value: el2.value
+              };
+            })
           },
           relayReply1: {
             data: sameProviderConflict.relayReply1.data,
@@ -275,7 +365,13 @@ var AminoConverter = {
             nonce: sameProviderConflict.relayReply1.nonce,
             latestBlock: _helpers.Long.fromString(sameProviderConflict.relayReply1.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply1.finalized_blocks_hashes,
-            sigBlocks: sameProviderConflict.relayReply1.sig_blocks
+            sigBlocks: sameProviderConflict.relayReply1.sig_blocks,
+            metadata: sameProviderConflict.relayReply1.metadata.map(function (el2) {
+              return {
+                name: el2.name,
+                value: el2.value
+              };
+            })
           }
         }
       };

@@ -1,14 +1,14 @@
 import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
-export declare enum KeyType {
+export declare enum ProjectKey_Type {
     NONE = 0,
     ADMIN = 1,
     DEVELOPER = 2,
     UNRECOGNIZED = -1
 }
-export declare const KeyTypeSDKType: typeof KeyType;
-export declare function keyTypeFromJSON(object: any): KeyType;
-export declare function keyTypeToJSON(object: KeyType): string;
+export declare const ProjectKey_TypeSDKType: typeof ProjectKey_Type;
+export declare function projectKey_TypeFromJSON(object: any): ProjectKey_Type;
+export declare function projectKey_TypeToJSON(object: ProjectKey_Type): string;
 export interface Project {
     /** unique id that will be the combination of subscription address and project name, cannot be changed once created */
     index: string;
@@ -37,21 +37,14 @@ export interface ProjectSDKType {
     subscription_policy?: PolicySDKType;
     snapshot: Long;
 }
-export interface KeyTypeObject {
-    types: KeyType;
-}
-export interface KeyTypeObjectSDKType {
-    types: KeyType;
-}
 export interface ProjectKey {
     /** the address of the project key */
     key: string;
-    /** the key type, determines the privilages of the key */
-    types: KeyTypeObject[];
+    kinds: number;
 }
 export interface ProjectKeySDKType {
     key: string;
-    types: KeyTypeObjectSDKType[];
+    kinds: number;
 }
 /** protobuf expected in YAML format: used "moretags" to simplify parsing */
 export interface Policy {
@@ -105,13 +98,6 @@ export declare const Project: {
     fromJSON(object: any): Project;
     toJSON(message: Project): unknown;
     fromPartial(object: Partial<Project>): Project;
-};
-export declare const KeyTypeObject: {
-    encode(message: KeyTypeObject, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): KeyTypeObject;
-    fromJSON(object: any): KeyTypeObject;
-    toJSON(message: KeyTypeObject): unknown;
-    fromPartial(object: Partial<KeyTypeObject>): KeyTypeObject;
 };
 export declare const ProjectKey: {
     encode(message: ProjectKey, writer?: _m0.Writer): _m0.Writer;

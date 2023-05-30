@@ -4,13 +4,15 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.QueryVerifyPairingResponse = exports.QueryVerifyPairingRequest = exports.QueryUserEntryResponse = exports.QueryUserEntryRequest = exports.QueryStaticProvidersListResponse = exports.QueryStaticProvidersListRequest = exports.QueryProvidersResponse = exports.QueryProvidersRequest = exports.QueryParamsResponse = exports.QueryParamsRequest = exports.QueryGetUniquePaymentStorageClientProviderResponse = exports.QueryGetUniquePaymentStorageClientProviderRequest = exports.QueryGetProviderPaymentStorageResponse = exports.QueryGetProviderPaymentStorageRequest = exports.QueryGetPairingResponse = exports.QueryGetPairingRequest = exports.QueryGetEpochPaymentsResponse = exports.QueryGetEpochPaymentsRequest = exports.QueryClientsResponse = exports.QueryClientsRequest = exports.QueryAllUniquePaymentStorageClientProviderResponse = exports.QueryAllUniquePaymentStorageClientProviderRequest = exports.QueryAllProviderPaymentStorageResponse = exports.QueryAllProviderPaymentStorageRequest = exports.QueryAllEpochPaymentsResponse = exports.QueryAllEpochPaymentsRequest = void 0;
+exports.QueryVerifyPairingResponse = exports.QueryVerifyPairingRequest = exports.QueryUserEntryResponse = exports.QueryUserEntryRequest = exports.QueryStaticProvidersListResponse = exports.QueryStaticProvidersListRequest = exports.QueryProvidersResponse = exports.QueryProvidersRequest = exports.QueryParamsResponse = exports.QueryParamsRequest = exports.QueryGetUniquePaymentStorageClientProviderResponse = exports.QueryGetUniquePaymentStorageClientProviderRequest = exports.QueryGetProviderPaymentStorageResponse = exports.QueryGetProviderPaymentStorageRequest = exports.QueryGetPairingResponse = exports.QueryGetPairingRequest = exports.QueryGetEpochPaymentsResponse = exports.QueryGetEpochPaymentsRequest = exports.QueryClientsResponse = exports.QueryClientsRequest = exports.QueryAllUniquePaymentStorageClientProviderResponse = exports.QueryAllUniquePaymentStorageClientProviderRequest = exports.QueryAllProviderPaymentStorageResponse = exports.QueryAllProviderPaymentStorageRequest = exports.QueryAllEpochPaymentsResponse = exports.QueryAllEpochPaymentsRequest = exports.QueryAccountInfoResponse = void 0;
 var _pagination = require("../cosmos/base/query/v1beta1/pagination");
 var _params = require("./params");
 var _stake_entry = require("../epochstorage/stake_entry");
 var _unique_payment_storage_client_provider = require("./unique_payment_storage_client_provider");
 var _provider_payment_storage = require("./provider_payment_storage");
 var _epoch_payments = require("./epoch_payments");
+var _subscription = require("../subscription/subscription");
+var _project = require("../projects/project");
 var _helpers = require("../helpers");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -1576,3 +1578,177 @@ var QueryStaticProvidersListResponse = {
   }
 };
 exports.QueryStaticProvidersListResponse = QueryStaticProvidersListResponse;
+function createBaseQueryAccountInfoResponse() {
+  return {
+    provider: [],
+    frozen: [],
+    consumer: [],
+    unstaked: [],
+    subscription: undefined,
+    project: undefined
+  };
+}
+var QueryAccountInfoResponse = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var _iterator8 = _createForOfIteratorHelper(message.provider),
+      _step8;
+    try {
+      for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+        var v = _step8.value;
+        _stake_entry.StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator8.e(err);
+    } finally {
+      _iterator8.f();
+    }
+    var _iterator9 = _createForOfIteratorHelper(message.frozen),
+      _step9;
+    try {
+      for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+        var _v = _step9.value;
+        _stake_entry.StakeEntry.encode(_v, writer.uint32(18).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator9.e(err);
+    } finally {
+      _iterator9.f();
+    }
+    var _iterator10 = _createForOfIteratorHelper(message.consumer),
+      _step10;
+    try {
+      for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+        var _v2 = _step10.value;
+        _stake_entry.StakeEntry.encode(_v2, writer.uint32(26).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator10.e(err);
+    } finally {
+      _iterator10.f();
+    }
+    var _iterator11 = _createForOfIteratorHelper(message.unstaked),
+      _step11;
+    try {
+      for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+        var _v3 = _step11.value;
+        _stake_entry.StakeEntry.encode(_v3, writer.uint32(34).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator11.e(err);
+    } finally {
+      _iterator11.f();
+    }
+    if (message.subscription !== undefined) {
+      _subscription.Subscription.encode(message.subscription, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.project !== undefined) {
+      _project.Project.encode(message.project, writer.uint32(50).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseQueryAccountInfoResponse();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.provider.push(_stake_entry.StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.frozen.push(_stake_entry.StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 3:
+          message.consumer.push(_stake_entry.StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 4:
+          message.unstaked.push(_stake_entry.StakeEntry.decode(reader, reader.uint32()));
+          break;
+        case 5:
+          message.subscription = _subscription.Subscription.decode(reader, reader.uint32());
+          break;
+        case 6:
+          message.project = _project.Project.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      provider: Array.isArray(object === null || object === void 0 ? void 0 : object.provider) ? object.provider.map(function (e) {
+        return _stake_entry.StakeEntry.fromJSON(e);
+      }) : [],
+      frozen: Array.isArray(object === null || object === void 0 ? void 0 : object.frozen) ? object.frozen.map(function (e) {
+        return _stake_entry.StakeEntry.fromJSON(e);
+      }) : [],
+      consumer: Array.isArray(object === null || object === void 0 ? void 0 : object.consumer) ? object.consumer.map(function (e) {
+        return _stake_entry.StakeEntry.fromJSON(e);
+      }) : [],
+      unstaked: Array.isArray(object === null || object === void 0 ? void 0 : object.unstaked) ? object.unstaked.map(function (e) {
+        return _stake_entry.StakeEntry.fromJSON(e);
+      }) : [],
+      subscription: (0, _helpers.isSet)(object.subscription) ? _subscription.Subscription.fromJSON(object.subscription) : undefined,
+      project: (0, _helpers.isSet)(object.project) ? _project.Project.fromJSON(object.project) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    if (message.provider) {
+      obj.provider = message.provider.map(function (e) {
+        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
+      });
+    } else {
+      obj.provider = [];
+    }
+    if (message.frozen) {
+      obj.frozen = message.frozen.map(function (e) {
+        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
+      });
+    } else {
+      obj.frozen = [];
+    }
+    if (message.consumer) {
+      obj.consumer = message.consumer.map(function (e) {
+        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
+      });
+    } else {
+      obj.consumer = [];
+    }
+    if (message.unstaked) {
+      obj.unstaked = message.unstaked.map(function (e) {
+        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
+      });
+    } else {
+      obj.unstaked = [];
+    }
+    message.subscription !== undefined && (obj.subscription = message.subscription ? _subscription.Subscription.toJSON(message.subscription) : undefined);
+    message.project !== undefined && (obj.project = message.project ? _project.Project.toJSON(message.project) : undefined);
+    return obj;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$provider2, _object$frozen, _object$consumer, _object$unstaked;
+    var message = createBaseQueryAccountInfoResponse();
+    message.provider = ((_object$provider2 = object.provider) === null || _object$provider2 === void 0 ? void 0 : _object$provider2.map(function (e) {
+      return _stake_entry.StakeEntry.fromPartial(e);
+    })) || [];
+    message.frozen = ((_object$frozen = object.frozen) === null || _object$frozen === void 0 ? void 0 : _object$frozen.map(function (e) {
+      return _stake_entry.StakeEntry.fromPartial(e);
+    })) || [];
+    message.consumer = ((_object$consumer = object.consumer) === null || _object$consumer === void 0 ? void 0 : _object$consumer.map(function (e) {
+      return _stake_entry.StakeEntry.fromPartial(e);
+    })) || [];
+    message.unstaked = ((_object$unstaked = object.unstaked) === null || _object$unstaked === void 0 ? void 0 : _object$unstaked.map(function (e) {
+      return _stake_entry.StakeEntry.fromPartial(e);
+    })) || [];
+    message.subscription = object.subscription !== undefined && object.subscription !== null ? _subscription.Subscription.fromPartial(object.subscription) : undefined;
+    message.project = object.project !== undefined && object.project !== null ? _project.Project.fromPartial(object.project) : undefined;
+    return message;
+  }
+};
+exports.QueryAccountInfoResponse = QueryAccountInfoResponse;

@@ -6,7 +6,8 @@ function createBaseEntry() {
     block: Long.UZERO,
     staleAt: Long.UZERO,
     refcount: Long.UZERO,
-    data: new Uint8Array()
+    data: new Uint8Array(),
+    deleteAt: Long.UZERO
   };
 }
 export const Entry = {
@@ -25,6 +26,9 @@ export const Entry = {
     }
     if (message.data.length !== 0) {
       writer.uint32(42).bytes(message.data);
+    }
+    if (!message.deleteAt.isZero()) {
+      writer.uint32(48).uint64(message.deleteAt);
     }
     return writer;
   },
@@ -50,6 +54,9 @@ export const Entry = {
         case 5:
           message.data = reader.bytes();
           break;
+        case 6:
+          message.deleteAt = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -63,7 +70,8 @@ export const Entry = {
       block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO,
       staleAt: isSet(object.staleAt) ? Long.fromValue(object.staleAt) : Long.UZERO,
       refcount: isSet(object.refcount) ? Long.fromValue(object.refcount) : Long.UZERO,
-      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array()
+      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(),
+      deleteAt: isSet(object.deleteAt) ? Long.fromValue(object.deleteAt) : Long.UZERO
     };
   },
   toJSON(message) {
@@ -73,6 +81,7 @@ export const Entry = {
     message.staleAt !== undefined && (obj.staleAt = (message.staleAt || Long.UZERO).toString());
     message.refcount !== undefined && (obj.refcount = (message.refcount || Long.UZERO).toString());
     message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
+    message.deleteAt !== undefined && (obj.deleteAt = (message.deleteAt || Long.UZERO).toString());
     return obj;
   },
   fromPartial(object) {
@@ -83,6 +92,7 @@ export const Entry = {
     message.staleAt = object.staleAt !== undefined && object.staleAt !== null ? Long.fromValue(object.staleAt) : Long.UZERO;
     message.refcount = object.refcount !== undefined && object.refcount !== null ? Long.fromValue(object.refcount) : Long.UZERO;
     message.data = (_object$data = object.data) !== null && _object$data !== void 0 ? _object$data : new Uint8Array();
+    message.deleteAt = object.deleteAt !== undefined && object.deleteAt !== null ? Long.fromValue(object.deleteAt) : Long.UZERO;
     return message;
   }
 };

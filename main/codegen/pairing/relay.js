@@ -4,11 +4,15 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RelaySession = exports.RelayRequest = exports.RelayReply = exports.RelayPrivateData = exports.QualityOfServiceReport = exports.Badge = void 0;
+exports.RelaySession = exports.RelayRequest = exports.RelayReply = exports.RelayPrivateData = exports.QualityOfServiceReport = exports.Metadata = exports.GenerateBadgeResponse = exports.GenerateBadgeRequest = exports.Badge = void 0;
+var _stake_entry = require("../epochstorage/stake_entry");
 var _helpers = require("../helpers");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function createBaseRelaySession() {
   return {
     specId: "",
@@ -174,7 +178,8 @@ function createBaseRelayPrivateData() {
     data: new Uint8Array(),
     requestBlock: _helpers.Long.ZERO,
     apiInterface: "",
-    salt: new Uint8Array()
+    salt: new Uint8Array(),
+    metadata: []
   };
 }
 var RelayPrivateData = {
@@ -197,6 +202,18 @@ var RelayPrivateData = {
     }
     if (message.salt.length !== 0) {
       writer.uint32(50).bytes(message.salt);
+    }
+    var _iterator = _createForOfIteratorHelper(message.metadata),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var v = _step.value;
+        Metadata.encode(v, writer.uint32(58).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
     return writer;
   },
@@ -225,6 +242,9 @@ var RelayPrivateData = {
         case 6:
           message.salt = reader.bytes();
           break;
+        case 7:
+          message.metadata.push(Metadata.decode(reader, reader.uint32()));
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -239,7 +259,10 @@ var RelayPrivateData = {
       data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
       requestBlock: (0, _helpers.isSet)(object.requestBlock) ? _helpers.Long.fromValue(object.requestBlock) : _helpers.Long.ZERO,
       apiInterface: (0, _helpers.isSet)(object.apiInterface) ? String(object.apiInterface) : "",
-      salt: (0, _helpers.isSet)(object.salt) ? (0, _helpers.bytesFromBase64)(object.salt) : new Uint8Array()
+      salt: (0, _helpers.isSet)(object.salt) ? (0, _helpers.bytesFromBase64)(object.salt) : new Uint8Array(),
+      metadata: Array.isArray(object === null || object === void 0 ? void 0 : object.metadata) ? object.metadata.map(function (e) {
+        return Metadata.fromJSON(e);
+      }) : []
     };
   },
   toJSON: function toJSON(message) {
@@ -250,10 +273,17 @@ var RelayPrivateData = {
     message.requestBlock !== undefined && (obj.requestBlock = (message.requestBlock || _helpers.Long.ZERO).toString());
     message.apiInterface !== undefined && (obj.apiInterface = message.apiInterface);
     message.salt !== undefined && (obj.salt = (0, _helpers.base64FromBytes)(message.salt !== undefined ? message.salt : new Uint8Array()));
+    if (message.metadata) {
+      obj.metadata = message.metadata.map(function (e) {
+        return e ? Metadata.toJSON(e) : undefined;
+      });
+    } else {
+      obj.metadata = [];
+    }
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$connectionTyp, _object$apiUrl, _object$data, _object$apiInterface, _object$salt;
+    var _object$connectionTyp, _object$apiUrl, _object$data, _object$apiInterface, _object$salt, _object$metadata;
     var message = createBaseRelayPrivateData();
     message.connectionType = (_object$connectionTyp = object.connectionType) !== null && _object$connectionTyp !== void 0 ? _object$connectionTyp : "";
     message.apiUrl = (_object$apiUrl = object.apiUrl) !== null && _object$apiUrl !== void 0 ? _object$apiUrl : "";
@@ -261,10 +291,71 @@ var RelayPrivateData = {
     message.requestBlock = object.requestBlock !== undefined && object.requestBlock !== null ? _helpers.Long.fromValue(object.requestBlock) : _helpers.Long.ZERO;
     message.apiInterface = (_object$apiInterface = object.apiInterface) !== null && _object$apiInterface !== void 0 ? _object$apiInterface : "";
     message.salt = (_object$salt = object.salt) !== null && _object$salt !== void 0 ? _object$salt : new Uint8Array();
+    message.metadata = ((_object$metadata = object.metadata) === null || _object$metadata === void 0 ? void 0 : _object$metadata.map(function (e) {
+      return Metadata.fromPartial(e);
+    })) || [];
     return message;
   }
 };
 exports.RelayPrivateData = RelayPrivateData;
+function createBaseMetadata() {
+  return {
+    name: "",
+    value: ""
+  };
+}
+var Metadata = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseMetadata();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        case 2:
+          message.value = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
+      value: (0, _helpers.isSet)(object.value) ? String(object.value) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$name, _object$value;
+    var message = createBaseMetadata();
+    message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
+    message.value = (_object$value = object.value) !== null && _object$value !== void 0 ? _object$value : "";
+    return message;
+  }
+};
+exports.Metadata = Metadata;
 function createBaseRelayRequest() {
   return {
     relaySession: undefined,
@@ -410,6 +501,151 @@ var Badge = {
   }
 };
 exports.Badge = Badge;
+function createBaseGenerateBadgeRequest() {
+  return {
+    badgeAddress: "",
+    projectId: "",
+    specId: undefined
+  };
+}
+var GenerateBadgeRequest = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    if (message.badgeAddress !== "") {
+      writer.uint32(10).string(message.badgeAddress);
+    }
+    if (message.projectId !== "") {
+      writer.uint32(18).string(message.projectId);
+    }
+    if (message.specId !== undefined) {
+      writer.uint32(26).string(message.specId);
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseGenerateBadgeRequest();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.badgeAddress = reader.string();
+          break;
+        case 2:
+          message.projectId = reader.string();
+          break;
+        case 3:
+          message.specId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      badgeAddress: (0, _helpers.isSet)(object.badgeAddress) ? String(object.badgeAddress) : "",
+      projectId: (0, _helpers.isSet)(object.projectId) ? String(object.projectId) : "",
+      specId: (0, _helpers.isSet)(object.specId) ? String(object.specId) : undefined
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.badgeAddress !== undefined && (obj.badgeAddress = message.badgeAddress);
+    message.projectId !== undefined && (obj.projectId = message.projectId);
+    message.specId !== undefined && (obj.specId = message.specId);
+    return obj;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$badgeAddress, _object$projectId, _object$specId2;
+    var message = createBaseGenerateBadgeRequest();
+    message.badgeAddress = (_object$badgeAddress = object.badgeAddress) !== null && _object$badgeAddress !== void 0 ? _object$badgeAddress : "";
+    message.projectId = (_object$projectId = object.projectId) !== null && _object$projectId !== void 0 ? _object$projectId : "";
+    message.specId = (_object$specId2 = object.specId) !== null && _object$specId2 !== void 0 ? _object$specId2 : undefined;
+    return message;
+  }
+};
+exports.GenerateBadgeRequest = GenerateBadgeRequest;
+function createBaseGenerateBadgeResponse() {
+  return {
+    badge: undefined,
+    pairingList: undefined
+  };
+}
+var GenerateBadgeResponse = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    if (message.badge !== undefined) {
+      Badge.encode(message.badge, writer.uint32(10).fork()).ldelim();
+    }
+    var _iterator2 = _createForOfIteratorHelper(message.pairingList),
+      _step2;
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var v = _step2.value;
+        _stake_entry.StakeEntry.encode(v, writer.uint32(18).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseGenerateBadgeResponse();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.badge = Badge.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.pairingList.push(_stake_entry.StakeEntry.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      badge: (0, _helpers.isSet)(object.badge) ? Badge.fromJSON(object.badge) : undefined,
+      pairingList: Array.isArray(object === null || object === void 0 ? void 0 : object.pairingList) ? object.pairingList.map(function (e) {
+        return _stake_entry.StakeEntry.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.badge !== undefined && (obj.badge = message.badge ? Badge.toJSON(message.badge) : undefined);
+    if (message.pairingList) {
+      obj.pairingList = message.pairingList.map(function (e) {
+        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
+      });
+    } else {
+      obj.pairingList = [];
+    }
+    return obj;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$pairingList;
+    var message = createBaseGenerateBadgeResponse();
+    message.badge = object.badge !== undefined && object.badge !== null ? Badge.fromPartial(object.badge) : undefined;
+    message.pairingList = ((_object$pairingList = object.pairingList) === null || _object$pairingList === void 0 ? void 0 : _object$pairingList.map(function (e) {
+      return _stake_entry.StakeEntry.fromPartial(e);
+    })) || [];
+    return message;
+  }
+};
+exports.GenerateBadgeResponse = GenerateBadgeResponse;
 function createBaseRelayReply() {
   return {
     data: new Uint8Array(),
@@ -417,7 +653,8 @@ function createBaseRelayReply() {
     nonce: 0,
     latestBlock: _helpers.Long.ZERO,
     finalizedBlocksHashes: new Uint8Array(),
-    sigBlocks: new Uint8Array()
+    sigBlocks: new Uint8Array(),
+    metadata: []
   };
 }
 var RelayReply = {
@@ -440,6 +677,18 @@ var RelayReply = {
     }
     if (message.sigBlocks.length !== 0) {
       writer.uint32(50).bytes(message.sigBlocks);
+    }
+    var _iterator3 = _createForOfIteratorHelper(message.metadata),
+      _step3;
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var v = _step3.value;
+        Metadata.encode(v, writer.uint32(58).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
     }
     return writer;
   },
@@ -468,6 +717,9 @@ var RelayReply = {
         case 6:
           message.sigBlocks = reader.bytes();
           break;
+        case 7:
+          message.metadata.push(Metadata.decode(reader, reader.uint32()));
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -482,7 +734,10 @@ var RelayReply = {
       nonce: (0, _helpers.isSet)(object.nonce) ? Number(object.nonce) : 0,
       latestBlock: (0, _helpers.isSet)(object.latestBlock) ? _helpers.Long.fromValue(object.latestBlock) : _helpers.Long.ZERO,
       finalizedBlocksHashes: (0, _helpers.isSet)(object.finalizedBlocksHashes) ? (0, _helpers.bytesFromBase64)(object.finalizedBlocksHashes) : new Uint8Array(),
-      sigBlocks: (0, _helpers.isSet)(object.sigBlocks) ? (0, _helpers.bytesFromBase64)(object.sigBlocks) : new Uint8Array()
+      sigBlocks: (0, _helpers.isSet)(object.sigBlocks) ? (0, _helpers.bytesFromBase64)(object.sigBlocks) : new Uint8Array(),
+      metadata: Array.isArray(object === null || object === void 0 ? void 0 : object.metadata) ? object.metadata.map(function (e) {
+        return Metadata.fromJSON(e);
+      }) : []
     };
   },
   toJSON: function toJSON(message) {
@@ -493,10 +748,17 @@ var RelayReply = {
     message.latestBlock !== undefined && (obj.latestBlock = (message.latestBlock || _helpers.Long.ZERO).toString());
     message.finalizedBlocksHashes !== undefined && (obj.finalizedBlocksHashes = (0, _helpers.base64FromBytes)(message.finalizedBlocksHashes !== undefined ? message.finalizedBlocksHashes : new Uint8Array()));
     message.sigBlocks !== undefined && (obj.sigBlocks = (0, _helpers.base64FromBytes)(message.sigBlocks !== undefined ? message.sigBlocks : new Uint8Array()));
+    if (message.metadata) {
+      obj.metadata = message.metadata.map(function (e) {
+        return e ? Metadata.toJSON(e) : undefined;
+      });
+    } else {
+      obj.metadata = [];
+    }
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$data2, _object$sig2, _object$nonce, _object$finalizedBloc, _object$sigBlocks;
+    var _object$data2, _object$sig2, _object$nonce, _object$finalizedBloc, _object$sigBlocks, _object$metadata2;
     var message = createBaseRelayReply();
     message.data = (_object$data2 = object.data) !== null && _object$data2 !== void 0 ? _object$data2 : new Uint8Array();
     message.sig = (_object$sig2 = object.sig) !== null && _object$sig2 !== void 0 ? _object$sig2 : new Uint8Array();
@@ -504,6 +766,9 @@ var RelayReply = {
     message.latestBlock = object.latestBlock !== undefined && object.latestBlock !== null ? _helpers.Long.fromValue(object.latestBlock) : _helpers.Long.ZERO;
     message.finalizedBlocksHashes = (_object$finalizedBloc = object.finalizedBlocksHashes) !== null && _object$finalizedBloc !== void 0 ? _object$finalizedBloc : new Uint8Array();
     message.sigBlocks = (_object$sigBlocks = object.sigBlocks) !== null && _object$sigBlocks !== void 0 ? _object$sigBlocks : new Uint8Array();
+    message.metadata = ((_object$metadata2 = object.metadata) === null || _object$metadata2 === void 0 ? void 0 : _object$metadata2.map(function (e) {
+      return Metadata.fromPartial(e);
+    })) || [];
     return message;
   }
 };

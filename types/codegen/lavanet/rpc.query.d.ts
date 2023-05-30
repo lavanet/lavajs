@@ -54,6 +54,7 @@ export declare const createRPCQueryClient: ({ rpcEndpoint }: {
             subscription: {
                 params(request?: import("../subscription/query").QueryParamsRequest): Promise<import("../subscription/query").QueryParamsResponse>;
                 current(request: import("../subscription/query").QueryCurrentRequest): Promise<import("../subscription/query").QueryCurrentResponse>;
+                listProjects(request: import("../subscription/query").QueryListProjectsRequest): Promise<import("../subscription/query").QueryListProjectsResponse>;
             };
         };
     };

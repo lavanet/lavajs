@@ -1,39 +1,39 @@
 import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
-export let KeyType = /*#__PURE__*/function (KeyType) {
-  KeyType[KeyType["NONE"] = 0] = "NONE";
-  KeyType[KeyType["ADMIN"] = 1] = "ADMIN";
-  KeyType[KeyType["DEVELOPER"] = 2] = "DEVELOPER";
-  KeyType[KeyType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
-  return KeyType;
+export let ProjectKey_Type = /*#__PURE__*/function (ProjectKey_Type) {
+  ProjectKey_Type[ProjectKey_Type["NONE"] = 0] = "NONE";
+  ProjectKey_Type[ProjectKey_Type["ADMIN"] = 1] = "ADMIN";
+  ProjectKey_Type[ProjectKey_Type["DEVELOPER"] = 2] = "DEVELOPER";
+  ProjectKey_Type[ProjectKey_Type["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+  return ProjectKey_Type;
 }({});
-export const KeyTypeSDKType = KeyType;
-export function keyTypeFromJSON(object) {
+export const ProjectKey_TypeSDKType = ProjectKey_Type;
+export function projectKey_TypeFromJSON(object) {
   switch (object) {
     case 0:
     case "NONE":
-      return KeyType.NONE;
+      return ProjectKey_Type.NONE;
     case 1:
     case "ADMIN":
-      return KeyType.ADMIN;
+      return ProjectKey_Type.ADMIN;
     case 2:
     case "DEVELOPER":
-      return KeyType.DEVELOPER;
+      return ProjectKey_Type.DEVELOPER;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return KeyType.UNRECOGNIZED;
+      return ProjectKey_Type.UNRECOGNIZED;
   }
 }
-export function keyTypeToJSON(object) {
+export function projectKey_TypeToJSON(object) {
   switch (object) {
-    case KeyType.NONE:
+    case ProjectKey_Type.NONE:
       return "NONE";
-    case KeyType.ADMIN:
+    case ProjectKey_Type.ADMIN:
       return "ADMIN";
-    case KeyType.DEVELOPER:
+    case ProjectKey_Type.DEVELOPER:
       return "DEVELOPER";
-    case KeyType.UNRECOGNIZED:
+    case ProjectKey_Type.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
@@ -177,56 +177,10 @@ export const Project = {
     return message;
   }
 };
-function createBaseKeyTypeObject() {
-  return {
-    types: 0
-  };
-}
-export const KeyTypeObject = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (message.types !== 0) {
-      writer.uint32(8).int32(message.types);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseKeyTypeObject();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.types = reader.int32();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      types: isSet(object.types) ? keyTypeFromJSON(object.types) : 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.types !== undefined && (obj.types = keyTypeToJSON(message.types));
-    return obj;
-  },
-  fromPartial(object) {
-    var _object$types;
-    const message = createBaseKeyTypeObject();
-    message.types = (_object$types = object.types) !== null && _object$types !== void 0 ? _object$types : 0;
-    return message;
-  }
-};
 function createBaseProjectKey() {
   return {
     key: "",
-    types: []
+    kinds: 0
   };
 }
 export const ProjectKey = {
@@ -234,8 +188,8 @@ export const ProjectKey = {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
-    for (const v of message.types) {
-      KeyTypeObject.encode(v, writer.uint32(18).fork()).ldelim();
+    if (message.kinds !== 0) {
+      writer.uint32(32).uint32(message.kinds);
     }
     return writer;
   },
@@ -249,8 +203,8 @@ export const ProjectKey = {
         case 1:
           message.key = reader.string();
           break;
-        case 2:
-          message.types.push(KeyTypeObject.decode(reader, reader.uint32()));
+        case 4:
+          message.kinds = reader.uint32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -262,24 +216,20 @@ export const ProjectKey = {
   fromJSON(object) {
     return {
       key: isSet(object.key) ? String(object.key) : "",
-      types: Array.isArray(object === null || object === void 0 ? void 0 : object.types) ? object.types.map(e => KeyTypeObject.fromJSON(e)) : []
+      kinds: isSet(object.kinds) ? Number(object.kinds) : 0
     };
   },
   toJSON(message) {
     const obj = {};
     message.key !== undefined && (obj.key = message.key);
-    if (message.types) {
-      obj.types = message.types.map(e => e ? KeyTypeObject.toJSON(e) : undefined);
-    } else {
-      obj.types = [];
-    }
+    message.kinds !== undefined && (obj.kinds = Math.round(message.kinds));
     return obj;
   },
   fromPartial(object) {
-    var _object$key, _object$types2;
+    var _object$key, _object$kinds;
     const message = createBaseProjectKey();
     message.key = (_object$key = object.key) !== null && _object$key !== void 0 ? _object$key : "";
-    message.types = ((_object$types2 = object.types) === null || _object$types2 === void 0 ? void 0 : _object$types2.map(e => KeyTypeObject.fromPartial(e))) || [];
+    message.kinds = (_object$kinds = object.kinds) !== null && _object$kinds !== void 0 ? _object$kinds : 0;
     return message;
   }
 };

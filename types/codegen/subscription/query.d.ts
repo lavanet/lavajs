@@ -28,6 +28,18 @@ export interface QueryCurrentResponse {
 export interface QueryCurrentResponseSDKType {
     sub?: SubscriptionSDKType;
 }
+export interface QueryListProjectsRequest {
+    subscription: string;
+}
+export interface QueryListProjectsRequestSDKType {
+    subscription: string;
+}
+export interface QueryListProjectsResponse {
+    projects: string[];
+}
+export interface QueryListProjectsResponseSDKType {
+    projects: string[];
+}
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest;
@@ -55,4 +67,18 @@ export declare const QueryCurrentResponse: {
     fromJSON(object: any): QueryCurrentResponse;
     toJSON(message: QueryCurrentResponse): unknown;
     fromPartial(object: Partial<QueryCurrentResponse>): QueryCurrentResponse;
+};
+export declare const QueryListProjectsRequest: {
+    encode(message: QueryListProjectsRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryListProjectsRequest;
+    fromJSON(object: any): QueryListProjectsRequest;
+    toJSON(message: QueryListProjectsRequest): unknown;
+    fromPartial(object: Partial<QueryListProjectsRequest>): QueryListProjectsRequest;
+};
+export declare const QueryListProjectsResponse: {
+    encode(message: QueryListProjectsResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryListProjectsResponse;
+    fromJSON(object: any): QueryListProjectsResponse;
+    toJSON(message: QueryListProjectsResponse): unknown;
+    fromPartial(object: Partial<QueryListProjectsResponse>): QueryListProjectsResponse;
 };

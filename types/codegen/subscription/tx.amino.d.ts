@@ -19,9 +19,7 @@ export interface MsgAddProjectAminoType extends AminoMsg {
             enabled: boolean;
             projectKeys: {
                 key: string;
-                types: {
-                    types: number;
-                }[];
+                kinds: number;
             }[];
             policy: {
                 chain_policies: {

@@ -27,6 +27,18 @@ export interface QueryCurrentResponse {
 export interface QueryCurrentResponseSDKType {
   sub?: SubscriptionSDKType;
 }
+export interface QueryListProjectsRequest {
+  subscription: string;
+}
+export interface QueryListProjectsRequestSDKType {
+  subscription: string;
+}
+export interface QueryListProjectsResponse {
+  projects: string[];
+}
+export interface QueryListProjectsResponseSDKType {
+  projects: string[];
+}
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -192,6 +204,100 @@ export const QueryCurrentResponse = {
   fromPartial(object: Partial<QueryCurrentResponse>): QueryCurrentResponse {
     const message = createBaseQueryCurrentResponse();
     message.sub = object.sub !== undefined && object.sub !== null ? Subscription.fromPartial(object.sub) : undefined;
+    return message;
+  }
+};
+function createBaseQueryListProjectsRequest(): QueryListProjectsRequest {
+  return {
+    subscription: ""
+  };
+}
+export const QueryListProjectsRequest = {
+  encode(message: QueryListProjectsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.subscription !== "") {
+      writer.uint32(10).string(message.subscription);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryListProjectsRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryListProjectsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.subscription = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): QueryListProjectsRequest {
+    return {
+      subscription: isSet(object.subscription) ? String(object.subscription) : ""
+    };
+  },
+  toJSON(message: QueryListProjectsRequest): unknown {
+    const obj: any = {};
+    message.subscription !== undefined && (obj.subscription = message.subscription);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryListProjectsRequest>): QueryListProjectsRequest {
+    const message = createBaseQueryListProjectsRequest();
+    message.subscription = object.subscription ?? "";
+    return message;
+  }
+};
+function createBaseQueryListProjectsResponse(): QueryListProjectsResponse {
+  return {
+    projects: []
+  };
+}
+export const QueryListProjectsResponse = {
+  encode(message: QueryListProjectsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.projects) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryListProjectsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryListProjectsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.projects.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): QueryListProjectsResponse {
+    return {
+      projects: Array.isArray(object?.projects) ? object.projects.map((e: any) => String(e)) : []
+    };
+  },
+  toJSON(message: QueryListProjectsResponse): unknown {
+    const obj: any = {};
+    if (message.projects) {
+      obj.projects = message.projects.map(e => e);
+    } else {
+      obj.projects = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<QueryListProjectsResponse>): QueryListProjectsResponse {
+    const message = createBaseQueryListProjectsResponse();
+    message.projects = object.projects?.map(e => e) || [];
     return message;
   }
 };

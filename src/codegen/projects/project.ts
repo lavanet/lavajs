@@ -1,38 +1,38 @@
 import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
-export enum KeyType {
+export enum ProjectKey_Type {
   NONE = 0,
   ADMIN = 1,
   DEVELOPER = 2,
   UNRECOGNIZED = -1,
 }
-export const KeyTypeSDKType = KeyType;
-export function keyTypeFromJSON(object: any): KeyType {
+export const ProjectKey_TypeSDKType = ProjectKey_Type;
+export function projectKey_TypeFromJSON(object: any): ProjectKey_Type {
   switch (object) {
     case 0:
     case "NONE":
-      return KeyType.NONE;
+      return ProjectKey_Type.NONE;
     case 1:
     case "ADMIN":
-      return KeyType.ADMIN;
+      return ProjectKey_Type.ADMIN;
     case 2:
     case "DEVELOPER":
-      return KeyType.DEVELOPER;
+      return ProjectKey_Type.DEVELOPER;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return KeyType.UNRECOGNIZED;
+      return ProjectKey_Type.UNRECOGNIZED;
   }
 }
-export function keyTypeToJSON(object: KeyType): string {
+export function projectKey_TypeToJSON(object: ProjectKey_Type): string {
   switch (object) {
-    case KeyType.NONE:
+    case ProjectKey_Type.NONE:
       return "NONE";
-    case KeyType.ADMIN:
+    case ProjectKey_Type.ADMIN:
       return "ADMIN";
-    case KeyType.DEVELOPER:
+    case ProjectKey_Type.DEVELOPER:
       return "DEVELOPER";
-    case KeyType.UNRECOGNIZED:
+    case ProjectKey_Type.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
@@ -65,21 +65,14 @@ export interface ProjectSDKType {
   subscription_policy?: PolicySDKType;
   snapshot: Long;
 }
-export interface KeyTypeObject {
-  types: KeyType;
-}
-export interface KeyTypeObjectSDKType {
-  types: KeyType;
-}
 export interface ProjectKey {
   /** the address of the project key */
   key: string;
-  /** the key type, determines the privilages of the key */
-  types: KeyTypeObject[];
+  kinds: number;
 }
 export interface ProjectKeySDKType {
   key: string;
-  types: KeyTypeObjectSDKType[];
+  kinds: number;
 }
 /** protobuf expected in YAML format: used "moretags" to simplify parsing */
 export interface Policy {
@@ -256,55 +249,10 @@ export const Project = {
     return message;
   }
 };
-function createBaseKeyTypeObject(): KeyTypeObject {
-  return {
-    types: 0
-  };
-}
-export const KeyTypeObject = {
-  encode(message: KeyTypeObject, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.types !== 0) {
-      writer.uint32(8).int32(message.types);
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): KeyTypeObject {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseKeyTypeObject();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.types = (reader.int32() as any);
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object: any): KeyTypeObject {
-    return {
-      types: isSet(object.types) ? keyTypeFromJSON(object.types) : 0
-    };
-  },
-  toJSON(message: KeyTypeObject): unknown {
-    const obj: any = {};
-    message.types !== undefined && (obj.types = keyTypeToJSON(message.types));
-    return obj;
-  },
-  fromPartial(object: Partial<KeyTypeObject>): KeyTypeObject {
-    const message = createBaseKeyTypeObject();
-    message.types = object.types ?? 0;
-    return message;
-  }
-};
 function createBaseProjectKey(): ProjectKey {
   return {
     key: "",
-    types: []
+    kinds: 0
   };
 }
 export const ProjectKey = {
@@ -312,8 +260,8 @@ export const ProjectKey = {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
-    for (const v of message.types) {
-      KeyTypeObject.encode(v!, writer.uint32(18).fork()).ldelim();
+    if (message.kinds !== 0) {
+      writer.uint32(32).uint32(message.kinds);
     }
     return writer;
   },
@@ -327,8 +275,8 @@ export const ProjectKey = {
         case 1:
           message.key = reader.string();
           break;
-        case 2:
-          message.types.push(KeyTypeObject.decode(reader, reader.uint32()));
+        case 4:
+          message.kinds = reader.uint32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -340,23 +288,19 @@ export const ProjectKey = {
   fromJSON(object: any): ProjectKey {
     return {
       key: isSet(object.key) ? String(object.key) : "",
-      types: Array.isArray(object?.types) ? object.types.map((e: any) => KeyTypeObject.fromJSON(e)) : []
+      kinds: isSet(object.kinds) ? Number(object.kinds) : 0
     };
   },
   toJSON(message: ProjectKey): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
-    if (message.types) {
-      obj.types = message.types.map(e => e ? KeyTypeObject.toJSON(e) : undefined);
-    } else {
-      obj.types = [];
-    }
+    message.kinds !== undefined && (obj.kinds = Math.round(message.kinds));
     return obj;
   },
   fromPartial(object: Partial<ProjectKey>): ProjectKey {
     const message = createBaseProjectKey();
     message.key = object.key ?? "";
-    message.types = object.types?.map(e => KeyTypeObject.fromPartial(e)) || [];
+    message.kinds = object.kinds ?? 0;
     return message;
   }
 };

@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { keyTypeFromJSON } from "./project";
+
 import { Long } from "../helpers";
 export const AminoConverter = {
   "/lavanet.lava.projects.MsgAddKeys": {
@@ -14,9 +14,7 @@ export const AminoConverter = {
         project,
         project_keys: projectKeys.map(el0 => ({
           key: el0.key,
-          types: el0.types.map(el1 => ({
-            types: el1.types
-          }))
+          kinds: el0.kinds
         }))
       };
     },
@@ -30,9 +28,7 @@ export const AminoConverter = {
         project,
         projectKeys: project_keys.map(el0 => ({
           key: el0.key,
-          types: el0.types.map(el1 => ({
-            types: keyTypeFromJSON(el1.types)
-          }))
+          kinds: el0.kinds
         }))
       };
     }

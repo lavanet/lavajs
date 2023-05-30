@@ -27,9 +27,7 @@ export declare const lavanetAminoConverters: {
                 enabled: boolean;
                 projectKeys: {
                     key: string;
-                    types: {
-                        types: number;
-                    }[];
+                    kinds: number;
                 }[];
                 policy: {
                     chain_policies: {
@@ -51,9 +49,7 @@ export declare const lavanetAminoConverters: {
                 enabled: boolean;
                 projectKeys: {
                     key: string;
-                    types: {
-                        types: number;
-                    }[];
+                    kinds: number;
                 }[];
                 policy: {
                     chain_policies: {
@@ -75,9 +71,7 @@ export declare const lavanetAminoConverters: {
             project: string;
             project_keys: {
                 key: string;
-                types: {
-                    types: number;
-                }[];
+                kinds: number;
             }[];
         };
         fromAmino: ({ creator, project, project_keys }: {
@@ -85,9 +79,7 @@ export declare const lavanetAminoConverters: {
             project: string;
             project_keys: {
                 key: string;
-                types: {
-                    types: number;
-                }[];
+                kinds: number;
             }[];
         }) => import("../proto/projects/tx").MsgAddKeys;
     };
@@ -324,6 +316,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
                 relayReply1: {
                     data: Uint8Array;
@@ -332,6 +328,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
             };
             responseConflict: {
@@ -368,6 +368,10 @@ export declare const lavanetAminoConverters: {
                             request_block: string;
                             api_interface: string;
                             salt: Uint8Array;
+                            metadata: {
+                                name: string;
+                                value: string;
+                            }[];
                         };
                     };
                     reply: {
@@ -377,6 +381,10 @@ export declare const lavanetAminoConverters: {
                         latest_block: string;
                         finalized_blocks_hashes: Uint8Array;
                         sig_blocks: Uint8Array;
+                        metadata: {
+                            name: string;
+                            value: string;
+                        }[];
                     };
                 };
                 conflictRelayData1: {
@@ -412,6 +420,10 @@ export declare const lavanetAminoConverters: {
                             request_block: string;
                             api_interface: string;
                             salt: Uint8Array;
+                            metadata: {
+                                name: string;
+                                value: string;
+                            }[];
                         };
                     };
                     reply: {
@@ -421,6 +433,10 @@ export declare const lavanetAminoConverters: {
                         latest_block: string;
                         finalized_blocks_hashes: Uint8Array;
                         sig_blocks: Uint8Array;
+                        metadata: {
+                            name: string;
+                            value: string;
+                        }[];
                     };
                 };
             };
@@ -432,6 +448,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
                 relayReply1: {
                     data: Uint8Array;
@@ -440,6 +460,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
             };
         };
@@ -453,6 +477,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
                 relayReply1: {
                     data: Uint8Array;
@@ -461,6 +489,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
             };
             responseConflict: {
@@ -497,6 +529,10 @@ export declare const lavanetAminoConverters: {
                             request_block: string;
                             api_interface: string;
                             salt: Uint8Array;
+                            metadata: {
+                                name: string;
+                                value: string;
+                            }[];
                         };
                     };
                     reply: {
@@ -506,6 +542,10 @@ export declare const lavanetAminoConverters: {
                         latest_block: string;
                         finalized_blocks_hashes: Uint8Array;
                         sig_blocks: Uint8Array;
+                        metadata: {
+                            name: string;
+                            value: string;
+                        }[];
                     };
                 };
                 conflictRelayData1: {
@@ -541,6 +581,10 @@ export declare const lavanetAminoConverters: {
                             request_block: string;
                             api_interface: string;
                             salt: Uint8Array;
+                            metadata: {
+                                name: string;
+                                value: string;
+                            }[];
                         };
                     };
                     reply: {
@@ -550,6 +594,10 @@ export declare const lavanetAminoConverters: {
                         latest_block: string;
                         finalized_blocks_hashes: Uint8Array;
                         sig_blocks: Uint8Array;
+                        metadata: {
+                            name: string;
+                            value: string;
+                        }[];
                     };
                 };
             };
@@ -561,6 +609,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
                 relayReply1: {
                     data: Uint8Array;
@@ -569,6 +621,10 @@ export declare const lavanetAminoConverters: {
                     latest_block: string;
                     finalized_blocks_hashes: Uint8Array;
                     sig_blocks: Uint8Array;
+                    metadata: {
+                        name: string;
+                        value: string;
+                    }[];
                 };
             };
         }) => import("../proto/conflict/tx").MsgDetection;
