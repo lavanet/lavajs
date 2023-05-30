@@ -54,7 +54,7 @@ const balances = await client.lava.exchange.v1beta1
 Import the `lava` object from `lava`. 
 
 ```js
-import { lava } from 'lava';
+import { lava } from 'lavajs';
 
 const {
     createSpotLimitOrder,
@@ -81,7 +81,7 @@ const {
 #### IBC Messages
 
 ```js
-import { ibc } from 'lava';
+import { ibc } from 'lavajs';
 
 const {
     transfer
@@ -91,7 +91,7 @@ const {
 #### Cosmos Messages
 
 ```js
-import { cosmos } from 'lava';
+import { cosmos } from 'lavajs';
 
 const {
     fundCommunityPool,
@@ -132,7 +132,7 @@ Here are the docs on [creating signers](https://github.com/cosmology-tech/cosmos
 Use `getSigninglavaClient` to get your `SigningStargateClient`, with the proto/amino messages full-loaded. No need to manually add amino types, just require and initialize the client:
 
 ```js
-import { getSigninglavaClient } from 'lava';
+import { getSigninglavaClient } from 'lavajs';
 
 const stargateClient = await getSigninglavaClient({
   rpcEndpoint,
@@ -220,7 +220,7 @@ import {
     ibcAminoConverters,
     lavaAminoConverters,
     lavaProtoRegistry
-} from 'lava';
+} from 'lavajs';
 
 const signer: OfflineSigner = /* create your signer (see above)  */
 const rpcEndpint = 'https://rpc.cosmos.directory/lava'; // or another URL
