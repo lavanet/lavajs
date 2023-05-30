@@ -113,45 +113,30 @@ import * as _225 from "../proto/pairing/tx.registry";
 import * as _226 from "../proto/projects/tx.registry";
 import * as _227 from "../proto/subscription/tx.registry";
 import * as _228 from "../subscription/tx.registry";
-import * as _229 from "../conflict/query.lcd";
-import * as _230 from "../epochstorage/query.lcd";
-import * as _231 from "../pairing/query.lcd";
-import * as _232 from "../plans/query.lcd";
-import * as _233 from "../projects/query.lcd";
-import * as _234 from "../proto/conflict/query.lcd";
-import * as _235 from "../proto/epochstorage/query.lcd";
-import * as _236 from "../proto/pairing/query.lcd";
-import * as _237 from "../proto/plans/query.lcd";
-import * as _238 from "../proto/projects/query.lcd";
-import * as _239 from "../proto/spec/query.lcd";
-import * as _240 from "../proto/subscription/query.lcd";
-import * as _241 from "../spec/query.lcd";
-import * as _242 from "../subscription/query.lcd";
-import * as _243 from "../conflict/query.rpc.Query";
-import * as _244 from "../epochstorage/query.rpc.Query";
-import * as _245 from "../pairing/query.rpc.Query";
-import * as _246 from "../plans/query.rpc.Query";
-import * as _247 from "../projects/query.rpc.Query";
-import * as _248 from "../proto/conflict/query.rpc.Query";
-import * as _249 from "../proto/epochstorage/query.rpc.Query";
-import * as _250 from "../proto/pairing/query.rpc.Query";
-import * as _251 from "../proto/plans/query.rpc.Query";
-import * as _252 from "../proto/projects/query.rpc.Query";
-import * as _253 from "../proto/spec/query.rpc.Query";
-import * as _254 from "../proto/subscription/query.rpc.Query";
-import * as _255 from "../spec/query.rpc.Query";
-import * as _256 from "../subscription/query.rpc.Query";
-import * as _257 from "../conflict/tx.rpc.msg";
-import * as _258 from "../pairing/tx.rpc.msg";
-import * as _259 from "../projects/tx.rpc.msg";
-import * as _260 from "../proto/conflict/tx.rpc.msg";
-import * as _261 from "../proto/pairing/tx.rpc.msg";
-import * as _262 from "../proto/projects/tx.rpc.msg";
-import * as _263 from "../proto/subscription/tx.rpc.msg";
-import * as _264 from "../subscription/tx.rpc.msg";
-import * as _342 from "./lcd";
-import * as _343 from "./rpc.query";
-import * as _344 from "./rpc.tx";
+import * as _229 from "../conflict/query.rpc.Query";
+import * as _230 from "../epochstorage/query.rpc.Query";
+import * as _231 from "../pairing/query.rpc.Query";
+import * as _232 from "../plans/query.rpc.Query";
+import * as _233 from "../projects/query.rpc.Query";
+import * as _234 from "../proto/conflict/query.rpc.Query";
+import * as _235 from "../proto/epochstorage/query.rpc.Query";
+import * as _236 from "../proto/pairing/query.rpc.Query";
+import * as _237 from "../proto/plans/query.rpc.Query";
+import * as _238 from "../proto/projects/query.rpc.Query";
+import * as _239 from "../proto/spec/query.rpc.Query";
+import * as _240 from "../proto/subscription/query.rpc.Query";
+import * as _241 from "../spec/query.rpc.Query";
+import * as _242 from "../subscription/query.rpc.Query";
+import * as _243 from "../conflict/tx.rpc.msg";
+import * as _244 from "../pairing/tx.rpc.msg";
+import * as _245 from "../projects/tx.rpc.msg";
+import * as _246 from "../proto/conflict/tx.rpc.msg";
+import * as _247 from "../proto/pairing/tx.rpc.msg";
+import * as _248 from "../proto/projects/tx.rpc.msg";
+import * as _249 from "../proto/subscription/tx.rpc.msg";
+import * as _250 from "../subscription/tx.rpc.msg";
+import * as _311 from "./rpc.query";
+import * as _312 from "./rpc.tx";
 export namespace lavanet {
   export namespace lava {
     export const common = {
@@ -178,9 +163,7 @@ export namespace lavanet {
       ..._229,
       ..._234,
       ..._243,
-      ..._248,
-      ..._257,
-      ..._260
+      ..._246
     };
     export const epochstorage = {
       ..._15,
@@ -202,9 +185,7 @@ export namespace lavanet {
       ..._31,
       ..._32,
       ..._230,
-      ..._235,
-      ..._244,
-      ..._249
+      ..._235
     };
     export const pairing = {
       ..._33,
@@ -234,10 +215,8 @@ export namespace lavanet {
       ..._225,
       ..._231,
       ..._236,
-      ..._245,
-      ..._250,
-      ..._258,
-      ..._261
+      ..._244,
+      ..._247
     };
     export const plans = {
       ..._54,
@@ -253,9 +232,7 @@ export namespace lavanet {
       ..._64,
       ..._65,
       ..._232,
-      ..._237,
-      ..._246,
-      ..._251
+      ..._237
     };
     export const projects = {
       ..._66,
@@ -274,10 +251,8 @@ export namespace lavanet {
       ..._226,
       ..._233,
       ..._238,
-      ..._247,
-      ..._252,
-      ..._259,
-      ..._262
+      ..._245,
+      ..._248
     };
     export const spec = {
       ..._76,
@@ -295,9 +270,7 @@ export namespace lavanet {
       ..._88,
       ..._89,
       ..._239,
-      ..._241,
-      ..._253,
-      ..._255
+      ..._241
     };
     export const subscription = {
       ..._90,
@@ -316,15 +289,12 @@ export namespace lavanet {
       ..._228,
       ..._240,
       ..._242,
-      ..._254,
-      ..._256,
-      ..._263,
-      ..._264
+      ..._249,
+      ..._250
     };
   }
   export const ClientFactory = {
-    ..._342,
-    ..._343,
-    ..._344
+    ..._311,
+    ..._312
   };
 }

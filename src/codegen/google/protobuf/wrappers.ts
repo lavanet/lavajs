@@ -1,4 +1,4 @@
-import { Long, DeepPartial } from "../../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
  * Wrapper message for `double`.
@@ -182,7 +182,17 @@ export const DoubleValue = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<DoubleValue>): DoubleValue {
+  fromJSON(object: any): DoubleValue {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message: DoubleValue): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+  fromPartial(object: Partial<DoubleValue>): DoubleValue {
     const message = createBaseDoubleValue();
     message.value = object.value ?? 0;
     return message;
@@ -217,7 +227,17 @@ export const FloatValue = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<FloatValue>): FloatValue {
+  fromJSON(object: any): FloatValue {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message: FloatValue): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+  fromPartial(object: Partial<FloatValue>): FloatValue {
     const message = createBaseFloatValue();
     message.value = object.value ?? 0;
     return message;
@@ -252,7 +272,17 @@ export const Int64Value = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Int64Value>): Int64Value {
+  fromJSON(object: any): Int64Value {
+    return {
+      value: isSet(object.value) ? Long.fromValue(object.value) : Long.ZERO
+    };
+  },
+  toJSON(message: Int64Value): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = (message.value || Long.ZERO).toString());
+    return obj;
+  },
+  fromPartial(object: Partial<Int64Value>): Int64Value {
     const message = createBaseInt64Value();
     message.value = object.value !== undefined && object.value !== null ? Long.fromValue(object.value) : Long.ZERO;
     return message;
@@ -287,7 +317,17 @@ export const UInt64Value = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<UInt64Value>): UInt64Value {
+  fromJSON(object: any): UInt64Value {
+    return {
+      value: isSet(object.value) ? Long.fromValue(object.value) : Long.UZERO
+    };
+  },
+  toJSON(message: UInt64Value): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = (message.value || Long.UZERO).toString());
+    return obj;
+  },
+  fromPartial(object: Partial<UInt64Value>): UInt64Value {
     const message = createBaseUInt64Value();
     message.value = object.value !== undefined && object.value !== null ? Long.fromValue(object.value) : Long.UZERO;
     return message;
@@ -322,7 +362,17 @@ export const Int32Value = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Int32Value>): Int32Value {
+  fromJSON(object: any): Int32Value {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message: Int32Value): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
+  },
+  fromPartial(object: Partial<Int32Value>): Int32Value {
     const message = createBaseInt32Value();
     message.value = object.value ?? 0;
     return message;
@@ -357,7 +407,17 @@ export const UInt32Value = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<UInt32Value>): UInt32Value {
+  fromJSON(object: any): UInt32Value {
+    return {
+      value: isSet(object.value) ? Number(object.value) : 0
+    };
+  },
+  toJSON(message: UInt32Value): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
+  },
+  fromPartial(object: Partial<UInt32Value>): UInt32Value {
     const message = createBaseUInt32Value();
     message.value = object.value ?? 0;
     return message;
@@ -392,7 +452,17 @@ export const BoolValue = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BoolValue>): BoolValue {
+  fromJSON(object: any): BoolValue {
+    return {
+      value: isSet(object.value) ? Boolean(object.value) : false
+    };
+  },
+  toJSON(message: BoolValue): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+  fromPartial(object: Partial<BoolValue>): BoolValue {
     const message = createBaseBoolValue();
     message.value = object.value ?? false;
     return message;
@@ -427,7 +497,17 @@ export const StringValue = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<StringValue>): StringValue {
+  fromJSON(object: any): StringValue {
+    return {
+      value: isSet(object.value) ? String(object.value) : ""
+    };
+  },
+  toJSON(message: StringValue): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+  fromPartial(object: Partial<StringValue>): StringValue {
     const message = createBaseStringValue();
     message.value = object.value ?? "";
     return message;
@@ -462,7 +542,17 @@ export const BytesValue = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BytesValue>): BytesValue {
+  fromJSON(object: any): BytesValue {
+    return {
+      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array()
+    };
+  },
+  toJSON(message: BytesValue): unknown {
+    const obj: any = {};
+    message.value !== undefined && (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
+    return obj;
+  },
+  fromPartial(object: Partial<BytesValue>): BytesValue {
     const message = createBaseBytesValue();
     message.value = object.value ?? new Uint8Array();
     return message;

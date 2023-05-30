@@ -1,7 +1,7 @@
 import { Params, ParamsSDKType } from "./params";
 import { ConflictVote, ConflictVoteSDKType } from "./conflict_vote";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../helpers";
+import { isSet } from "../helpers";
 /** GenesisState defines the conflict module's genesis state. */
 export interface GenesisState {
   params?: Params;
@@ -48,7 +48,23 @@ export const GenesisState = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenesisState>): GenesisState {
+  fromJSON(object: any): GenesisState {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+      conflictVoteList: Array.isArray(object?.conflictVoteList) ? object.conflictVoteList.map((e: any) => ConflictVote.fromJSON(e)) : []
+    };
+  },
+  toJSON(message: GenesisState): unknown {
+    const obj: any = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.conflictVoteList) {
+      obj.conflictVoteList = message.conflictVoteList.map(e => e ? ConflictVote.toJSON(e) : undefined);
+    } else {
+      obj.conflictVoteList = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.conflictVoteList = object.conflictVoteList?.map(e => ConflictVote.fromPartial(e)) || [];

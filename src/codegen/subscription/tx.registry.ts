@@ -35,6 +35,34 @@ export const MessageComposer = {
       };
     }
   },
+  toJSON: {
+    buy(value: MsgBuy) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgBuy",
+        value: MsgBuy.toJSON(value)
+      };
+    },
+    addProject(value: MsgAddProject) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgAddProject",
+        value: MsgAddProject.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    buy(value: any) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgBuy",
+        value: MsgBuy.fromJSON(value)
+      };
+    },
+    addProject(value: any) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgAddProject",
+        value: MsgAddProject.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     buy(value: MsgBuy) {
       return {

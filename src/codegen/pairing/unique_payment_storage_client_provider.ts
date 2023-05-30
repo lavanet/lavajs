@@ -1,4 +1,4 @@
-import { Long, DeepPartial } from "../helpers";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 export interface UniquePaymentStorageClientProvider {
   index: string;
@@ -53,7 +53,21 @@ export const UniquePaymentStorageClientProvider = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<UniquePaymentStorageClientProvider>): UniquePaymentStorageClientProvider {
+  fromJSON(object: any): UniquePaymentStorageClientProvider {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO,
+      usedCU: isSet(object.usedCU) ? Long.fromValue(object.usedCU) : Long.UZERO
+    };
+  },
+  toJSON(message: UniquePaymentStorageClientProvider): unknown {
+    const obj: any = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
+    message.usedCU !== undefined && (obj.usedCU = (message.usedCU || Long.UZERO).toString());
+    return obj;
+  },
+  fromPartial(object: Partial<UniquePaymentStorageClientProvider>): UniquePaymentStorageClientProvider {
     const message = createBaseUniquePaymentStorageClientProvider();
     message.index = object.index ?? "";
     message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;

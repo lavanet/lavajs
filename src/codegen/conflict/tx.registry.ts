@@ -47,6 +47,46 @@ export const MessageComposer = {
       };
     }
   },
+  toJSON: {
+    detection(value: MsgDetection) {
+      return {
+        typeUrl: "/lavanet.lava.conflict.MsgDetection",
+        value: MsgDetection.toJSON(value)
+      };
+    },
+    conflictVoteCommit(value: MsgConflictVoteCommit) {
+      return {
+        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
+        value: MsgConflictVoteCommit.toJSON(value)
+      };
+    },
+    conflictVoteReveal(value: MsgConflictVoteReveal) {
+      return {
+        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
+        value: MsgConflictVoteReveal.toJSON(value)
+      };
+    }
+  },
+  fromJSON: {
+    detection(value: any) {
+      return {
+        typeUrl: "/lavanet.lava.conflict.MsgDetection",
+        value: MsgDetection.fromJSON(value)
+      };
+    },
+    conflictVoteCommit(value: any) {
+      return {
+        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
+        value: MsgConflictVoteCommit.fromJSON(value)
+      };
+    },
+    conflictVoteReveal(value: any) {
+      return {
+        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
+        value: MsgConflictVoteReveal.fromJSON(value)
+      };
+    }
+  },
   fromPartial: {
     detection(value: MsgDetection) {
       return {

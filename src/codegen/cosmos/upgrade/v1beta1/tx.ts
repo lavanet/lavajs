@@ -1,6 +1,6 @@
 import { Plan, PlanSDKType } from "./upgrade";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { isSet } from "../../../helpers";
 /**
  * MsgSoftwareUpgrade is the Msg/SoftwareUpgrade request type.
  * 
@@ -98,7 +98,19 @@ export const MsgSoftwareUpgrade = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgSoftwareUpgrade>): MsgSoftwareUpgrade {
+  fromJSON(object: any): MsgSoftwareUpgrade {
+    return {
+      authority: isSet(object.authority) ? String(object.authority) : "",
+      plan: isSet(object.plan) ? Plan.fromJSON(object.plan) : undefined
+    };
+  },
+  toJSON(message: MsgSoftwareUpgrade): unknown {
+    const obj: any = {};
+    message.authority !== undefined && (obj.authority = message.authority);
+    message.plan !== undefined && (obj.plan = message.plan ? Plan.toJSON(message.plan) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<MsgSoftwareUpgrade>): MsgSoftwareUpgrade {
     const message = createBaseMsgSoftwareUpgrade();
     message.authority = object.authority ?? "";
     message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
@@ -126,7 +138,14 @@ export const MsgSoftwareUpgradeResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgSoftwareUpgradeResponse>): MsgSoftwareUpgradeResponse {
+  fromJSON(_: any): MsgSoftwareUpgradeResponse {
+    return {};
+  },
+  toJSON(_: MsgSoftwareUpgradeResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<MsgSoftwareUpgradeResponse>): MsgSoftwareUpgradeResponse {
     const message = createBaseMsgSoftwareUpgradeResponse();
     return message;
   }
@@ -160,7 +179,17 @@ export const MsgCancelUpgrade = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgCancelUpgrade>): MsgCancelUpgrade {
+  fromJSON(object: any): MsgCancelUpgrade {
+    return {
+      authority: isSet(object.authority) ? String(object.authority) : ""
+    };
+  },
+  toJSON(message: MsgCancelUpgrade): unknown {
+    const obj: any = {};
+    message.authority !== undefined && (obj.authority = message.authority);
+    return obj;
+  },
+  fromPartial(object: Partial<MsgCancelUpgrade>): MsgCancelUpgrade {
     const message = createBaseMsgCancelUpgrade();
     message.authority = object.authority ?? "";
     return message;
@@ -187,7 +216,14 @@ export const MsgCancelUpgradeResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgCancelUpgradeResponse>): MsgCancelUpgradeResponse {
+  fromJSON(_: any): MsgCancelUpgradeResponse {
+    return {};
+  },
+  toJSON(_: MsgCancelUpgradeResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<MsgCancelUpgradeResponse>): MsgCancelUpgradeResponse {
     const message = createBaseMsgCancelUpgradeResponse();
     return message;
   }

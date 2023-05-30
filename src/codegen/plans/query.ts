@@ -2,7 +2,7 @@ import { Params, ParamsSDKType } from "./params";
 import { Coin, CoinSDKType } from "../cosmos/base/v1beta1/coin";
 import { Plan, PlanSDKType } from "./plan";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../helpers";
+import { isSet } from "../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -67,7 +67,14 @@ export const QueryParamsRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+  fromJSON(_: any): QueryParamsRequest {
+    return {};
+  },
+  toJSON(_: QueryParamsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
   }
@@ -101,7 +108,17 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
+  fromJSON(object: any): QueryParamsResponse {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message: QueryParamsResponse): unknown {
+    const obj: any = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryParamsResponse>): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
@@ -128,7 +145,14 @@ export const QueryListRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryListRequest>): QueryListRequest {
+  fromJSON(_: any): QueryListRequest {
+    return {};
+  },
+  toJSON(_: QueryListRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<QueryListRequest>): QueryListRequest {
     const message = createBaseQueryListRequest();
     return message;
   }
@@ -162,7 +186,21 @@ export const QueryListResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryListResponse>): QueryListResponse {
+  fromJSON(object: any): QueryListResponse {
+    return {
+      plansInfo: Array.isArray(object?.plansInfo) ? object.plansInfo.map((e: any) => ListInfoStruct.fromJSON(e)) : []
+    };
+  },
+  toJSON(message: QueryListResponse): unknown {
+    const obj: any = {};
+    if (message.plansInfo) {
+      obj.plansInfo = message.plansInfo.map(e => e ? ListInfoStruct.toJSON(e) : undefined);
+    } else {
+      obj.plansInfo = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<QueryListResponse>): QueryListResponse {
     const message = createBaseQueryListResponse();
     message.plansInfo = object.plansInfo?.map(e => ListInfoStruct.fromPartial(e)) || [];
     return message;
@@ -211,7 +249,21 @@ export const ListInfoStruct = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ListInfoStruct>): ListInfoStruct {
+  fromJSON(object: any): ListInfoStruct {
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      description: isSet(object.description) ? String(object.description) : "",
+      price: isSet(object.price) ? Coin.fromJSON(object.price) : undefined
+    };
+  },
+  toJSON(message: ListInfoStruct): unknown {
+    const obj: any = {};
+    message.index !== undefined && (obj.index = message.index);
+    message.description !== undefined && (obj.description = message.description);
+    message.price !== undefined && (obj.price = message.price ? Coin.toJSON(message.price) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<ListInfoStruct>): ListInfoStruct {
     const message = createBaseListInfoStruct();
     message.index = object.index ?? "";
     message.description = object.description ?? "";
@@ -248,7 +300,17 @@ export const QueryInfoRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryInfoRequest>): QueryInfoRequest {
+  fromJSON(object: any): QueryInfoRequest {
+    return {
+      planIndex: isSet(object.planIndex) ? String(object.planIndex) : ""
+    };
+  },
+  toJSON(message: QueryInfoRequest): unknown {
+    const obj: any = {};
+    message.planIndex !== undefined && (obj.planIndex = message.planIndex);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryInfoRequest>): QueryInfoRequest {
     const message = createBaseQueryInfoRequest();
     message.planIndex = object.planIndex ?? "";
     return message;
@@ -283,7 +345,17 @@ export const QueryInfoResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryInfoResponse>): QueryInfoResponse {
+  fromJSON(object: any): QueryInfoResponse {
+    return {
+      planInfo: isSet(object.planInfo) ? Plan.fromJSON(object.planInfo) : undefined
+    };
+  },
+  toJSON(message: QueryInfoResponse): unknown {
+    const obj: any = {};
+    message.planInfo !== undefined && (obj.planInfo = message.planInfo ? Plan.toJSON(message.planInfo) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryInfoResponse>): QueryInfoResponse {
     const message = createBaseQueryInfoResponse();
     message.planInfo = object.planInfo !== undefined && object.planInfo !== null ? Plan.fromPartial(object.planInfo) : undefined;
     return message;

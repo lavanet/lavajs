@@ -2,7 +2,7 @@ import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } fr
 import { Params, ParamsSDKType } from "./params";
 import { Spec, SpecSDKType } from "./spec";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../helpers";
+import { isSet } from "../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -105,7 +105,14 @@ export const QueryParamsRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
+  fromJSON(_: any): QueryParamsRequest {
+    return {};
+  },
+  toJSON(_: QueryParamsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
   }
@@ -139,7 +146,17 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
+  fromJSON(object: any): QueryParamsResponse {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
+    };
+  },
+  toJSON(message: QueryParamsResponse): unknown {
+    const obj: any = {};
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryParamsResponse>): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
@@ -174,7 +191,17 @@ export const QueryGetSpecRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetSpecRequest>): QueryGetSpecRequest {
+  fromJSON(object: any): QueryGetSpecRequest {
+    return {
+      ChainID: isSet(object.ChainID) ? String(object.ChainID) : ""
+    };
+  },
+  toJSON(message: QueryGetSpecRequest): unknown {
+    const obj: any = {};
+    message.ChainID !== undefined && (obj.ChainID = message.ChainID);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryGetSpecRequest>): QueryGetSpecRequest {
     const message = createBaseQueryGetSpecRequest();
     message.ChainID = object.ChainID ?? "";
     return message;
@@ -209,7 +236,17 @@ export const QueryGetSpecResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryGetSpecResponse>): QueryGetSpecResponse {
+  fromJSON(object: any): QueryGetSpecResponse {
+    return {
+      Spec: isSet(object.Spec) ? Spec.fromJSON(object.Spec) : undefined
+    };
+  },
+  toJSON(message: QueryGetSpecResponse): unknown {
+    const obj: any = {};
+    message.Spec !== undefined && (obj.Spec = message.Spec ? Spec.toJSON(message.Spec) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryGetSpecResponse>): QueryGetSpecResponse {
     const message = createBaseQueryGetSpecResponse();
     message.Spec = object.Spec !== undefined && object.Spec !== null ? Spec.fromPartial(object.Spec) : undefined;
     return message;
@@ -244,7 +281,17 @@ export const QueryAllSpecRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAllSpecRequest>): QueryAllSpecRequest {
+  fromJSON(object: any): QueryAllSpecRequest {
+    return {
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message: QueryAllSpecRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryAllSpecRequest>): QueryAllSpecRequest {
     const message = createBaseQueryAllSpecRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
@@ -286,7 +333,23 @@ export const QueryAllSpecResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAllSpecResponse>): QueryAllSpecResponse {
+  fromJSON(object: any): QueryAllSpecResponse {
+    return {
+      Spec: Array.isArray(object?.Spec) ? object.Spec.map((e: any) => Spec.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message: QueryAllSpecResponse): unknown {
+    const obj: any = {};
+    if (message.Spec) {
+      obj.Spec = message.Spec.map(e => e ? Spec.toJSON(e) : undefined);
+    } else {
+      obj.Spec = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryAllSpecResponse>): QueryAllSpecResponse {
     const message = createBaseQueryAllSpecResponse();
     message.Spec = object.Spec?.map(e => Spec.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
@@ -314,7 +377,14 @@ export const QueryShowAllChainsRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryShowAllChainsRequest>): QueryShowAllChainsRequest {
+  fromJSON(_: any): QueryShowAllChainsRequest {
+    return {};
+  },
+  toJSON(_: QueryShowAllChainsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<QueryShowAllChainsRequest>): QueryShowAllChainsRequest {
     const message = createBaseQueryShowAllChainsRequest();
     return message;
   }
@@ -348,7 +418,21 @@ export const QueryShowAllChainsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryShowAllChainsResponse>): QueryShowAllChainsResponse {
+  fromJSON(object: any): QueryShowAllChainsResponse {
+    return {
+      chainInfoList: Array.isArray(object?.chainInfoList) ? object.chainInfoList.map((e: any) => ShowAllChainsInfoStruct.fromJSON(e)) : []
+    };
+  },
+  toJSON(message: QueryShowAllChainsResponse): unknown {
+    const obj: any = {};
+    if (message.chainInfoList) {
+      obj.chainInfoList = message.chainInfoList.map(e => e ? ShowAllChainsInfoStruct.toJSON(e) : undefined);
+    } else {
+      obj.chainInfoList = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<QueryShowAllChainsResponse>): QueryShowAllChainsResponse {
     const message = createBaseQueryShowAllChainsResponse();
     message.chainInfoList = object.chainInfoList?.map(e => ShowAllChainsInfoStruct.fromPartial(e)) || [];
     return message;
@@ -397,7 +481,25 @@ export const ShowAllChainsInfoStruct = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ShowAllChainsInfoStruct>): ShowAllChainsInfoStruct {
+  fromJSON(object: any): ShowAllChainsInfoStruct {
+    return {
+      chainName: isSet(object.chainName) ? String(object.chainName) : "",
+      chainID: isSet(object.chainID) ? String(object.chainID) : "",
+      enabledApiInterfaces: Array.isArray(object?.enabledApiInterfaces) ? object.enabledApiInterfaces.map((e: any) => String(e)) : []
+    };
+  },
+  toJSON(message: ShowAllChainsInfoStruct): unknown {
+    const obj: any = {};
+    message.chainName !== undefined && (obj.chainName = message.chainName);
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    if (message.enabledApiInterfaces) {
+      obj.enabledApiInterfaces = message.enabledApiInterfaces.map(e => e);
+    } else {
+      obj.enabledApiInterfaces = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<ShowAllChainsInfoStruct>): ShowAllChainsInfoStruct {
     const message = createBaseShowAllChainsInfoStruct();
     message.chainName = object.chainName ?? "";
     message.chainID = object.chainID ?? "";
@@ -434,7 +536,17 @@ export const QueryShowChainInfoRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryShowChainInfoRequest>): QueryShowChainInfoRequest {
+  fromJSON(object: any): QueryShowChainInfoRequest {
+    return {
+      chainName: isSet(object.chainName) ? String(object.chainName) : ""
+    };
+  },
+  toJSON(message: QueryShowChainInfoRequest): unknown {
+    const obj: any = {};
+    message.chainName !== undefined && (obj.chainName = message.chainName);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryShowChainInfoRequest>): QueryShowChainInfoRequest {
     const message = createBaseQueryShowChainInfoRequest();
     message.chainName = object.chainName ?? "";
     return message;
@@ -476,7 +588,23 @@ export const ApiList = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ApiList>): ApiList {
+  fromJSON(object: any): ApiList {
+    return {
+      interface: isSet(object.interface) ? String(object.interface) : "",
+      supportedApis: Array.isArray(object?.supportedApis) ? object.supportedApis.map((e: any) => String(e)) : []
+    };
+  },
+  toJSON(message: ApiList): unknown {
+    const obj: any = {};
+    message.interface !== undefined && (obj.interface = message.interface);
+    if (message.supportedApis) {
+      obj.supportedApis = message.supportedApis.map(e => e);
+    } else {
+      obj.supportedApis = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<ApiList>): ApiList {
     const message = createBaseApiList();
     message.interface = object.interface ?? "";
     message.supportedApis = object.supportedApis?.map(e => e) || [];
@@ -526,7 +654,29 @@ export const QueryShowChainInfoResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryShowChainInfoResponse>): QueryShowChainInfoResponse {
+  fromJSON(object: any): QueryShowChainInfoResponse {
+    return {
+      chainID: isSet(object.chainID) ? String(object.chainID) : "",
+      interfaces: Array.isArray(object?.interfaces) ? object.interfaces.map((e: any) => String(e)) : [],
+      supportedApisInterfaceList: Array.isArray(object?.supportedApisInterfaceList) ? object.supportedApisInterfaceList.map((e: any) => ApiList.fromJSON(e)) : []
+    };
+  },
+  toJSON(message: QueryShowChainInfoResponse): unknown {
+    const obj: any = {};
+    message.chainID !== undefined && (obj.chainID = message.chainID);
+    if (message.interfaces) {
+      obj.interfaces = message.interfaces.map(e => e);
+    } else {
+      obj.interfaces = [];
+    }
+    if (message.supportedApisInterfaceList) {
+      obj.supportedApisInterfaceList = message.supportedApisInterfaceList.map(e => e ? ApiList.toJSON(e) : undefined);
+    } else {
+      obj.supportedApisInterfaceList = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<QueryShowChainInfoResponse>): QueryShowChainInfoResponse {
     const message = createBaseQueryShowChainInfoResponse();
     message.chainID = object.chainID ?? "";
     message.interfaces = object.interfaces?.map(e => e) || [];

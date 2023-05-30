@@ -1,5 +1,5 @@
 import { ProjectData, ProjectDataSDKType } from "../projects/project";
-import { Long, DeepPartial } from "../helpers";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 export interface MsgBuy {
   creator: string;
@@ -76,7 +76,23 @@ export const MsgBuy = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgBuy>): MsgBuy {
+  fromJSON(object: any): MsgBuy {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      consumer: isSet(object.consumer) ? String(object.consumer) : "",
+      index: isSet(object.index) ? String(object.index) : "",
+      duration: isSet(object.duration) ? Long.fromValue(object.duration) : Long.UZERO
+    };
+  },
+  toJSON(message: MsgBuy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.consumer !== undefined && (obj.consumer = message.consumer);
+    message.index !== undefined && (obj.index = message.index);
+    message.duration !== undefined && (obj.duration = (message.duration || Long.UZERO).toString());
+    return obj;
+  },
+  fromPartial(object: Partial<MsgBuy>): MsgBuy {
     const message = createBaseMsgBuy();
     message.creator = object.creator ?? "";
     message.consumer = object.consumer ?? "";
@@ -106,7 +122,14 @@ export const MsgBuyResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgBuyResponse>): MsgBuyResponse {
+  fromJSON(_: any): MsgBuyResponse {
+    return {};
+  },
+  toJSON(_: MsgBuyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<MsgBuyResponse>): MsgBuyResponse {
     const message = createBaseMsgBuyResponse();
     return message;
   }
@@ -147,7 +170,19 @@ export const MsgAddProject = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<MsgAddProject>): MsgAddProject {
+  fromJSON(object: any): MsgAddProject {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      projectData: isSet(object.projectData) ? ProjectData.fromJSON(object.projectData) : undefined
+    };
+  },
+  toJSON(message: MsgAddProject): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.projectData !== undefined && (obj.projectData = message.projectData ? ProjectData.toJSON(message.projectData) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<MsgAddProject>): MsgAddProject {
     const message = createBaseMsgAddProject();
     message.creator = object.creator ?? "";
     message.projectData = object.projectData !== undefined && object.projectData !== null ? ProjectData.fromPartial(object.projectData) : undefined;
@@ -175,7 +210,14 @@ export const MsgAddProjectResponse = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<MsgAddProjectResponse>): MsgAddProjectResponse {
+  fromJSON(_: any): MsgAddProjectResponse {
+    return {};
+  },
+  toJSON(_: MsgAddProjectResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<MsgAddProjectResponse>): MsgAddProjectResponse {
     const message = createBaseMsgAddProjectResponse();
     return message;
   }
