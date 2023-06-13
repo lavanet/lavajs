@@ -1,9 +1,10 @@
 import { Rpc } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { MsgAddKeys, MsgAddKeysResponse, MsgSetPolicy, MsgSetPolicyResponse, MsgSetSubscriptionPolicy, MsgSetSubscriptionPolicyResponse } from "./tx";
+import { MsgAddKeys, MsgAddKeysResponse, MsgDelKeys, MsgDelKeysResponse, MsgSetPolicy, MsgSetPolicyResponse, MsgSetSubscriptionPolicy, MsgSetSubscriptionPolicyResponse } from "./tx";
 /** Msg defines the Msg service. */
 export interface Msg {
   addKeys(request: MsgAddKeys): Promise<MsgAddKeysResponse>;
+  delKeys(request: MsgDelKeys): Promise<MsgDelKeysResponse>;
   setPolicy(request: MsgSetPolicy): Promise<MsgSetPolicyResponse>;
   setSubscriptionPolicy(request: MsgSetSubscriptionPolicy): Promise<MsgSetSubscriptionPolicyResponse>;
 }
@@ -12,6 +13,7 @@ export class MsgClientImpl implements Msg {
   constructor(rpc: Rpc) {
     this.rpc = rpc;
     this.addKeys = this.addKeys.bind(this);
+    this.delKeys = this.delKeys.bind(this);
     this.setPolicy = this.setPolicy.bind(this);
     this.setSubscriptionPolicy = this.setSubscriptionPolicy.bind(this);
   }
@@ -19,6 +21,11 @@ export class MsgClientImpl implements Msg {
     const data = MsgAddKeys.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.projects.Msg", "AddKeys", data);
     return promise.then(data => MsgAddKeysResponse.decode(new _m0.Reader(data)));
+  }
+  delKeys(request: MsgDelKeys): Promise<MsgDelKeysResponse> {
+    const data = MsgDelKeys.encode(request).finish();
+    const promise = this.rpc.request("lavanet.lava.projects.Msg", "DelKeys", data);
+    return promise.then(data => MsgDelKeysResponse.decode(new _m0.Reader(data)));
   }
   setPolicy(request: MsgSetPolicy): Promise<MsgSetPolicyResponse> {
     const data = MsgSetPolicy.encode(request).finish();

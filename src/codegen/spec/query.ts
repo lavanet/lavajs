@@ -1,8 +1,8 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../cosmos/base/query/v1beta1/pagination";
 import { Params, ParamsSDKType } from "./params";
 import { Spec, SpecSDKType } from "./spec";
+import { Long, isSet } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -54,11 +54,13 @@ export interface ShowAllChainsInfoStruct {
   chainName: string;
   chainID: string;
   enabledApiInterfaces: string[];
+  apiCount: Long;
 }
 export interface ShowAllChainsInfoStructSDKType {
   chainName: string;
   chainID: string;
   enabledApiInterfaces: string[];
+  api_count: Long;
 }
 export interface QueryShowChainInfoRequest {
   chainName: string;
@@ -442,7 +444,8 @@ function createBaseShowAllChainsInfoStruct(): ShowAllChainsInfoStruct {
   return {
     chainName: "",
     chainID: "",
-    enabledApiInterfaces: []
+    enabledApiInterfaces: [],
+    apiCount: Long.UZERO
   };
 }
 export const ShowAllChainsInfoStruct = {
@@ -455,6 +458,9 @@ export const ShowAllChainsInfoStruct = {
     }
     for (const v of message.enabledApiInterfaces) {
       writer.uint32(26).string(v!);
+    }
+    if (!message.apiCount.isZero()) {
+      writer.uint32(32).uint64(message.apiCount);
     }
     return writer;
   },
@@ -474,6 +480,9 @@ export const ShowAllChainsInfoStruct = {
         case 3:
           message.enabledApiInterfaces.push(reader.string());
           break;
+        case 4:
+          message.apiCount = (reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -485,7 +494,8 @@ export const ShowAllChainsInfoStruct = {
     return {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
       chainID: isSet(object.chainID) ? String(object.chainID) : "",
-      enabledApiInterfaces: Array.isArray(object?.enabledApiInterfaces) ? object.enabledApiInterfaces.map((e: any) => String(e)) : []
+      enabledApiInterfaces: Array.isArray(object?.enabledApiInterfaces) ? object.enabledApiInterfaces.map((e: any) => String(e)) : [],
+      apiCount: isSet(object.apiCount) ? Long.fromValue(object.apiCount) : Long.UZERO
     };
   },
   toJSON(message: ShowAllChainsInfoStruct): unknown {
@@ -497,6 +507,7 @@ export const ShowAllChainsInfoStruct = {
     } else {
       obj.enabledApiInterfaces = [];
     }
+    message.apiCount !== undefined && (obj.apiCount = (message.apiCount || Long.UZERO).toString());
     return obj;
   },
   fromPartial(object: Partial<ShowAllChainsInfoStruct>): ShowAllChainsInfoStruct {
@@ -504,6 +515,7 @@ export const ShowAllChainsInfoStruct = {
     message.chainName = object.chainName ?? "";
     message.chainID = object.chainID ?? "";
     message.enabledApiInterfaces = object.enabledApiInterfaces?.map(e => e) || [];
+    message.apiCount = object.apiCount !== undefined && object.apiCount !== null ? Long.fromValue(object.apiCount) : Long.UZERO;
     return message;
   }
 };

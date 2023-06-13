@@ -13,6 +13,18 @@ export interface MsgAddKeysSDKType {
 }
 export interface MsgAddKeysResponse {}
 export interface MsgAddKeysResponseSDKType {}
+export interface MsgDelKeys {
+  creator: string;
+  project: string;
+  projectKeys: ProjectKey[];
+}
+export interface MsgDelKeysSDKType {
+  creator: string;
+  project: string;
+  project_keys: ProjectKeySDKType[];
+}
+export interface MsgDelKeysResponse {}
+export interface MsgDelKeysResponseSDKType {}
 export interface MsgSetPolicy {
   creator: string;
   project: string;
@@ -136,6 +148,108 @@ export const MsgAddKeysResponse = {
   },
   fromPartial(_: Partial<MsgAddKeysResponse>): MsgAddKeysResponse {
     const message = createBaseMsgAddKeysResponse();
+    return message;
+  }
+};
+function createBaseMsgDelKeys(): MsgDelKeys {
+  return {
+    creator: "",
+    project: "",
+    projectKeys: []
+  };
+}
+export const MsgDelKeys = {
+  encode(message: MsgDelKeys, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.project !== "") {
+      writer.uint32(18).string(message.project);
+    }
+    for (const v of message.projectKeys) {
+      ProjectKey.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDelKeys {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelKeys();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.project = reader.string();
+          break;
+        case 3:
+          message.projectKeys.push(ProjectKey.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): MsgDelKeys {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      project: isSet(object.project) ? String(object.project) : "",
+      projectKeys: Array.isArray(object?.projectKeys) ? object.projectKeys.map((e: any) => ProjectKey.fromJSON(e)) : []
+    };
+  },
+  toJSON(message: MsgDelKeys): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.project !== undefined && (obj.project = message.project);
+    if (message.projectKeys) {
+      obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toJSON(e) : undefined);
+    } else {
+      obj.projectKeys = [];
+    }
+    return obj;
+  },
+  fromPartial(object: Partial<MsgDelKeys>): MsgDelKeys {
+    const message = createBaseMsgDelKeys();
+    message.creator = object.creator ?? "";
+    message.project = object.project ?? "";
+    message.projectKeys = object.projectKeys?.map(e => ProjectKey.fromPartial(e)) || [];
+    return message;
+  }
+};
+function createBaseMsgDelKeysResponse(): MsgDelKeysResponse {
+  return {};
+}
+export const MsgDelKeysResponse = {
+  encode(_: MsgDelKeysResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDelKeysResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelKeysResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(_: any): MsgDelKeysResponse {
+    return {};
+  },
+  toJSON(_: MsgDelKeysResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<MsgDelKeysResponse>): MsgDelKeysResponse {
+    const message = createBaseMsgDelKeysResponse();
     return message;
   }
 };

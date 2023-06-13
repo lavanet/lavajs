@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgAddKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/lavanet.lava.projects.MsgAddKeys", MsgAddKeys], ["/lavanet.lava.projects.MsgSetPolicy", MsgSetPolicy], ["/lavanet.lava.projects.MsgSetSubscriptionPolicy", MsgSetSubscriptionPolicy]];
+import { MsgAddKeys, MsgDelKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/lavanet.lava.projects.MsgAddKeys", MsgAddKeys], ["/lavanet.lava.projects.MsgDelKeys", MsgDelKeys], ["/lavanet.lava.projects.MsgSetPolicy", MsgSetPolicy], ["/lavanet.lava.projects.MsgSetSubscriptionPolicy", MsgSetSubscriptionPolicy]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -13,6 +13,12 @@ export const MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.projects.MsgAddKeys",
         value: MsgAddKeys.encode(value).finish()
+      };
+    },
+    delKeys(value: MsgDelKeys) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: MsgDelKeys.encode(value).finish()
       };
     },
     setPolicy(value: MsgSetPolicy) {
@@ -32,6 +38,12 @@ export const MessageComposer = {
     addKeys(value: MsgAddKeys) {
       return {
         typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+        value
+      };
+    },
+    delKeys(value: MsgDelKeys) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
         value
       };
     },
@@ -55,6 +67,12 @@ export const MessageComposer = {
         value: MsgAddKeys.toJSON(value)
       };
     },
+    delKeys(value: MsgDelKeys) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: MsgDelKeys.toJSON(value)
+      };
+    },
     setPolicy(value: MsgSetPolicy) {
       return {
         typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
@@ -75,6 +93,12 @@ export const MessageComposer = {
         value: MsgAddKeys.fromJSON(value)
       };
     },
+    delKeys(value: any) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: MsgDelKeys.fromJSON(value)
+      };
+    },
     setPolicy(value: any) {
       return {
         typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
@@ -93,6 +117,12 @@ export const MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.projects.MsgAddKeys",
         value: MsgAddKeys.fromPartial(value)
+      };
+    },
+    delKeys(value: MsgDelKeys) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: MsgDelKeys.fromPartial(value)
       };
     },
     setPolicy(value: MsgSetPolicy) {

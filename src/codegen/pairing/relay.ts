@@ -1,4 +1,3 @@
-import { StakeEntry, StakeEntrySDKType } from "../epochstorage/stake_entry";
 import { Long, isSet, bytesFromBase64, base64FromBytes } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 export interface RelaySession {
@@ -29,6 +28,20 @@ export interface RelaySessionSDKType {
   lava_chain_id: string;
   sig: Uint8Array;
   badge?: BadgeSDKType;
+}
+export interface Badge {
+  cuAllocation: Long;
+  epoch: Long;
+  address: string;
+  lavaChainId: string;
+  projectSig: Uint8Array;
+}
+export interface BadgeSDKType {
+  cu_allocation: Long;
+  epoch: Long;
+  address: string;
+  lava_chain_id: string;
+  project_sig: Uint8Array;
 }
 export interface RelayPrivateData {
   connectionType: string;
@@ -64,38 +77,6 @@ export interface RelayRequest {
 export interface RelayRequestSDKType {
   relay_session?: RelaySessionSDKType;
   relay_data?: RelayPrivateDataSDKType;
-}
-export interface Badge {
-  cuAllocation: Long;
-  epoch: Long;
-  address: string;
-  lavaChainId: string;
-  projectSig: Uint8Array;
-}
-export interface BadgeSDKType {
-  cu_allocation: Long;
-  epoch: Long;
-  address: string;
-  lava_chain_id: string;
-  project_sig: Uint8Array;
-}
-export interface GenerateBadgeRequest {
-  badgeAddress: string;
-  projectId: string;
-  specId: string;
-}
-export interface GenerateBadgeRequestSDKType {
-  badge_address: string;
-  project_id: string;
-  spec_id: string;
-}
-export interface GenerateBadgeResponse {
-  badge?: Badge;
-  pairingList: StakeEntry[];
-}
-export interface GenerateBadgeResponseSDKType {
-  badge?: BadgeSDKType;
-  pairing_list: StakeEntrySDKType[];
 }
 export interface RelayReply {
   data: Uint8Array;
@@ -279,6 +260,91 @@ export const RelaySession = {
     message.lavaChainId = object.lavaChainId ?? "";
     message.sig = object.sig ?? new Uint8Array();
     message.badge = object.badge !== undefined && object.badge !== null ? Badge.fromPartial(object.badge) : undefined;
+    return message;
+  }
+};
+function createBaseBadge(): Badge {
+  return {
+    cuAllocation: Long.UZERO,
+    epoch: Long.UZERO,
+    address: "",
+    lavaChainId: "",
+    projectSig: new Uint8Array()
+  };
+}
+export const Badge = {
+  encode(message: Badge, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (!message.cuAllocation.isZero()) {
+      writer.uint32(8).uint64(message.cuAllocation);
+    }
+    if (!message.epoch.isZero()) {
+      writer.uint32(16).uint64(message.epoch);
+    }
+    if (message.address !== "") {
+      writer.uint32(26).string(message.address);
+    }
+    if (message.lavaChainId !== "") {
+      writer.uint32(34).string(message.lavaChainId);
+    }
+    if (message.projectSig.length !== 0) {
+      writer.uint32(42).bytes(message.projectSig);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): Badge {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseBadge();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.cuAllocation = (reader.uint64() as Long);
+          break;
+        case 2:
+          message.epoch = (reader.uint64() as Long);
+          break;
+        case 3:
+          message.address = reader.string();
+          break;
+        case 4:
+          message.lavaChainId = reader.string();
+          break;
+        case 5:
+          message.projectSig = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): Badge {
+    return {
+      cuAllocation: isSet(object.cuAllocation) ? Long.fromValue(object.cuAllocation) : Long.UZERO,
+      epoch: isSet(object.epoch) ? Long.fromValue(object.epoch) : Long.UZERO,
+      address: isSet(object.address) ? String(object.address) : "",
+      lavaChainId: isSet(object.lavaChainId) ? String(object.lavaChainId) : "",
+      projectSig: isSet(object.projectSig) ? bytesFromBase64(object.projectSig) : new Uint8Array()
+    };
+  },
+  toJSON(message: Badge): unknown {
+    const obj: any = {};
+    message.cuAllocation !== undefined && (obj.cuAllocation = (message.cuAllocation || Long.UZERO).toString());
+    message.epoch !== undefined && (obj.epoch = (message.epoch || Long.UZERO).toString());
+    message.address !== undefined && (obj.address = message.address);
+    message.lavaChainId !== undefined && (obj.lavaChainId = message.lavaChainId);
+    message.projectSig !== undefined && (obj.projectSig = base64FromBytes(message.projectSig !== undefined ? message.projectSig : new Uint8Array()));
+    return obj;
+  },
+  fromPartial(object: Partial<Badge>): Badge {
+    const message = createBaseBadge();
+    message.cuAllocation = object.cuAllocation !== undefined && object.cuAllocation !== null ? Long.fromValue(object.cuAllocation) : Long.UZERO;
+    message.epoch = object.epoch !== undefined && object.epoch !== null ? Long.fromValue(object.epoch) : Long.UZERO;
+    message.address = object.address ?? "";
+    message.lavaChainId = object.lavaChainId ?? "";
+    message.projectSig = object.projectSig ?? new Uint8Array();
     return message;
   }
 };
@@ -498,215 +564,6 @@ export const RelayRequest = {
     const message = createBaseRelayRequest();
     message.relaySession = object.relaySession !== undefined && object.relaySession !== null ? RelaySession.fromPartial(object.relaySession) : undefined;
     message.relayData = object.relayData !== undefined && object.relayData !== null ? RelayPrivateData.fromPartial(object.relayData) : undefined;
-    return message;
-  }
-};
-function createBaseBadge(): Badge {
-  return {
-    cuAllocation: Long.UZERO,
-    epoch: Long.UZERO,
-    address: "",
-    lavaChainId: "",
-    projectSig: new Uint8Array()
-  };
-}
-export const Badge = {
-  encode(message: Badge, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.cuAllocation.isZero()) {
-      writer.uint32(8).uint64(message.cuAllocation);
-    }
-    if (!message.epoch.isZero()) {
-      writer.uint32(16).uint64(message.epoch);
-    }
-    if (message.address !== "") {
-      writer.uint32(26).string(message.address);
-    }
-    if (message.lavaChainId !== "") {
-      writer.uint32(34).string(message.lavaChainId);
-    }
-    if (message.projectSig.length !== 0) {
-      writer.uint32(42).bytes(message.projectSig);
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Badge {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseBadge();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.cuAllocation = (reader.uint64() as Long);
-          break;
-        case 2:
-          message.epoch = (reader.uint64() as Long);
-          break;
-        case 3:
-          message.address = reader.string();
-          break;
-        case 4:
-          message.lavaChainId = reader.string();
-          break;
-        case 5:
-          message.projectSig = reader.bytes();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object: any): Badge {
-    return {
-      cuAllocation: isSet(object.cuAllocation) ? Long.fromValue(object.cuAllocation) : Long.UZERO,
-      epoch: isSet(object.epoch) ? Long.fromValue(object.epoch) : Long.UZERO,
-      address: isSet(object.address) ? String(object.address) : "",
-      lavaChainId: isSet(object.lavaChainId) ? String(object.lavaChainId) : "",
-      projectSig: isSet(object.projectSig) ? bytesFromBase64(object.projectSig) : new Uint8Array()
-    };
-  },
-  toJSON(message: Badge): unknown {
-    const obj: any = {};
-    message.cuAllocation !== undefined && (obj.cuAllocation = (message.cuAllocation || Long.UZERO).toString());
-    message.epoch !== undefined && (obj.epoch = (message.epoch || Long.UZERO).toString());
-    message.address !== undefined && (obj.address = message.address);
-    message.lavaChainId !== undefined && (obj.lavaChainId = message.lavaChainId);
-    message.projectSig !== undefined && (obj.projectSig = base64FromBytes(message.projectSig !== undefined ? message.projectSig : new Uint8Array()));
-    return obj;
-  },
-  fromPartial(object: Partial<Badge>): Badge {
-    const message = createBaseBadge();
-    message.cuAllocation = object.cuAllocation !== undefined && object.cuAllocation !== null ? Long.fromValue(object.cuAllocation) : Long.UZERO;
-    message.epoch = object.epoch !== undefined && object.epoch !== null ? Long.fromValue(object.epoch) : Long.UZERO;
-    message.address = object.address ?? "";
-    message.lavaChainId = object.lavaChainId ?? "";
-    message.projectSig = object.projectSig ?? new Uint8Array();
-    return message;
-  }
-};
-function createBaseGenerateBadgeRequest(): GenerateBadgeRequest {
-  return {
-    badgeAddress: "",
-    projectId: "",
-    specId: undefined
-  };
-}
-export const GenerateBadgeRequest = {
-  encode(message: GenerateBadgeRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.badgeAddress !== "") {
-      writer.uint32(10).string(message.badgeAddress);
-    }
-    if (message.projectId !== "") {
-      writer.uint32(18).string(message.projectId);
-    }
-    if (message.specId !== undefined) {
-      writer.uint32(26).string(message.specId);
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenerateBadgeRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGenerateBadgeRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.badgeAddress = reader.string();
-          break;
-        case 2:
-          message.projectId = reader.string();
-          break;
-        case 3:
-          message.specId = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object: any): GenerateBadgeRequest {
-    return {
-      badgeAddress: isSet(object.badgeAddress) ? String(object.badgeAddress) : "",
-      projectId: isSet(object.projectId) ? String(object.projectId) : "",
-      specId: isSet(object.specId) ? String(object.specId) : undefined
-    };
-  },
-  toJSON(message: GenerateBadgeRequest): unknown {
-    const obj: any = {};
-    message.badgeAddress !== undefined && (obj.badgeAddress = message.badgeAddress);
-    message.projectId !== undefined && (obj.projectId = message.projectId);
-    message.specId !== undefined && (obj.specId = message.specId);
-    return obj;
-  },
-  fromPartial(object: Partial<GenerateBadgeRequest>): GenerateBadgeRequest {
-    const message = createBaseGenerateBadgeRequest();
-    message.badgeAddress = object.badgeAddress ?? "";
-    message.projectId = object.projectId ?? "";
-    message.specId = object.specId ?? undefined;
-    return message;
-  }
-};
-function createBaseGenerateBadgeResponse(): GenerateBadgeResponse {
-  return {
-    badge: undefined,
-    pairingList: undefined
-  };
-}
-export const GenerateBadgeResponse = {
-  encode(message: GenerateBadgeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.badge !== undefined) {
-      Badge.encode(message.badge, writer.uint32(10).fork()).ldelim();
-    }
-    for (const v of message.pairingList) {
-      StakeEntry.encode(v!, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenerateBadgeResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGenerateBadgeResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.badge = Badge.decode(reader, reader.uint32());
-          break;
-        case 2:
-          message.pairingList.push(StakeEntry.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object: any): GenerateBadgeResponse {
-    return {
-      badge: isSet(object.badge) ? Badge.fromJSON(object.badge) : undefined,
-      pairingList: Array.isArray(object?.pairingList) ? object.pairingList.map((e: any) => StakeEntry.fromJSON(e)) : []
-    };
-  },
-  toJSON(message: GenerateBadgeResponse): unknown {
-    const obj: any = {};
-    message.badge !== undefined && (obj.badge = message.badge ? Badge.toJSON(message.badge) : undefined);
-    if (message.pairingList) {
-      obj.pairingList = message.pairingList.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.pairingList = [];
-    }
-    return obj;
-  },
-  fromPartial(object: Partial<GenerateBadgeResponse>): GenerateBadgeResponse {
-    const message = createBaseGenerateBadgeResponse();
-    message.badge = object.badge !== undefined && object.badge !== null ? Badge.fromPartial(object.badge) : undefined;
-    message.pairingList = object.pairingList?.map(e => StakeEntry.fromPartial(e)) || [];
     return message;
   }
 };

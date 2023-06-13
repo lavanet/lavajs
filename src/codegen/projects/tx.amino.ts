@@ -1,9 +1,21 @@
 //@ts-nocheck
+import { sELECTED_PROVIDERS_MODEFromJSON } from "./project";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
-import { MsgAddKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";
+import { MsgAddKeys, MsgDelKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";
 export interface MsgAddKeysAminoType extends AminoMsg {
   type: "/lavanet.lava.projects.MsgAddKeys";
+  value: {
+    creator: string;
+    project: string;
+    project_keys: {
+      key: string;
+      kinds: number;
+    }[];
+  };
+}
+export interface MsgDelKeysAminoType extends AminoMsg {
+  type: "/lavanet.lava.projects.MsgDelKeys";
   value: {
     creator: string;
     project: string;
@@ -27,6 +39,8 @@ export interface MsgSetPolicyAminoType extends AminoMsg {
       total_cu_limit: string;
       epoch_cu_limit: string;
       max_providers_to_pair: string;
+      selected_providers_mode: number;
+      selected_providers: string[];
     };
   };
 }
@@ -44,6 +58,8 @@ export interface MsgSetSubscriptionPolicyAminoType extends AminoMsg {
       total_cu_limit: string;
       epoch_cu_limit: string;
       max_providers_to_pair: string;
+      selected_providers_mode: number;
+      selected_providers: string[];
     };
   };
 }
@@ -79,6 +95,37 @@ export const AminoConverter = {
       };
     }
   },
+  "/lavanet.lava.projects.MsgDelKeys": {
+    aminoType: "/lavanet.lava.projects.MsgDelKeys",
+    toAmino: ({
+      creator,
+      project,
+      projectKeys
+    }: MsgDelKeys): MsgDelKeysAminoType["value"] => {
+      return {
+        creator,
+        project,
+        project_keys: projectKeys.map(el0 => ({
+          key: el0.key,
+          kinds: el0.kinds
+        }))
+      };
+    },
+    fromAmino: ({
+      creator,
+      project,
+      project_keys
+    }: MsgDelKeysAminoType["value"]): MsgDelKeys => {
+      return {
+        creator,
+        project,
+        projectKeys: project_keys.map(el0 => ({
+          key: el0.key,
+          kinds: el0.kinds
+        }))
+      };
+    }
+  },
   "/lavanet.lava.projects.MsgSetPolicy": {
     aminoType: "/lavanet.lava.projects.MsgSetPolicy",
     toAmino: ({
@@ -97,7 +144,9 @@ export const AminoConverter = {
           geolocation_profile: policy.geolocationProfile.toString(),
           total_cu_limit: policy.totalCuLimit.toString(),
           epoch_cu_limit: policy.epochCuLimit.toString(),
-          max_providers_to_pair: policy.maxProvidersToPair.toString()
+          max_providers_to_pair: policy.maxProvidersToPair.toString(),
+          selected_providers_mode: policy.selectedProvidersMode,
+          selected_providers: policy.selectedProviders
         }
       };
     },
@@ -117,7 +166,9 @@ export const AminoConverter = {
           geolocationProfile: Long.fromString(policy.geolocation_profile),
           totalCuLimit: Long.fromString(policy.total_cu_limit),
           epochCuLimit: Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: Long.fromString(policy.max_providers_to_pair)
+          maxProvidersToPair: Long.fromString(policy.max_providers_to_pair),
+          selectedProvidersMode: sELECTED_PROVIDERS_MODEFromJSON(policy.selected_providers_mode),
+          selectedProviders: policy.selected_providers
         }
       };
     }
@@ -140,7 +191,9 @@ export const AminoConverter = {
           geolocation_profile: policy.geolocationProfile.toString(),
           total_cu_limit: policy.totalCuLimit.toString(),
           epoch_cu_limit: policy.epochCuLimit.toString(),
-          max_providers_to_pair: policy.maxProvidersToPair.toString()
+          max_providers_to_pair: policy.maxProvidersToPair.toString(),
+          selected_providers_mode: policy.selectedProvidersMode,
+          selected_providers: policy.selectedProviders
         }
       };
     },
@@ -160,7 +213,9 @@ export const AminoConverter = {
           geolocationProfile: Long.fromString(policy.geolocation_profile),
           totalCuLimit: Long.fromString(policy.total_cu_limit),
           epochCuLimit: Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: Long.fromString(policy.max_providers_to_pair)
+          maxProvidersToPair: Long.fromString(policy.max_providers_to_pair),
+          selectedProvidersMode: sELECTED_PROVIDERS_MODEFromJSON(policy.selected_providers_mode),
+          selectedProviders: policy.selected_providers
         }
       };
     }
