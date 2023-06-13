@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
+var _project = require("../projects/project");
 var _helpers = require("../helpers");
 //@ts-nocheck
 
@@ -44,7 +45,6 @@ var AminoConverter = {
         creator: creator,
         project_data: {
           name: projectData.name,
-          description: projectData.description,
           enabled: projectData.enabled,
           projectKeys: projectData.projectKeys.map(function (el0) {
             return {
@@ -62,7 +62,9 @@ var AminoConverter = {
             geolocation_profile: projectData.policy.geolocationProfile.toString(),
             total_cu_limit: projectData.policy.totalCuLimit.toString(),
             epoch_cu_limit: projectData.policy.epochCuLimit.toString(),
-            max_providers_to_pair: projectData.policy.maxProvidersToPair.toString()
+            max_providers_to_pair: projectData.policy.maxProvidersToPair.toString(),
+            selected_providers_mode: projectData.policy.selectedProvidersMode,
+            selected_providers: projectData.policy.selectedProviders
           }
         }
       };
@@ -74,7 +76,6 @@ var AminoConverter = {
         creator: creator,
         projectData: {
           name: project_data.name,
-          description: project_data.description,
           enabled: project_data.enabled,
           projectKeys: project_data.projectKeys.map(function (el1) {
             return {
@@ -92,7 +93,9 @@ var AminoConverter = {
             geolocationProfile: _helpers.Long.fromString(project_data.policy.geolocation_profile),
             totalCuLimit: _helpers.Long.fromString(project_data.policy.total_cu_limit),
             epochCuLimit: _helpers.Long.fromString(project_data.policy.epoch_cu_limit),
-            maxProvidersToPair: _helpers.Long.fromString(project_data.policy.max_providers_to_pair)
+            maxProvidersToPair: _helpers.Long.fromString(project_data.policy.max_providers_to_pair),
+            selectedProvidersMode: (0, _project.sELECTED_PROVIDERS_MODEFromJSON)(project_data.policy.selected_providers_mode),
+            selectedProviders: project_data.policy.selected_providers
           }
         }
       };

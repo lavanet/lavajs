@@ -38,6 +38,51 @@ export function projectKey_TypeToJSON(object) {
       return "UNRECOGNIZED";
   }
 }
+/** the enum below determines the pairing algorithm's behaviour with the selected providers feature */
+export let SELECTED_PROVIDERS_MODE = /*#__PURE__*/function (SELECTED_PROVIDERS_MODE) {
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["ALLOWED"] = 0] = "ALLOWED";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["MIXED"] = 1] = "MIXED";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["EXCLUSIVE"] = 2] = "EXCLUSIVE";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["DISABLED"] = 3] = "DISABLED";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+  return SELECTED_PROVIDERS_MODE;
+}({});
+export const SELECTED_PROVIDERS_MODESDKType = SELECTED_PROVIDERS_MODE;
+export function sELECTED_PROVIDERS_MODEFromJSON(object) {
+  switch (object) {
+    case 0:
+    case "ALLOWED":
+      return SELECTED_PROVIDERS_MODE.ALLOWED;
+    case 1:
+    case "MIXED":
+      return SELECTED_PROVIDERS_MODE.MIXED;
+    case 2:
+    case "EXCLUSIVE":
+      return SELECTED_PROVIDERS_MODE.EXCLUSIVE;
+    case 3:
+    case "DISABLED":
+      return SELECTED_PROVIDERS_MODE.DISABLED;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SELECTED_PROVIDERS_MODE.UNRECOGNIZED;
+  }
+}
+export function sELECTED_PROVIDERS_MODEToJSON(object) {
+  switch (object) {
+    case SELECTED_PROVIDERS_MODE.ALLOWED:
+      return "ALLOWED";
+    case SELECTED_PROVIDERS_MODE.MIXED:
+      return "MIXED";
+    case SELECTED_PROVIDERS_MODE.EXCLUSIVE:
+      return "EXCLUSIVE";
+    case SELECTED_PROVIDERS_MODE.DISABLED:
+      return "DISABLED";
+    case SELECTED_PROVIDERS_MODE.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
 
 /** protobuf expected in YAML format: used "moretags" to simplify parsing */
 
@@ -51,7 +96,6 @@ function createBaseProject() {
   return {
     index: "",
     subscription: "",
-    description: "",
     enabled: false,
     projectKeys: [],
     adminPolicy: undefined,
@@ -67,9 +111,6 @@ export const Project = {
     }
     if (message.subscription !== "") {
       writer.uint32(18).string(message.subscription);
-    }
-    if (message.description !== "") {
-      writer.uint32(26).string(message.description);
     }
     if (message.enabled === true) {
       writer.uint32(32).bool(message.enabled);
@@ -104,9 +145,6 @@ export const Project = {
         case 2:
           message.subscription = reader.string();
           break;
-        case 3:
-          message.description = reader.string();
-          break;
         case 4:
           message.enabled = reader.bool();
           break;
@@ -136,7 +174,6 @@ export const Project = {
     return {
       index: isSet(object.index) ? String(object.index) : "",
       subscription: isSet(object.subscription) ? String(object.subscription) : "",
-      description: isSet(object.description) ? String(object.description) : "",
       enabled: isSet(object.enabled) ? Boolean(object.enabled) : false,
       projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(e => ProjectKey.fromJSON(e)) : [],
       adminPolicy: isSet(object.adminPolicy) ? Policy.fromJSON(object.adminPolicy) : undefined,
@@ -149,7 +186,6 @@ export const Project = {
     const obj = {};
     message.index !== undefined && (obj.index = message.index);
     message.subscription !== undefined && (obj.subscription = message.subscription);
-    message.description !== undefined && (obj.description = message.description);
     message.enabled !== undefined && (obj.enabled = message.enabled);
     if (message.projectKeys) {
       obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toJSON(e) : undefined);
@@ -163,11 +199,10 @@ export const Project = {
     return obj;
   },
   fromPartial(object) {
-    var _object$index, _object$subscription, _object$description, _object$enabled, _object$projectKeys;
+    var _object$index, _object$subscription, _object$enabled, _object$projectKeys;
     const message = createBaseProject();
     message.index = (_object$index = object.index) !== null && _object$index !== void 0 ? _object$index : "";
     message.subscription = (_object$subscription = object.subscription) !== null && _object$subscription !== void 0 ? _object$subscription : "";
-    message.description = (_object$description = object.description) !== null && _object$description !== void 0 ? _object$description : "";
     message.enabled = (_object$enabled = object.enabled) !== null && _object$enabled !== void 0 ? _object$enabled : false;
     message.projectKeys = ((_object$projectKeys = object.projectKeys) === null || _object$projectKeys === void 0 ? void 0 : _object$projectKeys.map(e => ProjectKey.fromPartial(e))) || [];
     message.adminPolicy = object.adminPolicy !== undefined && object.adminPolicy !== null ? Policy.fromPartial(object.adminPolicy) : undefined;
@@ -239,7 +274,9 @@ function createBasePolicy() {
     geolocationProfile: Long.UZERO,
     totalCuLimit: Long.UZERO,
     epochCuLimit: Long.UZERO,
-    maxProvidersToPair: Long.UZERO
+    maxProvidersToPair: Long.UZERO,
+    selectedProvidersMode: 0,
+    selectedProviders: []
   };
 }
 export const Policy = {
@@ -258,6 +295,12 @@ export const Policy = {
     }
     if (!message.maxProvidersToPair.isZero()) {
       writer.uint32(40).uint64(message.maxProvidersToPair);
+    }
+    if (message.selectedProvidersMode !== 0) {
+      writer.uint32(48).int32(message.selectedProvidersMode);
+    }
+    for (const v of message.selectedProviders) {
+      writer.uint32(58).string(v);
     }
     return writer;
   },
@@ -283,6 +326,12 @@ export const Policy = {
         case 5:
           message.maxProvidersToPair = reader.uint64();
           break;
+        case 6:
+          message.selectedProvidersMode = reader.int32();
+          break;
+        case 7:
+          message.selectedProviders.push(reader.string());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -296,7 +345,9 @@ export const Policy = {
       geolocationProfile: isSet(object.geolocationProfile) ? Long.fromValue(object.geolocationProfile) : Long.UZERO,
       totalCuLimit: isSet(object.totalCuLimit) ? Long.fromValue(object.totalCuLimit) : Long.UZERO,
       epochCuLimit: isSet(object.epochCuLimit) ? Long.fromValue(object.epochCuLimit) : Long.UZERO,
-      maxProvidersToPair: isSet(object.maxProvidersToPair) ? Long.fromValue(object.maxProvidersToPair) : Long.UZERO
+      maxProvidersToPair: isSet(object.maxProvidersToPair) ? Long.fromValue(object.maxProvidersToPair) : Long.UZERO,
+      selectedProvidersMode: isSet(object.selectedProvidersMode) ? sELECTED_PROVIDERS_MODEFromJSON(object.selectedProvidersMode) : 0,
+      selectedProviders: Array.isArray(object === null || object === void 0 ? void 0 : object.selectedProviders) ? object.selectedProviders.map(e => String(e)) : []
     };
   },
   toJSON(message) {
@@ -310,16 +361,24 @@ export const Policy = {
     message.totalCuLimit !== undefined && (obj.totalCuLimit = (message.totalCuLimit || Long.UZERO).toString());
     message.epochCuLimit !== undefined && (obj.epochCuLimit = (message.epochCuLimit || Long.UZERO).toString());
     message.maxProvidersToPair !== undefined && (obj.maxProvidersToPair = (message.maxProvidersToPair || Long.UZERO).toString());
+    message.selectedProvidersMode !== undefined && (obj.selectedProvidersMode = sELECTED_PROVIDERS_MODEToJSON(message.selectedProvidersMode));
+    if (message.selectedProviders) {
+      obj.selectedProviders = message.selectedProviders.map(e => e);
+    } else {
+      obj.selectedProviders = [];
+    }
     return obj;
   },
   fromPartial(object) {
-    var _object$chainPolicies;
+    var _object$chainPolicies, _object$selectedProvi, _object$selectedProvi2;
     const message = createBasePolicy();
     message.chainPolicies = ((_object$chainPolicies = object.chainPolicies) === null || _object$chainPolicies === void 0 ? void 0 : _object$chainPolicies.map(e => ChainPolicy.fromPartial(e))) || [];
     message.geolocationProfile = object.geolocationProfile !== undefined && object.geolocationProfile !== null ? Long.fromValue(object.geolocationProfile) : Long.UZERO;
     message.totalCuLimit = object.totalCuLimit !== undefined && object.totalCuLimit !== null ? Long.fromValue(object.totalCuLimit) : Long.UZERO;
     message.epochCuLimit = object.epochCuLimit !== undefined && object.epochCuLimit !== null ? Long.fromValue(object.epochCuLimit) : Long.UZERO;
     message.maxProvidersToPair = object.maxProvidersToPair !== undefined && object.maxProvidersToPair !== null ? Long.fromValue(object.maxProvidersToPair) : Long.UZERO;
+    message.selectedProvidersMode = (_object$selectedProvi = object.selectedProvidersMode) !== null && _object$selectedProvi !== void 0 ? _object$selectedProvi : 0;
+    message.selectedProviders = ((_object$selectedProvi2 = object.selectedProviders) === null || _object$selectedProvi2 === void 0 ? void 0 : _object$selectedProvi2.map(e => e)) || [];
     return message;
   }
 };
@@ -432,7 +491,6 @@ export const ProtoDeveloperData = {
 function createBaseProjectData() {
   return {
     name: "",
-    description: "",
     enabled: false,
     projectKeys: [],
     policy: undefined
@@ -442,9 +500,6 @@ export const ProjectData = {
   encode(message, writer = _m0.Writer.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
     }
     if (message.enabled === true) {
       writer.uint32(24).bool(message.enabled);
@@ -467,9 +522,6 @@ export const ProjectData = {
         case 1:
           message.name = reader.string();
           break;
-        case 2:
-          message.description = reader.string();
-          break;
         case 3:
           message.enabled = reader.bool();
           break;
@@ -489,7 +541,6 @@ export const ProjectData = {
   fromJSON(object) {
     return {
       name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : "",
       enabled: isSet(object.enabled) ? Boolean(object.enabled) : false,
       projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(e => ProjectKey.fromJSON(e)) : [],
       policy: isSet(object.policy) ? Policy.fromJSON(object.policy) : undefined
@@ -498,7 +549,6 @@ export const ProjectData = {
   toJSON(message) {
     const obj = {};
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
     message.enabled !== undefined && (obj.enabled = message.enabled);
     if (message.projectKeys) {
       obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toJSON(e) : undefined);
@@ -509,10 +559,9 @@ export const ProjectData = {
     return obj;
   },
   fromPartial(object) {
-    var _object$name, _object$description2, _object$enabled2, _object$projectKeys2;
+    var _object$name, _object$enabled2, _object$projectKeys2;
     const message = createBaseProjectData();
     message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
-    message.description = (_object$description2 = object.description) !== null && _object$description2 !== void 0 ? _object$description2 : "";
     message.enabled = (_object$enabled2 = object.enabled) !== null && _object$enabled2 !== void 0 ? _object$enabled2 : false;
     message.projectKeys = ((_object$projectKeys2 = object.projectKeys) === null || _object$projectKeys2 === void 0 ? void 0 : _object$projectKeys2.map(e => ProjectKey.fromPartial(e))) || [];
     message.policy = object.policy !== undefined && object.policy !== null ? Policy.fromPartial(object.policy) : undefined;

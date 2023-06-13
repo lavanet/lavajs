@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
+var _project = require("./project");
 var _helpers = require("../helpers");
 //@ts-nocheck
 
@@ -41,12 +42,45 @@ var AminoConverter = {
       };
     }
   },
-  "/lavanet.lava.projects.MsgSetPolicy": {
-    aminoType: "/lavanet.lava.projects.MsgSetPolicy",
+  "/lavanet.lava.projects.MsgDelKeys": {
+    aminoType: "/lavanet.lava.projects.MsgDelKeys",
     toAmino: function toAmino(_ref3) {
       var creator = _ref3.creator,
         project = _ref3.project,
-        policy = _ref3.policy;
+        projectKeys = _ref3.projectKeys;
+      return {
+        creator: creator,
+        project: project,
+        project_keys: projectKeys.map(function (el0) {
+          return {
+            key: el0.key,
+            kinds: el0.kinds
+          };
+        })
+      };
+    },
+    fromAmino: function fromAmino(_ref4) {
+      var creator = _ref4.creator,
+        project = _ref4.project,
+        project_keys = _ref4.project_keys;
+      return {
+        creator: creator,
+        project: project,
+        projectKeys: project_keys.map(function (el0) {
+          return {
+            key: el0.key,
+            kinds: el0.kinds
+          };
+        })
+      };
+    }
+  },
+  "/lavanet.lava.projects.MsgSetPolicy": {
+    aminoType: "/lavanet.lava.projects.MsgSetPolicy",
+    toAmino: function toAmino(_ref5) {
+      var creator = _ref5.creator,
+        project = _ref5.project,
+        policy = _ref5.policy;
       return {
         creator: creator,
         project: project,
@@ -60,14 +94,16 @@ var AminoConverter = {
           geolocation_profile: policy.geolocationProfile.toString(),
           total_cu_limit: policy.totalCuLimit.toString(),
           epoch_cu_limit: policy.epochCuLimit.toString(),
-          max_providers_to_pair: policy.maxProvidersToPair.toString()
+          max_providers_to_pair: policy.maxProvidersToPair.toString(),
+          selected_providers_mode: policy.selectedProvidersMode,
+          selected_providers: policy.selectedProviders
         }
       };
     },
-    fromAmino: function fromAmino(_ref4) {
-      var creator = _ref4.creator,
-        project = _ref4.project,
-        policy = _ref4.policy;
+    fromAmino: function fromAmino(_ref6) {
+      var creator = _ref6.creator,
+        project = _ref6.project,
+        policy = _ref6.policy;
       return {
         creator: creator,
         project: project,
@@ -81,17 +117,19 @@ var AminoConverter = {
           geolocationProfile: _helpers.Long.fromString(policy.geolocation_profile),
           totalCuLimit: _helpers.Long.fromString(policy.total_cu_limit),
           epochCuLimit: _helpers.Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair)
+          maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair),
+          selectedProvidersMode: (0, _project.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
+          selectedProviders: policy.selected_providers
         }
       };
     }
   },
   "/lavanet.lava.projects.MsgSetSubscriptionPolicy": {
     aminoType: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
-    toAmino: function toAmino(_ref5) {
-      var creator = _ref5.creator,
-        projects = _ref5.projects,
-        policy = _ref5.policy;
+    toAmino: function toAmino(_ref7) {
+      var creator = _ref7.creator,
+        projects = _ref7.projects,
+        policy = _ref7.policy;
       return {
         creator: creator,
         projects: projects,
@@ -105,14 +143,16 @@ var AminoConverter = {
           geolocation_profile: policy.geolocationProfile.toString(),
           total_cu_limit: policy.totalCuLimit.toString(),
           epoch_cu_limit: policy.epochCuLimit.toString(),
-          max_providers_to_pair: policy.maxProvidersToPair.toString()
+          max_providers_to_pair: policy.maxProvidersToPair.toString(),
+          selected_providers_mode: policy.selectedProvidersMode,
+          selected_providers: policy.selectedProviders
         }
       };
     },
-    fromAmino: function fromAmino(_ref6) {
-      var creator = _ref6.creator,
-        projects = _ref6.projects,
-        policy = _ref6.policy;
+    fromAmino: function fromAmino(_ref8) {
+      var creator = _ref8.creator,
+        projects = _ref8.projects,
+        policy = _ref8.policy;
       return {
         creator: creator,
         projects: projects,
@@ -126,7 +166,9 @@ var AminoConverter = {
           geolocationProfile: _helpers.Long.fromString(policy.geolocation_profile),
           totalCuLimit: _helpers.Long.fromString(policy.total_cu_limit),
           epochCuLimit: _helpers.Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair)
+          maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair),
+          selectedProvidersMode: (0, _project.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
+          selectedProviders: policy.selected_providers
         }
       };
     }

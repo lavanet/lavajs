@@ -4,8 +4,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RelaySession = exports.RelayRequest = exports.RelayReply = exports.RelayPrivateData = exports.QualityOfServiceReport = exports.Metadata = exports.GenerateBadgeResponse = exports.GenerateBadgeRequest = exports.Badge = void 0;
-var _stake_entry = require("../epochstorage/stake_entry");
+exports.RelaySession = exports.RelayRequest = exports.RelayReply = exports.RelayPrivateData = exports.QualityOfServiceReport = exports.Metadata = exports.Badge = void 0;
 var _helpers = require("../helpers");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -171,6 +170,94 @@ var RelaySession = {
   }
 };
 exports.RelaySession = RelaySession;
+function createBaseBadge() {
+  return {
+    cuAllocation: _helpers.Long.UZERO,
+    epoch: _helpers.Long.UZERO,
+    address: "",
+    lavaChainId: "",
+    projectSig: new Uint8Array()
+  };
+}
+var Badge = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    if (!message.cuAllocation.isZero()) {
+      writer.uint32(8).uint64(message.cuAllocation);
+    }
+    if (!message.epoch.isZero()) {
+      writer.uint32(16).uint64(message.epoch);
+    }
+    if (message.address !== "") {
+      writer.uint32(26).string(message.address);
+    }
+    if (message.lavaChainId !== "") {
+      writer.uint32(34).string(message.lavaChainId);
+    }
+    if (message.projectSig.length !== 0) {
+      writer.uint32(42).bytes(message.projectSig);
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseBadge();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.cuAllocation = reader.uint64();
+          break;
+        case 2:
+          message.epoch = reader.uint64();
+          break;
+        case 3:
+          message.address = reader.string();
+          break;
+        case 4:
+          message.lavaChainId = reader.string();
+          break;
+        case 5:
+          message.projectSig = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      cuAllocation: (0, _helpers.isSet)(object.cuAllocation) ? _helpers.Long.fromValue(object.cuAllocation) : _helpers.Long.UZERO,
+      epoch: (0, _helpers.isSet)(object.epoch) ? _helpers.Long.fromValue(object.epoch) : _helpers.Long.UZERO,
+      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
+      lavaChainId: (0, _helpers.isSet)(object.lavaChainId) ? String(object.lavaChainId) : "",
+      projectSig: (0, _helpers.isSet)(object.projectSig) ? (0, _helpers.bytesFromBase64)(object.projectSig) : new Uint8Array()
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.cuAllocation !== undefined && (obj.cuAllocation = (message.cuAllocation || _helpers.Long.UZERO).toString());
+    message.epoch !== undefined && (obj.epoch = (message.epoch || _helpers.Long.UZERO).toString());
+    message.address !== undefined && (obj.address = message.address);
+    message.lavaChainId !== undefined && (obj.lavaChainId = message.lavaChainId);
+    message.projectSig !== undefined && (obj.projectSig = (0, _helpers.base64FromBytes)(message.projectSig !== undefined ? message.projectSig : new Uint8Array()));
+    return obj;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$address, _object$lavaChainId2, _object$projectSig;
+    var message = createBaseBadge();
+    message.cuAllocation = object.cuAllocation !== undefined && object.cuAllocation !== null ? _helpers.Long.fromValue(object.cuAllocation) : _helpers.Long.UZERO;
+    message.epoch = object.epoch !== undefined && object.epoch !== null ? _helpers.Long.fromValue(object.epoch) : _helpers.Long.UZERO;
+    message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
+    message.lavaChainId = (_object$lavaChainId2 = object.lavaChainId) !== null && _object$lavaChainId2 !== void 0 ? _object$lavaChainId2 : "";
+    message.projectSig = (_object$projectSig = object.projectSig) !== null && _object$projectSig !== void 0 ? _object$projectSig : new Uint8Array();
+    return message;
+  }
+};
+exports.Badge = Badge;
 function createBaseRelayPrivateData() {
   return {
     connectionType: "",
@@ -413,239 +500,6 @@ var RelayRequest = {
   }
 };
 exports.RelayRequest = RelayRequest;
-function createBaseBadge() {
-  return {
-    cuAllocation: _helpers.Long.UZERO,
-    epoch: _helpers.Long.UZERO,
-    address: "",
-    lavaChainId: "",
-    projectSig: new Uint8Array()
-  };
-}
-var Badge = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.cuAllocation.isZero()) {
-      writer.uint32(8).uint64(message.cuAllocation);
-    }
-    if (!message.epoch.isZero()) {
-      writer.uint32(16).uint64(message.epoch);
-    }
-    if (message.address !== "") {
-      writer.uint32(26).string(message.address);
-    }
-    if (message.lavaChainId !== "") {
-      writer.uint32(34).string(message.lavaChainId);
-    }
-    if (message.projectSig.length !== 0) {
-      writer.uint32(42).bytes(message.projectSig);
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseBadge();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.cuAllocation = reader.uint64();
-          break;
-        case 2:
-          message.epoch = reader.uint64();
-          break;
-        case 3:
-          message.address = reader.string();
-          break;
-        case 4:
-          message.lavaChainId = reader.string();
-          break;
-        case 5:
-          message.projectSig = reader.bytes();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      cuAllocation: (0, _helpers.isSet)(object.cuAllocation) ? _helpers.Long.fromValue(object.cuAllocation) : _helpers.Long.UZERO,
-      epoch: (0, _helpers.isSet)(object.epoch) ? _helpers.Long.fromValue(object.epoch) : _helpers.Long.UZERO,
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      lavaChainId: (0, _helpers.isSet)(object.lavaChainId) ? String(object.lavaChainId) : "",
-      projectSig: (0, _helpers.isSet)(object.projectSig) ? (0, _helpers.bytesFromBase64)(object.projectSig) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.cuAllocation !== undefined && (obj.cuAllocation = (message.cuAllocation || _helpers.Long.UZERO).toString());
-    message.epoch !== undefined && (obj.epoch = (message.epoch || _helpers.Long.UZERO).toString());
-    message.address !== undefined && (obj.address = message.address);
-    message.lavaChainId !== undefined && (obj.lavaChainId = message.lavaChainId);
-    message.projectSig !== undefined && (obj.projectSig = (0, _helpers.base64FromBytes)(message.projectSig !== undefined ? message.projectSig : new Uint8Array()));
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$address, _object$lavaChainId2, _object$projectSig;
-    var message = createBaseBadge();
-    message.cuAllocation = object.cuAllocation !== undefined && object.cuAllocation !== null ? _helpers.Long.fromValue(object.cuAllocation) : _helpers.Long.UZERO;
-    message.epoch = object.epoch !== undefined && object.epoch !== null ? _helpers.Long.fromValue(object.epoch) : _helpers.Long.UZERO;
-    message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
-    message.lavaChainId = (_object$lavaChainId2 = object.lavaChainId) !== null && _object$lavaChainId2 !== void 0 ? _object$lavaChainId2 : "";
-    message.projectSig = (_object$projectSig = object.projectSig) !== null && _object$projectSig !== void 0 ? _object$projectSig : new Uint8Array();
-    return message;
-  }
-};
-exports.Badge = Badge;
-function createBaseGenerateBadgeRequest() {
-  return {
-    badgeAddress: "",
-    projectId: "",
-    specId: undefined
-  };
-}
-var GenerateBadgeRequest = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (message.badgeAddress !== "") {
-      writer.uint32(10).string(message.badgeAddress);
-    }
-    if (message.projectId !== "") {
-      writer.uint32(18).string(message.projectId);
-    }
-    if (message.specId !== undefined) {
-      writer.uint32(26).string(message.specId);
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseGenerateBadgeRequest();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.badgeAddress = reader.string();
-          break;
-        case 2:
-          message.projectId = reader.string();
-          break;
-        case 3:
-          message.specId = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      badgeAddress: (0, _helpers.isSet)(object.badgeAddress) ? String(object.badgeAddress) : "",
-      projectId: (0, _helpers.isSet)(object.projectId) ? String(object.projectId) : "",
-      specId: (0, _helpers.isSet)(object.specId) ? String(object.specId) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.badgeAddress !== undefined && (obj.badgeAddress = message.badgeAddress);
-    message.projectId !== undefined && (obj.projectId = message.projectId);
-    message.specId !== undefined && (obj.specId = message.specId);
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$badgeAddress, _object$projectId, _object$specId2;
-    var message = createBaseGenerateBadgeRequest();
-    message.badgeAddress = (_object$badgeAddress = object.badgeAddress) !== null && _object$badgeAddress !== void 0 ? _object$badgeAddress : "";
-    message.projectId = (_object$projectId = object.projectId) !== null && _object$projectId !== void 0 ? _object$projectId : "";
-    message.specId = (_object$specId2 = object.specId) !== null && _object$specId2 !== void 0 ? _object$specId2 : undefined;
-    return message;
-  }
-};
-exports.GenerateBadgeRequest = GenerateBadgeRequest;
-function createBaseGenerateBadgeResponse() {
-  return {
-    badge: undefined,
-    pairingList: undefined
-  };
-}
-var GenerateBadgeResponse = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (message.badge !== undefined) {
-      Badge.encode(message.badge, writer.uint32(10).fork()).ldelim();
-    }
-    var _iterator2 = _createForOfIteratorHelper(message.pairingList),
-      _step2;
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var v = _step2.value;
-        _stake_entry.StakeEntry.encode(v, writer.uint32(18).fork()).ldelim();
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseGenerateBadgeResponse();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.badge = Badge.decode(reader, reader.uint32());
-          break;
-        case 2:
-          message.pairingList.push(_stake_entry.StakeEntry.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      badge: (0, _helpers.isSet)(object.badge) ? Badge.fromJSON(object.badge) : undefined,
-      pairingList: Array.isArray(object === null || object === void 0 ? void 0 : object.pairingList) ? object.pairingList.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.badge !== undefined && (obj.badge = message.badge ? Badge.toJSON(message.badge) : undefined);
-    if (message.pairingList) {
-      obj.pairingList = message.pairingList.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.pairingList = [];
-    }
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$pairingList;
-    var message = createBaseGenerateBadgeResponse();
-    message.badge = object.badge !== undefined && object.badge !== null ? Badge.fromPartial(object.badge) : undefined;
-    message.pairingList = ((_object$pairingList = object.pairingList) === null || _object$pairingList === void 0 ? void 0 : _object$pairingList.map(function (e) {
-      return _stake_entry.StakeEntry.fromPartial(e);
-    })) || [];
-    return message;
-  }
-};
-exports.GenerateBadgeResponse = GenerateBadgeResponse;
 function createBaseRelayReply() {
   return {
     data: new Uint8Array(),
@@ -678,17 +532,17 @@ var RelayReply = {
     if (message.sigBlocks.length !== 0) {
       writer.uint32(50).bytes(message.sigBlocks);
     }
-    var _iterator3 = _createForOfIteratorHelper(message.metadata),
-      _step3;
+    var _iterator2 = _createForOfIteratorHelper(message.metadata),
+      _step2;
     try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var v = _step3.value;
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var v = _step2.value;
         Metadata.encode(v, writer.uint32(58).fork()).ldelim();
       }
     } catch (err) {
-      _iterator3.e(err);
+      _iterator2.e(err);
     } finally {
-      _iterator3.f();
+      _iterator2.f();
     }
     return writer;
   },

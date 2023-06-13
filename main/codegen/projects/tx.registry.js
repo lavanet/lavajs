@@ -9,7 +9,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 var _tx = require("./tx");
 //@ts-nocheck
 
-var registry = [["/lavanet.lava.projects.MsgAddKeys", _tx.MsgAddKeys], ["/lavanet.lava.projects.MsgSetPolicy", _tx.MsgSetPolicy], ["/lavanet.lava.projects.MsgSetSubscriptionPolicy", _tx.MsgSetSubscriptionPolicy]];
+var registry = [["/lavanet.lava.projects.MsgAddKeys", _tx.MsgAddKeys], ["/lavanet.lava.projects.MsgDelKeys", _tx.MsgDelKeys], ["/lavanet.lava.projects.MsgSetPolicy", _tx.MsgSetPolicy], ["/lavanet.lava.projects.MsgSetSubscriptionPolicy", _tx.MsgSetSubscriptionPolicy]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
   registry.forEach(function (_ref) {
@@ -26,6 +26,12 @@ var MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.projects.MsgAddKeys",
         value: _tx.MsgAddKeys.encode(value).finish()
+      };
+    },
+    delKeys: function delKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: _tx.MsgDelKeys.encode(value).finish()
       };
     },
     setPolicy: function setPolicy(value) {
@@ -45,6 +51,12 @@ var MessageComposer = {
     addKeys: function addKeys(value) {
       return {
         typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+        value: value
+      };
+    },
+    delKeys: function delKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
         value: value
       };
     },
@@ -68,6 +80,12 @@ var MessageComposer = {
         value: _tx.MsgAddKeys.toJSON(value)
       };
     },
+    delKeys: function delKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: _tx.MsgDelKeys.toJSON(value)
+      };
+    },
     setPolicy: function setPolicy(value) {
       return {
         typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
@@ -88,6 +106,12 @@ var MessageComposer = {
         value: _tx.MsgAddKeys.fromJSON(value)
       };
     },
+    delKeys: function delKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: _tx.MsgDelKeys.fromJSON(value)
+      };
+    },
     setPolicy: function setPolicy(value) {
       return {
         typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
@@ -106,6 +130,12 @@ var MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.projects.MsgAddKeys",
         value: _tx.MsgAddKeys.fromPartial(value)
+      };
+    },
+    delKeys: function delKeys(value) {
+      return {
+        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+        value: _tx.MsgDelKeys.fromPartial(value)
       };
     },
     setPolicy: function setPolicy(value) {

@@ -4,9 +4,11 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ProtoDeveloperData = exports.ProjectKey_TypeSDKType = exports.ProjectKey_Type = exports.ProjectKey = exports.ProjectData = exports.Project = exports.Policy = exports.ChainPolicy = void 0;
+exports.SELECTED_PROVIDERS_MODESDKType = exports.SELECTED_PROVIDERS_MODE = exports.ProtoDeveloperData = exports.ProjectKey_TypeSDKType = exports.ProjectKey_Type = exports.ProjectKey = exports.ProjectData = exports.Project = exports.Policy = exports.ChainPolicy = void 0;
 exports.projectKey_TypeFromJSON = projectKey_TypeFromJSON;
 exports.projectKey_TypeToJSON = projectKey_TypeToJSON;
+exports.sELECTED_PROVIDERS_MODEFromJSON = sELECTED_PROVIDERS_MODEFromJSON;
+exports.sELECTED_PROVIDERS_MODEToJSON = sELECTED_PROVIDERS_MODEToJSON;
 var _helpers = require("../helpers");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -54,6 +56,53 @@ function projectKey_TypeToJSON(object) {
       return "UNRECOGNIZED";
   }
 }
+/** the enum below determines the pairing algorithm's behaviour with the selected providers feature */
+var SELECTED_PROVIDERS_MODE = /*#__PURE__*/function (SELECTED_PROVIDERS_MODE) {
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["ALLOWED"] = 0] = "ALLOWED";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["MIXED"] = 1] = "MIXED";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["EXCLUSIVE"] = 2] = "EXCLUSIVE";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["DISABLED"] = 3] = "DISABLED";
+  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+  return SELECTED_PROVIDERS_MODE;
+}({});
+exports.SELECTED_PROVIDERS_MODE = SELECTED_PROVIDERS_MODE;
+var SELECTED_PROVIDERS_MODESDKType = SELECTED_PROVIDERS_MODE;
+exports.SELECTED_PROVIDERS_MODESDKType = SELECTED_PROVIDERS_MODESDKType;
+function sELECTED_PROVIDERS_MODEFromJSON(object) {
+  switch (object) {
+    case 0:
+    case "ALLOWED":
+      return SELECTED_PROVIDERS_MODE.ALLOWED;
+    case 1:
+    case "MIXED":
+      return SELECTED_PROVIDERS_MODE.MIXED;
+    case 2:
+    case "EXCLUSIVE":
+      return SELECTED_PROVIDERS_MODE.EXCLUSIVE;
+    case 3:
+    case "DISABLED":
+      return SELECTED_PROVIDERS_MODE.DISABLED;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SELECTED_PROVIDERS_MODE.UNRECOGNIZED;
+  }
+}
+function sELECTED_PROVIDERS_MODEToJSON(object) {
+  switch (object) {
+    case SELECTED_PROVIDERS_MODE.ALLOWED:
+      return "ALLOWED";
+    case SELECTED_PROVIDERS_MODE.MIXED:
+      return "MIXED";
+    case SELECTED_PROVIDERS_MODE.EXCLUSIVE:
+      return "EXCLUSIVE";
+    case SELECTED_PROVIDERS_MODE.DISABLED:
+      return "DISABLED";
+    case SELECTED_PROVIDERS_MODE.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
 
 /** protobuf expected in YAML format: used "moretags" to simplify parsing */
 
@@ -67,7 +116,6 @@ function createBaseProject() {
   return {
     index: "",
     subscription: "",
-    description: "",
     enabled: false,
     projectKeys: [],
     adminPolicy: undefined,
@@ -84,9 +132,6 @@ var Project = {
     }
     if (message.subscription !== "") {
       writer.uint32(18).string(message.subscription);
-    }
-    if (message.description !== "") {
-      writer.uint32(26).string(message.description);
     }
     if (message.enabled === true) {
       writer.uint32(32).bool(message.enabled);
@@ -130,9 +175,6 @@ var Project = {
         case 2:
           message.subscription = reader.string();
           break;
-        case 3:
-          message.description = reader.string();
-          break;
         case 4:
           message.enabled = reader.bool();
           break;
@@ -162,7 +204,6 @@ var Project = {
     return {
       index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
       subscription: (0, _helpers.isSet)(object.subscription) ? String(object.subscription) : "",
-      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
       enabled: (0, _helpers.isSet)(object.enabled) ? Boolean(object.enabled) : false,
       projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(function (e) {
         return ProjectKey.fromJSON(e);
@@ -177,7 +218,6 @@ var Project = {
     var obj = {};
     message.index !== undefined && (obj.index = message.index);
     message.subscription !== undefined && (obj.subscription = message.subscription);
-    message.description !== undefined && (obj.description = message.description);
     message.enabled !== undefined && (obj.enabled = message.enabled);
     if (message.projectKeys) {
       obj.projectKeys = message.projectKeys.map(function (e) {
@@ -193,11 +233,10 @@ var Project = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$index, _object$subscription, _object$description, _object$enabled, _object$projectKeys;
+    var _object$index, _object$subscription, _object$enabled, _object$projectKeys;
     var message = createBaseProject();
     message.index = (_object$index = object.index) !== null && _object$index !== void 0 ? _object$index : "";
     message.subscription = (_object$subscription = object.subscription) !== null && _object$subscription !== void 0 ? _object$subscription : "";
-    message.description = (_object$description = object.description) !== null && _object$description !== void 0 ? _object$description : "";
     message.enabled = (_object$enabled = object.enabled) !== null && _object$enabled !== void 0 ? _object$enabled : false;
     message.projectKeys = ((_object$projectKeys = object.projectKeys) === null || _object$projectKeys === void 0 ? void 0 : _object$projectKeys.map(function (e) {
       return ProjectKey.fromPartial(e);
@@ -274,7 +313,9 @@ function createBasePolicy() {
     geolocationProfile: _helpers.Long.UZERO,
     totalCuLimit: _helpers.Long.UZERO,
     epochCuLimit: _helpers.Long.UZERO,
-    maxProvidersToPair: _helpers.Long.UZERO
+    maxProvidersToPair: _helpers.Long.UZERO,
+    selectedProvidersMode: 0,
+    selectedProviders: []
   };
 }
 var Policy = {
@@ -304,6 +345,21 @@ var Policy = {
     if (!message.maxProvidersToPair.isZero()) {
       writer.uint32(40).uint64(message.maxProvidersToPair);
     }
+    if (message.selectedProvidersMode !== 0) {
+      writer.uint32(48).int32(message.selectedProvidersMode);
+    }
+    var _iterator3 = _createForOfIteratorHelper(message.selectedProviders),
+      _step3;
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var _v = _step3.value;
+        writer.uint32(58).string(_v);
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
     return writer;
   },
   decode: function decode(input, length) {
@@ -328,6 +384,12 @@ var Policy = {
         case 5:
           message.maxProvidersToPair = reader.uint64();
           break;
+        case 6:
+          message.selectedProvidersMode = reader.int32();
+          break;
+        case 7:
+          message.selectedProviders.push(reader.string());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -343,7 +405,11 @@ var Policy = {
       geolocationProfile: (0, _helpers.isSet)(object.geolocationProfile) ? _helpers.Long.fromValue(object.geolocationProfile) : _helpers.Long.UZERO,
       totalCuLimit: (0, _helpers.isSet)(object.totalCuLimit) ? _helpers.Long.fromValue(object.totalCuLimit) : _helpers.Long.UZERO,
       epochCuLimit: (0, _helpers.isSet)(object.epochCuLimit) ? _helpers.Long.fromValue(object.epochCuLimit) : _helpers.Long.UZERO,
-      maxProvidersToPair: (0, _helpers.isSet)(object.maxProvidersToPair) ? _helpers.Long.fromValue(object.maxProvidersToPair) : _helpers.Long.UZERO
+      maxProvidersToPair: (0, _helpers.isSet)(object.maxProvidersToPair) ? _helpers.Long.fromValue(object.maxProvidersToPair) : _helpers.Long.UZERO,
+      selectedProvidersMode: (0, _helpers.isSet)(object.selectedProvidersMode) ? sELECTED_PROVIDERS_MODEFromJSON(object.selectedProvidersMode) : 0,
+      selectedProviders: Array.isArray(object === null || object === void 0 ? void 0 : object.selectedProviders) ? object.selectedProviders.map(function (e) {
+        return String(e);
+      }) : []
     };
   },
   toJSON: function toJSON(message) {
@@ -359,10 +425,18 @@ var Policy = {
     message.totalCuLimit !== undefined && (obj.totalCuLimit = (message.totalCuLimit || _helpers.Long.UZERO).toString());
     message.epochCuLimit !== undefined && (obj.epochCuLimit = (message.epochCuLimit || _helpers.Long.UZERO).toString());
     message.maxProvidersToPair !== undefined && (obj.maxProvidersToPair = (message.maxProvidersToPair || _helpers.Long.UZERO).toString());
+    message.selectedProvidersMode !== undefined && (obj.selectedProvidersMode = sELECTED_PROVIDERS_MODEToJSON(message.selectedProvidersMode));
+    if (message.selectedProviders) {
+      obj.selectedProviders = message.selectedProviders.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.selectedProviders = [];
+    }
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$chainPolicies;
+    var _object$chainPolicies, _object$selectedProvi, _object$selectedProvi2;
     var message = createBasePolicy();
     message.chainPolicies = ((_object$chainPolicies = object.chainPolicies) === null || _object$chainPolicies === void 0 ? void 0 : _object$chainPolicies.map(function (e) {
       return ChainPolicy.fromPartial(e);
@@ -371,6 +445,10 @@ var Policy = {
     message.totalCuLimit = object.totalCuLimit !== undefined && object.totalCuLimit !== null ? _helpers.Long.fromValue(object.totalCuLimit) : _helpers.Long.UZERO;
     message.epochCuLimit = object.epochCuLimit !== undefined && object.epochCuLimit !== null ? _helpers.Long.fromValue(object.epochCuLimit) : _helpers.Long.UZERO;
     message.maxProvidersToPair = object.maxProvidersToPair !== undefined && object.maxProvidersToPair !== null ? _helpers.Long.fromValue(object.maxProvidersToPair) : _helpers.Long.UZERO;
+    message.selectedProvidersMode = (_object$selectedProvi = object.selectedProvidersMode) !== null && _object$selectedProvi !== void 0 ? _object$selectedProvi : 0;
+    message.selectedProviders = ((_object$selectedProvi2 = object.selectedProviders) === null || _object$selectedProvi2 === void 0 ? void 0 : _object$selectedProvi2.map(function (e) {
+      return e;
+    })) || [];
     return message;
   }
 };
@@ -387,17 +465,17 @@ var ChainPolicy = {
     if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
     }
-    var _iterator3 = _createForOfIteratorHelper(message.apis),
-      _step3;
+    var _iterator4 = _createForOfIteratorHelper(message.apis),
+      _step4;
     try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var v = _step3.value;
+      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+        var v = _step4.value;
         writer.uint32(18).string(v);
       }
     } catch (err) {
-      _iterator3.e(err);
+      _iterator4.e(err);
     } finally {
-      _iterator3.f();
+      _iterator4.f();
     }
     return writer;
   },
@@ -503,7 +581,6 @@ exports.ProtoDeveloperData = ProtoDeveloperData;
 function createBaseProjectData() {
   return {
     name: "",
-    description: "",
     enabled: false,
     projectKeys: [],
     policy: undefined
@@ -515,23 +592,20 @@ var ProjectData = {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
     if (message.enabled === true) {
       writer.uint32(24).bool(message.enabled);
     }
-    var _iterator4 = _createForOfIteratorHelper(message.projectKeys),
-      _step4;
+    var _iterator5 = _createForOfIteratorHelper(message.projectKeys),
+      _step5;
     try {
-      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-        var v = _step4.value;
+      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+        var v = _step5.value;
         ProjectKey.encode(v, writer.uint32(34).fork()).ldelim();
       }
     } catch (err) {
-      _iterator4.e(err);
+      _iterator5.e(err);
     } finally {
-      _iterator4.f();
+      _iterator5.f();
     }
     if (message.policy !== undefined) {
       Policy.encode(message.policy, writer.uint32(42).fork()).ldelim();
@@ -547,9 +621,6 @@ var ProjectData = {
       switch (tag >>> 3) {
         case 1:
           message.name = reader.string();
-          break;
-        case 2:
-          message.description = reader.string();
           break;
         case 3:
           message.enabled = reader.bool();
@@ -570,7 +641,6 @@ var ProjectData = {
   fromJSON: function fromJSON(object) {
     return {
       name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
-      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
       enabled: (0, _helpers.isSet)(object.enabled) ? Boolean(object.enabled) : false,
       projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(function (e) {
         return ProjectKey.fromJSON(e);
@@ -581,7 +651,6 @@ var ProjectData = {
   toJSON: function toJSON(message) {
     var obj = {};
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
     message.enabled !== undefined && (obj.enabled = message.enabled);
     if (message.projectKeys) {
       obj.projectKeys = message.projectKeys.map(function (e) {
@@ -594,10 +663,9 @@ var ProjectData = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$name, _object$description2, _object$enabled2, _object$projectKeys2;
+    var _object$name, _object$enabled2, _object$projectKeys2;
     var message = createBaseProjectData();
     message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
-    message.description = (_object$description2 = object.description) !== null && _object$description2 !== void 0 ? _object$description2 : "";
     message.enabled = (_object$enabled2 = object.enabled) !== null && _object$enabled2 !== void 0 ? _object$enabled2 : false;
     message.projectKeys = ((_object$projectKeys2 = object.projectKeys) === null || _object$projectKeys2 === void 0 ? void 0 : _object$projectKeys2.map(function (e) {
       return ProjectKey.fromPartial(e);

@@ -104,6 +104,109 @@ export const MsgAddKeysResponse = {
     return message;
   }
 };
+function createBaseMsgDelKeys() {
+  return {
+    creator: "",
+    project: "",
+    projectKeys: []
+  };
+}
+export const MsgDelKeys = {
+  encode(message, writer = _m0.Writer.create()) {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.project !== "") {
+      writer.uint32(18).string(message.project);
+    }
+    for (const v of message.projectKeys) {
+      ProjectKey.encode(v, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelKeys();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.project = reader.string();
+          break;
+        case 3:
+          message.projectKeys.push(ProjectKey.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object) {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      project: isSet(object.project) ? String(object.project) : "",
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(e => ProjectKey.fromJSON(e)) : []
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.project !== undefined && (obj.project = message.project);
+    if (message.projectKeys) {
+      obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toJSON(e) : undefined);
+    } else {
+      obj.projectKeys = [];
+    }
+    return obj;
+  },
+  fromPartial(object) {
+    var _object$creator2, _object$project2, _object$projectKeys2;
+    const message = createBaseMsgDelKeys();
+    message.creator = (_object$creator2 = object.creator) !== null && _object$creator2 !== void 0 ? _object$creator2 : "";
+    message.project = (_object$project2 = object.project) !== null && _object$project2 !== void 0 ? _object$project2 : "";
+    message.projectKeys = ((_object$projectKeys2 = object.projectKeys) === null || _object$projectKeys2 === void 0 ? void 0 : _object$projectKeys2.map(e => ProjectKey.fromPartial(e))) || [];
+    return message;
+  }
+};
+function createBaseMsgDelKeysResponse() {
+  return {};
+}
+export const MsgDelKeysResponse = {
+  encode(_, writer = _m0.Writer.create()) {
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelKeysResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
+  },
+  fromPartial(_) {
+    const message = createBaseMsgDelKeysResponse();
+    return message;
+  }
+};
 function createBaseMsgSetPolicy() {
   return {
     creator: "",
@@ -162,10 +265,10 @@ export const MsgSetPolicy = {
     return obj;
   },
   fromPartial(object) {
-    var _object$creator2, _object$project2;
+    var _object$creator3, _object$project3;
     const message = createBaseMsgSetPolicy();
-    message.creator = (_object$creator2 = object.creator) !== null && _object$creator2 !== void 0 ? _object$creator2 : "";
-    message.project = (_object$project2 = object.project) !== null && _object$project2 !== void 0 ? _object$project2 : "";
+    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
+    message.project = (_object$project3 = object.project) !== null && _object$project3 !== void 0 ? _object$project3 : "";
     message.policy = object.policy !== undefined && object.policy !== null ? Policy.fromPartial(object.policy) : undefined;
     return message;
   }
@@ -265,9 +368,9 @@ export const MsgSetSubscriptionPolicy = {
     return obj;
   },
   fromPartial(object) {
-    var _object$creator3, _object$projects;
+    var _object$creator4, _object$projects;
     const message = createBaseMsgSetSubscriptionPolicy();
-    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
+    message.creator = (_object$creator4 = object.creator) !== null && _object$creator4 !== void 0 ? _object$creator4 : "";
     message.projects = ((_object$projects = object.projects) === null || _object$projects === void 0 ? void 0 : _object$projects.map(e => e)) || [];
     message.policy = object.policy !== undefined && object.policy !== null ? Policy.fromPartial(object.policy) : undefined;
     return message;

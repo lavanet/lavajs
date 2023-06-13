@@ -8,8 +8,8 @@ exports.ShowAllChainsInfoStruct = exports.QueryShowChainInfoResponse = exports.Q
 var _pagination = require("../cosmos/base/query/v1beta1/pagination");
 var _params = require("./params");
 var _spec = require("./spec");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 var _helpers = require("../helpers");
+var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -430,7 +430,8 @@ function createBaseShowAllChainsInfoStruct() {
   return {
     chainName: "",
     chainID: "",
-    enabledApiInterfaces: []
+    enabledApiInterfaces: [],
+    apiCount: _helpers.Long.UZERO
   };
 }
 var ShowAllChainsInfoStruct = {
@@ -454,6 +455,9 @@ var ShowAllChainsInfoStruct = {
     } finally {
       _iterator3.f();
     }
+    if (!message.apiCount.isZero()) {
+      writer.uint32(32).uint64(message.apiCount);
+    }
     return writer;
   },
   decode: function decode(input, length) {
@@ -472,6 +476,9 @@ var ShowAllChainsInfoStruct = {
         case 3:
           message.enabledApiInterfaces.push(reader.string());
           break;
+        case 4:
+          message.apiCount = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -485,7 +492,8 @@ var ShowAllChainsInfoStruct = {
       chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
       enabledApiInterfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.enabledApiInterfaces) ? object.enabledApiInterfaces.map(function (e) {
         return String(e);
-      }) : []
+      }) : [],
+      apiCount: (0, _helpers.isSet)(object.apiCount) ? _helpers.Long.fromValue(object.apiCount) : _helpers.Long.UZERO
     };
   },
   toJSON: function toJSON(message) {
@@ -499,6 +507,7 @@ var ShowAllChainsInfoStruct = {
     } else {
       obj.enabledApiInterfaces = [];
     }
+    message.apiCount !== undefined && (obj.apiCount = (message.apiCount || _helpers.Long.UZERO).toString());
     return obj;
   },
   fromPartial: function fromPartial(object) {
@@ -509,6 +518,7 @@ var ShowAllChainsInfoStruct = {
     message.enabledApiInterfaces = ((_object$enabledApiInt = object.enabledApiInterfaces) === null || _object$enabledApiInt === void 0 ? void 0 : _object$enabledApiInt.map(function (e) {
       return e;
     })) || [];
+    message.apiCount = object.apiCount !== undefined && object.apiCount !== null ? _helpers.Long.fromValue(object.apiCount) : _helpers.Long.UZERO;
     return message;
   }
 };

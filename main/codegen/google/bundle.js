@@ -7,14 +7,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.google = void 0;
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-var _194 = _interopRequireWildcard(require("./api/annotations"));
-var _195 = _interopRequireWildcard(require("./api/http"));
-var _196 = _interopRequireWildcard(require("./protobuf/any"));
-var _197 = _interopRequireWildcard(require("./protobuf/descriptor"));
-var _198 = _interopRequireWildcard(require("./protobuf/duration"));
-var _199 = _interopRequireWildcard(require("./protobuf/empty"));
-var _200 = _interopRequireWildcard(require("./protobuf/timestamp"));
-var _201 = _interopRequireWildcard(require("./protobuf/wrappers"));
+var _196 = _interopRequireWildcard(require("./api/annotations"));
+var _197 = _interopRequireWildcard(require("./api/http"));
+var _198 = _interopRequireWildcard(require("./protobuf/any"));
+var _199 = _interopRequireWildcard(require("./protobuf/descriptor"));
+var _200 = _interopRequireWildcard(require("./protobuf/duration"));
+var _201 = _interopRequireWildcard(require("./protobuf/empty"));
+var _202 = _interopRequireWildcard(require("./protobuf/timestamp"));
+var _203 = _interopRequireWildcard(require("./protobuf/wrappers"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -22,6 +22,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var google;
 exports.google = google;
 (function (_google) {
-  var api = _google.api = _objectSpread(_objectSpread({}, _194), _195);
-  var protobuf = _google.protobuf = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _196), _197), _198), _199), _200), _201);
+  var api = _google.api = _objectSpread(_objectSpread({}, _196), _197);
+  var protobuf = _google.protobuf = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _198), _199), _200), _201), _202), _203);
 })(google || (exports.google = google = {}));

@@ -1,6 +1,6 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import * as _m0 from "protobufjs/minimal";
-import { MsgAddKeys, MsgAddKeysResponse, MsgSetPolicy, MsgSetPolicyResponse, MsgSetSubscriptionPolicy, MsgSetSubscriptionPolicyResponse } from "./tx";
+import { MsgAddKeys, MsgAddKeysResponse, MsgDelKeys, MsgDelKeysResponse, MsgSetPolicy, MsgSetPolicyResponse, MsgSetSubscriptionPolicy, MsgSetSubscriptionPolicyResponse } from "./tx";
 /** Msg defines the Msg service. */
 
 export class MsgClientImpl {
@@ -8,6 +8,7 @@ export class MsgClientImpl {
     _defineProperty(this, "rpc", void 0);
     this.rpc = rpc;
     this.addKeys = this.addKeys.bind(this);
+    this.delKeys = this.delKeys.bind(this);
     this.setPolicy = this.setPolicy.bind(this);
     this.setSubscriptionPolicy = this.setSubscriptionPolicy.bind(this);
   }
@@ -15,6 +16,11 @@ export class MsgClientImpl {
     const data = MsgAddKeys.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.projects.Msg", "AddKeys", data);
     return promise.then(data => MsgAddKeysResponse.decode(new _m0.Reader(data)));
+  }
+  delKeys(request) {
+    const data = MsgDelKeys.encode(request).finish();
+    const promise = this.rpc.request("lavanet.lava.projects.Msg", "DelKeys", data);
+    return promise.then(data => MsgDelKeysResponse.decode(new _m0.Reader(data)));
   }
   setPolicy(request) {
     const data = MsgSetPolicy.encode(request).finish();

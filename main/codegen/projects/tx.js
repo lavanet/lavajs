@@ -4,7 +4,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MsgSetSubscriptionPolicyResponse = exports.MsgSetSubscriptionPolicy = exports.MsgSetPolicyResponse = exports.MsgSetPolicy = exports.MsgAddKeysResponse = exports.MsgAddKeys = void 0;
+exports.MsgSetSubscriptionPolicyResponse = exports.MsgSetSubscriptionPolicy = exports.MsgSetPolicyResponse = exports.MsgSetPolicy = exports.MsgDelKeysResponse = exports.MsgDelKeys = exports.MsgAddKeysResponse = exports.MsgAddKeys = void 0;
 var _project = require("./project");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 var _helpers = require("../helpers");
@@ -135,6 +135,128 @@ var MsgAddKeysResponse = {
   }
 };
 exports.MsgAddKeysResponse = MsgAddKeysResponse;
+function createBaseMsgDelKeys() {
+  return {
+    creator: "",
+    project: "",
+    projectKeys: []
+  };
+}
+var MsgDelKeys = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.project !== "") {
+      writer.uint32(18).string(message.project);
+    }
+    var _iterator2 = _createForOfIteratorHelper(message.projectKeys),
+      _step2;
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var v = _step2.value;
+        _project.ProjectKey.encode(v, writer.uint32(26).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseMsgDelKeys();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.project = reader.string();
+          break;
+        case 3:
+          message.projectKeys.push(_project.ProjectKey.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      project: (0, _helpers.isSet)(object.project) ? String(object.project) : "",
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(function (e) {
+        return _project.ProjectKey.fromJSON(e);
+      }) : []
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.project !== undefined && (obj.project = message.project);
+    if (message.projectKeys) {
+      obj.projectKeys = message.projectKeys.map(function (e) {
+        return e ? _project.ProjectKey.toJSON(e) : undefined;
+      });
+    } else {
+      obj.projectKeys = [];
+    }
+    return obj;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$creator2, _object$project2, _object$projectKeys2;
+    var message = createBaseMsgDelKeys();
+    message.creator = (_object$creator2 = object.creator) !== null && _object$creator2 !== void 0 ? _object$creator2 : "";
+    message.project = (_object$project2 = object.project) !== null && _object$project2 !== void 0 ? _object$project2 : "";
+    message.projectKeys = ((_object$projectKeys2 = object.projectKeys) === null || _object$projectKeys2 === void 0 ? void 0 : _object$projectKeys2.map(function (e) {
+      return _project.ProjectKey.fromPartial(e);
+    })) || [];
+    return message;
+  }
+};
+exports.MsgDelKeys = MsgDelKeys;
+function createBaseMsgDelKeysResponse() {
+  return {};
+}
+var MsgDelKeysResponse = {
+  encode: function encode(_) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseMsgDelKeysResponse();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
+  fromPartial: function fromPartial(_) {
+    var message = createBaseMsgDelKeysResponse();
+    return message;
+  }
+};
+exports.MsgDelKeysResponse = MsgDelKeysResponse;
 function createBaseMsgSetPolicy() {
   return {
     creator: "",
@@ -194,10 +316,10 @@ var MsgSetPolicy = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$creator2, _object$project2;
+    var _object$creator3, _object$project3;
     var message = createBaseMsgSetPolicy();
-    message.creator = (_object$creator2 = object.creator) !== null && _object$creator2 !== void 0 ? _object$creator2 : "";
-    message.project = (_object$project2 = object.project) !== null && _object$project2 !== void 0 ? _object$project2 : "";
+    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
+    message.project = (_object$project3 = object.project) !== null && _object$project3 !== void 0 ? _object$project3 : "";
     message.policy = object.policy !== undefined && object.policy !== null ? _project.Policy.fromPartial(object.policy) : undefined;
     return message;
   }
@@ -251,17 +373,17 @@ var MsgSetSubscriptionPolicy = {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
-    var _iterator2 = _createForOfIteratorHelper(message.projects),
-      _step2;
+    var _iterator3 = _createForOfIteratorHelper(message.projects),
+      _step3;
     try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var v = _step2.value;
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var v = _step3.value;
         writer.uint32(18).string(v);
       }
     } catch (err) {
-      _iterator2.e(err);
+      _iterator3.e(err);
     } finally {
-      _iterator2.f();
+      _iterator3.f();
     }
     if (message.policy !== undefined) {
       _project.Policy.encode(message.policy, writer.uint32(26).fork()).ldelim();
@@ -314,9 +436,9 @@ var MsgSetSubscriptionPolicy = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$creator3, _object$projects;
+    var _object$creator4, _object$projects;
     var message = createBaseMsgSetSubscriptionPolicy();
-    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
+    message.creator = (_object$creator4 = object.creator) !== null && _object$creator4 !== void 0 ? _object$creator4 : "";
     message.projects = ((_object$projects = object.projects) === null || _object$projects === void 0 ? void 0 : _object$projects.map(function (e) {
       return e;
     })) || [];

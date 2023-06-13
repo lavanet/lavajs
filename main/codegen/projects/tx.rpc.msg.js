@@ -20,6 +20,7 @@ var MsgClientImpl = /*#__PURE__*/function () {
     (0, _defineProperty2["default"])(this, "rpc", void 0);
     this.rpc = rpc;
     this.addKeys = this.addKeys.bind(this);
+    this.delKeys = this.delKeys.bind(this);
     this.setPolicy = this.setPolicy.bind(this);
     this.setSubscriptionPolicy = this.setSubscriptionPolicy.bind(this);
   }
@@ -30,6 +31,15 @@ var MsgClientImpl = /*#__PURE__*/function () {
       var promise = this.rpc.request("lavanet.lava.projects.Msg", "AddKeys", data);
       return promise.then(function (data) {
         return _tx.MsgAddKeysResponse.decode(new _m0.Reader(data));
+      });
+    }
+  }, {
+    key: "delKeys",
+    value: function delKeys(request) {
+      var data = _tx.MsgDelKeys.encode(request).finish();
+      var promise = this.rpc.request("lavanet.lava.projects.Msg", "DelKeys", data);
+      return promise.then(function (data) {
+        return _tx.MsgDelKeysResponse.decode(new _m0.Reader(data));
       });
     }
   }, {
