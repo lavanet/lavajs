@@ -100,6 +100,25 @@ var AminoConverter = {
         }
       };
     }
+  },
+  "/lavanet.lava.subscription.MsgDelProject": {
+    aminoType: "/lavanet.lava.subscription.MsgDelProject",
+    toAmino: function toAmino(_ref5) {
+      var creator = _ref5.creator,
+        name = _ref5.name;
+      return {
+        creator: creator,
+        name: name
+      };
+    },
+    fromAmino: function fromAmino(_ref6) {
+      var creator = _ref6.creator,
+        name = _ref6.name;
+      return {
+        creator: creator,
+        name: name
+      };
+    }
   }
 };
 exports.AminoConverter = AminoConverter;

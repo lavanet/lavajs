@@ -16,12 +16,9 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function createBaseParams() {
   return {
     mintCoinsPerCU: "",
-    burnCoinsPerCU: "",
     fraudStakeSlashingFactor: "",
     fraudSlashingAmount: _helpers.Long.UZERO,
-    servicersToPairCount: _helpers.Long.UZERO,
     epochBlocksOverlap: _helpers.Long.UZERO,
-    stakeToMaxCUList: "",
     unpayLimit: "",
     slashLimit: "",
     dataReliabilityReward: "",
@@ -35,23 +32,14 @@ var Params = {
     if (message.mintCoinsPerCU !== "") {
       writer.uint32(26).string(message.mintCoinsPerCU);
     }
-    if (message.burnCoinsPerCU !== "") {
-      writer.uint32(34).string(message.burnCoinsPerCU);
-    }
     if (message.fraudStakeSlashingFactor !== "") {
       writer.uint32(42).string(message.fraudStakeSlashingFactor);
     }
     if (!message.fraudSlashingAmount.isZero()) {
       writer.uint32(48).uint64(message.fraudSlashingAmount);
     }
-    if (!message.servicersToPairCount.isZero()) {
-      writer.uint32(56).uint64(message.servicersToPairCount);
-    }
     if (!message.epochBlocksOverlap.isZero()) {
       writer.uint32(64).uint64(message.epochBlocksOverlap);
-    }
-    if (message.stakeToMaxCUList !== "") {
-      writer.uint32(74).string(message.stakeToMaxCUList);
     }
     if (message.unpayLimit !== "") {
       writer.uint32(82).string(message.unpayLimit);
@@ -80,23 +68,14 @@ var Params = {
         case 3:
           message.mintCoinsPerCU = reader.string();
           break;
-        case 4:
-          message.burnCoinsPerCU = reader.string();
-          break;
         case 5:
           message.fraudStakeSlashingFactor = reader.string();
           break;
         case 6:
           message.fraudSlashingAmount = reader.uint64();
           break;
-        case 7:
-          message.servicersToPairCount = reader.uint64();
-          break;
         case 8:
           message.epochBlocksOverlap = reader.uint64();
-          break;
-        case 9:
-          message.stakeToMaxCUList = reader.string();
           break;
         case 10:
           message.unpayLimit = reader.string();
@@ -123,12 +102,9 @@ var Params = {
   fromJSON: function fromJSON(object) {
     return {
       mintCoinsPerCU: (0, _helpers.isSet)(object.mintCoinsPerCU) ? String(object.mintCoinsPerCU) : "",
-      burnCoinsPerCU: (0, _helpers.isSet)(object.burnCoinsPerCU) ? String(object.burnCoinsPerCU) : "",
       fraudStakeSlashingFactor: (0, _helpers.isSet)(object.fraudStakeSlashingFactor) ? String(object.fraudStakeSlashingFactor) : "",
       fraudSlashingAmount: (0, _helpers.isSet)(object.fraudSlashingAmount) ? _helpers.Long.fromValue(object.fraudSlashingAmount) : _helpers.Long.UZERO,
-      servicersToPairCount: (0, _helpers.isSet)(object.servicersToPairCount) ? _helpers.Long.fromValue(object.servicersToPairCount) : _helpers.Long.UZERO,
       epochBlocksOverlap: (0, _helpers.isSet)(object.epochBlocksOverlap) ? _helpers.Long.fromValue(object.epochBlocksOverlap) : _helpers.Long.UZERO,
-      stakeToMaxCUList: (0, _helpers.isSet)(object.stakeToMaxCUList) ? String(object.stakeToMaxCUList) : "",
       unpayLimit: (0, _helpers.isSet)(object.unpayLimit) ? String(object.unpayLimit) : "",
       slashLimit: (0, _helpers.isSet)(object.slashLimit) ? String(object.slashLimit) : "",
       dataReliabilityReward: (0, _helpers.isSet)(object.dataReliabilityReward) ? String(object.dataReliabilityReward) : "",
@@ -139,12 +115,9 @@ var Params = {
   toJSON: function toJSON(message) {
     var obj = {};
     message.mintCoinsPerCU !== undefined && (obj.mintCoinsPerCU = message.mintCoinsPerCU);
-    message.burnCoinsPerCU !== undefined && (obj.burnCoinsPerCU = message.burnCoinsPerCU);
     message.fraudStakeSlashingFactor !== undefined && (obj.fraudStakeSlashingFactor = message.fraudStakeSlashingFactor);
     message.fraudSlashingAmount !== undefined && (obj.fraudSlashingAmount = (message.fraudSlashingAmount || _helpers.Long.UZERO).toString());
-    message.servicersToPairCount !== undefined && (obj.servicersToPairCount = (message.servicersToPairCount || _helpers.Long.UZERO).toString());
     message.epochBlocksOverlap !== undefined && (obj.epochBlocksOverlap = (message.epochBlocksOverlap || _helpers.Long.UZERO).toString());
-    message.stakeToMaxCUList !== undefined && (obj.stakeToMaxCUList = message.stakeToMaxCUList);
     message.unpayLimit !== undefined && (obj.unpayLimit = message.unpayLimit);
     message.slashLimit !== undefined && (obj.slashLimit = message.slashLimit);
     message.dataReliabilityReward !== undefined && (obj.dataReliabilityReward = message.dataReliabilityReward);
@@ -153,15 +126,12 @@ var Params = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$mintCoinsPerC, _object$burnCoinsPerC, _object$fraudStakeSla, _object$stakeToMaxCUL, _object$unpayLimit, _object$slashLimit, _object$dataReliabili, _object$QoSWeight;
+    var _object$mintCoinsPerC, _object$fraudStakeSla, _object$unpayLimit, _object$slashLimit, _object$dataReliabili, _object$QoSWeight;
     var message = createBaseParams();
     message.mintCoinsPerCU = (_object$mintCoinsPerC = object.mintCoinsPerCU) !== null && _object$mintCoinsPerC !== void 0 ? _object$mintCoinsPerC : "";
-    message.burnCoinsPerCU = (_object$burnCoinsPerC = object.burnCoinsPerCU) !== null && _object$burnCoinsPerC !== void 0 ? _object$burnCoinsPerC : "";
     message.fraudStakeSlashingFactor = (_object$fraudStakeSla = object.fraudStakeSlashingFactor) !== null && _object$fraudStakeSla !== void 0 ? _object$fraudStakeSla : "";
     message.fraudSlashingAmount = object.fraudSlashingAmount !== undefined && object.fraudSlashingAmount !== null ? _helpers.Long.fromValue(object.fraudSlashingAmount) : _helpers.Long.UZERO;
-    message.servicersToPairCount = object.servicersToPairCount !== undefined && object.servicersToPairCount !== null ? _helpers.Long.fromValue(object.servicersToPairCount) : _helpers.Long.UZERO;
     message.epochBlocksOverlap = object.epochBlocksOverlap !== undefined && object.epochBlocksOverlap !== null ? _helpers.Long.fromValue(object.epochBlocksOverlap) : _helpers.Long.UZERO;
-    message.stakeToMaxCUList = (_object$stakeToMaxCUL = object.stakeToMaxCUList) !== null && _object$stakeToMaxCUL !== void 0 ? _object$stakeToMaxCUL : "";
     message.unpayLimit = (_object$unpayLimit = object.unpayLimit) !== null && _object$unpayLimit !== void 0 ? _object$unpayLimit : "";
     message.slashLimit = (_object$slashLimit = object.slashLimit) !== null && _object$slashLimit !== void 0 ? _object$slashLimit : "";
     message.dataReliabilityReward = (_object$dataReliabili = object.dataReliabilityReward) !== null && _object$dataReliabili !== void 0 ? _object$dataReliabili : "";

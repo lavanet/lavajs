@@ -4,7 +4,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MsgUnstakeProviderResponse = exports.MsgUnstakeProvider = exports.MsgUnstakeClientResponse = exports.MsgUnstakeClient = exports.MsgUnfreezeProviderResponse = exports.MsgUnfreezeProvider = exports.MsgStakeProviderResponse = exports.MsgStakeProvider = exports.MsgStakeClientResponse = exports.MsgStakeClient = exports.MsgRelayPaymentResponse = exports.MsgRelayPayment = exports.MsgFreezeProviderResponse = exports.MsgFreezeProvider = void 0;
+exports.MsgUnstakeProviderResponse = exports.MsgUnstakeProvider = exports.MsgUnfreezeProviderResponse = exports.MsgUnfreezeProvider = exports.MsgStakeProviderResponse = exports.MsgStakeProvider = exports.MsgRelayPaymentResponse = exports.MsgRelayPayment = exports.MsgFreezeProviderResponse = exports.MsgFreezeProvider = void 0;
 var _coin = require("../cosmos/base/v1beta1/coin");
 var _endpoint = require("../epochstorage/endpoint");
 var _relay = require("./relay");
@@ -167,119 +167,6 @@ var MsgStakeProviderResponse = {
   }
 };
 exports.MsgStakeProviderResponse = MsgStakeProviderResponse;
-function createBaseMsgStakeClient() {
-  return {
-    creator: "",
-    chainID: "",
-    amount: undefined,
-    geolocation: _helpers.Long.UZERO
-  };
-}
-var MsgStakeClient = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (message.creator !== "") {
-      writer.uint32(10).string(message.creator);
-    }
-    if (message.chainID !== "") {
-      writer.uint32(18).string(message.chainID);
-    }
-    if (message.amount !== undefined) {
-      _coin.Coin.encode(message.amount, writer.uint32(26).fork()).ldelim();
-    }
-    if (!message.geolocation.isZero()) {
-      writer.uint32(32).uint64(message.geolocation);
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseMsgStakeClient();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.creator = reader.string();
-          break;
-        case 2:
-          message.chainID = reader.string();
-          break;
-        case 3:
-          message.amount = _coin.Coin.decode(reader, reader.uint32());
-          break;
-        case 4:
-          message.geolocation = reader.uint64();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
-      amount: (0, _helpers.isSet)(object.amount) ? _coin.Coin.fromJSON(object.amount) : undefined,
-      geolocation: (0, _helpers.isSet)(object.geolocation) ? _helpers.Long.fromValue(object.geolocation) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.amount !== undefined && (obj.amount = message.amount ? _coin.Coin.toJSON(message.amount) : undefined);
-    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || _helpers.Long.UZERO).toString());
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$creator2, _object$chainID2;
-    var message = createBaseMsgStakeClient();
-    message.creator = (_object$creator2 = object.creator) !== null && _object$creator2 !== void 0 ? _object$creator2 : "";
-    message.chainID = (_object$chainID2 = object.chainID) !== null && _object$chainID2 !== void 0 ? _object$chainID2 : "";
-    message.amount = object.amount !== undefined && object.amount !== null ? _coin.Coin.fromPartial(object.amount) : undefined;
-    message.geolocation = object.geolocation !== undefined && object.geolocation !== null ? _helpers.Long.fromValue(object.geolocation) : _helpers.Long.UZERO;
-    return message;
-  }
-};
-exports.MsgStakeClient = MsgStakeClient;
-function createBaseMsgStakeClientResponse() {
-  return {};
-}
-var MsgStakeClientResponse = {
-  encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseMsgStakeClientResponse();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
-  },
-  fromPartial: function fromPartial(_) {
-    var message = createBaseMsgStakeClientResponse();
-    return message;
-  }
-};
-exports.MsgStakeClientResponse = MsgStakeClientResponse;
 function createBaseMsgUnstakeProvider() {
   return {
     creator: "",
@@ -330,10 +217,10 @@ var MsgUnstakeProvider = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$creator3, _object$chainID3;
+    var _object$creator2, _object$chainID2;
     var message = createBaseMsgUnstakeProvider();
-    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
-    message.chainID = (_object$chainID3 = object.chainID) !== null && _object$chainID3 !== void 0 ? _object$chainID3 : "";
+    message.creator = (_object$creator2 = object.creator) !== null && _object$creator2 !== void 0 ? _object$creator2 : "";
+    message.chainID = (_object$chainID2 = object.chainID) !== null && _object$chainID2 !== void 0 ? _object$chainID2 : "";
     return message;
   }
 };
@@ -373,99 +260,6 @@ var MsgUnstakeProviderResponse = {
   }
 };
 exports.MsgUnstakeProviderResponse = MsgUnstakeProviderResponse;
-function createBaseMsgUnstakeClient() {
-  return {
-    creator: "",
-    chainID: ""
-  };
-}
-var MsgUnstakeClient = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (message.creator !== "") {
-      writer.uint32(10).string(message.creator);
-    }
-    if (message.chainID !== "") {
-      writer.uint32(18).string(message.chainID);
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseMsgUnstakeClient();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.creator = reader.string();
-          break;
-        case 2:
-          message.chainID = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$creator4, _object$chainID4;
-    var message = createBaseMsgUnstakeClient();
-    message.creator = (_object$creator4 = object.creator) !== null && _object$creator4 !== void 0 ? _object$creator4 : "";
-    message.chainID = (_object$chainID4 = object.chainID) !== null && _object$chainID4 !== void 0 ? _object$chainID4 : "";
-    return message;
-  }
-};
-exports.MsgUnstakeClient = MsgUnstakeClient;
-function createBaseMsgUnstakeClientResponse() {
-  return {};
-}
-var MsgUnstakeClientResponse = {
-  encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseMsgUnstakeClientResponse();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
-  },
-  fromPartial: function fromPartial(_) {
-    var message = createBaseMsgUnstakeClientResponse();
-    return message;
-  }
-};
-exports.MsgUnstakeClientResponse = MsgUnstakeClientResponse;
 function createBaseMsgRelayPayment() {
   return {
     creator: "",
@@ -542,9 +336,9 @@ var MsgRelayPayment = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$creator5, _object$relays, _object$descriptionSt;
+    var _object$creator3, _object$relays, _object$descriptionSt;
     var message = createBaseMsgRelayPayment();
-    message.creator = (_object$creator5 = object.creator) !== null && _object$creator5 !== void 0 ? _object$creator5 : "";
+    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
     message.relays = ((_object$relays = object.relays) === null || _object$relays === void 0 ? void 0 : _object$relays.map(function (e) {
       return _relay.RelaySession.fromPartial(e);
     })) || [];
@@ -664,9 +458,9 @@ var MsgFreezeProvider = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$creator6, _object$chainIds, _object$reason;
+    var _object$creator4, _object$chainIds, _object$reason;
     var message = createBaseMsgFreezeProvider();
-    message.creator = (_object$creator6 = object.creator) !== null && _object$creator6 !== void 0 ? _object$creator6 : "";
+    message.creator = (_object$creator4 = object.creator) !== null && _object$creator4 !== void 0 ? _object$creator4 : "";
     message.chainIds = ((_object$chainIds = object.chainIds) === null || _object$chainIds === void 0 ? void 0 : _object$chainIds.map(function (e) {
       return e;
     })) || [];
@@ -777,9 +571,9 @@ var MsgUnfreezeProvider = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$creator7, _object$chainIds2;
+    var _object$creator5, _object$chainIds2;
     var message = createBaseMsgUnfreezeProvider();
-    message.creator = (_object$creator7 = object.creator) !== null && _object$creator7 !== void 0 ? _object$creator7 : "";
+    message.creator = (_object$creator5 = object.creator) !== null && _object$creator5 !== void 0 ? _object$creator5 : "";
     message.chainIds = ((_object$chainIds2 = object.chainIds) === null || _object$chainIds2 === void 0 ? void 0 : _object$chainIds2.map(function (e) {
       return e;
     })) || [];

@@ -22,7 +22,6 @@ var QueryClientImpl = /*#__PURE__*/function () {
     this.rpc = rpc;
     this.params = this.params.bind(this);
     this.providers = this.providers.bind(this);
-    this.clients = this.clients.bind(this);
     this.getPairing = this.getPairing.bind(this);
     this.verifyPairing = this.verifyPairing.bind(this);
     this.uniquePaymentStorageClientProvider = this.uniquePaymentStorageClientProvider.bind(this);
@@ -51,15 +50,6 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "Providers", data);
       return promise.then(function (data) {
         return _query.QueryProvidersResponse.decode(new _m0.Reader(data));
-      });
-    }
-  }, {
-    key: "clients",
-    value: function clients(request) {
-      var data = _query.QueryClientsRequest.encode(request).finish();
-      var promise = this.rpc.request("lavanet.lava.pairing.Query", "Clients", data);
-      return promise.then(function (data) {
-        return _query.QueryClientsResponse.decode(new _m0.Reader(data));
       });
     }
   }, {
@@ -174,9 +164,6 @@ var createRpcQueryExtension = function createRpcQueryExtension(base) {
     },
     providers: function providers(request) {
       return queryService.providers(request);
-    },
-    clients: function clients(request) {
-      return queryService.clients(request);
     },
     getPairing: function getPairing(request) {
       return queryService.getPairing(request);

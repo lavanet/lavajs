@@ -1,7 +1,7 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import * as _m0 from "protobufjs/minimal";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryProvidersRequest, QueryProvidersResponse, QueryClientsRequest, QueryClientsResponse, QueryGetPairingRequest, QueryGetPairingResponse, QueryVerifyPairingRequest, QueryVerifyPairingResponse, QueryGetUniquePaymentStorageClientProviderRequest, QueryGetUniquePaymentStorageClientProviderResponse, QueryAllUniquePaymentStorageClientProviderRequest, QueryAllUniquePaymentStorageClientProviderResponse, QueryGetProviderPaymentStorageRequest, QueryGetProviderPaymentStorageResponse, QueryAllProviderPaymentStorageRequest, QueryAllProviderPaymentStorageResponse, QueryGetEpochPaymentsRequest, QueryGetEpochPaymentsResponse, QueryAllEpochPaymentsRequest, QueryAllEpochPaymentsResponse, QueryUserEntryRequest, QueryUserEntryResponse, QueryStaticProvidersListRequest, QueryStaticProvidersListResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryProvidersRequest, QueryProvidersResponse, QueryGetPairingRequest, QueryGetPairingResponse, QueryVerifyPairingRequest, QueryVerifyPairingResponse, QueryGetUniquePaymentStorageClientProviderRequest, QueryGetUniquePaymentStorageClientProviderResponse, QueryAllUniquePaymentStorageClientProviderRequest, QueryAllUniquePaymentStorageClientProviderResponse, QueryGetProviderPaymentStorageRequest, QueryGetProviderPaymentStorageResponse, QueryAllProviderPaymentStorageRequest, QueryAllProviderPaymentStorageResponse, QueryGetEpochPaymentsRequest, QueryGetEpochPaymentsResponse, QueryAllEpochPaymentsRequest, QueryAllEpochPaymentsResponse, QueryUserEntryRequest, QueryUserEntryResponse, QueryStaticProvidersListRequest, QueryStaticProvidersListResponse } from "./query";
 /** Query defines the gRPC querier service. */
 
 export class QueryClientImpl {
@@ -10,7 +10,6 @@ export class QueryClientImpl {
     this.rpc = rpc;
     this.params = this.params.bind(this);
     this.providers = this.providers.bind(this);
-    this.clients = this.clients.bind(this);
     this.getPairing = this.getPairing.bind(this);
     this.verifyPairing = this.verifyPairing.bind(this);
     this.uniquePaymentStorageClientProvider = this.uniquePaymentStorageClientProvider.bind(this);
@@ -31,11 +30,6 @@ export class QueryClientImpl {
     const data = QueryProvidersRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "Providers", data);
     return promise.then(data => QueryProvidersResponse.decode(new _m0.Reader(data)));
-  }
-  clients(request) {
-    const data = QueryClientsRequest.encode(request).finish();
-    const promise = this.rpc.request("lavanet.lava.pairing.Query", "Clients", data);
-    return promise.then(data => QueryClientsResponse.decode(new _m0.Reader(data)));
   }
   getPairing(request) {
     const data = QueryGetPairingRequest.encode(request).finish();
@@ -103,9 +97,6 @@ export const createRpcQueryExtension = base => {
     },
     providers(request) {
       return queryService.providers(request);
-    },
-    clients(request) {
-      return queryService.clients(request);
     },
     getPairing(request) {
       return queryService.getPairing(request);

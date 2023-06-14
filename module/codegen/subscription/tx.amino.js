@@ -89,5 +89,26 @@ export const AminoConverter = {
         }
       };
     }
+  },
+  "/lavanet.lava.subscription.MsgDelProject": {
+    aminoType: "/lavanet.lava.subscription.MsgDelProject",
+    toAmino: ({
+      creator,
+      name
+    }) => {
+      return {
+        creator,
+        name
+      };
+    },
+    fromAmino: ({
+      creator,
+      name
+    }) => {
+      return {
+        creator,
+        name
+      };
+    }
   }
 };

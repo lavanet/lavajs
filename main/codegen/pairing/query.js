@@ -4,7 +4,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.QueryVerifyPairingResponse = exports.QueryVerifyPairingRequest = exports.QueryUserEntryResponse = exports.QueryUserEntryRequest = exports.QueryStaticProvidersListResponse = exports.QueryStaticProvidersListRequest = exports.QueryProvidersResponse = exports.QueryProvidersRequest = exports.QueryParamsResponse = exports.QueryParamsRequest = exports.QueryGetUniquePaymentStorageClientProviderResponse = exports.QueryGetUniquePaymentStorageClientProviderRequest = exports.QueryGetProviderPaymentStorageResponse = exports.QueryGetProviderPaymentStorageRequest = exports.QueryGetPairingResponse = exports.QueryGetPairingRequest = exports.QueryGetEpochPaymentsResponse = exports.QueryGetEpochPaymentsRequest = exports.QueryClientsResponse = exports.QueryClientsRequest = exports.QueryAllUniquePaymentStorageClientProviderResponse = exports.QueryAllUniquePaymentStorageClientProviderRequest = exports.QueryAllProviderPaymentStorageResponse = exports.QueryAllProviderPaymentStorageRequest = exports.QueryAllEpochPaymentsResponse = exports.QueryAllEpochPaymentsRequest = exports.QueryAccountInfoResponse = void 0;
+exports.QueryVerifyPairingResponse = exports.QueryVerifyPairingRequest = exports.QueryUserEntryResponse = exports.QueryUserEntryRequest = exports.QueryStaticProvidersListResponse = exports.QueryStaticProvidersListRequest = exports.QueryProvidersResponse = exports.QueryProvidersRequest = exports.QueryParamsResponse = exports.QueryParamsRequest = exports.QueryGetUniquePaymentStorageClientProviderResponse = exports.QueryGetUniquePaymentStorageClientProviderRequest = exports.QueryGetProviderPaymentStorageResponse = exports.QueryGetProviderPaymentStorageRequest = exports.QueryGetPairingResponse = exports.QueryGetPairingRequest = exports.QueryGetEpochPaymentsResponse = exports.QueryGetEpochPaymentsRequest = exports.QueryAllUniquePaymentStorageClientProviderResponse = exports.QueryAllUniquePaymentStorageClientProviderRequest = exports.QueryAllProviderPaymentStorageResponse = exports.QueryAllProviderPaymentStorageRequest = exports.QueryAllEpochPaymentsResponse = exports.QueryAllEpochPaymentsRequest = exports.QueryAccountInfoResponse = void 0;
 var _pagination = require("../cosmos/base/query/v1beta1/pagination");
 var _params = require("./params");
 var _stake_entry = require("../epochstorage/stake_entry");
@@ -245,131 +245,6 @@ var QueryProvidersResponse = {
   }
 };
 exports.QueryProvidersResponse = QueryProvidersResponse;
-function createBaseQueryClientsRequest() {
-  return {
-    chainID: ""
-  };
-}
-var QueryClientsRequest = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (message.chainID !== "") {
-      writer.uint32(10).string(message.chainID);
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseQueryClientsRequest();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.chainID = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$chainID2;
-    var message = createBaseQueryClientsRequest();
-    message.chainID = (_object$chainID2 = object.chainID) !== null && _object$chainID2 !== void 0 ? _object$chainID2 : "";
-    return message;
-  }
-};
-exports.QueryClientsRequest = QueryClientsRequest;
-function createBaseQueryClientsResponse() {
-  return {
-    stakeEntry: [],
-    output: ""
-  };
-}
-var QueryClientsResponse = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator2 = _createForOfIteratorHelper(message.stakeEntry),
-      _step2;
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var v = _step2.value;
-        _stake_entry.StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
-    if (message.output !== "") {
-      writer.uint32(18).string(message.output);
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseQueryClientsResponse();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.stakeEntry.push(_stake_entry.StakeEntry.decode(reader, reader.uint32()));
-          break;
-        case 2:
-          message.output = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      stakeEntry: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeEntry) ? object.stakeEntry.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      output: (0, _helpers.isSet)(object.output) ? String(object.output) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.stakeEntry) {
-      obj.stakeEntry = message.stakeEntry.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.stakeEntry = [];
-    }
-    message.output !== undefined && (obj.output = message.output);
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$stakeEntry2, _object$output2;
-    var message = createBaseQueryClientsResponse();
-    message.stakeEntry = ((_object$stakeEntry2 = object.stakeEntry) === null || _object$stakeEntry2 === void 0 ? void 0 : _object$stakeEntry2.map(function (e) {
-      return _stake_entry.StakeEntry.fromPartial(e);
-    })) || [];
-    message.output = (_object$output2 = object.output) !== null && _object$output2 !== void 0 ? _object$output2 : "";
-    return message;
-  }
-};
-exports.QueryClientsResponse = QueryClientsResponse;
 function createBaseQueryGetPairingRequest() {
   return {
     chainID: "",
@@ -420,9 +295,9 @@ var QueryGetPairingRequest = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$chainID3, _object$client;
+    var _object$chainID2, _object$client;
     var message = createBaseQueryGetPairingRequest();
-    message.chainID = (_object$chainID3 = object.chainID) !== null && _object$chainID3 !== void 0 ? _object$chainID3 : "";
+    message.chainID = (_object$chainID2 = object.chainID) !== null && _object$chainID2 !== void 0 ? _object$chainID2 : "";
     message.client = (_object$client = object.client) !== null && _object$client !== void 0 ? _object$client : "";
     return message;
   }
@@ -440,17 +315,17 @@ function createBaseQueryGetPairingResponse() {
 var QueryGetPairingResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator3 = _createForOfIteratorHelper(message.providers),
-      _step3;
+    var _iterator2 = _createForOfIteratorHelper(message.providers),
+      _step2;
     try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var v = _step3.value;
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var v = _step2.value;
         _stake_entry.StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
       }
     } catch (err) {
-      _iterator3.e(err);
+      _iterator2.e(err);
     } finally {
-      _iterator3.f();
+      _iterator2.f();
     }
     if (!message.currentEpoch.isZero()) {
       writer.uint32(16).uint64(message.currentEpoch);
@@ -603,9 +478,9 @@ var QueryVerifyPairingRequest = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$chainID4, _object$client2, _object$provider;
+    var _object$chainID3, _object$client2, _object$provider;
     var message = createBaseQueryVerifyPairingRequest();
-    message.chainID = (_object$chainID4 = object.chainID) !== null && _object$chainID4 !== void 0 ? _object$chainID4 : "";
+    message.chainID = (_object$chainID3 = object.chainID) !== null && _object$chainID3 !== void 0 ? _object$chainID3 : "";
     message.client = (_object$client2 = object.client) !== null && _object$client2 !== void 0 ? _object$client2 : "";
     message.provider = (_object$provider = object.provider) !== null && _object$provider !== void 0 ? _object$provider : "";
     message.block = object.block !== undefined && object.block !== null ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO;
@@ -832,17 +707,17 @@ function createBaseQueryAllUniquePaymentStorageClientProviderResponse() {
 var QueryAllUniquePaymentStorageClientProviderResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator4 = _createForOfIteratorHelper(message.uniquePaymentStorageClientProvider),
-      _step4;
+    var _iterator3 = _createForOfIteratorHelper(message.uniquePaymentStorageClientProvider),
+      _step3;
     try {
-      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-        var v = _step4.value;
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var v = _step3.value;
         _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.encode(v, writer.uint32(10).fork()).ldelim();
       }
     } catch (err) {
-      _iterator4.e(err);
+      _iterator3.e(err);
     } finally {
-      _iterator4.f();
+      _iterator3.f();
     }
     if (message.pagination !== undefined) {
       _pagination.PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -1051,17 +926,17 @@ function createBaseQueryAllProviderPaymentStorageResponse() {
 var QueryAllProviderPaymentStorageResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator5 = _createForOfIteratorHelper(message.providerPaymentStorage),
-      _step5;
+    var _iterator4 = _createForOfIteratorHelper(message.providerPaymentStorage),
+      _step4;
     try {
-      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-        var v = _step5.value;
+      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+        var v = _step4.value;
         _provider_payment_storage.ProviderPaymentStorage.encode(v, writer.uint32(10).fork()).ldelim();
       }
     } catch (err) {
-      _iterator5.e(err);
+      _iterator4.e(err);
     } finally {
-      _iterator5.f();
+      _iterator4.f();
     }
     if (message.pagination !== undefined) {
       _pagination.PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -1270,17 +1145,17 @@ function createBaseQueryAllEpochPaymentsResponse() {
 var QueryAllEpochPaymentsResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator6 = _createForOfIteratorHelper(message.epochPayments),
-      _step6;
+    var _iterator5 = _createForOfIteratorHelper(message.epochPayments),
+      _step5;
     try {
-      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-        var v = _step6.value;
+      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+        var v = _step5.value;
         _epoch_payments.EpochPayments.encode(v, writer.uint32(10).fork()).ldelim();
       }
     } catch (err) {
-      _iterator6.e(err);
+      _iterator5.e(err);
     } finally {
-      _iterator6.f();
+      _iterator5.f();
     }
     if (message.pagination !== undefined) {
       _pagination.PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -1397,10 +1272,10 @@ var QueryUserEntryRequest = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$address, _object$chainID5;
+    var _object$address, _object$chainID4;
     var message = createBaseQueryUserEntryRequest();
     message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
-    message.chainID = (_object$chainID5 = object.chainID) !== null && _object$chainID5 !== void 0 ? _object$chainID5 : "";
+    message.chainID = (_object$chainID4 = object.chainID) !== null && _object$chainID4 !== void 0 ? _object$chainID4 : "";
     message.block = object.block !== undefined && object.block !== null ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO;
     return message;
   }
@@ -1504,9 +1379,9 @@ var QueryStaticProvidersListRequest = {
     return obj;
   },
   fromPartial: function fromPartial(object) {
-    var _object$chainID6;
+    var _object$chainID5;
     var message = createBaseQueryStaticProvidersListRequest();
-    message.chainID = (_object$chainID6 = object.chainID) !== null && _object$chainID6 !== void 0 ? _object$chainID6 : "";
+    message.chainID = (_object$chainID5 = object.chainID) !== null && _object$chainID5 !== void 0 ? _object$chainID5 : "";
     return message;
   }
 };
@@ -1519,17 +1394,17 @@ function createBaseQueryStaticProvidersListResponse() {
 var QueryStaticProvidersListResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator7 = _createForOfIteratorHelper(message.providers),
-      _step7;
+    var _iterator6 = _createForOfIteratorHelper(message.providers),
+      _step6;
     try {
-      for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-        var v = _step7.value;
+      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+        var v = _step6.value;
         _stake_entry.StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
       }
     } catch (err) {
-      _iterator7.e(err);
+      _iterator6.e(err);
     } finally {
-      _iterator7.f();
+      _iterator6.f();
     }
     return writer;
   },
@@ -1591,53 +1466,53 @@ function createBaseQueryAccountInfoResponse() {
 var QueryAccountInfoResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator8 = _createForOfIteratorHelper(message.provider),
+    var _iterator7 = _createForOfIteratorHelper(message.provider),
+      _step7;
+    try {
+      for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+        var v = _step7.value;
+        _stake_entry.StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
+      }
+    } catch (err) {
+      _iterator7.e(err);
+    } finally {
+      _iterator7.f();
+    }
+    var _iterator8 = _createForOfIteratorHelper(message.frozen),
       _step8;
     try {
       for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-        var v = _step8.value;
-        _stake_entry.StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
+        var _v = _step8.value;
+        _stake_entry.StakeEntry.encode(_v, writer.uint32(18).fork()).ldelim();
       }
     } catch (err) {
       _iterator8.e(err);
     } finally {
       _iterator8.f();
     }
-    var _iterator9 = _createForOfIteratorHelper(message.frozen),
+    var _iterator9 = _createForOfIteratorHelper(message.consumer),
       _step9;
     try {
       for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-        var _v = _step9.value;
-        _stake_entry.StakeEntry.encode(_v, writer.uint32(18).fork()).ldelim();
+        var _v2 = _step9.value;
+        _stake_entry.StakeEntry.encode(_v2, writer.uint32(26).fork()).ldelim();
       }
     } catch (err) {
       _iterator9.e(err);
     } finally {
       _iterator9.f();
     }
-    var _iterator10 = _createForOfIteratorHelper(message.consumer),
+    var _iterator10 = _createForOfIteratorHelper(message.unstaked),
       _step10;
     try {
       for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-        var _v2 = _step10.value;
-        _stake_entry.StakeEntry.encode(_v2, writer.uint32(26).fork()).ldelim();
+        var _v3 = _step10.value;
+        _stake_entry.StakeEntry.encode(_v3, writer.uint32(34).fork()).ldelim();
       }
     } catch (err) {
       _iterator10.e(err);
     } finally {
       _iterator10.f();
-    }
-    var _iterator11 = _createForOfIteratorHelper(message.unstaked),
-      _step11;
-    try {
-      for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-        var _v3 = _step11.value;
-        _stake_entry.StakeEntry.encode(_v3, writer.uint32(34).fork()).ldelim();
-      }
-    } catch (err) {
-      _iterator11.e(err);
-    } finally {
-      _iterator11.f();
     }
     if (message.subscription !== undefined) {
       _subscription.Subscription.encode(message.subscription, writer.uint32(42).fork()).ldelim();

@@ -4,7 +4,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MsgBuyResponse = exports.MsgBuy = exports.MsgAddProjectResponse = exports.MsgAddProject = void 0;
+exports.MsgDelProjectResponse = exports.MsgDelProject = exports.MsgBuyResponse = exports.MsgBuy = exports.MsgAddProjectResponse = exports.MsgAddProject = void 0;
 var _project = require("../projects/project");
 var _helpers = require("../helpers");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
@@ -216,3 +216,96 @@ var MsgAddProjectResponse = {
   }
 };
 exports.MsgAddProjectResponse = MsgAddProjectResponse;
+function createBaseMsgDelProject() {
+  return {
+    creator: "",
+    name: ""
+  };
+}
+var MsgDelProject = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseMsgDelProject();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(object) {
+    return {
+      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
+      name: (0, _helpers.isSet)(object.name) ? String(object.name) : ""
+    };
+  },
+  toJSON: function toJSON(message) {
+    var obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.name !== undefined && (obj.name = message.name);
+    return obj;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$creator3, _object$name;
+    var message = createBaseMsgDelProject();
+    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
+    message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
+    return message;
+  }
+};
+exports.MsgDelProject = MsgDelProject;
+function createBaseMsgDelProjectResponse() {
+  return {};
+}
+var MsgDelProjectResponse = {
+  encode: function encode(_) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseMsgDelProjectResponse();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON: function fromJSON(_) {
+    return {};
+  },
+  toJSON: function toJSON(_) {
+    var obj = {};
+    return obj;
+  },
+  fromPartial: function fromPartial(_) {
+    var message = createBaseMsgDelProjectResponse();
+    return message;
+  }
+};
+exports.MsgDelProjectResponse = MsgDelProjectResponse;

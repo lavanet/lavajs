@@ -199,3 +199,92 @@ export const MsgAddProjectResponse = {
     return message;
   }
 };
+function createBaseMsgDelProject() {
+  return {
+    creator: "",
+    name: ""
+  };
+}
+export const MsgDelProject = {
+  encode(message, writer = _m0.Writer.create()) {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelProject();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object) {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      name: isSet(object.name) ? String(object.name) : ""
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.name !== undefined && (obj.name = message.name);
+    return obj;
+  },
+  fromPartial(object) {
+    var _object$creator3, _object$name;
+    const message = createBaseMsgDelProject();
+    message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
+    message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
+    return message;
+  }
+};
+function createBaseMsgDelProjectResponse() {
+  return {};
+}
+export const MsgDelProjectResponse = {
+  encode(_, writer = _m0.Writer.create()) {
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelProjectResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(_) {
+    return {};
+  },
+  toJSON(_) {
+    const obj = {};
+    return obj;
+  },
+  fromPartial(_) {
+    const message = createBaseMsgDelProjectResponse();
+    return message;
+  }
+};

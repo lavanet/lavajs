@@ -9,7 +9,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 var _tx = require("./tx");
 //@ts-nocheck
 
-var registry = [["/lavanet.lava.pairing.MsgStakeProvider", _tx.MsgStakeProvider], ["/lavanet.lava.pairing.MsgStakeClient", _tx.MsgStakeClient], ["/lavanet.lava.pairing.MsgUnstakeProvider", _tx.MsgUnstakeProvider], ["/lavanet.lava.pairing.MsgUnstakeClient", _tx.MsgUnstakeClient], ["/lavanet.lava.pairing.MsgRelayPayment", _tx.MsgRelayPayment], ["/lavanet.lava.pairing.MsgFreezeProvider", _tx.MsgFreezeProvider], ["/lavanet.lava.pairing.MsgUnfreezeProvider", _tx.MsgUnfreezeProvider]];
+var registry = [["/lavanet.lava.pairing.MsgStakeProvider", _tx.MsgStakeProvider], ["/lavanet.lava.pairing.MsgUnstakeProvider", _tx.MsgUnstakeProvider], ["/lavanet.lava.pairing.MsgRelayPayment", _tx.MsgRelayPayment], ["/lavanet.lava.pairing.MsgFreezeProvider", _tx.MsgFreezeProvider], ["/lavanet.lava.pairing.MsgUnfreezeProvider", _tx.MsgUnfreezeProvider]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
   registry.forEach(function (_ref) {
@@ -28,22 +28,10 @@ var MessageComposer = {
         value: _tx.MsgStakeProvider.encode(value).finish()
       };
     },
-    stakeClient: function stakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: _tx.MsgStakeClient.encode(value).finish()
-      };
-    },
     unstakeProvider: function unstakeProvider(value) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: _tx.MsgUnstakeProvider.encode(value).finish()
-      };
-    },
-    unstakeClient: function unstakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: _tx.MsgUnstakeClient.encode(value).finish()
       };
     },
     relayPayment: function relayPayment(value) {
@@ -72,21 +60,9 @@ var MessageComposer = {
         value: value
       };
     },
-    stakeClient: function stakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: value
-      };
-    },
     unstakeProvider: function unstakeProvider(value) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
-        value: value
-      };
-    },
-    unstakeClient: function unstakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
         value: value
       };
     },
@@ -116,22 +92,10 @@ var MessageComposer = {
         value: _tx.MsgStakeProvider.toJSON(value)
       };
     },
-    stakeClient: function stakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: _tx.MsgStakeClient.toJSON(value)
-      };
-    },
     unstakeProvider: function unstakeProvider(value) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: _tx.MsgUnstakeProvider.toJSON(value)
-      };
-    },
-    unstakeClient: function unstakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: _tx.MsgUnstakeClient.toJSON(value)
       };
     },
     relayPayment: function relayPayment(value) {
@@ -160,22 +124,10 @@ var MessageComposer = {
         value: _tx.MsgStakeProvider.fromJSON(value)
       };
     },
-    stakeClient: function stakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: _tx.MsgStakeClient.fromJSON(value)
-      };
-    },
     unstakeProvider: function unstakeProvider(value) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: _tx.MsgUnstakeProvider.fromJSON(value)
-      };
-    },
-    unstakeClient: function unstakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: _tx.MsgUnstakeClient.fromJSON(value)
       };
     },
     relayPayment: function relayPayment(value) {
@@ -204,22 +156,10 @@ var MessageComposer = {
         value: _tx.MsgStakeProvider.fromPartial(value)
       };
     },
-    stakeClient: function stakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: _tx.MsgStakeClient.fromPartial(value)
-      };
-    },
     unstakeProvider: function unstakeProvider(value) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: _tx.MsgUnstakeProvider.fromPartial(value)
-      };
-    },
-    unstakeClient: function unstakeClient(value) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: _tx.MsgUnstakeClient.fromPartial(value)
       };
     },
     relayPayment: function relayPayment(value) {

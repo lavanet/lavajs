@@ -61,71 +61,19 @@ var AminoConverter = {
       };
     }
   },
-  "/lavanet.lava.pairing.MsgStakeClient": {
-    aminoType: "/lavanet.lava.pairing.MsgStakeClient",
+  "/lavanet.lava.pairing.MsgUnstakeProvider": {
+    aminoType: "/lavanet.lava.pairing.MsgUnstakeProvider",
     toAmino: function toAmino(_ref3) {
       var creator = _ref3.creator,
-        chainID = _ref3.chainID,
-        amount = _ref3.amount,
-        geolocation = _ref3.geolocation;
+        chainID = _ref3.chainID;
       return {
         creator: creator,
-        chainID: chainID,
-        amount: {
-          denom: amount.denom,
-          amount: _helpers.Long.fromValue(amount.amount).toString()
-        },
-        geolocation: geolocation.toString()
+        chainID: chainID
       };
     },
     fromAmino: function fromAmino(_ref4) {
       var creator = _ref4.creator,
-        chainID = _ref4.chainID,
-        amount = _ref4.amount,
-        geolocation = _ref4.geolocation;
-      return {
-        creator: creator,
-        chainID: chainID,
-        amount: {
-          denom: amount.denom,
-          amount: amount.amount
-        },
-        geolocation: _helpers.Long.fromString(geolocation)
-      };
-    }
-  },
-  "/lavanet.lava.pairing.MsgUnstakeProvider": {
-    aminoType: "/lavanet.lava.pairing.MsgUnstakeProvider",
-    toAmino: function toAmino(_ref5) {
-      var creator = _ref5.creator,
-        chainID = _ref5.chainID;
-      return {
-        creator: creator,
-        chainID: chainID
-      };
-    },
-    fromAmino: function fromAmino(_ref6) {
-      var creator = _ref6.creator,
-        chainID = _ref6.chainID;
-      return {
-        creator: creator,
-        chainID: chainID
-      };
-    }
-  },
-  "/lavanet.lava.pairing.MsgUnstakeClient": {
-    aminoType: "/lavanet.lava.pairing.MsgUnstakeClient",
-    toAmino: function toAmino(_ref7) {
-      var creator = _ref7.creator,
-        chainID = _ref7.chainID;
-      return {
-        creator: creator,
-        chainID: chainID
-      };
-    },
-    fromAmino: function fromAmino(_ref8) {
-      var creator = _ref8.creator,
-        chainID = _ref8.chainID;
+        chainID = _ref4.chainID;
       return {
         creator: creator,
         chainID: chainID
@@ -134,10 +82,10 @@ var AminoConverter = {
   },
   "/lavanet.lava.pairing.MsgRelayPayment": {
     aminoType: "/lavanet.lava.pairing.MsgRelayPayment",
-    toAmino: function toAmino(_ref9) {
-      var creator = _ref9.creator,
-        relays = _ref9.relays,
-        descriptionString = _ref9.descriptionString;
+    toAmino: function toAmino(_ref5) {
+      var creator = _ref5.creator,
+        relays = _ref5.relays,
+        descriptionString = _ref5.descriptionString;
       return {
         creator: creator,
         relays: relays.map(function (el0) {
@@ -169,10 +117,10 @@ var AminoConverter = {
         descriptionString: descriptionString
       };
     },
-    fromAmino: function fromAmino(_ref10) {
-      var creator = _ref10.creator,
-        relays = _ref10.relays,
-        descriptionString = _ref10.descriptionString;
+    fromAmino: function fromAmino(_ref6) {
+      var creator = _ref6.creator,
+        relays = _ref6.relays,
+        descriptionString = _ref6.descriptionString;
       return {
         creator: creator,
         relays: relays.map(function (el0) {
@@ -207,20 +155,20 @@ var AminoConverter = {
   },
   "/lavanet.lava.pairing.MsgFreezeProvider": {
     aminoType: "/lavanet.lava.pairing.MsgFreezeProvider",
-    toAmino: function toAmino(_ref11) {
-      var creator = _ref11.creator,
-        chainIds = _ref11.chainIds,
-        reason = _ref11.reason;
+    toAmino: function toAmino(_ref7) {
+      var creator = _ref7.creator,
+        chainIds = _ref7.chainIds,
+        reason = _ref7.reason;
       return {
         creator: creator,
         chainIds: chainIds,
         reason: reason
       };
     },
-    fromAmino: function fromAmino(_ref12) {
-      var creator = _ref12.creator,
-        chainIds = _ref12.chainIds,
-        reason = _ref12.reason;
+    fromAmino: function fromAmino(_ref8) {
+      var creator = _ref8.creator,
+        chainIds = _ref8.chainIds,
+        reason = _ref8.reason;
       return {
         creator: creator,
         chainIds: chainIds,
@@ -230,17 +178,17 @@ var AminoConverter = {
   },
   "/lavanet.lava.pairing.MsgUnfreezeProvider": {
     aminoType: "/lavanet.lava.pairing.MsgUnfreezeProvider",
-    toAmino: function toAmino(_ref13) {
-      var creator = _ref13.creator,
-        chainIds = _ref13.chainIds;
+    toAmino: function toAmino(_ref9) {
+      var creator = _ref9.creator,
+        chainIds = _ref9.chainIds;
       return {
         creator: creator,
         chainIds: chainIds
       };
     },
-    fromAmino: function fromAmino(_ref14) {
-      var creator = _ref14.creator,
-        chainIds = _ref14.chainIds;
+    fromAmino: function fromAmino(_ref10) {
+      var creator = _ref10.creator,
+        chainIds = _ref10.chainIds;
       return {
         creator: creator,
         chainIds: chainIds

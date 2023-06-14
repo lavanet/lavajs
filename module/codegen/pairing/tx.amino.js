@@ -53,64 +53,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/lavanet.lava.pairing.MsgStakeClient": {
-    aminoType: "/lavanet.lava.pairing.MsgStakeClient",
-    toAmino: ({
-      creator,
-      chainID,
-      amount,
-      geolocation
-    }) => {
-      return {
-        creator,
-        chainID,
-        amount: {
-          denom: amount.denom,
-          amount: Long.fromValue(amount.amount).toString()
-        },
-        geolocation: geolocation.toString()
-      };
-    },
-    fromAmino: ({
-      creator,
-      chainID,
-      amount,
-      geolocation
-    }) => {
-      return {
-        creator,
-        chainID,
-        amount: {
-          denom: amount.denom,
-          amount: amount.amount
-        },
-        geolocation: Long.fromString(geolocation)
-      };
-    }
-  },
   "/lavanet.lava.pairing.MsgUnstakeProvider": {
     aminoType: "/lavanet.lava.pairing.MsgUnstakeProvider",
-    toAmino: ({
-      creator,
-      chainID
-    }) => {
-      return {
-        creator,
-        chainID
-      };
-    },
-    fromAmino: ({
-      creator,
-      chainID
-    }) => {
-      return {
-        creator,
-        chainID
-      };
-    }
-  },
-  "/lavanet.lava.pairing.MsgUnstakeClient": {
-    aminoType: "/lavanet.lava.pairing.MsgUnstakeClient",
     toAmino: ({
       creator,
       chainID

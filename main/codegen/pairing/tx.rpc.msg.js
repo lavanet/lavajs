@@ -20,9 +20,7 @@ var MsgClientImpl = /*#__PURE__*/function () {
     (0, _defineProperty2["default"])(this, "rpc", void 0);
     this.rpc = rpc;
     this.stakeProvider = this.stakeProvider.bind(this);
-    this.stakeClient = this.stakeClient.bind(this);
     this.unstakeProvider = this.unstakeProvider.bind(this);
-    this.unstakeClient = this.unstakeClient.bind(this);
     this.relayPayment = this.relayPayment.bind(this);
     this.freezeProvider = this.freezeProvider.bind(this);
     this.unfreezeProvider = this.unfreezeProvider.bind(this);
@@ -37,30 +35,12 @@ var MsgClientImpl = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "stakeClient",
-    value: function stakeClient(request) {
-      var data = _tx.MsgStakeClient.encode(request).finish();
-      var promise = this.rpc.request("lavanet.lava.pairing.Msg", "StakeClient", data);
-      return promise.then(function (data) {
-        return _tx.MsgStakeClientResponse.decode(new _m0.Reader(data));
-      });
-    }
-  }, {
     key: "unstakeProvider",
     value: function unstakeProvider(request) {
       var data = _tx.MsgUnstakeProvider.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Msg", "UnstakeProvider", data);
       return promise.then(function (data) {
         return _tx.MsgUnstakeProviderResponse.decode(new _m0.Reader(data));
-      });
-    }
-  }, {
-    key: "unstakeClient",
-    value: function unstakeClient(request) {
-      var data = _tx.MsgUnstakeClient.encode(request).finish();
-      var promise = this.rpc.request("lavanet.lava.pairing.Msg", "UnstakeClient", data);
-      return promise.then(function (data) {
-        return _tx.MsgUnstakeClientResponse.decode(new _m0.Reader(data));
       });
     }
   }, {

@@ -7,12 +7,9 @@ import * as _m0 from "protobufjs/minimal";
 function createBaseParams() {
   return {
     mintCoinsPerCU: "",
-    burnCoinsPerCU: "",
     fraudStakeSlashingFactor: "",
     fraudSlashingAmount: Long.UZERO,
-    servicersToPairCount: Long.UZERO,
     epochBlocksOverlap: Long.UZERO,
-    stakeToMaxCUList: "",
     unpayLimit: "",
     slashLimit: "",
     dataReliabilityReward: "",
@@ -25,23 +22,14 @@ export const Params = {
     if (message.mintCoinsPerCU !== "") {
       writer.uint32(26).string(message.mintCoinsPerCU);
     }
-    if (message.burnCoinsPerCU !== "") {
-      writer.uint32(34).string(message.burnCoinsPerCU);
-    }
     if (message.fraudStakeSlashingFactor !== "") {
       writer.uint32(42).string(message.fraudStakeSlashingFactor);
     }
     if (!message.fraudSlashingAmount.isZero()) {
       writer.uint32(48).uint64(message.fraudSlashingAmount);
     }
-    if (!message.servicersToPairCount.isZero()) {
-      writer.uint32(56).uint64(message.servicersToPairCount);
-    }
     if (!message.epochBlocksOverlap.isZero()) {
       writer.uint32(64).uint64(message.epochBlocksOverlap);
-    }
-    if (message.stakeToMaxCUList !== "") {
-      writer.uint32(74).string(message.stakeToMaxCUList);
     }
     if (message.unpayLimit !== "") {
       writer.uint32(82).string(message.unpayLimit);
@@ -70,23 +58,14 @@ export const Params = {
         case 3:
           message.mintCoinsPerCU = reader.string();
           break;
-        case 4:
-          message.burnCoinsPerCU = reader.string();
-          break;
         case 5:
           message.fraudStakeSlashingFactor = reader.string();
           break;
         case 6:
           message.fraudSlashingAmount = reader.uint64();
           break;
-        case 7:
-          message.servicersToPairCount = reader.uint64();
-          break;
         case 8:
           message.epochBlocksOverlap = reader.uint64();
-          break;
-        case 9:
-          message.stakeToMaxCUList = reader.string();
           break;
         case 10:
           message.unpayLimit = reader.string();
@@ -113,12 +92,9 @@ export const Params = {
   fromJSON(object) {
     return {
       mintCoinsPerCU: isSet(object.mintCoinsPerCU) ? String(object.mintCoinsPerCU) : "",
-      burnCoinsPerCU: isSet(object.burnCoinsPerCU) ? String(object.burnCoinsPerCU) : "",
       fraudStakeSlashingFactor: isSet(object.fraudStakeSlashingFactor) ? String(object.fraudStakeSlashingFactor) : "",
       fraudSlashingAmount: isSet(object.fraudSlashingAmount) ? Long.fromValue(object.fraudSlashingAmount) : Long.UZERO,
-      servicersToPairCount: isSet(object.servicersToPairCount) ? Long.fromValue(object.servicersToPairCount) : Long.UZERO,
       epochBlocksOverlap: isSet(object.epochBlocksOverlap) ? Long.fromValue(object.epochBlocksOverlap) : Long.UZERO,
-      stakeToMaxCUList: isSet(object.stakeToMaxCUList) ? String(object.stakeToMaxCUList) : "",
       unpayLimit: isSet(object.unpayLimit) ? String(object.unpayLimit) : "",
       slashLimit: isSet(object.slashLimit) ? String(object.slashLimit) : "",
       dataReliabilityReward: isSet(object.dataReliabilityReward) ? String(object.dataReliabilityReward) : "",
@@ -129,12 +105,9 @@ export const Params = {
   toJSON(message) {
     const obj = {};
     message.mintCoinsPerCU !== undefined && (obj.mintCoinsPerCU = message.mintCoinsPerCU);
-    message.burnCoinsPerCU !== undefined && (obj.burnCoinsPerCU = message.burnCoinsPerCU);
     message.fraudStakeSlashingFactor !== undefined && (obj.fraudStakeSlashingFactor = message.fraudStakeSlashingFactor);
     message.fraudSlashingAmount !== undefined && (obj.fraudSlashingAmount = (message.fraudSlashingAmount || Long.UZERO).toString());
-    message.servicersToPairCount !== undefined && (obj.servicersToPairCount = (message.servicersToPairCount || Long.UZERO).toString());
     message.epochBlocksOverlap !== undefined && (obj.epochBlocksOverlap = (message.epochBlocksOverlap || Long.UZERO).toString());
-    message.stakeToMaxCUList !== undefined && (obj.stakeToMaxCUList = message.stakeToMaxCUList);
     message.unpayLimit !== undefined && (obj.unpayLimit = message.unpayLimit);
     message.slashLimit !== undefined && (obj.slashLimit = message.slashLimit);
     message.dataReliabilityReward !== undefined && (obj.dataReliabilityReward = message.dataReliabilityReward);
@@ -143,15 +116,12 @@ export const Params = {
     return obj;
   },
   fromPartial(object) {
-    var _object$mintCoinsPerC, _object$burnCoinsPerC, _object$fraudStakeSla, _object$stakeToMaxCUL, _object$unpayLimit, _object$slashLimit, _object$dataReliabili, _object$QoSWeight;
+    var _object$mintCoinsPerC, _object$fraudStakeSla, _object$unpayLimit, _object$slashLimit, _object$dataReliabili, _object$QoSWeight;
     const message = createBaseParams();
     message.mintCoinsPerCU = (_object$mintCoinsPerC = object.mintCoinsPerCU) !== null && _object$mintCoinsPerC !== void 0 ? _object$mintCoinsPerC : "";
-    message.burnCoinsPerCU = (_object$burnCoinsPerC = object.burnCoinsPerCU) !== null && _object$burnCoinsPerC !== void 0 ? _object$burnCoinsPerC : "";
     message.fraudStakeSlashingFactor = (_object$fraudStakeSla = object.fraudStakeSlashingFactor) !== null && _object$fraudStakeSla !== void 0 ? _object$fraudStakeSla : "";
     message.fraudSlashingAmount = object.fraudSlashingAmount !== undefined && object.fraudSlashingAmount !== null ? Long.fromValue(object.fraudSlashingAmount) : Long.UZERO;
-    message.servicersToPairCount = object.servicersToPairCount !== undefined && object.servicersToPairCount !== null ? Long.fromValue(object.servicersToPairCount) : Long.UZERO;
     message.epochBlocksOverlap = object.epochBlocksOverlap !== undefined && object.epochBlocksOverlap !== null ? Long.fromValue(object.epochBlocksOverlap) : Long.UZERO;
-    message.stakeToMaxCUList = (_object$stakeToMaxCUL = object.stakeToMaxCUList) !== null && _object$stakeToMaxCUL !== void 0 ? _object$stakeToMaxCUL : "";
     message.unpayLimit = (_object$unpayLimit = object.unpayLimit) !== null && _object$unpayLimit !== void 0 ? _object$unpayLimit : "";
     message.slashLimit = (_object$slashLimit = object.slashLimit) !== null && _object$slashLimit !== void 0 ? _object$slashLimit : "";
     message.dataReliabilityReward = (_object$dataReliabili = object.dataReliabilityReward) !== null && _object$dataReliabili !== void 0 ? _object$dataReliabili : "";

@@ -210,112 +210,6 @@ export const QueryProvidersResponse = {
     return message;
   }
 };
-function createBaseQueryClientsRequest() {
-  return {
-    chainID: ""
-  };
-}
-export const QueryClientsRequest = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (message.chainID !== "") {
-      writer.uint32(10).string(message.chainID);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryClientsRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.chainID = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      chainID: isSet(object.chainID) ? String(object.chainID) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    return obj;
-  },
-  fromPartial(object) {
-    var _object$chainID2;
-    const message = createBaseQueryClientsRequest();
-    message.chainID = (_object$chainID2 = object.chainID) !== null && _object$chainID2 !== void 0 ? _object$chainID2 : "";
-    return message;
-  }
-};
-function createBaseQueryClientsResponse() {
-  return {
-    stakeEntry: [],
-    output: ""
-  };
-}
-export const QueryClientsResponse = {
-  encode(message, writer = _m0.Writer.create()) {
-    for (const v of message.stakeEntry) {
-      StakeEntry.encode(v, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.output !== "") {
-      writer.uint32(18).string(message.output);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryClientsResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.stakeEntry.push(StakeEntry.decode(reader, reader.uint32()));
-          break;
-        case 2:
-          message.output = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      stakeEntry: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeEntry) ? object.stakeEntry.map(e => StakeEntry.fromJSON(e)) : [],
-      output: isSet(object.output) ? String(object.output) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.stakeEntry) {
-      obj.stakeEntry = message.stakeEntry.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.stakeEntry = [];
-    }
-    message.output !== undefined && (obj.output = message.output);
-    return obj;
-  },
-  fromPartial(object) {
-    var _object$stakeEntry2, _object$output2;
-    const message = createBaseQueryClientsResponse();
-    message.stakeEntry = ((_object$stakeEntry2 = object.stakeEntry) === null || _object$stakeEntry2 === void 0 ? void 0 : _object$stakeEntry2.map(e => StakeEntry.fromPartial(e))) || [];
-    message.output = (_object$output2 = object.output) !== null && _object$output2 !== void 0 ? _object$output2 : "";
-    return message;
-  }
-};
 function createBaseQueryGetPairingRequest() {
   return {
     chainID: "",
@@ -365,9 +259,9 @@ export const QueryGetPairingRequest = {
     return obj;
   },
   fromPartial(object) {
-    var _object$chainID3, _object$client;
+    var _object$chainID2, _object$client;
     const message = createBaseQueryGetPairingRequest();
-    message.chainID = (_object$chainID3 = object.chainID) !== null && _object$chainID3 !== void 0 ? _object$chainID3 : "";
+    message.chainID = (_object$chainID2 = object.chainID) !== null && _object$chainID2 !== void 0 ? _object$chainID2 : "";
     message.client = (_object$client = object.client) !== null && _object$client !== void 0 ? _object$client : "";
     return message;
   }
@@ -529,9 +423,9 @@ export const QueryVerifyPairingRequest = {
     return obj;
   },
   fromPartial(object) {
-    var _object$chainID4, _object$client2, _object$provider;
+    var _object$chainID3, _object$client2, _object$provider;
     const message = createBaseQueryVerifyPairingRequest();
-    message.chainID = (_object$chainID4 = object.chainID) !== null && _object$chainID4 !== void 0 ? _object$chainID4 : "";
+    message.chainID = (_object$chainID3 = object.chainID) !== null && _object$chainID3 !== void 0 ? _object$chainID3 : "";
     message.client = (_object$client2 = object.client) !== null && _object$client2 !== void 0 ? _object$client2 : "";
     message.provider = (_object$provider = object.provider) !== null && _object$provider !== void 0 ? _object$provider : "";
     message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
@@ -1250,10 +1144,10 @@ export const QueryUserEntryRequest = {
     return obj;
   },
   fromPartial(object) {
-    var _object$address, _object$chainID5;
+    var _object$address, _object$chainID4;
     const message = createBaseQueryUserEntryRequest();
     message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
-    message.chainID = (_object$chainID5 = object.chainID) !== null && _object$chainID5 !== void 0 ? _object$chainID5 : "";
+    message.chainID = (_object$chainID4 = object.chainID) !== null && _object$chainID4 !== void 0 ? _object$chainID4 : "";
     message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
     return message;
   }
@@ -1353,9 +1247,9 @@ export const QueryStaticProvidersListRequest = {
     return obj;
   },
   fromPartial(object) {
-    var _object$chainID6;
+    var _object$chainID5;
     const message = createBaseQueryStaticProvidersListRequest();
-    message.chainID = (_object$chainID6 = object.chainID) !== null && _object$chainID6 !== void 0 ? _object$chainID6 : "";
+    message.chainID = (_object$chainID5 = object.chainID) !== null && _object$chainID5 !== void 0 ? _object$chainID5 : "";
     return message;
   }
 };

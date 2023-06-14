@@ -9,7 +9,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 var _tx = require("./tx");
 //@ts-nocheck
 
-var registry = [["/lavanet.lava.subscription.MsgBuy", _tx.MsgBuy], ["/lavanet.lava.subscription.MsgAddProject", _tx.MsgAddProject]];
+var registry = [["/lavanet.lava.subscription.MsgBuy", _tx.MsgBuy], ["/lavanet.lava.subscription.MsgAddProject", _tx.MsgAddProject], ["/lavanet.lava.subscription.MsgDelProject", _tx.MsgDelProject]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
   registry.forEach(function (_ref) {
@@ -33,6 +33,12 @@ var MessageComposer = {
         typeUrl: "/lavanet.lava.subscription.MsgAddProject",
         value: _tx.MsgAddProject.encode(value).finish()
       };
+    },
+    delProject: function delProject(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgDelProject",
+        value: _tx.MsgDelProject.encode(value).finish()
+      };
     }
   },
   withTypeUrl: {
@@ -45,6 +51,12 @@ var MessageComposer = {
     addProject: function addProject(value) {
       return {
         typeUrl: "/lavanet.lava.subscription.MsgAddProject",
+        value: value
+      };
+    },
+    delProject: function delProject(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgDelProject",
         value: value
       };
     }
@@ -61,6 +73,12 @@ var MessageComposer = {
         typeUrl: "/lavanet.lava.subscription.MsgAddProject",
         value: _tx.MsgAddProject.toJSON(value)
       };
+    },
+    delProject: function delProject(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgDelProject",
+        value: _tx.MsgDelProject.toJSON(value)
+      };
     }
   },
   fromJSON: {
@@ -75,6 +93,12 @@ var MessageComposer = {
         typeUrl: "/lavanet.lava.subscription.MsgAddProject",
         value: _tx.MsgAddProject.fromJSON(value)
       };
+    },
+    delProject: function delProject(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgDelProject",
+        value: _tx.MsgDelProject.fromJSON(value)
+      };
     }
   },
   fromPartial: {
@@ -88,6 +112,12 @@ var MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.subscription.MsgAddProject",
         value: _tx.MsgAddProject.fromPartial(value)
+      };
+    },
+    delProject: function delProject(value) {
+      return {
+        typeUrl: "/lavanet.lava.subscription.MsgDelProject",
+        value: _tx.MsgDelProject.fromPartial(value)
       };
     }
   }

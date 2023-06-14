@@ -21,6 +21,7 @@ var MsgClientImpl = /*#__PURE__*/function () {
     this.rpc = rpc;
     this.buy = this.buy.bind(this);
     this.addProject = this.addProject.bind(this);
+    this.delProject = this.delProject.bind(this);
   }
   (0, _createClass2["default"])(MsgClientImpl, [{
     key: "buy",
@@ -38,6 +39,15 @@ var MsgClientImpl = /*#__PURE__*/function () {
       var promise = this.rpc.request("lavanet.lava.subscription.Msg", "AddProject", data);
       return promise.then(function (data) {
         return _tx.MsgAddProjectResponse.decode(new _m0.Reader(data));
+      });
+    }
+  }, {
+    key: "delProject",
+    value: function delProject(request) {
+      var data = _tx.MsgDelProject.encode(request).finish();
+      var promise = this.rpc.request("lavanet.lava.subscription.Msg", "DelProject", data);
+      return promise.then(function (data) {
+        return _tx.MsgDelProjectResponse.decode(new _m0.Reader(data));
       });
     }
   }]);
