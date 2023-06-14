@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
-import { MsgStakeProvider, MsgStakeClient, MsgUnstakeProvider, MsgUnstakeClient, MsgRelayPayment, MsgFreezeProvider, MsgUnfreezeProvider } from "./tx";
+import { MsgStakeProvider, MsgUnstakeProvider, MsgRelayPayment, MsgFreezeProvider, MsgUnfreezeProvider } from "./tx";
 export interface MsgStakeProviderAminoType extends AminoMsg {
   type: "/lavanet.lava.pairing.MsgStakeProvider";
   value: {
@@ -20,27 +20,8 @@ export interface MsgStakeProviderAminoType extends AminoMsg {
     moniker: string;
   };
 }
-export interface MsgStakeClientAminoType extends AminoMsg {
-  type: "/lavanet.lava.pairing.MsgStakeClient";
-  value: {
-    creator: string;
-    chainID: string;
-    amount: {
-      denom: string;
-      amount: string;
-    };
-    geolocation: string;
-  };
-}
 export interface MsgUnstakeProviderAminoType extends AminoMsg {
   type: "/lavanet.lava.pairing.MsgUnstakeProvider";
-  value: {
-    creator: string;
-    chainID: string;
-  };
-}
-export interface MsgUnstakeClientAminoType extends AminoMsg {
-  type: "/lavanet.lava.pairing.MsgUnstakeClient";
   value: {
     creator: string;
     chainID: string;
@@ -144,41 +125,6 @@ export const AminoConverter = {
       };
     }
   },
-  "/lavanet.lava.pairing.MsgStakeClient": {
-    aminoType: "/lavanet.lava.pairing.MsgStakeClient",
-    toAmino: ({
-      creator,
-      chainID,
-      amount,
-      geolocation
-    }: MsgStakeClient): MsgStakeClientAminoType["value"] => {
-      return {
-        creator,
-        chainID,
-        amount: {
-          denom: amount.denom,
-          amount: Long.fromValue(amount.amount).toString()
-        },
-        geolocation: geolocation.toString()
-      };
-    },
-    fromAmino: ({
-      creator,
-      chainID,
-      amount,
-      geolocation
-    }: MsgStakeClientAminoType["value"]): MsgStakeClient => {
-      return {
-        creator,
-        chainID,
-        amount: {
-          denom: amount.denom,
-          amount: amount.amount
-        },
-        geolocation: Long.fromString(geolocation)
-      };
-    }
-  },
   "/lavanet.lava.pairing.MsgUnstakeProvider": {
     aminoType: "/lavanet.lava.pairing.MsgUnstakeProvider",
     toAmino: ({
@@ -194,27 +140,6 @@ export const AminoConverter = {
       creator,
       chainID
     }: MsgUnstakeProviderAminoType["value"]): MsgUnstakeProvider => {
-      return {
-        creator,
-        chainID
-      };
-    }
-  },
-  "/lavanet.lava.pairing.MsgUnstakeClient": {
-    aminoType: "/lavanet.lava.pairing.MsgUnstakeClient",
-    toAmino: ({
-      creator,
-      chainID
-    }: MsgUnstakeClient): MsgUnstakeClientAminoType["value"] => {
-      return {
-        creator,
-        chainID
-      };
-    },
-    fromAmino: ({
-      creator,
-      chainID
-    }: MsgUnstakeClientAminoType["value"]): MsgUnstakeClient => {
       return {
         creator,
         chainID

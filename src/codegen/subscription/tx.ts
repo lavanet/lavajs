@@ -26,6 +26,16 @@ export interface MsgAddProjectSDKType {
 }
 export interface MsgAddProjectResponse {}
 export interface MsgAddProjectResponseSDKType {}
+export interface MsgDelProject {
+  creator: string;
+  name: string;
+}
+export interface MsgDelProjectSDKType {
+  creator: string;
+  name: string;
+}
+export interface MsgDelProjectResponse {}
+export interface MsgDelProjectResponseSDKType {}
 function createBaseMsgBuy(): MsgBuy {
   return {
     creator: "",
@@ -219,6 +229,94 @@ export const MsgAddProjectResponse = {
   },
   fromPartial(_: Partial<MsgAddProjectResponse>): MsgAddProjectResponse {
     const message = createBaseMsgAddProjectResponse();
+    return message;
+  }
+};
+function createBaseMsgDelProject(): MsgDelProject {
+  return {
+    creator: "",
+    name: ""
+  };
+}
+export const MsgDelProject = {
+  encode(message: MsgDelProject, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDelProject {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelProject();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): MsgDelProject {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      name: isSet(object.name) ? String(object.name) : ""
+    };
+  },
+  toJSON(message: MsgDelProject): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.name !== undefined && (obj.name = message.name);
+    return obj;
+  },
+  fromPartial(object: Partial<MsgDelProject>): MsgDelProject {
+    const message = createBaseMsgDelProject();
+    message.creator = object.creator ?? "";
+    message.name = object.name ?? "";
+    return message;
+  }
+};
+function createBaseMsgDelProjectResponse(): MsgDelProjectResponse {
+  return {};
+}
+export const MsgDelProjectResponse = {
+  encode(_: MsgDelProjectResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgDelProjectResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgDelProjectResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(_: any): MsgDelProjectResponse {
+    return {};
+  },
+  toJSON(_: MsgDelProjectResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+  fromPartial(_: Partial<MsgDelProjectResponse>): MsgDelProjectResponse {
+    const message = createBaseMsgDelProjectResponse();
     return message;
   }
 };

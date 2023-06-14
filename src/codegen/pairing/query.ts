@@ -37,20 +37,6 @@ export interface QueryProvidersResponseSDKType {
   stakeEntry: StakeEntrySDKType[];
   output: string;
 }
-export interface QueryClientsRequest {
-  chainID: string;
-}
-export interface QueryClientsRequestSDKType {
-  chainID: string;
-}
-export interface QueryClientsResponse {
-  stakeEntry: StakeEntry[];
-  output: string;
-}
-export interface QueryClientsResponseSDKType {
-  stakeEntry: StakeEntrySDKType[];
-  output: string;
-}
 export interface QueryGetPairingRequest {
   chainID: string;
   client: string;
@@ -406,110 +392,6 @@ export const QueryProvidersResponse = {
   },
   fromPartial(object: Partial<QueryProvidersResponse>): QueryProvidersResponse {
     const message = createBaseQueryProvidersResponse();
-    message.stakeEntry = object.stakeEntry?.map(e => StakeEntry.fromPartial(e)) || [];
-    message.output = object.output ?? "";
-    return message;
-  }
-};
-function createBaseQueryClientsRequest(): QueryClientsRequest {
-  return {
-    chainID: ""
-  };
-}
-export const QueryClientsRequest = {
-  encode(message: QueryClientsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.chainID !== "") {
-      writer.uint32(10).string(message.chainID);
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryClientsRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.chainID = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object: any): QueryClientsRequest {
-    return {
-      chainID: isSet(object.chainID) ? String(object.chainID) : ""
-    };
-  },
-  toJSON(message: QueryClientsRequest): unknown {
-    const obj: any = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    return obj;
-  },
-  fromPartial(object: Partial<QueryClientsRequest>): QueryClientsRequest {
-    const message = createBaseQueryClientsRequest();
-    message.chainID = object.chainID ?? "";
-    return message;
-  }
-};
-function createBaseQueryClientsResponse(): QueryClientsResponse {
-  return {
-    stakeEntry: [],
-    output: ""
-  };
-}
-export const QueryClientsResponse = {
-  encode(message: QueryClientsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.stakeEntry) {
-      StakeEntry.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.output !== "") {
-      writer.uint32(18).string(message.output);
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryClientsResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.stakeEntry.push(StakeEntry.decode(reader, reader.uint32()));
-          break;
-        case 2:
-          message.output = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON(object: any): QueryClientsResponse {
-    return {
-      stakeEntry: Array.isArray(object?.stakeEntry) ? object.stakeEntry.map((e: any) => StakeEntry.fromJSON(e)) : [],
-      output: isSet(object.output) ? String(object.output) : ""
-    };
-  },
-  toJSON(message: QueryClientsResponse): unknown {
-    const obj: any = {};
-    if (message.stakeEntry) {
-      obj.stakeEntry = message.stakeEntry.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.stakeEntry = [];
-    }
-    message.output !== undefined && (obj.output = message.output);
-    return obj;
-  },
-  fromPartial(object: Partial<QueryClientsResponse>): QueryClientsResponse {
-    const message = createBaseQueryClientsResponse();
     message.stakeEntry = object.stakeEntry?.map(e => StakeEntry.fromPartial(e)) || [];
     message.output = object.output ?? "";
     return message;

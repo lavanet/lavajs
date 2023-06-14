@@ -1,15 +1,13 @@
 import { Rpc } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryProvidersRequest, QueryProvidersResponse, QueryClientsRequest, QueryClientsResponse, QueryGetPairingRequest, QueryGetPairingResponse, QueryVerifyPairingRequest, QueryVerifyPairingResponse, QueryGetUniquePaymentStorageClientProviderRequest, QueryGetUniquePaymentStorageClientProviderResponse, QueryAllUniquePaymentStorageClientProviderRequest, QueryAllUniquePaymentStorageClientProviderResponse, QueryGetProviderPaymentStorageRequest, QueryGetProviderPaymentStorageResponse, QueryAllProviderPaymentStorageRequest, QueryAllProviderPaymentStorageResponse, QueryGetEpochPaymentsRequest, QueryGetEpochPaymentsResponse, QueryAllEpochPaymentsRequest, QueryAllEpochPaymentsResponse, QueryUserEntryRequest, QueryUserEntryResponse, QueryStaticProvidersListRequest, QueryStaticProvidersListResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryProvidersRequest, QueryProvidersResponse, QueryGetPairingRequest, QueryGetPairingResponse, QueryVerifyPairingRequest, QueryVerifyPairingResponse, QueryGetUniquePaymentStorageClientProviderRequest, QueryGetUniquePaymentStorageClientProviderResponse, QueryAllUniquePaymentStorageClientProviderRequest, QueryAllUniquePaymentStorageClientProviderResponse, QueryGetProviderPaymentStorageRequest, QueryGetProviderPaymentStorageResponse, QueryAllProviderPaymentStorageRequest, QueryAllProviderPaymentStorageResponse, QueryGetEpochPaymentsRequest, QueryGetEpochPaymentsResponse, QueryAllEpochPaymentsRequest, QueryAllEpochPaymentsResponse, QueryUserEntryRequest, QueryUserEntryResponse, QueryStaticProvidersListRequest, QueryStaticProvidersListResponse } from "./query";
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
   params(request?: QueryParamsRequest): Promise<QueryParamsResponse>;
   /** Queries a list of Providers items. */
   providers(request: QueryProvidersRequest): Promise<QueryProvidersResponse>;
-  /** Queries a list of Clients items. */
-  clients(request: QueryClientsRequest): Promise<QueryClientsResponse>;
   /** Queries a list of GetPairing items. */
   getPairing(request: QueryGetPairingRequest): Promise<QueryGetPairingResponse>;
   /** Queries a list of VerifyPairing items. */
@@ -37,7 +35,6 @@ export class QueryClientImpl implements Query {
     this.rpc = rpc;
     this.params = this.params.bind(this);
     this.providers = this.providers.bind(this);
-    this.clients = this.clients.bind(this);
     this.getPairing = this.getPairing.bind(this);
     this.verifyPairing = this.verifyPairing.bind(this);
     this.uniquePaymentStorageClientProvider = this.uniquePaymentStorageClientProvider.bind(this);
@@ -58,11 +55,6 @@ export class QueryClientImpl implements Query {
     const data = QueryProvidersRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "Providers", data);
     return promise.then(data => QueryProvidersResponse.decode(new _m0.Reader(data)));
-  }
-  clients(request: QueryClientsRequest): Promise<QueryClientsResponse> {
-    const data = QueryClientsRequest.encode(request).finish();
-    const promise = this.rpc.request("lavanet.lava.pairing.Query", "Clients", data);
-    return promise.then(data => QueryClientsResponse.decode(new _m0.Reader(data)));
   }
   getPairing(request: QueryGetPairingRequest): Promise<QueryGetPairingResponse> {
     const data = QueryGetPairingRequest.encode(request).finish();
@@ -130,9 +122,6 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     },
     providers(request: QueryProvidersRequest): Promise<QueryProvidersResponse> {
       return queryService.providers(request);
-    },
-    clients(request: QueryClientsRequest): Promise<QueryClientsResponse> {
-      return queryService.clients(request);
     },
     getPairing(request: QueryGetPairingRequest): Promise<QueryGetPairingResponse> {
       return queryService.getPairing(request);

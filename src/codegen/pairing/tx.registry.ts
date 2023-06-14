@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgStakeProvider, MsgStakeClient, MsgUnstakeProvider, MsgUnstakeClient, MsgRelayPayment, MsgFreezeProvider, MsgUnfreezeProvider } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/lavanet.lava.pairing.MsgStakeProvider", MsgStakeProvider], ["/lavanet.lava.pairing.MsgStakeClient", MsgStakeClient], ["/lavanet.lava.pairing.MsgUnstakeProvider", MsgUnstakeProvider], ["/lavanet.lava.pairing.MsgUnstakeClient", MsgUnstakeClient], ["/lavanet.lava.pairing.MsgRelayPayment", MsgRelayPayment], ["/lavanet.lava.pairing.MsgFreezeProvider", MsgFreezeProvider], ["/lavanet.lava.pairing.MsgUnfreezeProvider", MsgUnfreezeProvider]];
+import { MsgStakeProvider, MsgUnstakeProvider, MsgRelayPayment, MsgFreezeProvider, MsgUnfreezeProvider } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/lavanet.lava.pairing.MsgStakeProvider", MsgStakeProvider], ["/lavanet.lava.pairing.MsgUnstakeProvider", MsgUnstakeProvider], ["/lavanet.lava.pairing.MsgRelayPayment", MsgRelayPayment], ["/lavanet.lava.pairing.MsgFreezeProvider", MsgFreezeProvider], ["/lavanet.lava.pairing.MsgUnfreezeProvider", MsgUnfreezeProvider]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -15,22 +15,10 @@ export const MessageComposer = {
         value: MsgStakeProvider.encode(value).finish()
       };
     },
-    stakeClient(value: MsgStakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: MsgStakeClient.encode(value).finish()
-      };
-    },
     unstakeProvider(value: MsgUnstakeProvider) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: MsgUnstakeProvider.encode(value).finish()
-      };
-    },
-    unstakeClient(value: MsgUnstakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: MsgUnstakeClient.encode(value).finish()
       };
     },
     relayPayment(value: MsgRelayPayment) {
@@ -59,21 +47,9 @@ export const MessageComposer = {
         value
       };
     },
-    stakeClient(value: MsgStakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value
-      };
-    },
     unstakeProvider(value: MsgUnstakeProvider) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
-        value
-      };
-    },
-    unstakeClient(value: MsgUnstakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
         value
       };
     },
@@ -103,22 +79,10 @@ export const MessageComposer = {
         value: MsgStakeProvider.toJSON(value)
       };
     },
-    stakeClient(value: MsgStakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: MsgStakeClient.toJSON(value)
-      };
-    },
     unstakeProvider(value: MsgUnstakeProvider) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: MsgUnstakeProvider.toJSON(value)
-      };
-    },
-    unstakeClient(value: MsgUnstakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: MsgUnstakeClient.toJSON(value)
       };
     },
     relayPayment(value: MsgRelayPayment) {
@@ -147,22 +111,10 @@ export const MessageComposer = {
         value: MsgStakeProvider.fromJSON(value)
       };
     },
-    stakeClient(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: MsgStakeClient.fromJSON(value)
-      };
-    },
     unstakeProvider(value: any) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: MsgUnstakeProvider.fromJSON(value)
-      };
-    },
-    unstakeClient(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: MsgUnstakeClient.fromJSON(value)
       };
     },
     relayPayment(value: any) {
@@ -191,22 +143,10 @@ export const MessageComposer = {
         value: MsgStakeProvider.fromPartial(value)
       };
     },
-    stakeClient(value: MsgStakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgStakeClient",
-        value: MsgStakeClient.fromPartial(value)
-      };
-    },
     unstakeProvider(value: MsgUnstakeProvider) {
       return {
         typeUrl: "/lavanet.lava.pairing.MsgUnstakeProvider",
         value: MsgUnstakeProvider.fromPartial(value)
-      };
-    },
-    unstakeClient(value: MsgUnstakeClient) {
-      return {
-        typeUrl: "/lavanet.lava.pairing.MsgUnstakeClient",
-        value: MsgUnstakeClient.fromPartial(value)
       };
     },
     relayPayment(value: MsgRelayPayment) {

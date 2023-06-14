@@ -2,7 +2,7 @@
 import { sELECTED_PROVIDERS_MODEFromJSON } from "../projects/project";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
-import { MsgBuy, MsgAddProject } from "./tx";
+import { MsgBuy, MsgAddProject, MsgDelProject } from "./tx";
 export interface MsgBuyAminoType extends AminoMsg {
   type: "/lavanet.lava.subscription.MsgBuy";
   value: {
@@ -36,6 +36,13 @@ export interface MsgAddProjectAminoType extends AminoMsg {
         selected_providers: string[];
       };
     };
+  };
+}
+export interface MsgDelProjectAminoType extends AminoMsg {
+  type: "/lavanet.lava.subscription.MsgDelProject";
+  value: {
+    creator: string;
+    name: string;
   };
 }
 export const AminoConverter = {
@@ -124,6 +131,27 @@ export const AminoConverter = {
             selectedProviders: project_data.policy.selected_providers
           }
         }
+      };
+    }
+  },
+  "/lavanet.lava.subscription.MsgDelProject": {
+    aminoType: "/lavanet.lava.subscription.MsgDelProject",
+    toAmino: ({
+      creator,
+      name
+    }: MsgDelProject): MsgDelProjectAminoType["value"] => {
+      return {
+        creator,
+        name
+      };
+    },
+    fromAmino: ({
+      creator,
+      name
+    }: MsgDelProjectAminoType["value"]): MsgDelProject => {
+      return {
+        creator,
+        name
       };
     }
   }
