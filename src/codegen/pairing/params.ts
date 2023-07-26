@@ -1,4 +1,4 @@
-import { Long, isSet } from "../helpers";
+import { Long, DeepPartial } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** Params defines the parameters for the module. */
 export interface Params {
@@ -109,33 +109,7 @@ export const Params = {
     }
     return message;
   },
-  fromJSON(object: any): Params {
-    return {
-      mintCoinsPerCU: isSet(object.mintCoinsPerCU) ? String(object.mintCoinsPerCU) : "",
-      fraudStakeSlashingFactor: isSet(object.fraudStakeSlashingFactor) ? String(object.fraudStakeSlashingFactor) : "",
-      fraudSlashingAmount: isSet(object.fraudSlashingAmount) ? Long.fromValue(object.fraudSlashingAmount) : Long.UZERO,
-      epochBlocksOverlap: isSet(object.epochBlocksOverlap) ? Long.fromValue(object.epochBlocksOverlap) : Long.UZERO,
-      unpayLimit: isSet(object.unpayLimit) ? String(object.unpayLimit) : "",
-      slashLimit: isSet(object.slashLimit) ? String(object.slashLimit) : "",
-      dataReliabilityReward: isSet(object.dataReliabilityReward) ? String(object.dataReliabilityReward) : "",
-      QoSWeight: isSet(object.QoSWeight) ? String(object.QoSWeight) : "",
-      recommendedEpochNumToCollectPayment: isSet(object.recommendedEpochNumToCollectPayment) ? Long.fromValue(object.recommendedEpochNumToCollectPayment) : Long.UZERO
-    };
-  },
-  toJSON(message: Params): unknown {
-    const obj: any = {};
-    message.mintCoinsPerCU !== undefined && (obj.mintCoinsPerCU = message.mintCoinsPerCU);
-    message.fraudStakeSlashingFactor !== undefined && (obj.fraudStakeSlashingFactor = message.fraudStakeSlashingFactor);
-    message.fraudSlashingAmount !== undefined && (obj.fraudSlashingAmount = (message.fraudSlashingAmount || Long.UZERO).toString());
-    message.epochBlocksOverlap !== undefined && (obj.epochBlocksOverlap = (message.epochBlocksOverlap || Long.UZERO).toString());
-    message.unpayLimit !== undefined && (obj.unpayLimit = message.unpayLimit);
-    message.slashLimit !== undefined && (obj.slashLimit = message.slashLimit);
-    message.dataReliabilityReward !== undefined && (obj.dataReliabilityReward = message.dataReliabilityReward);
-    message.QoSWeight !== undefined && (obj.QoSWeight = message.QoSWeight);
-    message.recommendedEpochNumToCollectPayment !== undefined && (obj.recommendedEpochNumToCollectPayment = (message.recommendedEpochNumToCollectPayment || Long.UZERO).toString());
-    return obj;
-  },
-  fromPartial(object: Partial<Params>): Params {
+  fromPartial(object: DeepPartial<Params>): Params {
     const message = createBaseParams();
     message.mintCoinsPerCU = object.mintCoinsPerCU ?? "";
     message.fraudStakeSlashingFactor = object.fraudStakeSlashingFactor ?? "";

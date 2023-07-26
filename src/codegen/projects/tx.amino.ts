@@ -1,5 +1,4 @@
-//@ts-nocheck
-import { sELECTED_PROVIDERS_MODEFromJSON } from "./project";
+import { sELECTED_PROVIDERS_MODEFromJSON } from "../plans/plan";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
 import { MsgAddKeys, MsgDelKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";

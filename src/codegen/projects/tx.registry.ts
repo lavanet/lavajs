@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgAddKeys, MsgDelKeys, MsgSetPolicy, MsgSetSubscriptionPolicy } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/lavanet.lava.projects.MsgAddKeys", MsgAddKeys], ["/lavanet.lava.projects.MsgDelKeys", MsgDelKeys], ["/lavanet.lava.projects.MsgSetPolicy", MsgSetPolicy], ["/lavanet.lava.projects.MsgSetSubscriptionPolicy", MsgSetSubscriptionPolicy]];
@@ -57,58 +56,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
         value
-      };
-    }
-  },
-  toJSON: {
-    addKeys(value: MsgAddKeys) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
-        value: MsgAddKeys.toJSON(value)
-      };
-    },
-    delKeys(value: MsgDelKeys) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
-        value: MsgDelKeys.toJSON(value)
-      };
-    },
-    setPolicy(value: MsgSetPolicy) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
-        value: MsgSetPolicy.toJSON(value)
-      };
-    },
-    setSubscriptionPolicy(value: MsgSetSubscriptionPolicy) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
-        value: MsgSetSubscriptionPolicy.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    addKeys(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
-        value: MsgAddKeys.fromJSON(value)
-      };
-    },
-    delKeys(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
-        value: MsgDelKeys.fromJSON(value)
-      };
-    },
-    setPolicy(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
-        value: MsgSetPolicy.fromJSON(value)
-      };
-    },
-    setSubscriptionPolicy(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
-        value: MsgSetSubscriptionPolicy.fromJSON(value)
       };
     }
   },

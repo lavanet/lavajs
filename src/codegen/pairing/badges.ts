@@ -1,7 +1,7 @@
 import { Badge, BadgeSDKType } from "./relay";
 import { StakeEntry, StakeEntrySDKType } from "../epochstorage/stake_entry";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
+import { DeepPartial } from "../helpers";
 export interface GenerateBadgeRequest {
   badgeAddress: string;
   projectId: string;
@@ -65,21 +65,7 @@ export const GenerateBadgeRequest = {
     }
     return message;
   },
-  fromJSON(object: any): GenerateBadgeRequest {
-    return {
-      badgeAddress: isSet(object.badgeAddress) ? String(object.badgeAddress) : "",
-      projectId: isSet(object.projectId) ? String(object.projectId) : "",
-      specId: isSet(object.specId) ? String(object.specId) : undefined
-    };
-  },
-  toJSON(message: GenerateBadgeRequest): unknown {
-    const obj: any = {};
-    message.badgeAddress !== undefined && (obj.badgeAddress = message.badgeAddress);
-    message.projectId !== undefined && (obj.projectId = message.projectId);
-    message.specId !== undefined && (obj.specId = message.specId);
-    return obj;
-  },
-  fromPartial(object: Partial<GenerateBadgeRequest>): GenerateBadgeRequest {
+  fromPartial(object: DeepPartial<GenerateBadgeRequest>): GenerateBadgeRequest {
     const message = createBaseGenerateBadgeRequest();
     message.badgeAddress = object.badgeAddress ?? "";
     message.projectId = object.projectId ?? "";
@@ -130,25 +116,7 @@ export const GenerateBadgeResponse = {
     }
     return message;
   },
-  fromJSON(object: any): GenerateBadgeResponse {
-    return {
-      badge: isSet(object.badge) ? Badge.fromJSON(object.badge) : undefined,
-      pairingList: Array.isArray(object?.pairingList) ? object.pairingList.map((e: any) => StakeEntry.fromJSON(e)) : [],
-      badgeSignerAddress: isSet(object.badgeSignerAddress) ? String(object.badgeSignerAddress) : ""
-    };
-  },
-  toJSON(message: GenerateBadgeResponse): unknown {
-    const obj: any = {};
-    message.badge !== undefined && (obj.badge = message.badge ? Badge.toJSON(message.badge) : undefined);
-    if (message.pairingList) {
-      obj.pairingList = message.pairingList.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.pairingList = [];
-    }
-    message.badgeSignerAddress !== undefined && (obj.badgeSignerAddress = message.badgeSignerAddress);
-    return obj;
-  },
-  fromPartial(object: Partial<GenerateBadgeResponse>): GenerateBadgeResponse {
+  fromPartial(object: DeepPartial<GenerateBadgeResponse>): GenerateBadgeResponse {
     const message = createBaseGenerateBadgeResponse();
     message.badge = object.badge !== undefined && object.badge !== null ? Badge.fromPartial(object.badge) : undefined;
     message.pairingList = object.pairingList?.map(e => StakeEntry.fromPartial(e)) || [];

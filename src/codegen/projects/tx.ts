@@ -1,6 +1,7 @@
-import { ProjectKey, ProjectKeySDKType, Policy, PolicySDKType } from "./project";
+import { ProjectKey, ProjectKeySDKType } from "./project";
+import { Policy, PolicySDKType } from "../plans/plan";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
+import { DeepPartial } from "../helpers";
 export interface MsgAddKeys {
   creator: string;
   project: string;
@@ -92,25 +93,7 @@ export const MsgAddKeys = {
     }
     return message;
   },
-  fromJSON(object: any): MsgAddKeys {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      project: isSet(object.project) ? String(object.project) : "",
-      projectKeys: Array.isArray(object?.projectKeys) ? object.projectKeys.map((e: any) => ProjectKey.fromJSON(e)) : []
-    };
-  },
-  toJSON(message: MsgAddKeys): unknown {
-    const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.project !== undefined && (obj.project = message.project);
-    if (message.projectKeys) {
-      obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toJSON(e) : undefined);
-    } else {
-      obj.projectKeys = [];
-    }
-    return obj;
-  },
-  fromPartial(object: Partial<MsgAddKeys>): MsgAddKeys {
+  fromPartial(object: DeepPartial<MsgAddKeys>): MsgAddKeys {
     const message = createBaseMsgAddKeys();
     message.creator = object.creator ?? "";
     message.project = object.project ?? "";
@@ -139,14 +122,7 @@ export const MsgAddKeysResponse = {
     }
     return message;
   },
-  fromJSON(_: any): MsgAddKeysResponse {
-    return {};
-  },
-  toJSON(_: MsgAddKeysResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
-  fromPartial(_: Partial<MsgAddKeysResponse>): MsgAddKeysResponse {
+  fromPartial(_: DeepPartial<MsgAddKeysResponse>): MsgAddKeysResponse {
     const message = createBaseMsgAddKeysResponse();
     return message;
   }
@@ -194,25 +170,7 @@ export const MsgDelKeys = {
     }
     return message;
   },
-  fromJSON(object: any): MsgDelKeys {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      project: isSet(object.project) ? String(object.project) : "",
-      projectKeys: Array.isArray(object?.projectKeys) ? object.projectKeys.map((e: any) => ProjectKey.fromJSON(e)) : []
-    };
-  },
-  toJSON(message: MsgDelKeys): unknown {
-    const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.project !== undefined && (obj.project = message.project);
-    if (message.projectKeys) {
-      obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toJSON(e) : undefined);
-    } else {
-      obj.projectKeys = [];
-    }
-    return obj;
-  },
-  fromPartial(object: Partial<MsgDelKeys>): MsgDelKeys {
+  fromPartial(object: DeepPartial<MsgDelKeys>): MsgDelKeys {
     const message = createBaseMsgDelKeys();
     message.creator = object.creator ?? "";
     message.project = object.project ?? "";
@@ -241,14 +199,7 @@ export const MsgDelKeysResponse = {
     }
     return message;
   },
-  fromJSON(_: any): MsgDelKeysResponse {
-    return {};
-  },
-  toJSON(_: MsgDelKeysResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
-  fromPartial(_: Partial<MsgDelKeysResponse>): MsgDelKeysResponse {
+  fromPartial(_: DeepPartial<MsgDelKeysResponse>): MsgDelKeysResponse {
     const message = createBaseMsgDelKeysResponse();
     return message;
   }
@@ -296,21 +247,7 @@ export const MsgSetPolicy = {
     }
     return message;
   },
-  fromJSON(object: any): MsgSetPolicy {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      project: isSet(object.project) ? String(object.project) : "",
-      policy: isSet(object.policy) ? Policy.fromJSON(object.policy) : undefined
-    };
-  },
-  toJSON(message: MsgSetPolicy): unknown {
-    const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.project !== undefined && (obj.project = message.project);
-    message.policy !== undefined && (obj.policy = message.policy ? Policy.toJSON(message.policy) : undefined);
-    return obj;
-  },
-  fromPartial(object: Partial<MsgSetPolicy>): MsgSetPolicy {
+  fromPartial(object: DeepPartial<MsgSetPolicy>): MsgSetPolicy {
     const message = createBaseMsgSetPolicy();
     message.creator = object.creator ?? "";
     message.project = object.project ?? "";
@@ -339,14 +276,7 @@ export const MsgSetPolicyResponse = {
     }
     return message;
   },
-  fromJSON(_: any): MsgSetPolicyResponse {
-    return {};
-  },
-  toJSON(_: MsgSetPolicyResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
-  fromPartial(_: Partial<MsgSetPolicyResponse>): MsgSetPolicyResponse {
+  fromPartial(_: DeepPartial<MsgSetPolicyResponse>): MsgSetPolicyResponse {
     const message = createBaseMsgSetPolicyResponse();
     return message;
   }
@@ -394,25 +324,7 @@ export const MsgSetSubscriptionPolicy = {
     }
     return message;
   },
-  fromJSON(object: any): MsgSetSubscriptionPolicy {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      projects: Array.isArray(object?.projects) ? object.projects.map((e: any) => String(e)) : [],
-      policy: isSet(object.policy) ? Policy.fromJSON(object.policy) : undefined
-    };
-  },
-  toJSON(message: MsgSetSubscriptionPolicy): unknown {
-    const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    if (message.projects) {
-      obj.projects = message.projects.map(e => e);
-    } else {
-      obj.projects = [];
-    }
-    message.policy !== undefined && (obj.policy = message.policy ? Policy.toJSON(message.policy) : undefined);
-    return obj;
-  },
-  fromPartial(object: Partial<MsgSetSubscriptionPolicy>): MsgSetSubscriptionPolicy {
+  fromPartial(object: DeepPartial<MsgSetSubscriptionPolicy>): MsgSetSubscriptionPolicy {
     const message = createBaseMsgSetSubscriptionPolicy();
     message.creator = object.creator ?? "";
     message.projects = object.projects?.map(e => e) || [];
@@ -441,14 +353,7 @@ export const MsgSetSubscriptionPolicyResponse = {
     }
     return message;
   },
-  fromJSON(_: any): MsgSetSubscriptionPolicyResponse {
-    return {};
-  },
-  toJSON(_: MsgSetSubscriptionPolicyResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
-  fromPartial(_: Partial<MsgSetSubscriptionPolicyResponse>): MsgSetSubscriptionPolicyResponse {
+  fromPartial(_: DeepPartial<MsgSetSubscriptionPolicyResponse>): MsgSetSubscriptionPolicyResponse {
     const message = createBaseMsgSetSubscriptionPolicyResponse();
     return message;
   }

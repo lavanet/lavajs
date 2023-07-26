@@ -1,7 +1,7 @@
 import { Rpc } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryCurrentRequest, QueryCurrentResponse, QueryListProjectsRequest, QueryListProjectsResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryCurrentRequest, QueryCurrentResponse, QueryListProjectsRequest, QueryListProjectsResponse, QueryListRequest, QueryListResponse } from "./query";
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -10,6 +10,8 @@ export interface Query {
   current(request: QueryCurrentRequest): Promise<QueryCurrentResponse>;
   /** Queries a list of ListProjects items. */
   listProjects(request: QueryListProjectsRequest): Promise<QueryListProjectsResponse>;
+  /** Queries a list of List items. */
+  list(request?: QueryListRequest): Promise<QueryListResponse>;
 }
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
@@ -18,6 +20,7 @@ export class QueryClientImpl implements Query {
     this.params = this.params.bind(this);
     this.current = this.current.bind(this);
     this.listProjects = this.listProjects.bind(this);
+    this.list = this.list.bind(this);
   }
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -34,6 +37,11 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("lavanet.lava.subscription.Query", "ListProjects", data);
     return promise.then(data => QueryListProjectsResponse.decode(new _m0.Reader(data)));
   }
+  list(request: QueryListRequest = {}): Promise<QueryListResponse> {
+    const data = QueryListRequest.encode(request).finish();
+    const promise = this.rpc.request("lavanet.lava.subscription.Query", "List", data);
+    return promise.then(data => QueryListResponse.decode(new _m0.Reader(data)));
+  }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {
   const rpc = createProtobufRpcClient(base);
@@ -47,6 +55,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     },
     listProjects(request: QueryListProjectsRequest): Promise<QueryListProjectsResponse> {
       return queryService.listProjects(request);
+    },
+    list(request?: QueryListRequest): Promise<QueryListResponse> {
+      return queryService.list(request);
     }
   };
 };

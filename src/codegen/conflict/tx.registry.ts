@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgDetection, MsgConflictVoteCommit, MsgConflictVoteReveal } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/lavanet.lava.conflict.MsgDetection", MsgDetection], ["/lavanet.lava.conflict.MsgConflictVoteCommit", MsgConflictVoteCommit], ["/lavanet.lava.conflict.MsgConflictVoteReveal", MsgConflictVoteReveal]];
@@ -45,46 +44,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
         value
-      };
-    }
-  },
-  toJSON: {
-    detection(value: MsgDetection) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgDetection",
-        value: MsgDetection.toJSON(value)
-      };
-    },
-    conflictVoteCommit(value: MsgConflictVoteCommit) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
-        value: MsgConflictVoteCommit.toJSON(value)
-      };
-    },
-    conflictVoteReveal(value: MsgConflictVoteReveal) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
-        value: MsgConflictVoteReveal.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    detection(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgDetection",
-        value: MsgDetection.fromJSON(value)
-      };
-    },
-    conflictVoteCommit(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
-        value: MsgConflictVoteCommit.fromJSON(value)
-      };
-    },
-    conflictVoteReveal(value: any) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
-        value: MsgConflictVoteReveal.fromJSON(value)
       };
     }
   },

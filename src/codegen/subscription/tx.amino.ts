@@ -1,7 +1,6 @@
-//@ts-nocheck
-import { sELECTED_PROVIDERS_MODEFromJSON } from "../projects/project";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
+import { sELECTED_PROVIDERS_MODEFromJSON } from "../plans/plan";
 import { MsgBuy, MsgAddProject, MsgDelProject } from "./tx";
 export interface MsgBuyAminoType extends AminoMsg {
   type: "/lavanet.lava.subscription.MsgBuy";
