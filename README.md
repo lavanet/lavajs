@@ -9,7 +9,7 @@
 ## install
 
 ```sh
-npm install lavajs
+npm install @lavanet/lavajs
 ```
 ## Table of contents
 
@@ -17,12 +17,7 @@ npm install lavajs
   - [Install](#install)
   - [Table of contents](#table-of-contents)
 - [Usage](#usage)
-    - [RPC Clients](#rpc-clients)
-    - [Composing Messages](#composing-messages)
-        - Cosmos, CosmWasm, and IBC
-            - [CosmWasm](#cosmwasm-messages)
-            - [IBC](#ibc-messages)
-            - [Cosmos](#cosmos-messages)
+    - [RPC Clients](#rpc-clients)           
 - [Wallets and Signers](#connecting-with-wallets-and-signing-messages)
     - [Stargate Client](#initializing-the-stargate-client)
     - [Creating Signers](#creating-signers)
@@ -35,90 +30,18 @@ npm install lavajs
 ### RPC Clients
 
 ```js
-import { lava } from 'lavajs';
+import { lava } from '@lavanet/lavajs';
 
 const { createRPCQueryClient } = lava.ClientFactory; 
 const client = await createRPCQueryClient({ rpcEndpoint: RPC_ENDPOINT });
 
 // now you can query the cosmos modules
 const balance = await client.cosmos.bank.v1beta1
-    .allBalances({ address: 'lava1addresshere' });
+    .allBalances({ address: 'lava@1addresshere' });
 
 // you can also query the lava modules
 const balances = await client.lava.exchange.v1beta1
     .exchangeBalances()
-```
-
-### Composing Messages
-
-Import the `lava` object from `lava`. 
-
-```js
-import { lava } from 'lavajs';
-
-const {
-    createSpotLimitOrder,
-    createSpotMarketOrder,
-    deposit
-} = lava.exchange.v1beta1.MessageComposer.withTypeUrl;
-```
-
-#### CosmWasm Messages
-
-```js
-import { cosmwasm } from "lava";
-
-const {
-    clearAdmin,
-    executeContract,
-    instantiateContract,
-    migrateContract,
-    storeCode,
-    updateAdmin
-} = cosmwasm.wasm.v1.MessageComposer.withTypeUrl;
-```
-
-#### IBC Messages
-
-```js
-import { ibc } from 'lavajs';
-
-const {
-    transfer
-} = ibc.applications.transfer.v1.MessageComposer.withTypeUrl
-```
-
-#### Cosmos Messages
-
-```js
-import { cosmos } from 'lavajs';
-
-const {
-    fundCommunityPool,
-    setWithdrawAddress,
-    withdrawDelegatorReward,
-    withdrawValidatorCommission
-} = cosmos.distribution.v1beta1.MessageComposer.fromPartial;
-
-const {
-    multiSend,
-    send
-} = cosmos.bank.v1beta1.MessageComposer.fromPartial;
-
-const {
-    beginRedelegate,
-    createValidator,
-    delegate,
-    editValidator,
-    undelegate
-} = cosmos.staking.v1beta1.MessageComposer.fromPartial;
-
-const {
-    deposit,
-    submitProposal,
-    vote,
-    voteWeighted
-} = cosmos.gov.v1beta1.MessageComposer.fromPartial;
 ```
 
 ## Connecting with Wallets and Signing Messages
@@ -129,12 +52,12 @@ Here are the docs on [creating signers](https://github.com/cosmology-tech/cosmos
 
 ### Initializing the Stargate Client
 
-Use `getSigninglavaClient` to get your `SigningStargateClient`, with the proto/amino messages full-loaded. No need to manually add amino types, just require and initialize the client:
+Use `getSigningLavanetClient` to get your `SigningStargateClient`, with the proto/amino messages full-loaded. No need to manually add amino types, just require and initialize the client:
 
 ```js
-import { getSigninglavaClient } from 'lavajs';
+import { getSigningLavanetClient } from '@lavanet/lavajs';
 
-const stargateClient = await getSigninglavaClient({
+const stargateClient = await getSigningLavanetClient({
   rpcEndpoint,
   signer // OfflineSigner
 });
@@ -220,7 +143,7 @@ import {
     ibcAminoConverters,
     lavaAminoConverters,
     lavaProtoRegistry
-} from 'lavajs';
+} from '@lavanet/lavajs';
 
 const signer: OfflineSigner = /* create your signer (see above)  */
 const rpcEndpint = 'https://rpc.cosmos.directory/lava'; // or another URL
