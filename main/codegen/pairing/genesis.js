@@ -57,18 +57,6 @@ var BadgeUsedCu = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      badgeUsedCuKey: (0, _helpers.isSet)(object.badgeUsedCuKey) ? (0, _helpers.bytesFromBase64)(object.badgeUsedCuKey) : new Uint8Array(),
-      usedCu: (0, _helpers.isSet)(object.usedCu) ? _helpers.Long.fromValue(object.usedCu) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.badgeUsedCuKey !== undefined && (obj.badgeUsedCuKey = (0, _helpers.base64FromBytes)(message.badgeUsedCuKey !== undefined ? message.badgeUsedCuKey : new Uint8Array()));
-    message.usedCu !== undefined && (obj.usedCu = (message.usedCu || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$badgeUsedCuKe;
     var message = createBaseBadgeUsedCu();
@@ -171,56 +159,6 @@ var GenesisState = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      params: (0, _helpers.isSet)(object.params) ? _params.Params.fromJSON(object.params) : undefined,
-      uniquePaymentStorageClientProviderList: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProviderList) ? object.uniquePaymentStorageClientProviderList.map(function (e) {
-        return _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.fromJSON(e);
-      }) : [],
-      providerPaymentStorageList: Array.isArray(object === null || object === void 0 ? void 0 : object.providerPaymentStorageList) ? object.providerPaymentStorageList.map(function (e) {
-        return _provider_payment_storage.ProviderPaymentStorage.fromJSON(e);
-      }) : [],
-      epochPaymentsList: Array.isArray(object === null || object === void 0 ? void 0 : object.epochPaymentsList) ? object.epochPaymentsList.map(function (e) {
-        return _epoch_payments.EpochPayments.fromJSON(e);
-      }) : [],
-      badgeUsedCuList: Array.isArray(object === null || object === void 0 ? void 0 : object.badgeUsedCuList) ? object.badgeUsedCuList.map(function (e) {
-        return BadgeUsedCu.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.params !== undefined && (obj.params = message.params ? _params.Params.toJSON(message.params) : undefined);
-    if (message.uniquePaymentStorageClientProviderList) {
-      obj.uniquePaymentStorageClientProviderList = message.uniquePaymentStorageClientProviderList.map(function (e) {
-        return e ? _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.toJSON(e) : undefined;
-      });
-    } else {
-      obj.uniquePaymentStorageClientProviderList = [];
-    }
-    if (message.providerPaymentStorageList) {
-      obj.providerPaymentStorageList = message.providerPaymentStorageList.map(function (e) {
-        return e ? _provider_payment_storage.ProviderPaymentStorage.toJSON(e) : undefined;
-      });
-    } else {
-      obj.providerPaymentStorageList = [];
-    }
-    if (message.epochPaymentsList) {
-      obj.epochPaymentsList = message.epochPaymentsList.map(function (e) {
-        return e ? _epoch_payments.EpochPayments.toJSON(e) : undefined;
-      });
-    } else {
-      obj.epochPaymentsList = [];
-    }
-    if (message.badgeUsedCuList) {
-      obj.badgeUsedCuList = message.badgeUsedCuList.map(function (e) {
-        return e ? BadgeUsedCu.toJSON(e) : undefined;
-      });
-    } else {
-      obj.badgeUsedCuList = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$uniquePayment, _object$providerPayme, _object$epochPayments, _object$badgeUsedCuLi;

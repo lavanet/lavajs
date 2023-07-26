@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** EventSend is emitted on Msg/Send */
 
 /** EventSend is emitted on Msg/Send */
@@ -62,22 +62,6 @@ export const EventSend = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      classId: isSet(object.classId) ? String(object.classId) : "",
-      id: isSet(object.id) ? String(object.id) : "",
-      sender: isSet(object.sender) ? String(object.sender) : "",
-      receiver: isSet(object.receiver) ? String(object.receiver) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.classId !== undefined && (obj.classId = message.classId);
-    message.id !== undefined && (obj.id = message.id);
-    message.sender !== undefined && (obj.sender = message.sender);
-    message.receiver !== undefined && (obj.receiver = message.receiver);
-    return obj;
-  },
   fromPartial(object) {
     var _object$classId, _object$id, _object$sender, _object$receiver;
     const message = createBaseEventSend();
@@ -131,20 +115,6 @@ export const EventMint = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      classId: isSet(object.classId) ? String(object.classId) : "",
-      id: isSet(object.id) ? String(object.id) : "",
-      owner: isSet(object.owner) ? String(object.owner) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.classId !== undefined && (obj.classId = message.classId);
-    message.id !== undefined && (obj.id = message.id);
-    message.owner !== undefined && (obj.owner = message.owner);
-    return obj;
-  },
   fromPartial(object) {
     var _object$classId2, _object$id2, _object$owner;
     const message = createBaseEventMint();
@@ -196,20 +166,6 @@ export const EventBurn = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      classId: isSet(object.classId) ? String(object.classId) : "",
-      id: isSet(object.id) ? String(object.id) : "",
-      owner: isSet(object.owner) ? String(object.owner) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.classId !== undefined && (obj.classId = message.classId);
-    message.id !== undefined && (obj.id = message.id);
-    message.owner !== undefined && (obj.owner = message.owner);
-    return obj;
   },
   fromPartial(object) {
     var _object$classId3, _object$id3, _object$owner2;

@@ -95,36 +95,6 @@ var StakeEntry = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      stake: (0, _helpers.isSet)(object.stake) ? _coin.Coin.fromJSON(object.stake) : undefined,
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      stakeAppliedBlock: (0, _helpers.isSet)(object.stakeAppliedBlock) ? _helpers.Long.fromValue(object.stakeAppliedBlock) : _helpers.Long.UZERO,
-      endpoints: Array.isArray(object === null || object === void 0 ? void 0 : object.endpoints) ? object.endpoints.map(function (e) {
-        return _endpoint.Endpoint.fromJSON(e);
-      }) : [],
-      geolocation: (0, _helpers.isSet)(object.geolocation) ? _helpers.Long.fromValue(object.geolocation) : _helpers.Long.UZERO,
-      chain: (0, _helpers.isSet)(object.chain) ? String(object.chain) : "",
-      moniker: (0, _helpers.isSet)(object.moniker) ? String(object.moniker) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.stake !== undefined && (obj.stake = message.stake ? _coin.Coin.toJSON(message.stake) : undefined);
-    message.address !== undefined && (obj.address = message.address);
-    message.stakeAppliedBlock !== undefined && (obj.stakeAppliedBlock = (message.stakeAppliedBlock || _helpers.Long.UZERO).toString());
-    if (message.endpoints) {
-      obj.endpoints = message.endpoints.map(function (e) {
-        return e ? _endpoint.Endpoint.toJSON(e) : undefined;
-      });
-    } else {
-      obj.endpoints = [];
-    }
-    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || _helpers.Long.UZERO).toString());
-    message.chain !== undefined && (obj.chain = message.chain);
-    message.moniker !== undefined && (obj.moniker = message.moniker);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$address, _object$endpoints, _object$chain, _object$moniker;
     var message = createBaseStakeEntry();

@@ -1,4 +1,4 @@
-import { Long, isSet } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** Params defines the parameters for the module. */
 
@@ -60,24 +60,6 @@ export const Params = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      unstakeHoldBlocks: isSet(object.unstakeHoldBlocks) ? Long.fromValue(object.unstakeHoldBlocks) : Long.UZERO,
-      epochBlocks: isSet(object.epochBlocks) ? Long.fromValue(object.epochBlocks) : Long.UZERO,
-      epochsToSave: isSet(object.epochsToSave) ? Long.fromValue(object.epochsToSave) : Long.UZERO,
-      latestParamChange: isSet(object.latestParamChange) ? Long.fromValue(object.latestParamChange) : Long.UZERO,
-      unstakeHoldBlocksStatic: isSet(object.unstakeHoldBlocksStatic) ? Long.fromValue(object.unstakeHoldBlocksStatic) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.unstakeHoldBlocks !== undefined && (obj.unstakeHoldBlocks = (message.unstakeHoldBlocks || Long.UZERO).toString());
-    message.epochBlocks !== undefined && (obj.epochBlocks = (message.epochBlocks || Long.UZERO).toString());
-    message.epochsToSave !== undefined && (obj.epochsToSave = (message.epochsToSave || Long.UZERO).toString());
-    message.latestParamChange !== undefined && (obj.latestParamChange = (message.latestParamChange || Long.UZERO).toString());
-    message.unstakeHoldBlocksStatic !== undefined && (obj.unstakeHoldBlocksStatic = (message.unstakeHoldBlocksStatic || Long.UZERO).toString());
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseParams();

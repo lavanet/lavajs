@@ -196,60 +196,6 @@ var Spec = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
-      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
-      imports: Array.isArray(object === null || object === void 0 ? void 0 : object.imports) ? object.imports.map(function (e) {
-        return String(e);
-      }) : [],
-      apis: Array.isArray(object === null || object === void 0 ? void 0 : object.apis) ? object.apis.map(function (e) {
-        return _service_api.ServiceApi.fromJSON(e);
-      }) : [],
-      enabled: (0, _helpers.isSet)(object.enabled) ? Boolean(object.enabled) : false,
-      reliabilityThreshold: (0, _helpers.isSet)(object.reliabilityThreshold) ? Number(object.reliabilityThreshold) : 0,
-      dataReliabilityEnabled: (0, _helpers.isSet)(object.dataReliabilityEnabled) ? Boolean(object.dataReliabilityEnabled) : false,
-      blockDistanceForFinalizedData: (0, _helpers.isSet)(object.blockDistanceForFinalizedData) ? Number(object.blockDistanceForFinalizedData) : 0,
-      blocksInFinalizationProof: (0, _helpers.isSet)(object.blocksInFinalizationProof) ? Number(object.blocksInFinalizationProof) : 0,
-      averageBlockTime: (0, _helpers.isSet)(object.averageBlockTime) ? _helpers.Long.fromValue(object.averageBlockTime) : _helpers.Long.ZERO,
-      allowedBlockLagForQosSync: (0, _helpers.isSet)(object.allowedBlockLagForQosSync) ? _helpers.Long.fromValue(object.allowedBlockLagForQosSync) : _helpers.Long.ZERO,
-      blockLastUpdated: (0, _helpers.isSet)(object.blockLastUpdated) ? _helpers.Long.fromValue(object.blockLastUpdated) : _helpers.Long.UZERO,
-      minStakeProvider: (0, _helpers.isSet)(object.minStakeProvider) ? _coin.Coin.fromJSON(object.minStakeProvider) : undefined,
-      minStakeClient: (0, _helpers.isSet)(object.minStakeClient) ? _coin.Coin.fromJSON(object.minStakeClient) : undefined,
-      providersTypes: (0, _helpers.isSet)(object.providersTypes) ? spec_ProvidersTypesFromJSON(object.providersTypes) : 0
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.name !== undefined && (obj.name = message.name);
-    if (message.imports) {
-      obj.imports = message.imports.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.imports = [];
-    }
-    if (message.apis) {
-      obj.apis = message.apis.map(function (e) {
-        return e ? _service_api.ServiceApi.toJSON(e) : undefined;
-      });
-    } else {
-      obj.apis = [];
-    }
-    message.enabled !== undefined && (obj.enabled = message.enabled);
-    message.reliabilityThreshold !== undefined && (obj.reliabilityThreshold = Math.round(message.reliabilityThreshold));
-    message.dataReliabilityEnabled !== undefined && (obj.dataReliabilityEnabled = message.dataReliabilityEnabled);
-    message.blockDistanceForFinalizedData !== undefined && (obj.blockDistanceForFinalizedData = Math.round(message.blockDistanceForFinalizedData));
-    message.blocksInFinalizationProof !== undefined && (obj.blocksInFinalizationProof = Math.round(message.blocksInFinalizationProof));
-    message.averageBlockTime !== undefined && (obj.averageBlockTime = (message.averageBlockTime || _helpers.Long.ZERO).toString());
-    message.allowedBlockLagForQosSync !== undefined && (obj.allowedBlockLagForQosSync = (message.allowedBlockLagForQosSync || _helpers.Long.ZERO).toString());
-    message.blockLastUpdated !== undefined && (obj.blockLastUpdated = (message.blockLastUpdated || _helpers.Long.UZERO).toString());
-    message.minStakeProvider !== undefined && (obj.minStakeProvider = message.minStakeProvider ? _coin.Coin.toJSON(message.minStakeProvider) : undefined);
-    message.minStakeClient !== undefined && (obj.minStakeClient = message.minStakeClient ? _coin.Coin.toJSON(message.minStakeClient) : undefined);
-    message.providersTypes !== undefined && (obj.providersTypes = spec_ProvidersTypesToJSON(message.providersTypes));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$name, _object$imports, _object$apis, _object$enabled, _object$reliabilityTh, _object$dataReliabili, _object$blockDistance, _object$blocksInFinal, _object$providersType;
     var message = createBaseSpec();

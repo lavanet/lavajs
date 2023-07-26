@@ -1,4 +1,4 @@
-import { Long, isSet } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseEpochDetails() {
   return {
@@ -51,24 +51,6 @@ export const EpochDetails = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      startBlock: isSet(object.startBlock) ? Long.fromValue(object.startBlock) : Long.UZERO,
-      earliestStart: isSet(object.earliestStart) ? Long.fromValue(object.earliestStart) : Long.UZERO,
-      deletedEpochs: Array.isArray(object === null || object === void 0 ? void 0 : object.deletedEpochs) ? object.deletedEpochs.map(e => Long.fromValue(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.startBlock !== undefined && (obj.startBlock = (message.startBlock || Long.UZERO).toString());
-    message.earliestStart !== undefined && (obj.earliestStart = (message.earliestStart || Long.UZERO).toString());
-    if (message.deletedEpochs) {
-      obj.deletedEpochs = message.deletedEpochs.map(e => (e || Long.UZERO).toString());
-    } else {
-      obj.deletedEpochs = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$deletedEpochs;

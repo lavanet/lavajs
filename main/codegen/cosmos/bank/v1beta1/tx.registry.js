@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.bank.v1beta1.MsgSend", _tx.MsgSend], ["/cosmos.bank.v1beta1.MsgMultiSend", _tx.MsgMultiSend]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -46,34 +44,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    send: function send(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-        value: _tx.MsgSend.toJSON(value)
-      };
-    },
-    multiSend: function multiSend(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
-        value: _tx.MsgMultiSend.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    send: function send(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-        value: _tx.MsgSend.fromJSON(value)
-      };
-    },
-    multiSend: function multiSend(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
-        value: _tx.MsgMultiSend.fromJSON(value)
       };
     }
   },

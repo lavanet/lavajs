@@ -66,28 +66,6 @@ var ValidatorSet = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      validators: Array.isArray(object === null || object === void 0 ? void 0 : object.validators) ? object.validators.map(function (e) {
-        return Validator.fromJSON(e);
-      }) : [],
-      proposer: (0, _helpers.isSet)(object.proposer) ? Validator.fromJSON(object.proposer) : undefined,
-      totalVotingPower: (0, _helpers.isSet)(object.totalVotingPower) ? _helpers.Long.fromValue(object.totalVotingPower) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.validators) {
-      obj.validators = message.validators.map(function (e) {
-        return e ? Validator.toJSON(e) : undefined;
-      });
-    } else {
-      obj.validators = [];
-    }
-    message.proposer !== undefined && (obj.proposer = message.proposer ? Validator.toJSON(message.proposer) : undefined);
-    message.totalVotingPower !== undefined && (obj.totalVotingPower = (message.totalVotingPower || _helpers.Long.ZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$validators;
     var message = createBaseValidatorSet();
@@ -151,22 +129,6 @@ var Validator = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      address: (0, _helpers.isSet)(object.address) ? (0, _helpers.bytesFromBase64)(object.address) : new Uint8Array(),
-      pubKey: (0, _helpers.isSet)(object.pubKey) ? _keys.PublicKey.fromJSON(object.pubKey) : undefined,
-      votingPower: (0, _helpers.isSet)(object.votingPower) ? _helpers.Long.fromValue(object.votingPower) : _helpers.Long.ZERO,
-      proposerPriority: (0, _helpers.isSet)(object.proposerPriority) ? _helpers.Long.fromValue(object.proposerPriority) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.address !== undefined && (obj.address = (0, _helpers.base64FromBytes)(message.address !== undefined ? message.address : new Uint8Array()));
-    message.pubKey !== undefined && (obj.pubKey = message.pubKey ? _keys.PublicKey.toJSON(message.pubKey) : undefined);
-    message.votingPower !== undefined && (obj.votingPower = (message.votingPower || _helpers.Long.ZERO).toString());
-    message.proposerPriority !== undefined && (obj.proposerPriority = (message.proposerPriority || _helpers.Long.ZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$address;
     var message = createBaseValidator();
@@ -214,18 +176,6 @@ var SimpleValidator = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      pubKey: (0, _helpers.isSet)(object.pubKey) ? _keys.PublicKey.fromJSON(object.pubKey) : undefined,
-      votingPower: (0, _helpers.isSet)(object.votingPower) ? _helpers.Long.fromValue(object.votingPower) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.pubKey !== undefined && (obj.pubKey = message.pubKey ? _keys.PublicKey.toJSON(message.pubKey) : undefined);
-    message.votingPower !== undefined && (obj.votingPower = (message.votingPower || _helpers.Long.ZERO).toString());
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseSimpleValidator();

@@ -4,10 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-var _project = require("./project");
+var _plan = require("../plans/plan");
 var _helpers = require("../helpers");
-//@ts-nocheck
-
 var AminoConverter = {
   "/lavanet.lava.projects.MsgAddKeys": {
     aminoType: "/lavanet.lava.projects.MsgAddKeys",
@@ -118,7 +116,7 @@ var AminoConverter = {
           totalCuLimit: _helpers.Long.fromString(policy.total_cu_limit),
           epochCuLimit: _helpers.Long.fromString(policy.epoch_cu_limit),
           maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair),
-          selectedProvidersMode: (0, _project.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
+          selectedProvidersMode: (0, _plan.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
           selectedProviders: policy.selected_providers
         }
       };
@@ -167,7 +165,7 @@ var AminoConverter = {
           totalCuLimit: _helpers.Long.fromString(policy.total_cu_limit),
           epochCuLimit: _helpers.Long.fromString(policy.epoch_cu_limit),
           maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair),
-          selectedProvidersMode: (0, _project.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
+          selectedProvidersMode: (0, _plan.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
           selectedProviders: policy.selected_providers
         }
       };

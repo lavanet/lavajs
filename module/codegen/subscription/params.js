@@ -1,4 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
+
 /** Params defines the parameters for the module. */
 
 /** Params defines the parameters for the module. */
@@ -23,13 +24,6 @@ export const Params = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseParams();

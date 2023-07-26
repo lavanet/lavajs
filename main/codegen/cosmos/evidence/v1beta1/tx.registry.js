@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.evidence.v1beta1.MsgSubmitEvidence", _tx.MsgSubmitEvidence]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -34,22 +32,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    submitEvidence: function submitEvidence(value) {
-      return {
-        typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
-        value: _tx.MsgSubmitEvidence.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    submitEvidence: function submitEvidence(value) {
-      return {
-        typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
-        value: _tx.MsgSubmitEvidence.fromJSON(value)
       };
     }
   },

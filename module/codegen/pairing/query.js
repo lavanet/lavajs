@@ -6,7 +6,7 @@ import { ProviderPaymentStorage } from "./provider_payment_storage";
 import { EpochPayments } from "./epoch_payments";
 import { Subscription } from "../subscription/subscription";
 import { Project } from "../projects/project";
-import { Long, isSet } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
@@ -36,13 +36,6 @@ export const QueryParamsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
@@ -77,16 +70,6 @@ export const QueryParamsResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
@@ -129,18 +112,6 @@ export const QueryProvidersRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      chainID: isSet(object.chainID) ? String(object.chainID) : "",
-      showFrozen: isSet(object.showFrozen) ? Boolean(object.showFrozen) : false
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.showFrozen !== undefined && (obj.showFrozen = message.showFrozen);
-    return obj;
   },
   fromPartial(object) {
     var _object$chainID, _object$showFrozen;
@@ -186,22 +157,6 @@ export const QueryProvidersResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      stakeEntry: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeEntry) ? object.stakeEntry.map(e => StakeEntry.fromJSON(e)) : [],
-      output: isSet(object.output) ? String(object.output) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.stakeEntry) {
-      obj.stakeEntry = message.stakeEntry.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.stakeEntry = [];
-    }
-    message.output !== undefined && (obj.output = message.output);
-    return obj;
-  },
   fromPartial(object) {
     var _object$stakeEntry, _object$output;
     const message = createBaseQueryProvidersResponse();
@@ -245,18 +200,6 @@ export const QueryGetPairingRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      chainID: isSet(object.chainID) ? String(object.chainID) : "",
-      client: isSet(object.client) ? String(object.client) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.client !== undefined && (obj.client = message.client);
-    return obj;
   },
   fromPartial(object) {
     var _object$chainID2, _object$client;
@@ -323,28 +266,6 @@ export const QueryGetPairingResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      providers: Array.isArray(object === null || object === void 0 ? void 0 : object.providers) ? object.providers.map(e => StakeEntry.fromJSON(e)) : [],
-      currentEpoch: isSet(object.currentEpoch) ? Long.fromValue(object.currentEpoch) : Long.UZERO,
-      timeLeftToNextPairing: isSet(object.timeLeftToNextPairing) ? Long.fromValue(object.timeLeftToNextPairing) : Long.UZERO,
-      specLastUpdatedBlock: isSet(object.specLastUpdatedBlock) ? Long.fromValue(object.specLastUpdatedBlock) : Long.UZERO,
-      blockOfNextPairing: isSet(object.blockOfNextPairing) ? Long.fromValue(object.blockOfNextPairing) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.providers) {
-      obj.providers = message.providers.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.providers = [];
-    }
-    message.currentEpoch !== undefined && (obj.currentEpoch = (message.currentEpoch || Long.UZERO).toString());
-    message.timeLeftToNextPairing !== undefined && (obj.timeLeftToNextPairing = (message.timeLeftToNextPairing || Long.UZERO).toString());
-    message.specLastUpdatedBlock !== undefined && (obj.specLastUpdatedBlock = (message.specLastUpdatedBlock || Long.UZERO).toString());
-    message.blockOfNextPairing !== undefined && (obj.blockOfNextPairing = (message.blockOfNextPairing || Long.UZERO).toString());
-    return obj;
-  },
   fromPartial(object) {
     var _object$providers;
     const message = createBaseQueryGetPairingResponse();
@@ -406,22 +327,6 @@ export const QueryVerifyPairingRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      chainID: isSet(object.chainID) ? String(object.chainID) : "",
-      client: isSet(object.client) ? String(object.client) : "",
-      provider: isSet(object.provider) ? String(object.provider) : "",
-      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.client !== undefined && (obj.client = message.client);
-    message.provider !== undefined && (obj.provider = message.provider);
-    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
-    return obj;
-  },
   fromPartial(object) {
     var _object$chainID3, _object$client2, _object$provider;
     const message = createBaseQueryVerifyPairingRequest();
@@ -475,20 +380,6 @@ export const QueryVerifyPairingResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      valid: isSet(object.valid) ? Boolean(object.valid) : false,
-      pairedProviders: isSet(object.pairedProviders) ? Long.fromValue(object.pairedProviders) : Long.UZERO,
-      cuPerEpoch: isSet(object.cuPerEpoch) ? Long.fromValue(object.cuPerEpoch) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.valid !== undefined && (obj.valid = message.valid);
-    message.pairedProviders !== undefined && (obj.pairedProviders = (message.pairedProviders || Long.UZERO).toString());
-    message.cuPerEpoch !== undefined && (obj.cuPerEpoch = (message.cuPerEpoch || Long.UZERO).toString());
-    return obj;
-  },
   fromPartial(object) {
     var _object$valid;
     const message = createBaseQueryVerifyPairingResponse();
@@ -527,16 +418,6 @@ export const QueryGetUniquePaymentStorageClientProviderRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
-  },
   fromPartial(object) {
     var _object$index;
     const message = createBaseQueryGetUniquePaymentStorageClientProviderRequest();
@@ -573,16 +454,6 @@ export const QueryGetUniquePaymentStorageClientProviderResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      uniquePaymentStorageClientProvider: isSet(object.uniquePaymentStorageClientProvider) ? UniquePaymentStorageClientProvider.fromJSON(object.uniquePaymentStorageClientProvider) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.uniquePaymentStorageClientProvider !== undefined && (obj.uniquePaymentStorageClientProvider = message.uniquePaymentStorageClientProvider ? UniquePaymentStorageClientProvider.toJSON(message.uniquePaymentStorageClientProvider) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryGetUniquePaymentStorageClientProviderResponse();
     message.uniquePaymentStorageClientProvider = object.uniquePaymentStorageClientProvider !== undefined && object.uniquePaymentStorageClientProvider !== null ? UniquePaymentStorageClientProvider.fromPartial(object.uniquePaymentStorageClientProvider) : undefined;
@@ -617,16 +488,6 @@ export const QueryAllUniquePaymentStorageClientProviderRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryAllUniquePaymentStorageClientProviderRequest();
@@ -670,22 +531,6 @@ export const QueryAllUniquePaymentStorageClientProviderResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      uniquePaymentStorageClientProvider: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProvider) ? object.uniquePaymentStorageClientProvider.map(e => UniquePaymentStorageClientProvider.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.uniquePaymentStorageClientProvider) {
-      obj.uniquePaymentStorageClientProvider = message.uniquePaymentStorageClientProvider.map(e => e ? UniquePaymentStorageClientProvider.toJSON(e) : undefined);
-    } else {
-      obj.uniquePaymentStorageClientProvider = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$uniquePayment;
     const message = createBaseQueryAllUniquePaymentStorageClientProviderResponse();
@@ -723,16 +568,6 @@ export const QueryGetProviderPaymentStorageRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
-  },
   fromPartial(object) {
     var _object$index2;
     const message = createBaseQueryGetProviderPaymentStorageRequest();
@@ -769,16 +604,6 @@ export const QueryGetProviderPaymentStorageResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      providerPaymentStorage: isSet(object.providerPaymentStorage) ? ProviderPaymentStorage.fromJSON(object.providerPaymentStorage) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.providerPaymentStorage !== undefined && (obj.providerPaymentStorage = message.providerPaymentStorage ? ProviderPaymentStorage.toJSON(message.providerPaymentStorage) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryGetProviderPaymentStorageResponse();
     message.providerPaymentStorage = object.providerPaymentStorage !== undefined && object.providerPaymentStorage !== null ? ProviderPaymentStorage.fromPartial(object.providerPaymentStorage) : undefined;
@@ -813,16 +638,6 @@ export const QueryAllProviderPaymentStorageRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryAllProviderPaymentStorageRequest();
@@ -866,22 +681,6 @@ export const QueryAllProviderPaymentStorageResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      providerPaymentStorage: Array.isArray(object === null || object === void 0 ? void 0 : object.providerPaymentStorage) ? object.providerPaymentStorage.map(e => ProviderPaymentStorage.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.providerPaymentStorage) {
-      obj.providerPaymentStorage = message.providerPaymentStorage.map(e => e ? ProviderPaymentStorage.toJSON(e) : undefined);
-    } else {
-      obj.providerPaymentStorage = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$providerPayme;
     const message = createBaseQueryAllProviderPaymentStorageResponse();
@@ -919,16 +718,6 @@ export const QueryGetEpochPaymentsRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
-  },
   fromPartial(object) {
     var _object$index3;
     const message = createBaseQueryGetEpochPaymentsRequest();
@@ -965,16 +754,6 @@ export const QueryGetEpochPaymentsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      epochPayments: isSet(object.epochPayments) ? EpochPayments.fromJSON(object.epochPayments) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.epochPayments !== undefined && (obj.epochPayments = message.epochPayments ? EpochPayments.toJSON(message.epochPayments) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryGetEpochPaymentsResponse();
     message.epochPayments = object.epochPayments !== undefined && object.epochPayments !== null ? EpochPayments.fromPartial(object.epochPayments) : undefined;
@@ -1009,16 +788,6 @@ export const QueryAllEpochPaymentsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryAllEpochPaymentsRequest();
@@ -1061,22 +830,6 @@ export const QueryAllEpochPaymentsResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      epochPayments: Array.isArray(object === null || object === void 0 ? void 0 : object.epochPayments) ? object.epochPayments.map(e => EpochPayments.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.epochPayments) {
-      obj.epochPayments = message.epochPayments.map(e => e ? EpochPayments.toJSON(e) : undefined);
-    } else {
-      obj.epochPayments = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$epochPayments;
@@ -1129,20 +882,6 @@ export const QueryUserEntryRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      chainID: isSet(object.chainID) ? String(object.chainID) : "",
-      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
-    return obj;
-  },
   fromPartial(object) {
     var _object$address, _object$chainID4;
     const message = createBaseQueryUserEntryRequest();
@@ -1188,18 +927,6 @@ export const QueryUserEntryResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      consumer: isSet(object.consumer) ? StakeEntry.fromJSON(object.consumer) : undefined,
-      maxCU: isSet(object.maxCU) ? Long.fromValue(object.maxCU) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.consumer !== undefined && (obj.consumer = message.consumer ? StakeEntry.toJSON(message.consumer) : undefined);
-    message.maxCU !== undefined && (obj.maxCU = (message.maxCU || Long.UZERO).toString());
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryUserEntryResponse();
     message.consumer = object.consumer !== undefined && object.consumer !== null ? StakeEntry.fromPartial(object.consumer) : undefined;
@@ -1236,16 +963,6 @@ export const QueryStaticProvidersListRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      chainID: isSet(object.chainID) ? String(object.chainID) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    return obj;
-  },
   fromPartial(object) {
     var _object$chainID5;
     const message = createBaseQueryStaticProvidersListRequest();
@@ -1281,20 +998,6 @@ export const QueryStaticProvidersListResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      providers: Array.isArray(object === null || object === void 0 ? void 0 : object.providers) ? object.providers.map(e => StakeEntry.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.providers) {
-      obj.providers = message.providers.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.providers = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$providers2;
@@ -1366,42 +1069,6 @@ export const QueryAccountInfoResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      provider: Array.isArray(object === null || object === void 0 ? void 0 : object.provider) ? object.provider.map(e => StakeEntry.fromJSON(e)) : [],
-      frozen: Array.isArray(object === null || object === void 0 ? void 0 : object.frozen) ? object.frozen.map(e => StakeEntry.fromJSON(e)) : [],
-      consumer: Array.isArray(object === null || object === void 0 ? void 0 : object.consumer) ? object.consumer.map(e => StakeEntry.fromJSON(e)) : [],
-      unstaked: Array.isArray(object === null || object === void 0 ? void 0 : object.unstaked) ? object.unstaked.map(e => StakeEntry.fromJSON(e)) : [],
-      subscription: isSet(object.subscription) ? Subscription.fromJSON(object.subscription) : undefined,
-      project: isSet(object.project) ? Project.fromJSON(object.project) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.provider) {
-      obj.provider = message.provider.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.provider = [];
-    }
-    if (message.frozen) {
-      obj.frozen = message.frozen.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.frozen = [];
-    }
-    if (message.consumer) {
-      obj.consumer = message.consumer.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.consumer = [];
-    }
-    if (message.unstaked) {
-      obj.unstaked = message.unstaked.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.unstaked = [];
-    }
-    message.subscription !== undefined && (obj.subscription = message.subscription ? Subscription.toJSON(message.subscription) : undefined);
-    message.project !== undefined && (obj.project = message.project ? Project.toJSON(message.project) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$provider2, _object$frozen, _object$consumer, _object$unstaked;

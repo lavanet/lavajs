@@ -8,7 +8,6 @@ exports.GenerateBadgeResponse = exports.GenerateBadgeRequest = void 0;
 var _relay = require("./relay");
 var _stake_entry = require("../epochstorage/stake_entry");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -57,20 +56,6 @@ var GenerateBadgeRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      badgeAddress: (0, _helpers.isSet)(object.badgeAddress) ? String(object.badgeAddress) : "",
-      projectId: (0, _helpers.isSet)(object.projectId) ? String(object.projectId) : "",
-      specId: (0, _helpers.isSet)(object.specId) ? String(object.specId) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.badgeAddress !== undefined && (obj.badgeAddress = message.badgeAddress);
-    message.projectId !== undefined && (obj.projectId = message.projectId);
-    message.specId !== undefined && (obj.specId = message.specId);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$badgeAddress, _object$projectId, _object$specId;
@@ -134,28 +119,6 @@ var GenerateBadgeResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      badge: (0, _helpers.isSet)(object.badge) ? _relay.Badge.fromJSON(object.badge) : undefined,
-      pairingList: Array.isArray(object === null || object === void 0 ? void 0 : object.pairingList) ? object.pairingList.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      badgeSignerAddress: (0, _helpers.isSet)(object.badgeSignerAddress) ? String(object.badgeSignerAddress) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.badge !== undefined && (obj.badge = message.badge ? _relay.Badge.toJSON(message.badge) : undefined);
-    if (message.pairingList) {
-      obj.pairingList = message.pairingList.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.pairingList = [];
-    }
-    message.badgeSignerAddress !== undefined && (obj.badgeSignerAddress = message.badgeSignerAddress);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$pairingList, _object$badgeSignerAd;

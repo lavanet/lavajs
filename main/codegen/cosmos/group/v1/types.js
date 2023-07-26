@@ -304,7 +304,7 @@ var Member = {
       writer.uint32(26).string(message.metadata);
     }
     if (message.addedAt !== undefined) {
-      _timestamp.Timestamp.encode(message.addedAt, writer.uint32(34).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.addedAt), writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -325,7 +325,7 @@ var Member = {
           message.metadata = reader.string();
           break;
         case 4:
-          message.addedAt = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.addedAt = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -334,29 +334,13 @@ var Member = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      weight: (0, _helpers.isSet)(object.weight) ? String(object.weight) : "",
-      metadata: (0, _helpers.isSet)(object.metadata) ? String(object.metadata) : "",
-      addedAt: (0, _helpers.isSet)(object.addedAt) ? (0, _helpers.fromJsonTimestamp)(object.addedAt) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.weight !== undefined && (obj.weight = message.weight);
-    message.metadata !== undefined && (obj.metadata = message.metadata);
-    message.addedAt !== undefined && (obj.addedAt = (0, _helpers.fromTimestamp)(message.addedAt).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$address, _object$weight, _object$metadata;
+    var _object$address, _object$weight, _object$metadata, _object$addedAt;
     var message = createBaseMember();
     message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
     message.weight = (_object$weight = object.weight) !== null && _object$weight !== void 0 ? _object$weight : "";
     message.metadata = (_object$metadata = object.metadata) !== null && _object$metadata !== void 0 ? _object$metadata : "";
-    message.addedAt = object.addedAt !== undefined && object.addedAt !== null ? _timestamp.Timestamp.fromPartial(object.addedAt) : undefined;
+    message.addedAt = (_object$addedAt = object.addedAt) !== null && _object$addedAt !== void 0 ? _object$addedAt : undefined;
     return message;
   }
 };
@@ -399,24 +383,6 @@ var Members = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      members: Array.isArray(object === null || object === void 0 ? void 0 : object.members) ? object.members.map(function (e) {
-        return Member.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.members) {
-      obj.members = message.members.map(function (e) {
-        return e ? Member.toJSON(e) : undefined;
-      });
-    } else {
-      obj.members = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$members;
@@ -465,18 +431,6 @@ var ThresholdDecisionPolicy = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      threshold: (0, _helpers.isSet)(object.threshold) ? String(object.threshold) : "",
-      windows: (0, _helpers.isSet)(object.windows) ? DecisionPolicyWindows.fromJSON(object.windows) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.threshold !== undefined && (obj.threshold = message.threshold);
-    message.windows !== undefined && (obj.windows = message.windows ? DecisionPolicyWindows.toJSON(message.windows) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$threshold;
     var message = createBaseThresholdDecisionPolicy();
@@ -522,18 +476,6 @@ var PercentageDecisionPolicy = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      percentage: (0, _helpers.isSet)(object.percentage) ? String(object.percentage) : "",
-      windows: (0, _helpers.isSet)(object.windows) ? DecisionPolicyWindows.fromJSON(object.windows) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.percentage !== undefined && (obj.percentage = message.percentage);
-    message.windows !== undefined && (obj.windows = message.windows ? DecisionPolicyWindows.toJSON(message.windows) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$percentage;
@@ -581,18 +523,6 @@ var DecisionPolicyWindows = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      votingPeriod: (0, _helpers.isSet)(object.votingPeriod) ? _duration.Duration.fromJSON(object.votingPeriod) : undefined,
-      minExecutionPeriod: (0, _helpers.isSet)(object.minExecutionPeriod) ? _duration.Duration.fromJSON(object.minExecutionPeriod) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.votingPeriod !== undefined && (obj.votingPeriod = message.votingPeriod ? _duration.Duration.toJSON(message.votingPeriod) : undefined);
-    message.minExecutionPeriod !== undefined && (obj.minExecutionPeriod = message.minExecutionPeriod ? _duration.Duration.toJSON(message.minExecutionPeriod) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseDecisionPolicyWindows();
     message.votingPeriod = object.votingPeriod !== undefined && object.votingPeriod !== null ? _duration.Duration.fromPartial(object.votingPeriod) : undefined;
@@ -630,7 +560,7 @@ var GroupInfo = {
       writer.uint32(42).string(message.totalWeight);
     }
     if (message.createdAt !== undefined) {
-      _timestamp.Timestamp.encode(message.createdAt, writer.uint32(50).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.createdAt), writer.uint32(50).fork()).ldelim();
     }
     return writer;
   },
@@ -657,7 +587,7 @@ var GroupInfo = {
           message.totalWeight = reader.string();
           break;
         case 6:
-          message.createdAt = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.createdAt = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -666,35 +596,15 @@ var GroupInfo = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      id: (0, _helpers.isSet)(object.id) ? _helpers.Long.fromValue(object.id) : _helpers.Long.UZERO,
-      admin: (0, _helpers.isSet)(object.admin) ? String(object.admin) : "",
-      metadata: (0, _helpers.isSet)(object.metadata) ? String(object.metadata) : "",
-      version: (0, _helpers.isSet)(object.version) ? _helpers.Long.fromValue(object.version) : _helpers.Long.UZERO,
-      totalWeight: (0, _helpers.isSet)(object.totalWeight) ? String(object.totalWeight) : "",
-      createdAt: (0, _helpers.isSet)(object.createdAt) ? (0, _helpers.fromJsonTimestamp)(object.createdAt) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.id !== undefined && (obj.id = (message.id || _helpers.Long.UZERO).toString());
-    message.admin !== undefined && (obj.admin = message.admin);
-    message.metadata !== undefined && (obj.metadata = message.metadata);
-    message.version !== undefined && (obj.version = (message.version || _helpers.Long.UZERO).toString());
-    message.totalWeight !== undefined && (obj.totalWeight = message.totalWeight);
-    message.createdAt !== undefined && (obj.createdAt = (0, _helpers.fromTimestamp)(message.createdAt).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$admin, _object$metadata2, _object$totalWeight;
+    var _object$admin, _object$metadata2, _object$totalWeight, _object$createdAt;
     var message = createBaseGroupInfo();
     message.id = object.id !== undefined && object.id !== null ? _helpers.Long.fromValue(object.id) : _helpers.Long.UZERO;
     message.admin = (_object$admin = object.admin) !== null && _object$admin !== void 0 ? _object$admin : "";
     message.metadata = (_object$metadata2 = object.metadata) !== null && _object$metadata2 !== void 0 ? _object$metadata2 : "";
     message.version = object.version !== undefined && object.version !== null ? _helpers.Long.fromValue(object.version) : _helpers.Long.UZERO;
     message.totalWeight = (_object$totalWeight = object.totalWeight) !== null && _object$totalWeight !== void 0 ? _object$totalWeight : "";
-    message.createdAt = object.createdAt !== undefined && object.createdAt !== null ? _timestamp.Timestamp.fromPartial(object.createdAt) : undefined;
+    message.createdAt = (_object$createdAt = object.createdAt) !== null && _object$createdAt !== void 0 ? _object$createdAt : undefined;
     return message;
   }
 };
@@ -735,18 +645,6 @@ var GroupMember = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      groupId: (0, _helpers.isSet)(object.groupId) ? _helpers.Long.fromValue(object.groupId) : _helpers.Long.UZERO,
-      member: (0, _helpers.isSet)(object.member) ? Member.fromJSON(object.member) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.groupId !== undefined && (obj.groupId = (message.groupId || _helpers.Long.UZERO).toString());
-    message.member !== undefined && (obj.member = message.member ? Member.toJSON(message.member) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseGroupMember();
@@ -789,7 +687,7 @@ var GroupPolicyInfo = {
       _any.Any.encode(message.decisionPolicy, writer.uint32(50).fork()).ldelim();
     }
     if (message.createdAt !== undefined) {
-      _timestamp.Timestamp.encode(message.createdAt, writer.uint32(58).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.createdAt), writer.uint32(58).fork()).ldelim();
     }
     return writer;
   },
@@ -819,7 +717,7 @@ var GroupPolicyInfo = {
           message.decisionPolicy = _any.Any.decode(reader, reader.uint32());
           break;
         case 7:
-          message.createdAt = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.createdAt = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -828,30 +726,8 @@ var GroupPolicyInfo = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      groupId: (0, _helpers.isSet)(object.groupId) ? _helpers.Long.fromValue(object.groupId) : _helpers.Long.UZERO,
-      admin: (0, _helpers.isSet)(object.admin) ? String(object.admin) : "",
-      metadata: (0, _helpers.isSet)(object.metadata) ? String(object.metadata) : "",
-      version: (0, _helpers.isSet)(object.version) ? _helpers.Long.fromValue(object.version) : _helpers.Long.UZERO,
-      decisionPolicy: (0, _helpers.isSet)(object.decisionPolicy) ? _any.Any.fromJSON(object.decisionPolicy) : undefined,
-      createdAt: (0, _helpers.isSet)(object.createdAt) ? (0, _helpers.fromJsonTimestamp)(object.createdAt) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.groupId !== undefined && (obj.groupId = (message.groupId || _helpers.Long.UZERO).toString());
-    message.admin !== undefined && (obj.admin = message.admin);
-    message.metadata !== undefined && (obj.metadata = message.metadata);
-    message.version !== undefined && (obj.version = (message.version || _helpers.Long.UZERO).toString());
-    message.decisionPolicy !== undefined && (obj.decisionPolicy = message.decisionPolicy ? _any.Any.toJSON(message.decisionPolicy) : undefined);
-    message.createdAt !== undefined && (obj.createdAt = (0, _helpers.fromTimestamp)(message.createdAt).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$address2, _object$admin2, _object$metadata3;
+    var _object$address2, _object$admin2, _object$metadata3, _object$createdAt2;
     var message = createBaseGroupPolicyInfo();
     message.address = (_object$address2 = object.address) !== null && _object$address2 !== void 0 ? _object$address2 : "";
     message.groupId = object.groupId !== undefined && object.groupId !== null ? _helpers.Long.fromValue(object.groupId) : _helpers.Long.UZERO;
@@ -859,7 +735,7 @@ var GroupPolicyInfo = {
     message.metadata = (_object$metadata3 = object.metadata) !== null && _object$metadata3 !== void 0 ? _object$metadata3 : "";
     message.version = object.version !== undefined && object.version !== null ? _helpers.Long.fromValue(object.version) : _helpers.Long.UZERO;
     message.decisionPolicy = object.decisionPolicy !== undefined && object.decisionPolicy !== null ? _any.Any.fromPartial(object.decisionPolicy) : undefined;
-    message.createdAt = object.createdAt !== undefined && object.createdAt !== null ? _timestamp.Timestamp.fromPartial(object.createdAt) : undefined;
+    message.createdAt = (_object$createdAt2 = object.createdAt) !== null && _object$createdAt2 !== void 0 ? _object$createdAt2 : undefined;
     return message;
   }
 };
@@ -906,7 +782,7 @@ var Proposal = {
       _iterator2.f();
     }
     if (message.submitTime !== undefined) {
-      _timestamp.Timestamp.encode(message.submitTime, writer.uint32(42).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.submitTime), writer.uint32(42).fork()).ldelim();
     }
     if (!message.groupVersion.isZero()) {
       writer.uint32(48).uint64(message.groupVersion);
@@ -924,7 +800,7 @@ var Proposal = {
       TallyResult.encode(message.finalTallyResult, writer.uint32(82).fork()).ldelim();
     }
     if (message.votingPeriodEnd !== undefined) {
-      _timestamp.Timestamp.encode(message.votingPeriodEnd, writer.uint32(90).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.votingPeriodEnd), writer.uint32(90).fork()).ldelim();
     }
     if (message.executorResult !== 0) {
       writer.uint32(96).int32(message.executorResult);
@@ -963,7 +839,7 @@ var Proposal = {
           message.proposers.push(reader.string());
           break;
         case 5:
-          message.submitTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.submitTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 6:
           message.groupVersion = reader.uint64();
@@ -981,7 +857,7 @@ var Proposal = {
           message.finalTallyResult = TallyResult.decode(reader, reader.uint32());
           break;
         case 11:
-          message.votingPeriodEnd = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.votingPeriodEnd = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 12:
           message.executorResult = reader.int32();
@@ -996,58 +872,8 @@ var Proposal = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      id: (0, _helpers.isSet)(object.id) ? _helpers.Long.fromValue(object.id) : _helpers.Long.UZERO,
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      metadata: (0, _helpers.isSet)(object.metadata) ? String(object.metadata) : "",
-      proposers: Array.isArray(object === null || object === void 0 ? void 0 : object.proposers) ? object.proposers.map(function (e) {
-        return String(e);
-      }) : [],
-      submitTime: (0, _helpers.isSet)(object.submitTime) ? (0, _helpers.fromJsonTimestamp)(object.submitTime) : undefined,
-      groupVersion: (0, _helpers.isSet)(object.groupVersion) ? _helpers.Long.fromValue(object.groupVersion) : _helpers.Long.UZERO,
-      groupPolicyVersion: (0, _helpers.isSet)(object.groupPolicyVersion) ? _helpers.Long.fromValue(object.groupPolicyVersion) : _helpers.Long.UZERO,
-      status: (0, _helpers.isSet)(object.status) ? proposalStatusFromJSON(object.status) : 0,
-      result: (0, _helpers.isSet)(object.result) ? proposalResultFromJSON(object.result) : 0,
-      finalTallyResult: (0, _helpers.isSet)(object.finalTallyResult) ? TallyResult.fromJSON(object.finalTallyResult) : undefined,
-      votingPeriodEnd: (0, _helpers.isSet)(object.votingPeriodEnd) ? (0, _helpers.fromJsonTimestamp)(object.votingPeriodEnd) : undefined,
-      executorResult: (0, _helpers.isSet)(object.executorResult) ? proposalExecutorResultFromJSON(object.executorResult) : 0,
-      messages: Array.isArray(object === null || object === void 0 ? void 0 : object.messages) ? object.messages.map(function (e) {
-        return _any.Any.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.id !== undefined && (obj.id = (message.id || _helpers.Long.UZERO).toString());
-    message.address !== undefined && (obj.address = message.address);
-    message.metadata !== undefined && (obj.metadata = message.metadata);
-    if (message.proposers) {
-      obj.proposers = message.proposers.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.proposers = [];
-    }
-    message.submitTime !== undefined && (obj.submitTime = (0, _helpers.fromTimestamp)(message.submitTime).toISOString());
-    message.groupVersion !== undefined && (obj.groupVersion = (message.groupVersion || _helpers.Long.UZERO).toString());
-    message.groupPolicyVersion !== undefined && (obj.groupPolicyVersion = (message.groupPolicyVersion || _helpers.Long.UZERO).toString());
-    message.status !== undefined && (obj.status = proposalStatusToJSON(message.status));
-    message.result !== undefined && (obj.result = proposalResultToJSON(message.result));
-    message.finalTallyResult !== undefined && (obj.finalTallyResult = message.finalTallyResult ? TallyResult.toJSON(message.finalTallyResult) : undefined);
-    message.votingPeriodEnd !== undefined && (obj.votingPeriodEnd = (0, _helpers.fromTimestamp)(message.votingPeriodEnd).toISOString());
-    message.executorResult !== undefined && (obj.executorResult = proposalExecutorResultToJSON(message.executorResult));
-    if (message.messages) {
-      obj.messages = message.messages.map(function (e) {
-        return e ? _any.Any.toJSON(e) : undefined;
-      });
-    } else {
-      obj.messages = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$address3, _object$metadata4, _object$proposers, _object$status, _object$result, _object$executorResul, _object$messages;
+    var _object$address3, _object$metadata4, _object$proposers, _object$submitTime, _object$status, _object$result, _object$votingPeriodE, _object$executorResul, _object$messages;
     var message = createBaseProposal();
     message.id = object.id !== undefined && object.id !== null ? _helpers.Long.fromValue(object.id) : _helpers.Long.UZERO;
     message.address = (_object$address3 = object.address) !== null && _object$address3 !== void 0 ? _object$address3 : "";
@@ -1055,13 +881,13 @@ var Proposal = {
     message.proposers = ((_object$proposers = object.proposers) === null || _object$proposers === void 0 ? void 0 : _object$proposers.map(function (e) {
       return e;
     })) || [];
-    message.submitTime = object.submitTime !== undefined && object.submitTime !== null ? _timestamp.Timestamp.fromPartial(object.submitTime) : undefined;
+    message.submitTime = (_object$submitTime = object.submitTime) !== null && _object$submitTime !== void 0 ? _object$submitTime : undefined;
     message.groupVersion = object.groupVersion !== undefined && object.groupVersion !== null ? _helpers.Long.fromValue(object.groupVersion) : _helpers.Long.UZERO;
     message.groupPolicyVersion = object.groupPolicyVersion !== undefined && object.groupPolicyVersion !== null ? _helpers.Long.fromValue(object.groupPolicyVersion) : _helpers.Long.UZERO;
     message.status = (_object$status = object.status) !== null && _object$status !== void 0 ? _object$status : 0;
     message.result = (_object$result = object.result) !== null && _object$result !== void 0 ? _object$result : 0;
     message.finalTallyResult = object.finalTallyResult !== undefined && object.finalTallyResult !== null ? TallyResult.fromPartial(object.finalTallyResult) : undefined;
-    message.votingPeriodEnd = object.votingPeriodEnd !== undefined && object.votingPeriodEnd !== null ? _timestamp.Timestamp.fromPartial(object.votingPeriodEnd) : undefined;
+    message.votingPeriodEnd = (_object$votingPeriodE = object.votingPeriodEnd) !== null && _object$votingPeriodE !== void 0 ? _object$votingPeriodE : undefined;
     message.executorResult = (_object$executorResul = object.executorResult) !== null && _object$executorResul !== void 0 ? _object$executorResul : 0;
     message.messages = ((_object$messages = object.messages) === null || _object$messages === void 0 ? void 0 : _object$messages.map(function (e) {
       return _any.Any.fromPartial(e);
@@ -1121,22 +947,6 @@ var TallyResult = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      yesCount: (0, _helpers.isSet)(object.yesCount) ? String(object.yesCount) : "",
-      abstainCount: (0, _helpers.isSet)(object.abstainCount) ? String(object.abstainCount) : "",
-      noCount: (0, _helpers.isSet)(object.noCount) ? String(object.noCount) : "",
-      noWithVetoCount: (0, _helpers.isSet)(object.noWithVetoCount) ? String(object.noWithVetoCount) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.yesCount !== undefined && (obj.yesCount = message.yesCount);
-    message.abstainCount !== undefined && (obj.abstainCount = message.abstainCount);
-    message.noCount !== undefined && (obj.noCount = message.noCount);
-    message.noWithVetoCount !== undefined && (obj.noWithVetoCount = message.noWithVetoCount);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$yesCount, _object$abstainCount, _object$noCount, _object$noWithVetoCou;
     var message = createBaseTallyResult();
@@ -1173,7 +983,7 @@ var Vote = {
       writer.uint32(34).string(message.metadata);
     }
     if (message.submitTime !== undefined) {
-      _timestamp.Timestamp.encode(message.submitTime, writer.uint32(42).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.submitTime), writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -1197,7 +1007,7 @@ var Vote = {
           message.metadata = reader.string();
           break;
         case 5:
-          message.submitTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.submitTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -1206,32 +1016,14 @@ var Vote = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      proposalId: (0, _helpers.isSet)(object.proposalId) ? _helpers.Long.fromValue(object.proposalId) : _helpers.Long.UZERO,
-      voter: (0, _helpers.isSet)(object.voter) ? String(object.voter) : "",
-      option: (0, _helpers.isSet)(object.option) ? voteOptionFromJSON(object.option) : 0,
-      metadata: (0, _helpers.isSet)(object.metadata) ? String(object.metadata) : "",
-      submitTime: (0, _helpers.isSet)(object.submitTime) ? (0, _helpers.fromJsonTimestamp)(object.submitTime) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.proposalId !== undefined && (obj.proposalId = (message.proposalId || _helpers.Long.UZERO).toString());
-    message.voter !== undefined && (obj.voter = message.voter);
-    message.option !== undefined && (obj.option = voteOptionToJSON(message.option));
-    message.metadata !== undefined && (obj.metadata = message.metadata);
-    message.submitTime !== undefined && (obj.submitTime = (0, _helpers.fromTimestamp)(message.submitTime).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$voter, _object$option, _object$metadata5;
+    var _object$voter, _object$option, _object$metadata5, _object$submitTime2;
     var message = createBaseVote();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? _helpers.Long.fromValue(object.proposalId) : _helpers.Long.UZERO;
     message.voter = (_object$voter = object.voter) !== null && _object$voter !== void 0 ? _object$voter : "";
     message.option = (_object$option = object.option) !== null && _object$option !== void 0 ? _object$option : 0;
     message.metadata = (_object$metadata5 = object.metadata) !== null && _object$metadata5 !== void 0 ? _object$metadata5 : "";
-    message.submitTime = object.submitTime !== undefined && object.submitTime !== null ? _timestamp.Timestamp.fromPartial(object.submitTime) : undefined;
+    message.submitTime = (_object$submitTime2 = object.submitTime) !== null && _object$submitTime2 !== void 0 ? _object$submitTime2 : undefined;
     return message;
   }
 };

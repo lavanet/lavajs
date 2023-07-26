@@ -53,20 +53,6 @@ var Endpoint = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      iPPORT: (0, _helpers.isSet)(object.iPPORT) ? String(object.iPPORT) : "",
-      useType: (0, _helpers.isSet)(object.useType) ? String(object.useType) : "",
-      geolocation: (0, _helpers.isSet)(object.geolocation) ? _helpers.Long.fromValue(object.geolocation) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.iPPORT !== undefined && (obj.iPPORT = message.iPPORT);
-    message.useType !== undefined && (obj.useType = message.useType);
-    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$iPPORT, _object$useType;
     var message = createBaseEndpoint();

@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgCreateValidator, MsgEditValidator, MsgDelegate, MsgBeginRedelegate, MsgUndelegate } from "./tx";
 export const registry = [["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator], ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator], ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate], ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate], ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate]];
 export const load = protoRegistry => {
@@ -69,70 +67,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
         value
-      };
-    }
-  },
-  toJSON: {
-    createValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgCreateValidator",
-        value: MsgCreateValidator.toJSON(value)
-      };
-    },
-    editValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
-        value: MsgEditValidator.toJSON(value)
-      };
-    },
-    delegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-        value: MsgDelegate.toJSON(value)
-      };
-    },
-    beginRedelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
-        value: MsgBeginRedelegate.toJSON(value)
-      };
-    },
-    undelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-        value: MsgUndelegate.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    createValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgCreateValidator",
-        value: MsgCreateValidator.fromJSON(value)
-      };
-    },
-    editValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
-        value: MsgEditValidator.fromJSON(value)
-      };
-    },
-    delegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-        value: MsgDelegate.fromJSON(value)
-      };
-    },
-    beginRedelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
-        value: MsgBeginRedelegate.fromJSON(value)
-      };
-    },
-    undelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-        value: MsgUndelegate.fromJSON(value)
       };
     }
   },

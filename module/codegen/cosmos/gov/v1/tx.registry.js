@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgSubmitProposal, MsgExecLegacyContent, MsgVote, MsgVoteWeighted, MsgDeposit } from "./tx";
 export const registry = [["/cosmos.gov.v1.MsgSubmitProposal", MsgSubmitProposal], ["/cosmos.gov.v1.MsgExecLegacyContent", MsgExecLegacyContent], ["/cosmos.gov.v1.MsgVote", MsgVote], ["/cosmos.gov.v1.MsgVoteWeighted", MsgVoteWeighted], ["/cosmos.gov.v1.MsgDeposit", MsgDeposit]];
 export const load = protoRegistry => {
@@ -69,70 +67,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.gov.v1.MsgDeposit",
         value
-      };
-    }
-  },
-  toJSON: {
-    submitProposal(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgSubmitProposal",
-        value: MsgSubmitProposal.toJSON(value)
-      };
-    },
-    execLegacyContent(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgExecLegacyContent",
-        value: MsgExecLegacyContent.toJSON(value)
-      };
-    },
-    vote(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgVote",
-        value: MsgVote.toJSON(value)
-      };
-    },
-    voteWeighted(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgVoteWeighted",
-        value: MsgVoteWeighted.toJSON(value)
-      };
-    },
-    deposit(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgDeposit",
-        value: MsgDeposit.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    submitProposal(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgSubmitProposal",
-        value: MsgSubmitProposal.fromJSON(value)
-      };
-    },
-    execLegacyContent(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgExecLegacyContent",
-        value: MsgExecLegacyContent.fromJSON(value)
-      };
-    },
-    vote(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgVote",
-        value: MsgVote.fromJSON(value)
-      };
-    },
-    voteWeighted(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgVoteWeighted",
-        value: MsgVoteWeighted.fromJSON(value)
-      };
-    },
-    deposit(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1.MsgDeposit",
-        value: MsgDeposit.fromJSON(value)
       };
     }
   },

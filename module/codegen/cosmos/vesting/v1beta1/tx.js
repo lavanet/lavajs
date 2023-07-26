@@ -1,6 +1,6 @@
 import { Coin } from "../../base/v1beta1/coin";
 import { Period } from "./vesting";
-import { Long, isSet } from "../../../helpers";
+import { Long } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
  * MsgCreateVestingAccount defines a message that enables creating a vesting
@@ -107,28 +107,6 @@ export const MsgCreateVestingAccount = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      fromAddress: isSet(object.fromAddress) ? String(object.fromAddress) : "",
-      toAddress: isSet(object.toAddress) ? String(object.toAddress) : "",
-      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(e => Coin.fromJSON(e)) : [],
-      endTime: isSet(object.endTime) ? Long.fromValue(object.endTime) : Long.ZERO,
-      delayed: isSet(object.delayed) ? Boolean(object.delayed) : false
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    if (message.amount) {
-      obj.amount = message.amount.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.amount = [];
-    }
-    message.endTime !== undefined && (obj.endTime = (message.endTime || Long.ZERO).toString());
-    message.delayed !== undefined && (obj.delayed = message.delayed);
-    return obj;
-  },
   fromPartial(object) {
     var _object$fromAddress, _object$toAddress, _object$amount, _object$delayed;
     const message = createBaseMsgCreateVestingAccount();
@@ -160,13 +138,6 @@ export const MsgCreateVestingAccountResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgCreateVestingAccountResponse();
@@ -216,24 +187,6 @@ export const MsgCreatePermanentLockedAccount = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      fromAddress: isSet(object.fromAddress) ? String(object.fromAddress) : "",
-      toAddress: isSet(object.toAddress) ? String(object.toAddress) : "",
-      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(e => Coin.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    if (message.amount) {
-      obj.amount = message.amount.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.amount = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$fromAddress2, _object$toAddress2, _object$amount2;
     const message = createBaseMsgCreatePermanentLockedAccount();
@@ -263,13 +216,6 @@ export const MsgCreatePermanentLockedAccountResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgCreatePermanentLockedAccountResponse();
@@ -326,26 +272,6 @@ export const MsgCreatePeriodicVestingAccount = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      fromAddress: isSet(object.fromAddress) ? String(object.fromAddress) : "",
-      toAddress: isSet(object.toAddress) ? String(object.toAddress) : "",
-      startTime: isSet(object.startTime) ? Long.fromValue(object.startTime) : Long.ZERO,
-      vestingPeriods: Array.isArray(object === null || object === void 0 ? void 0 : object.vestingPeriods) ? object.vestingPeriods.map(e => Period.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    message.startTime !== undefined && (obj.startTime = (message.startTime || Long.ZERO).toString());
-    if (message.vestingPeriods) {
-      obj.vestingPeriods = message.vestingPeriods.map(e => e ? Period.toJSON(e) : undefined);
-    } else {
-      obj.vestingPeriods = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$fromAddress3, _object$toAddress3, _object$vestingPeriod;
     const message = createBaseMsgCreatePeriodicVestingAccount();
@@ -376,13 +302,6 @@ export const MsgCreatePeriodicVestingAccountResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgCreatePeriodicVestingAccountResponse();

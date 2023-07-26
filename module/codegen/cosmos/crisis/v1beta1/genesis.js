@@ -1,6 +1,6 @@
 import { Coin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** GenesisState defines the crisis module's genesis state. */
 
 /** GenesisState defines the crisis module's genesis state. */
@@ -33,16 +33,6 @@ export const GenesisState = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      constantFee: isSet(object.constantFee) ? Coin.fromJSON(object.constantFee) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.constantFee !== undefined && (obj.constantFee = message.constantFee ? Coin.toJSON(message.constantFee) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseGenesisState();

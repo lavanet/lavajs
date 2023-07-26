@@ -23,6 +23,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
     this.params = this.params.bind(this);
     this.current = this.current.bind(this);
     this.listProjects = this.listProjects.bind(this);
+    this.list = this.list.bind(this);
   }
   (0, _createClass2["default"])(QueryClientImpl, [{
     key: "params",
@@ -52,6 +53,16 @@ var QueryClientImpl = /*#__PURE__*/function () {
         return _query.QueryListProjectsResponse.decode(new _m0.Reader(data));
       });
     }
+  }, {
+    key: "list",
+    value: function list() {
+      var request = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var data = _query.QueryListRequest.encode(request).finish();
+      var promise = this.rpc.request("lavanet.lava.subscription.Query", "List", data);
+      return promise.then(function (data) {
+        return _query.QueryListResponse.decode(new _m0.Reader(data));
+      });
+    }
   }]);
   return QueryClientImpl;
 }();
@@ -68,6 +79,9 @@ var createRpcQueryExtension = function createRpcQueryExtension(base) {
     },
     listProjects: function listProjects(request) {
       return queryService.listProjects(request);
+    },
+    list: function list(request) {
+      return queryService.list(request);
     }
   };
 };

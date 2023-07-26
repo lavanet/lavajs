@@ -189,18 +189,6 @@ var PartSetHeader = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      total: (0, _helpers.isSet)(object.total) ? Number(object.total) : 0,
-      hash: (0, _helpers.isSet)(object.hash) ? (0, _helpers.bytesFromBase64)(object.hash) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.hash !== undefined && (obj.hash = (0, _helpers.base64FromBytes)(message.hash !== undefined ? message.hash : new Uint8Array()));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$total, _object$hash;
     var message = createBasePartSetHeader();
@@ -254,20 +242,6 @@ var Part = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? Number(object.index) : 0,
-      bytes: (0, _helpers.isSet)(object.bytes) ? (0, _helpers.bytesFromBase64)(object.bytes) : new Uint8Array(),
-      proof: (0, _helpers.isSet)(object.proof) ? _proof.Proof.fromJSON(object.proof) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = Math.round(message.index));
-    message.bytes !== undefined && (obj.bytes = (0, _helpers.base64FromBytes)(message.bytes !== undefined ? message.bytes : new Uint8Array()));
-    message.proof !== undefined && (obj.proof = message.proof ? _proof.Proof.toJSON(message.proof) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$bytes;
     var message = createBasePart();
@@ -315,18 +289,6 @@ var BlockID = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      hash: (0, _helpers.isSet)(object.hash) ? (0, _helpers.bytesFromBase64)(object.hash) : new Uint8Array(),
-      partSetHeader: (0, _helpers.isSet)(object.partSetHeader) ? PartSetHeader.fromJSON(object.partSetHeader) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.hash !== undefined && (obj.hash = (0, _helpers.base64FromBytes)(message.hash !== undefined ? message.hash : new Uint8Array()));
-    message.partSetHeader !== undefined && (obj.partSetHeader = message.partSetHeader ? PartSetHeader.toJSON(message.partSetHeader) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$hash2;
     var message = createBaseBlockID();
@@ -367,7 +329,7 @@ var Header = {
       writer.uint32(24).int64(message.height);
     }
     if (message.time !== undefined) {
-      _timestamp.Timestamp.encode(message.time, writer.uint32(34).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.time), writer.uint32(34).fork()).ldelim();
     }
     if (message.lastBlockId !== undefined) {
       BlockID.encode(message.lastBlockId, writer.uint32(42).fork()).ldelim();
@@ -418,7 +380,7 @@ var Header = {
           message.height = reader.int64();
           break;
         case 4:
-          message.time = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.time = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 5:
           message.lastBlockId = BlockID.decode(reader, reader.uint32());
@@ -457,49 +419,13 @@ var Header = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      version: (0, _helpers.isSet)(object.version) ? _types.Consensus.fromJSON(object.version) : undefined,
-      chainId: (0, _helpers.isSet)(object.chainId) ? String(object.chainId) : "",
-      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
-      time: (0, _helpers.isSet)(object.time) ? (0, _helpers.fromJsonTimestamp)(object.time) : undefined,
-      lastBlockId: (0, _helpers.isSet)(object.lastBlockId) ? BlockID.fromJSON(object.lastBlockId) : undefined,
-      lastCommitHash: (0, _helpers.isSet)(object.lastCommitHash) ? (0, _helpers.bytesFromBase64)(object.lastCommitHash) : new Uint8Array(),
-      dataHash: (0, _helpers.isSet)(object.dataHash) ? (0, _helpers.bytesFromBase64)(object.dataHash) : new Uint8Array(),
-      validatorsHash: (0, _helpers.isSet)(object.validatorsHash) ? (0, _helpers.bytesFromBase64)(object.validatorsHash) : new Uint8Array(),
-      nextValidatorsHash: (0, _helpers.isSet)(object.nextValidatorsHash) ? (0, _helpers.bytesFromBase64)(object.nextValidatorsHash) : new Uint8Array(),
-      consensusHash: (0, _helpers.isSet)(object.consensusHash) ? (0, _helpers.bytesFromBase64)(object.consensusHash) : new Uint8Array(),
-      appHash: (0, _helpers.isSet)(object.appHash) ? (0, _helpers.bytesFromBase64)(object.appHash) : new Uint8Array(),
-      lastResultsHash: (0, _helpers.isSet)(object.lastResultsHash) ? (0, _helpers.bytesFromBase64)(object.lastResultsHash) : new Uint8Array(),
-      evidenceHash: (0, _helpers.isSet)(object.evidenceHash) ? (0, _helpers.bytesFromBase64)(object.evidenceHash) : new Uint8Array(),
-      proposerAddress: (0, _helpers.isSet)(object.proposerAddress) ? (0, _helpers.bytesFromBase64)(object.proposerAddress) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.version !== undefined && (obj.version = message.version ? _types.Consensus.toJSON(message.version) : undefined);
-    message.chainId !== undefined && (obj.chainId = message.chainId);
-    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
-    message.time !== undefined && (obj.time = (0, _helpers.fromTimestamp)(message.time).toISOString());
-    message.lastBlockId !== undefined && (obj.lastBlockId = message.lastBlockId ? BlockID.toJSON(message.lastBlockId) : undefined);
-    message.lastCommitHash !== undefined && (obj.lastCommitHash = (0, _helpers.base64FromBytes)(message.lastCommitHash !== undefined ? message.lastCommitHash : new Uint8Array()));
-    message.dataHash !== undefined && (obj.dataHash = (0, _helpers.base64FromBytes)(message.dataHash !== undefined ? message.dataHash : new Uint8Array()));
-    message.validatorsHash !== undefined && (obj.validatorsHash = (0, _helpers.base64FromBytes)(message.validatorsHash !== undefined ? message.validatorsHash : new Uint8Array()));
-    message.nextValidatorsHash !== undefined && (obj.nextValidatorsHash = (0, _helpers.base64FromBytes)(message.nextValidatorsHash !== undefined ? message.nextValidatorsHash : new Uint8Array()));
-    message.consensusHash !== undefined && (obj.consensusHash = (0, _helpers.base64FromBytes)(message.consensusHash !== undefined ? message.consensusHash : new Uint8Array()));
-    message.appHash !== undefined && (obj.appHash = (0, _helpers.base64FromBytes)(message.appHash !== undefined ? message.appHash : new Uint8Array()));
-    message.lastResultsHash !== undefined && (obj.lastResultsHash = (0, _helpers.base64FromBytes)(message.lastResultsHash !== undefined ? message.lastResultsHash : new Uint8Array()));
-    message.evidenceHash !== undefined && (obj.evidenceHash = (0, _helpers.base64FromBytes)(message.evidenceHash !== undefined ? message.evidenceHash : new Uint8Array()));
-    message.proposerAddress !== undefined && (obj.proposerAddress = (0, _helpers.base64FromBytes)(message.proposerAddress !== undefined ? message.proposerAddress : new Uint8Array()));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$chainId, _object$lastCommitHas, _object$dataHash, _object$validatorsHas, _object$nextValidator, _object$consensusHash, _object$appHash, _object$lastResultsHa, _object$evidenceHash, _object$proposerAddre;
+    var _object$chainId, _object$time, _object$lastCommitHas, _object$dataHash, _object$validatorsHas, _object$nextValidator, _object$consensusHash, _object$appHash, _object$lastResultsHa, _object$evidenceHash, _object$proposerAddre;
     var message = createBaseHeader();
     message.version = object.version !== undefined && object.version !== null ? _types.Consensus.fromPartial(object.version) : undefined;
     message.chainId = (_object$chainId = object.chainId) !== null && _object$chainId !== void 0 ? _object$chainId : "";
     message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
-    message.time = object.time !== undefined && object.time !== null ? _timestamp.Timestamp.fromPartial(object.time) : undefined;
+    message.time = (_object$time = object.time) !== null && _object$time !== void 0 ? _object$time : undefined;
     message.lastBlockId = object.lastBlockId !== undefined && object.lastBlockId !== null ? BlockID.fromPartial(object.lastBlockId) : undefined;
     message.lastCommitHash = (_object$lastCommitHas = object.lastCommitHash) !== null && _object$lastCommitHas !== void 0 ? _object$lastCommitHas : new Uint8Array();
     message.dataHash = (_object$dataHash = object.dataHash) !== null && _object$dataHash !== void 0 ? _object$dataHash : new Uint8Array();
@@ -553,24 +479,6 @@ var Data = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      txs: Array.isArray(object === null || object === void 0 ? void 0 : object.txs) ? object.txs.map(function (e) {
-        return (0, _helpers.bytesFromBase64)(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.txs) {
-      obj.txs = message.txs.map(function (e) {
-        return (0, _helpers.base64FromBytes)(e !== undefined ? e : new Uint8Array());
-      });
-    } else {
-      obj.txs = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$txs;
     var message = createBaseData();
@@ -609,7 +517,7 @@ var Vote = {
       BlockID.encode(message.blockId, writer.uint32(34).fork()).ldelim();
     }
     if (message.timestamp !== undefined) {
-      _timestamp.Timestamp.encode(message.timestamp, writer.uint32(42).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.timestamp), writer.uint32(42).fork()).ldelim();
     }
     if (message.validatorAddress.length !== 0) {
       writer.uint32(50).bytes(message.validatorAddress);
@@ -642,7 +550,7 @@ var Vote = {
           message.blockId = BlockID.decode(reader, reader.uint32());
           break;
         case 5:
-          message.timestamp = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.timestamp = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 6:
           message.validatorAddress = reader.bytes();
@@ -660,38 +568,14 @@ var Vote = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      type: (0, _helpers.isSet)(object.type) ? signedMsgTypeFromJSON(object.type) : 0,
-      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
-      round: (0, _helpers.isSet)(object.round) ? Number(object.round) : 0,
-      blockId: (0, _helpers.isSet)(object.blockId) ? BlockID.fromJSON(object.blockId) : undefined,
-      timestamp: (0, _helpers.isSet)(object.timestamp) ? (0, _helpers.fromJsonTimestamp)(object.timestamp) : undefined,
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? (0, _helpers.bytesFromBase64)(object.validatorAddress) : new Uint8Array(),
-      validatorIndex: (0, _helpers.isSet)(object.validatorIndex) ? Number(object.validatorIndex) : 0,
-      signature: (0, _helpers.isSet)(object.signature) ? (0, _helpers.bytesFromBase64)(object.signature) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.type !== undefined && (obj.type = signedMsgTypeToJSON(message.type));
-    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
-    message.round !== undefined && (obj.round = Math.round(message.round));
-    message.blockId !== undefined && (obj.blockId = message.blockId ? BlockID.toJSON(message.blockId) : undefined);
-    message.timestamp !== undefined && (obj.timestamp = (0, _helpers.fromTimestamp)(message.timestamp).toISOString());
-    message.validatorAddress !== undefined && (obj.validatorAddress = (0, _helpers.base64FromBytes)(message.validatorAddress !== undefined ? message.validatorAddress : new Uint8Array()));
-    message.validatorIndex !== undefined && (obj.validatorIndex = Math.round(message.validatorIndex));
-    message.signature !== undefined && (obj.signature = (0, _helpers.base64FromBytes)(message.signature !== undefined ? message.signature : new Uint8Array()));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$type, _object$round, _object$validatorAddr, _object$validatorInde, _object$signature;
+    var _object$type, _object$round, _object$timestamp, _object$validatorAddr, _object$validatorInde, _object$signature;
     var message = createBaseVote();
     message.type = (_object$type = object.type) !== null && _object$type !== void 0 ? _object$type : 0;
     message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
     message.round = (_object$round = object.round) !== null && _object$round !== void 0 ? _object$round : 0;
     message.blockId = object.blockId !== undefined && object.blockId !== null ? BlockID.fromPartial(object.blockId) : undefined;
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? _timestamp.Timestamp.fromPartial(object.timestamp) : undefined;
+    message.timestamp = (_object$timestamp = object.timestamp) !== null && _object$timestamp !== void 0 ? _object$timestamp : undefined;
     message.validatorAddress = (_object$validatorAddr = object.validatorAddress) !== null && _object$validatorAddr !== void 0 ? _object$validatorAddr : new Uint8Array();
     message.validatorIndex = (_object$validatorInde = object.validatorIndex) !== null && _object$validatorInde !== void 0 ? _object$validatorInde : 0;
     message.signature = (_object$signature = object.signature) !== null && _object$signature !== void 0 ? _object$signature : new Uint8Array();
@@ -759,30 +643,6 @@ var Commit = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
-      round: (0, _helpers.isSet)(object.round) ? Number(object.round) : 0,
-      blockId: (0, _helpers.isSet)(object.blockId) ? BlockID.fromJSON(object.blockId) : undefined,
-      signatures: Array.isArray(object === null || object === void 0 ? void 0 : object.signatures) ? object.signatures.map(function (e) {
-        return CommitSig.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
-    message.round !== undefined && (obj.round = Math.round(message.round));
-    message.blockId !== undefined && (obj.blockId = message.blockId ? BlockID.toJSON(message.blockId) : undefined);
-    if (message.signatures) {
-      obj.signatures = message.signatures.map(function (e) {
-        return e ? CommitSig.toJSON(e) : undefined;
-      });
-    } else {
-      obj.signatures = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$round2, _object$signatures;
     var message = createBaseCommit();
@@ -814,7 +674,7 @@ var CommitSig = {
       writer.uint32(18).bytes(message.validatorAddress);
     }
     if (message.timestamp !== undefined) {
-      _timestamp.Timestamp.encode(message.timestamp, writer.uint32(26).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.timestamp), writer.uint32(26).fork()).ldelim();
     }
     if (message.signature.length !== 0) {
       writer.uint32(34).bytes(message.signature);
@@ -835,7 +695,7 @@ var CommitSig = {
           message.validatorAddress = reader.bytes();
           break;
         case 3:
-          message.timestamp = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.timestamp = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 4:
           message.signature = reader.bytes();
@@ -847,28 +707,12 @@ var CommitSig = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      blockIdFlag: (0, _helpers.isSet)(object.blockIdFlag) ? blockIDFlagFromJSON(object.blockIdFlag) : 0,
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? (0, _helpers.bytesFromBase64)(object.validatorAddress) : new Uint8Array(),
-      timestamp: (0, _helpers.isSet)(object.timestamp) ? (0, _helpers.fromJsonTimestamp)(object.timestamp) : undefined,
-      signature: (0, _helpers.isSet)(object.signature) ? (0, _helpers.bytesFromBase64)(object.signature) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.blockIdFlag !== undefined && (obj.blockIdFlag = blockIDFlagToJSON(message.blockIdFlag));
-    message.validatorAddress !== undefined && (obj.validatorAddress = (0, _helpers.base64FromBytes)(message.validatorAddress !== undefined ? message.validatorAddress : new Uint8Array()));
-    message.timestamp !== undefined && (obj.timestamp = (0, _helpers.fromTimestamp)(message.timestamp).toISOString());
-    message.signature !== undefined && (obj.signature = (0, _helpers.base64FromBytes)(message.signature !== undefined ? message.signature : new Uint8Array()));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$blockIdFlag, _object$validatorAddr2, _object$signature2;
+    var _object$blockIdFlag, _object$validatorAddr2, _object$timestamp2, _object$signature2;
     var message = createBaseCommitSig();
     message.blockIdFlag = (_object$blockIdFlag = object.blockIdFlag) !== null && _object$blockIdFlag !== void 0 ? _object$blockIdFlag : 0;
     message.validatorAddress = (_object$validatorAddr2 = object.validatorAddress) !== null && _object$validatorAddr2 !== void 0 ? _object$validatorAddr2 : new Uint8Array();
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? _timestamp.Timestamp.fromPartial(object.timestamp) : undefined;
+    message.timestamp = (_object$timestamp2 = object.timestamp) !== null && _object$timestamp2 !== void 0 ? _object$timestamp2 : undefined;
     message.signature = (_object$signature2 = object.signature) !== null && _object$signature2 !== void 0 ? _object$signature2 : new Uint8Array();
     return message;
   }
@@ -904,7 +748,7 @@ var Proposal = {
       BlockID.encode(message.blockId, writer.uint32(42).fork()).ldelim();
     }
     if (message.timestamp !== undefined) {
-      _timestamp.Timestamp.encode(message.timestamp, writer.uint32(50).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.timestamp), writer.uint32(50).fork()).ldelim();
     }
     if (message.signature.length !== 0) {
       writer.uint32(58).bytes(message.signature);
@@ -934,7 +778,7 @@ var Proposal = {
           message.blockId = BlockID.decode(reader, reader.uint32());
           break;
         case 6:
-          message.timestamp = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.timestamp = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 7:
           message.signature = reader.bytes();
@@ -946,37 +790,15 @@ var Proposal = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      type: (0, _helpers.isSet)(object.type) ? signedMsgTypeFromJSON(object.type) : 0,
-      height: (0, _helpers.isSet)(object.height) ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO,
-      round: (0, _helpers.isSet)(object.round) ? Number(object.round) : 0,
-      polRound: (0, _helpers.isSet)(object.polRound) ? Number(object.polRound) : 0,
-      blockId: (0, _helpers.isSet)(object.blockId) ? BlockID.fromJSON(object.blockId) : undefined,
-      timestamp: (0, _helpers.isSet)(object.timestamp) ? (0, _helpers.fromJsonTimestamp)(object.timestamp) : undefined,
-      signature: (0, _helpers.isSet)(object.signature) ? (0, _helpers.bytesFromBase64)(object.signature) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.type !== undefined && (obj.type = signedMsgTypeToJSON(message.type));
-    message.height !== undefined && (obj.height = (message.height || _helpers.Long.ZERO).toString());
-    message.round !== undefined && (obj.round = Math.round(message.round));
-    message.polRound !== undefined && (obj.polRound = Math.round(message.polRound));
-    message.blockId !== undefined && (obj.blockId = message.blockId ? BlockID.toJSON(message.blockId) : undefined);
-    message.timestamp !== undefined && (obj.timestamp = (0, _helpers.fromTimestamp)(message.timestamp).toISOString());
-    message.signature !== undefined && (obj.signature = (0, _helpers.base64FromBytes)(message.signature !== undefined ? message.signature : new Uint8Array()));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$type2, _object$round3, _object$polRound, _object$signature3;
+    var _object$type2, _object$round3, _object$polRound, _object$timestamp3, _object$signature3;
     var message = createBaseProposal();
     message.type = (_object$type2 = object.type) !== null && _object$type2 !== void 0 ? _object$type2 : 0;
     message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
     message.round = (_object$round3 = object.round) !== null && _object$round3 !== void 0 ? _object$round3 : 0;
     message.polRound = (_object$polRound = object.polRound) !== null && _object$polRound !== void 0 ? _object$polRound : 0;
     message.blockId = object.blockId !== undefined && object.blockId !== null ? BlockID.fromPartial(object.blockId) : undefined;
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? _timestamp.Timestamp.fromPartial(object.timestamp) : undefined;
+    message.timestamp = (_object$timestamp3 = object.timestamp) !== null && _object$timestamp3 !== void 0 ? _object$timestamp3 : undefined;
     message.signature = (_object$signature3 = object.signature) !== null && _object$signature3 !== void 0 ? _object$signature3 : new Uint8Array();
     return message;
   }
@@ -1018,18 +840,6 @@ var SignedHeader = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      header: (0, _helpers.isSet)(object.header) ? Header.fromJSON(object.header) : undefined,
-      commit: (0, _helpers.isSet)(object.commit) ? Commit.fromJSON(object.commit) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.header !== undefined && (obj.header = message.header ? Header.toJSON(message.header) : undefined);
-    message.commit !== undefined && (obj.commit = message.commit ? Commit.toJSON(message.commit) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseSignedHeader();
@@ -1075,18 +885,6 @@ var LightBlock = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      signedHeader: (0, _helpers.isSet)(object.signedHeader) ? SignedHeader.fromJSON(object.signedHeader) : undefined,
-      validatorSet: (0, _helpers.isSet)(object.validatorSet) ? _validator.ValidatorSet.fromJSON(object.validatorSet) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.signedHeader !== undefined && (obj.signedHeader = message.signedHeader ? SignedHeader.toJSON(message.signedHeader) : undefined);
-    message.validatorSet !== undefined && (obj.validatorSet = message.validatorSet ? _validator.ValidatorSet.toJSON(message.validatorSet) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseLightBlock();
@@ -1147,22 +945,6 @@ var BlockMeta = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      blockId: (0, _helpers.isSet)(object.blockId) ? BlockID.fromJSON(object.blockId) : undefined,
-      blockSize: (0, _helpers.isSet)(object.blockSize) ? _helpers.Long.fromValue(object.blockSize) : _helpers.Long.ZERO,
-      header: (0, _helpers.isSet)(object.header) ? Header.fromJSON(object.header) : undefined,
-      numTxs: (0, _helpers.isSet)(object.numTxs) ? _helpers.Long.fromValue(object.numTxs) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.blockId !== undefined && (obj.blockId = message.blockId ? BlockID.toJSON(message.blockId) : undefined);
-    message.blockSize !== undefined && (obj.blockSize = (message.blockSize || _helpers.Long.ZERO).toString());
-    message.header !== undefined && (obj.header = message.header ? Header.toJSON(message.header) : undefined);
-    message.numTxs !== undefined && (obj.numTxs = (message.numTxs || _helpers.Long.ZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseBlockMeta();
     message.blockId = object.blockId !== undefined && object.blockId !== null ? BlockID.fromPartial(object.blockId) : undefined;
@@ -1216,20 +998,6 @@ var TxProof = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      rootHash: (0, _helpers.isSet)(object.rootHash) ? (0, _helpers.bytesFromBase64)(object.rootHash) : new Uint8Array(),
-      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
-      proof: (0, _helpers.isSet)(object.proof) ? _proof.Proof.fromJSON(object.proof) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.rootHash !== undefined && (obj.rootHash = (0, _helpers.base64FromBytes)(message.rootHash !== undefined ? message.rootHash : new Uint8Array()));
-    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
-    message.proof !== undefined && (obj.proof = message.proof ? _proof.Proof.toJSON(message.proof) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$rootHash, _object$data;

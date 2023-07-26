@@ -119,38 +119,6 @@ var RelaySession = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      specId: (0, _helpers.isSet)(object.specId) ? String(object.specId) : "",
-      contentHash: (0, _helpers.isSet)(object.contentHash) ? (0, _helpers.bytesFromBase64)(object.contentHash) : new Uint8Array(),
-      sessionId: (0, _helpers.isSet)(object.sessionId) ? _helpers.Long.fromValue(object.sessionId) : _helpers.Long.UZERO,
-      cuSum: (0, _helpers.isSet)(object.cuSum) ? _helpers.Long.fromValue(object.cuSum) : _helpers.Long.UZERO,
-      provider: (0, _helpers.isSet)(object.provider) ? String(object.provider) : "",
-      relayNum: (0, _helpers.isSet)(object.relayNum) ? _helpers.Long.fromValue(object.relayNum) : _helpers.Long.UZERO,
-      qosReport: (0, _helpers.isSet)(object.qosReport) ? QualityOfServiceReport.fromJSON(object.qosReport) : undefined,
-      epoch: (0, _helpers.isSet)(object.epoch) ? _helpers.Long.fromValue(object.epoch) : _helpers.Long.ZERO,
-      unresponsiveProviders: (0, _helpers.isSet)(object.unresponsiveProviders) ? (0, _helpers.bytesFromBase64)(object.unresponsiveProviders) : new Uint8Array(),
-      lavaChainId: (0, _helpers.isSet)(object.lavaChainId) ? String(object.lavaChainId) : "",
-      sig: (0, _helpers.isSet)(object.sig) ? (0, _helpers.bytesFromBase64)(object.sig) : new Uint8Array(),
-      badge: (0, _helpers.isSet)(object.badge) ? Badge.fromJSON(object.badge) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.specId !== undefined && (obj.specId = message.specId);
-    message.contentHash !== undefined && (obj.contentHash = (0, _helpers.base64FromBytes)(message.contentHash !== undefined ? message.contentHash : new Uint8Array()));
-    message.sessionId !== undefined && (obj.sessionId = (message.sessionId || _helpers.Long.UZERO).toString());
-    message.cuSum !== undefined && (obj.cuSum = (message.cuSum || _helpers.Long.UZERO).toString());
-    message.provider !== undefined && (obj.provider = message.provider);
-    message.relayNum !== undefined && (obj.relayNum = (message.relayNum || _helpers.Long.UZERO).toString());
-    message.qosReport !== undefined && (obj.qosReport = message.qosReport ? QualityOfServiceReport.toJSON(message.qosReport) : undefined);
-    message.epoch !== undefined && (obj.epoch = (message.epoch || _helpers.Long.ZERO).toString());
-    message.unresponsiveProviders !== undefined && (obj.unresponsiveProviders = (0, _helpers.base64FromBytes)(message.unresponsiveProviders !== undefined ? message.unresponsiveProviders : new Uint8Array()));
-    message.lavaChainId !== undefined && (obj.lavaChainId = message.lavaChainId);
-    message.sig !== undefined && (obj.sig = (0, _helpers.base64FromBytes)(message.sig !== undefined ? message.sig : new Uint8Array()));
-    message.badge !== undefined && (obj.badge = message.badge ? Badge.toJSON(message.badge) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$specId, _object$contentHash, _object$provider, _object$unresponsiveP, _object$lavaChainId, _object$sig;
     var message = createBaseRelaySession();
@@ -227,24 +195,6 @@ var Badge = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      cuAllocation: (0, _helpers.isSet)(object.cuAllocation) ? _helpers.Long.fromValue(object.cuAllocation) : _helpers.Long.UZERO,
-      epoch: (0, _helpers.isSet)(object.epoch) ? _helpers.Long.fromValue(object.epoch) : _helpers.Long.UZERO,
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      lavaChainId: (0, _helpers.isSet)(object.lavaChainId) ? String(object.lavaChainId) : "",
-      projectSig: (0, _helpers.isSet)(object.projectSig) ? (0, _helpers.bytesFromBase64)(object.projectSig) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.cuAllocation !== undefined && (obj.cuAllocation = (message.cuAllocation || _helpers.Long.UZERO).toString());
-    message.epoch !== undefined && (obj.epoch = (message.epoch || _helpers.Long.UZERO).toString());
-    message.address !== undefined && (obj.address = message.address);
-    message.lavaChainId !== undefined && (obj.lavaChainId = message.lavaChainId);
-    message.projectSig !== undefined && (obj.projectSig = (0, _helpers.base64FromBytes)(message.projectSig !== undefined ? message.projectSig : new Uint8Array()));
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address, _object$lavaChainId2, _object$projectSig;
@@ -339,36 +289,6 @@ var RelayPrivateData = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      connectionType: (0, _helpers.isSet)(object.connectionType) ? String(object.connectionType) : "",
-      apiUrl: (0, _helpers.isSet)(object.apiUrl) ? String(object.apiUrl) : "",
-      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
-      requestBlock: (0, _helpers.isSet)(object.requestBlock) ? _helpers.Long.fromValue(object.requestBlock) : _helpers.Long.ZERO,
-      apiInterface: (0, _helpers.isSet)(object.apiInterface) ? String(object.apiInterface) : "",
-      salt: (0, _helpers.isSet)(object.salt) ? (0, _helpers.bytesFromBase64)(object.salt) : new Uint8Array(),
-      metadata: Array.isArray(object === null || object === void 0 ? void 0 : object.metadata) ? object.metadata.map(function (e) {
-        return Metadata.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.connectionType !== undefined && (obj.connectionType = message.connectionType);
-    message.apiUrl !== undefined && (obj.apiUrl = message.apiUrl);
-    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
-    message.requestBlock !== undefined && (obj.requestBlock = (message.requestBlock || _helpers.Long.ZERO).toString());
-    message.apiInterface !== undefined && (obj.apiInterface = message.apiInterface);
-    message.salt !== undefined && (obj.salt = (0, _helpers.base64FromBytes)(message.salt !== undefined ? message.salt : new Uint8Array()));
-    if (message.metadata) {
-      obj.metadata = message.metadata.map(function (e) {
-        return e ? Metadata.toJSON(e) : undefined;
-      });
-    } else {
-      obj.metadata = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$connectionTyp, _object$apiUrl, _object$data, _object$apiInterface, _object$salt, _object$metadata;
     var message = createBaseRelayPrivateData();
@@ -422,18 +342,6 @@ var Metadata = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
-      value: (0, _helpers.isSet)(object.value) ? String(object.value) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.value !== undefined && (obj.value = message.value);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$name, _object$value;
     var message = createBaseMetadata();
@@ -479,18 +387,6 @@ var RelayRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      relaySession: (0, _helpers.isSet)(object.relaySession) ? RelaySession.fromJSON(object.relaySession) : undefined,
-      relayData: (0, _helpers.isSet)(object.relayData) ? RelayPrivateData.fromJSON(object.relayData) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.relaySession !== undefined && (obj.relaySession = message.relaySession ? RelaySession.toJSON(message.relaySession) : undefined);
-    message.relayData !== undefined && (obj.relayData = message.relayData ? RelayPrivateData.toJSON(message.relayData) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseRelayRequest();
@@ -581,36 +477,6 @@ var RelayReply = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
-      sig: (0, _helpers.isSet)(object.sig) ? (0, _helpers.bytesFromBase64)(object.sig) : new Uint8Array(),
-      nonce: (0, _helpers.isSet)(object.nonce) ? Number(object.nonce) : 0,
-      latestBlock: (0, _helpers.isSet)(object.latestBlock) ? _helpers.Long.fromValue(object.latestBlock) : _helpers.Long.ZERO,
-      finalizedBlocksHashes: (0, _helpers.isSet)(object.finalizedBlocksHashes) ? (0, _helpers.bytesFromBase64)(object.finalizedBlocksHashes) : new Uint8Array(),
-      sigBlocks: (0, _helpers.isSet)(object.sigBlocks) ? (0, _helpers.bytesFromBase64)(object.sigBlocks) : new Uint8Array(),
-      metadata: Array.isArray(object === null || object === void 0 ? void 0 : object.metadata) ? object.metadata.map(function (e) {
-        return Metadata.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
-    message.sig !== undefined && (obj.sig = (0, _helpers.base64FromBytes)(message.sig !== undefined ? message.sig : new Uint8Array()));
-    message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
-    message.latestBlock !== undefined && (obj.latestBlock = (message.latestBlock || _helpers.Long.ZERO).toString());
-    message.finalizedBlocksHashes !== undefined && (obj.finalizedBlocksHashes = (0, _helpers.base64FromBytes)(message.finalizedBlocksHashes !== undefined ? message.finalizedBlocksHashes : new Uint8Array()));
-    message.sigBlocks !== undefined && (obj.sigBlocks = (0, _helpers.base64FromBytes)(message.sigBlocks !== undefined ? message.sigBlocks : new Uint8Array()));
-    if (message.metadata) {
-      obj.metadata = message.metadata.map(function (e) {
-        return e ? Metadata.toJSON(e) : undefined;
-      });
-    } else {
-      obj.metadata = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$data2, _object$sig2, _object$nonce, _object$finalizedBloc, _object$sigBlocks, _object$metadata2;
     var message = createBaseRelayReply();
@@ -670,20 +536,6 @@ var QualityOfServiceReport = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      latency: (0, _helpers.isSet)(object.latency) ? String(object.latency) : "",
-      availability: (0, _helpers.isSet)(object.availability) ? String(object.availability) : "",
-      sync: (0, _helpers.isSet)(object.sync) ? String(object.sync) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.latency !== undefined && (obj.latency = message.latency);
-    message.availability !== undefined && (obj.availability = message.availability);
-    message.sync !== undefined && (obj.sync = message.sync);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$latency, _object$availability, _object$sync;

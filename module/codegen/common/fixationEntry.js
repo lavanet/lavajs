@@ -1,4 +1,4 @@
-import { Long, isSet, bytesFromBase64, base64FromBytes } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseEntry() {
   return {
@@ -64,26 +64,6 @@ export const Entry = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : "",
-      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO,
-      staleAt: isSet(object.staleAt) ? Long.fromValue(object.staleAt) : Long.UZERO,
-      refcount: isSet(object.refcount) ? Long.fromValue(object.refcount) : Long.UZERO,
-      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(),
-      deleteAt: isSet(object.deleteAt) ? Long.fromValue(object.deleteAt) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
-    message.staleAt !== undefined && (obj.staleAt = (message.staleAt || Long.UZERO).toString());
-    message.refcount !== undefined && (obj.refcount = (message.refcount || Long.UZERO).toString());
-    message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
-    message.deleteAt !== undefined && (obj.deleteAt = (message.deleteAt || Long.UZERO).toString());
-    return obj;
-  },
   fromPartial(object) {
     var _object$index, _object$data;
     const message = createBaseEntry();
@@ -93,6 +73,50 @@ export const Entry = {
     message.refcount = object.refcount !== undefined && object.refcount !== null ? Long.fromValue(object.refcount) : Long.UZERO;
     message.data = (_object$data = object.data) !== null && _object$data !== void 0 ? _object$data : new Uint8Array();
     message.deleteAt = object.deleteAt !== undefined && object.deleteAt !== null ? Long.fromValue(object.deleteAt) : Long.UZERO;
+    return message;
+  }
+};
+function createBaseRawMessage() {
+  return {
+    key: new Uint8Array(),
+    value: new Uint8Array()
+  };
+}
+export const RawMessage = {
+  encode(message, writer = _m0.Writer.create()) {
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
+    if (message.value.length !== 0) {
+      writer.uint32(18).bytes(message.value);
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRawMessage();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.bytes();
+          break;
+        case 2:
+          message.value = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object) {
+    var _object$key, _object$value;
+    const message = createBaseRawMessage();
+    message.key = (_object$key = object.key) !== null && _object$key !== void 0 ? _object$key : new Uint8Array();
+    message.value = (_object$value = object.value) !== null && _object$value !== void 0 ? _object$value : new Uint8Array();
     return message;
   }
 };

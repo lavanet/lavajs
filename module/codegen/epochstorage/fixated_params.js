@@ -1,4 +1,4 @@
-import { Long, isSet, bytesFromBase64, base64FromBytes } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseFixatedParams() {
   return {
@@ -42,20 +42,6 @@ export const FixatedParams = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : "",
-      parameter: isSet(object.parameter) ? bytesFromBase64(object.parameter) : new Uint8Array(),
-      fixationBlock: isSet(object.fixationBlock) ? Long.fromValue(object.fixationBlock) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.parameter !== undefined && (obj.parameter = base64FromBytes(message.parameter !== undefined ? message.parameter : new Uint8Array()));
-    message.fixationBlock !== undefined && (obj.fixationBlock = (message.fixationBlock || Long.UZERO).toString());
-    return obj;
   },
   fromPartial(object) {
     var _object$index, _object$parameter;

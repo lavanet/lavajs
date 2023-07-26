@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.authz.v1beta1.MsgGrant", _tx.MsgGrant], ["/cosmos.authz.v1beta1.MsgExec", _tx.MsgExec], ["/cosmos.authz.v1beta1.MsgRevoke", _tx.MsgRevoke]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -58,46 +56,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    grant: function grant(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
-        value: _tx.MsgGrant.toJSON(value)
-      };
-    },
-    exec: function exec(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgExec",
-        value: _tx.MsgExec.toJSON(value)
-      };
-    },
-    revoke: function revoke(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
-        value: _tx.MsgRevoke.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    grant: function grant(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
-        value: _tx.MsgGrant.fromJSON(value)
-      };
-    },
-    exec: function exec(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgExec",
-        value: _tx.MsgExec.fromJSON(value)
-      };
-    },
-    revoke: function revoke(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
-        value: _tx.MsgRevoke.fromJSON(value)
       };
     }
   },

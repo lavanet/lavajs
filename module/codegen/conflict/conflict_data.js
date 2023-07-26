@@ -1,6 +1,5 @@
 import { RelayRequest, RelayReply } from "../pairing/relay";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
 function createBaseResponseConflict() {
   return {
     conflictRelayData0: undefined,
@@ -36,18 +35,6 @@ export const ResponseConflict = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      conflictRelayData0: isSet(object.conflictRelayData0) ? ConflictRelayData.fromJSON(object.conflictRelayData0) : undefined,
-      conflictRelayData1: isSet(object.conflictRelayData1) ? ConflictRelayData.fromJSON(object.conflictRelayData1) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.conflictRelayData0 !== undefined && (obj.conflictRelayData0 = message.conflictRelayData0 ? ConflictRelayData.toJSON(message.conflictRelayData0) : undefined);
-    message.conflictRelayData1 !== undefined && (obj.conflictRelayData1 = message.conflictRelayData1 ? ConflictRelayData.toJSON(message.conflictRelayData1) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseResponseConflict();
@@ -92,18 +79,6 @@ export const ConflictRelayData = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      request: isSet(object.request) ? RelayRequest.fromJSON(object.request) : undefined,
-      reply: isSet(object.reply) ? RelayReply.fromJSON(object.reply) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.request !== undefined && (obj.request = message.request ? RelayRequest.toJSON(message.request) : undefined);
-    message.reply !== undefined && (obj.reply = message.reply ? RelayReply.toJSON(message.reply) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseConflictRelayData();
     message.request = object.request !== undefined && object.request !== null ? RelayRequest.fromPartial(object.request) : undefined;
@@ -146,18 +121,6 @@ export const FinalizationConflict = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      relayReply0: isSet(object.relayReply0) ? RelayReply.fromJSON(object.relayReply0) : undefined,
-      relayReply1: isSet(object.relayReply1) ? RelayReply.fromJSON(object.relayReply1) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.relayReply0 !== undefined && (obj.relayReply0 = message.relayReply0 ? RelayReply.toJSON(message.relayReply0) : undefined);
-    message.relayReply1 !== undefined && (obj.relayReply1 = message.relayReply1 ? RelayReply.toJSON(message.relayReply1) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseFinalizationConflict();

@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/lavanet.lava.subscription.MsgBuy", _tx.MsgBuy], ["/lavanet.lava.subscription.MsgAddProject", _tx.MsgAddProject], ["/lavanet.lava.subscription.MsgDelProject", _tx.MsgDelProject]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -58,46 +56,6 @@ var MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.subscription.MsgDelProject",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    buy: function buy(value) {
-      return {
-        typeUrl: "/lavanet.lava.subscription.MsgBuy",
-        value: _tx.MsgBuy.toJSON(value)
-      };
-    },
-    addProject: function addProject(value) {
-      return {
-        typeUrl: "/lavanet.lava.subscription.MsgAddProject",
-        value: _tx.MsgAddProject.toJSON(value)
-      };
-    },
-    delProject: function delProject(value) {
-      return {
-        typeUrl: "/lavanet.lava.subscription.MsgDelProject",
-        value: _tx.MsgDelProject.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    buy: function buy(value) {
-      return {
-        typeUrl: "/lavanet.lava.subscription.MsgBuy",
-        value: _tx.MsgBuy.fromJSON(value)
-      };
-    },
-    addProject: function addProject(value) {
-      return {
-        typeUrl: "/lavanet.lava.subscription.MsgAddProject",
-        value: _tx.MsgAddProject.fromJSON(value)
-      };
-    },
-    delProject: function delProject(value) {
-      return {
-        typeUrl: "/lavanet.lava.subscription.MsgDelProject",
-        value: _tx.MsgDelProject.fromJSON(value)
       };
     }
   },

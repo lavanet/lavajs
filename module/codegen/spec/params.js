@@ -1,4 +1,4 @@
-import { Long, isSet } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** Params defines the parameters for the module. */
 
@@ -39,18 +39,6 @@ export const Params = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      geolocationCount: isSet(object.geolocationCount) ? Long.fromValue(object.geolocationCount) : Long.UZERO,
-      maxCU: isSet(object.maxCU) ? Long.fromValue(object.maxCU) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.geolocationCount !== undefined && (obj.geolocationCount = (message.geolocationCount || Long.UZERO).toString());
-    message.maxCU !== undefined && (obj.maxCU = (message.maxCU || Long.UZERO).toString());
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseParams();

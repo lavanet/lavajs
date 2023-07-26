@@ -71,28 +71,6 @@ var GenesisState = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      params: (0, _helpers.isSet)(object.params) ? _params.Params.fromJSON(object.params) : undefined,
-      specList: Array.isArray(object === null || object === void 0 ? void 0 : object.specList) ? object.specList.map(function (e) {
-        return _spec.Spec.fromJSON(e);
-      }) : [],
-      specCount: (0, _helpers.isSet)(object.specCount) ? _helpers.Long.fromValue(object.specCount) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.params !== undefined && (obj.params = message.params ? _params.Params.toJSON(message.params) : undefined);
-    if (message.specList) {
-      obj.specList = message.specList.map(function (e) {
-        return e ? _spec.Spec.toJSON(e) : undefined;
-      });
-    } else {
-      obj.specList = [];
-    }
-    message.specCount !== undefined && (obj.specCount = (message.specCount || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$specList;
     var message = createBaseGenesisState();

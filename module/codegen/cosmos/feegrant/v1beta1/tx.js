@@ -1,6 +1,6 @@
 import { Any } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /**
  * MsgGrantAllowance adds permission for Grantee to spend up to Allowance
  * of fees from the account of Granter.
@@ -66,20 +66,6 @@ export const MsgGrantAllowance = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      granter: isSet(object.granter) ? String(object.granter) : "",
-      grantee: isSet(object.grantee) ? String(object.grantee) : "",
-      allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.granter !== undefined && (obj.granter = message.granter);
-    message.grantee !== undefined && (obj.grantee = message.grantee);
-    message.allowance !== undefined && (obj.allowance = message.allowance ? Any.toJSON(message.allowance) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$granter, _object$grantee;
     const message = createBaseMsgGrantAllowance();
@@ -109,13 +95,6 @@ export const MsgGrantAllowanceResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgGrantAllowanceResponse();
@@ -158,18 +137,6 @@ export const MsgRevokeAllowance = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      granter: isSet(object.granter) ? String(object.granter) : "",
-      grantee: isSet(object.grantee) ? String(object.grantee) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.granter !== undefined && (obj.granter = message.granter);
-    message.grantee !== undefined && (obj.grantee = message.grantee);
-    return obj;
-  },
   fromPartial(object) {
     var _object$granter2, _object$grantee2;
     const message = createBaseMsgRevokeAllowance();
@@ -198,13 +165,6 @@ export const MsgRevokeAllowanceResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgRevokeAllowanceResponse();

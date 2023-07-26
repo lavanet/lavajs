@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.MsgWithdrawValidatorCommissionResponse = exports.MsgWithdrawValidatorCommission = exports.MsgWithdrawDelegatorRewardResponse = exports.MsgWithdrawDelegatorReward = exports.MsgSetWithdrawAddressResponse = exports.MsgSetWithdrawAddress = exports.MsgFundCommunityPoolResponse = exports.MsgFundCommunityPool = void 0;
 var _coin = require("../../base/v1beta1/coin");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -106,18 +105,6 @@ var MsgSetWithdrawAddress = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      withdrawAddress: (0, _helpers.isSet)(object.withdrawAddress) ? String(object.withdrawAddress) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr, _object$withdrawAddre;
     var message = createBaseMsgSetWithdrawAddress();
@@ -148,13 +135,6 @@ var MsgSetWithdrawAddressResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgSetWithdrawAddressResponse();
@@ -198,18 +178,6 @@ var MsgWithdrawDelegatorReward = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr2, _object$validatorAddr;
@@ -259,24 +227,6 @@ var MsgWithdrawDelegatorRewardResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.amount) {
-      obj.amount = message.amount.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.amount = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$amount;
     var message = createBaseMsgWithdrawDelegatorRewardResponse();
@@ -316,16 +266,6 @@ var MsgWithdrawValidatorCommission = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$validatorAddr2;
@@ -373,24 +313,6 @@ var MsgWithdrawValidatorCommissionResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.amount) {
-      obj.amount = message.amount.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.amount = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$amount2;
@@ -448,26 +370,6 @@ var MsgFundCommunityPool = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : [],
-      depositor: (0, _helpers.isSet)(object.depositor) ? String(object.depositor) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.amount) {
-      obj.amount = message.amount.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.amount = [];
-    }
-    message.depositor !== undefined && (obj.depositor = message.depositor);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$amount3, _object$depositor;
     var message = createBaseMsgFundCommunityPool();
@@ -500,13 +402,6 @@ var MsgFundCommunityPoolResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgFundCommunityPoolResponse();

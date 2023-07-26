@@ -50,18 +50,6 @@ var Params = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      geolocationCount: (0, _helpers.isSet)(object.geolocationCount) ? _helpers.Long.fromValue(object.geolocationCount) : _helpers.Long.UZERO,
-      maxCU: (0, _helpers.isSet)(object.maxCU) ? _helpers.Long.fromValue(object.maxCU) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.geolocationCount !== undefined && (obj.geolocationCount = (message.geolocationCount || _helpers.Long.UZERO).toString());
-    message.maxCU !== undefined && (obj.maxCU = (message.maxCU || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseParams();
     message.geolocationCount = object.geolocationCount !== undefined && object.geolocationCount !== null ? _helpers.Long.fromValue(object.geolocationCount) : _helpers.Long.UZERO;

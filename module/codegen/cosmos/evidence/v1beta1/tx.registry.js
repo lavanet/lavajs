@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgSubmitEvidence } from "./tx";
 export const registry = [["/cosmos.evidence.v1beta1.MsgSubmitEvidence", MsgSubmitEvidence]];
 export const load = protoRegistry => {
@@ -21,22 +19,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
         value
-      };
-    }
-  },
-  toJSON: {
-    submitEvidence(value) {
-      return {
-        typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
-        value: MsgSubmitEvidence.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    submitEvidence(value) {
-      return {
-        typeUrl: "/cosmos.evidence.v1beta1.MsgSubmitEvidence",
-        value: MsgSubmitEvidence.fromJSON(value)
       };
     }
   },

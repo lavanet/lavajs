@@ -1,4 +1,4 @@
-import { Long, isSet } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseUniquePaymentStorageClientProvider() {
   return {
@@ -42,20 +42,6 @@ export const UniquePaymentStorageClientProvider = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : "",
-      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO,
-      usedCU: isSet(object.usedCU) ? Long.fromValue(object.usedCU) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
-    message.usedCU !== undefined && (obj.usedCU = (message.usedCU || Long.UZERO).toString());
-    return obj;
   },
   fromPartial(object) {
     var _object$index;

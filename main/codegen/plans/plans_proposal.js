@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.PlansDelProposal = exports.PlansAddProposal = void 0;
 var _plan = require("./plan");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -65,28 +64,6 @@ var PlansAddProposal = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      title: (0, _helpers.isSet)(object.title) ? String(object.title) : "",
-      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
-      plans: Array.isArray(object === null || object === void 0 ? void 0 : object.plans) ? object.plans.map(function (e) {
-        return _plan.Plan.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.title !== undefined && (obj.title = message.title);
-    message.description !== undefined && (obj.description = message.description);
-    if (message.plans) {
-      obj.plans = message.plans.map(function (e) {
-        return e ? _plan.Plan.toJSON(e) : undefined;
-      });
-    } else {
-      obj.plans = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$title, _object$description, _object$plans;
@@ -152,28 +129,6 @@ var PlansDelProposal = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      title: (0, _helpers.isSet)(object.title) ? String(object.title) : "",
-      description: (0, _helpers.isSet)(object.description) ? String(object.description) : "",
-      plans: Array.isArray(object === null || object === void 0 ? void 0 : object.plans) ? object.plans.map(function (e) {
-        return String(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.title !== undefined && (obj.title = message.title);
-    message.description !== undefined && (obj.description = message.description);
-    if (message.plans) {
-      obj.plans = message.plans.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.plans = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$title2, _object$description2, _object$plans2;

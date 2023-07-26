@@ -1,5 +1,5 @@
 import { ProjectData } from "../projects/project";
-import { Long, isSet } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseMsgBuy() {
   return {
@@ -51,22 +51,6 @@ export const MsgBuy = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      consumer: isSet(object.consumer) ? String(object.consumer) : "",
-      index: isSet(object.index) ? String(object.index) : "",
-      duration: isSet(object.duration) ? Long.fromValue(object.duration) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.consumer !== undefined && (obj.consumer = message.consumer);
-    message.index !== undefined && (obj.index = message.index);
-    message.duration !== undefined && (obj.duration = (message.duration || Long.UZERO).toString());
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator, _object$consumer, _object$index;
     const message = createBaseMsgBuy();
@@ -97,13 +81,6 @@ export const MsgBuyResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgBuyResponse();
@@ -146,18 +123,6 @@ export const MsgAddProject = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      projectData: isSet(object.projectData) ? ProjectData.fromJSON(object.projectData) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.projectData !== undefined && (obj.projectData = message.projectData ? ProjectData.toJSON(message.projectData) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator2;
     const message = createBaseMsgAddProject();
@@ -186,13 +151,6 @@ export const MsgAddProjectResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgAddProjectResponse();
@@ -235,18 +193,6 @@ export const MsgDelProject = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      name: isSet(object.name) ? String(object.name) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator3, _object$name;
     const message = createBaseMsgDelProject();
@@ -275,13 +221,6 @@ export const MsgDelProjectResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgDelProjectResponse();

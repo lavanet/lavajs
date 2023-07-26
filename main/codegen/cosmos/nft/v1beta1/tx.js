@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MsgSendResponse = exports.MsgSend = void 0;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** MsgSend represents a message to send a nft from one account to another account. */
@@ -68,22 +67,6 @@ var MsgSend = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      classId: (0, _helpers.isSet)(object.classId) ? String(object.classId) : "",
-      id: (0, _helpers.isSet)(object.id) ? String(object.id) : "",
-      sender: (0, _helpers.isSet)(object.sender) ? String(object.sender) : "",
-      receiver: (0, _helpers.isSet)(object.receiver) ? String(object.receiver) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.classId !== undefined && (obj.classId = message.classId);
-    message.id !== undefined && (obj.id = message.id);
-    message.sender !== undefined && (obj.sender = message.sender);
-    message.receiver !== undefined && (obj.receiver = message.receiver);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$classId, _object$id, _object$sender, _object$receiver;
     var message = createBaseMsgSend();
@@ -116,13 +99,6 @@ var MsgSendResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgSendResponse();

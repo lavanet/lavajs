@@ -4,10 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-var _project = require("../projects/project");
 var _helpers = require("../helpers");
-//@ts-nocheck
-
+var _plan = require("../plans/plan");
 var AminoConverter = {
   "/lavanet.lava.subscription.MsgBuy": {
     aminoType: "/lavanet.lava.subscription.MsgBuy",
@@ -94,7 +92,7 @@ var AminoConverter = {
             totalCuLimit: _helpers.Long.fromString(project_data.policy.total_cu_limit),
             epochCuLimit: _helpers.Long.fromString(project_data.policy.epoch_cu_limit),
             maxProvidersToPair: _helpers.Long.fromString(project_data.policy.max_providers_to_pair),
-            selectedProvidersMode: (0, _project.sELECTED_PROVIDERS_MODEFromJSON)(project_data.policy.selected_providers_mode),
+            selectedProvidersMode: (0, _plan.sELECTED_PROVIDERS_MODEFromJSON)(project_data.policy.selected_providers_mode),
             selectedProviders: project_data.policy.selected_providers
           }
         }

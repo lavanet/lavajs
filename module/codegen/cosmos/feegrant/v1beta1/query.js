@@ -1,7 +1,7 @@
 import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Grant } from "./feegrant";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** QueryAllowanceRequest is the request type for the Query/Allowance RPC method. */
 
 /** QueryAllowanceRequest is the request type for the Query/Allowance RPC method. */
@@ -62,18 +62,6 @@ export const QueryAllowanceRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      granter: isSet(object.granter) ? String(object.granter) : "",
-      grantee: isSet(object.grantee) ? String(object.grantee) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.granter !== undefined && (obj.granter = message.granter);
-    message.grantee !== undefined && (obj.grantee = message.grantee);
-    return obj;
-  },
   fromPartial(object) {
     var _object$granter, _object$grantee;
     const message = createBaseQueryAllowanceRequest();
@@ -110,16 +98,6 @@ export const QueryAllowanceResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      allowance: isSet(object.allowance) ? Grant.fromJSON(object.allowance) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.allowance !== undefined && (obj.allowance = message.allowance ? Grant.toJSON(message.allowance) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryAllowanceResponse();
@@ -162,18 +140,6 @@ export const QueryAllowancesRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      grantee: isSet(object.grantee) ? String(object.grantee) : "",
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.grantee !== undefined && (obj.grantee = message.grantee);
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$grantee2;
@@ -219,22 +185,6 @@ export const QueryAllowancesResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      allowances: Array.isArray(object === null || object === void 0 ? void 0 : object.allowances) ? object.allowances.map(e => Grant.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.allowances) {
-      obj.allowances = message.allowances.map(e => e ? Grant.toJSON(e) : undefined);
-    } else {
-      obj.allowances = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$allowances;
     const message = createBaseQueryAllowancesResponse();
@@ -279,18 +229,6 @@ export const QueryAllowancesByGranterRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      granter: isSet(object.granter) ? String(object.granter) : "",
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.granter !== undefined && (obj.granter = message.granter);
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$granter2;
     const message = createBaseQueryAllowancesByGranterRequest();
@@ -334,22 +272,6 @@ export const QueryAllowancesByGranterResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      allowances: Array.isArray(object === null || object === void 0 ? void 0 : object.allowances) ? object.allowances.map(e => Grant.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.allowances) {
-      obj.allowances = message.allowances.map(e => e ? Grant.toJSON(e) : undefined);
-    } else {
-      obj.allowances = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$allowances2;

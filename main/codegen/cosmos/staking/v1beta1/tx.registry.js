@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.staking.v1beta1.MsgCreateValidator", _tx.MsgCreateValidator], ["/cosmos.staking.v1beta1.MsgEditValidator", _tx.MsgEditValidator], ["/cosmos.staking.v1beta1.MsgDelegate", _tx.MsgDelegate], ["/cosmos.staking.v1beta1.MsgBeginRedelegate", _tx.MsgBeginRedelegate], ["/cosmos.staking.v1beta1.MsgUndelegate", _tx.MsgUndelegate]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -82,70 +80,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    createValidator: function createValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgCreateValidator",
-        value: _tx.MsgCreateValidator.toJSON(value)
-      };
-    },
-    editValidator: function editValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
-        value: _tx.MsgEditValidator.toJSON(value)
-      };
-    },
-    delegate: function delegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-        value: _tx.MsgDelegate.toJSON(value)
-      };
-    },
-    beginRedelegate: function beginRedelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
-        value: _tx.MsgBeginRedelegate.toJSON(value)
-      };
-    },
-    undelegate: function undelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-        value: _tx.MsgUndelegate.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    createValidator: function createValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgCreateValidator",
-        value: _tx.MsgCreateValidator.fromJSON(value)
-      };
-    },
-    editValidator: function editValidator(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgEditValidator",
-        value: _tx.MsgEditValidator.fromJSON(value)
-      };
-    },
-    delegate: function delegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-        value: _tx.MsgDelegate.fromJSON(value)
-      };
-    },
-    beginRedelegate: function beginRedelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
-        value: _tx.MsgBeginRedelegate.fromJSON(value)
-      };
-    },
-    undelegate: function undelegate(value) {
-      return {
-        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-        value: _tx.MsgUndelegate.fromJSON(value)
       };
     }
   },

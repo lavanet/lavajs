@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgSend, MsgMultiSend } from "./tx";
 export const registry = [["/cosmos.bank.v1beta1.MsgSend", MsgSend], ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend]];
 export const load = protoRegistry => {
@@ -33,34 +31,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
         value
-      };
-    }
-  },
-  toJSON: {
-    send(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-        value: MsgSend.toJSON(value)
-      };
-    },
-    multiSend(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
-        value: MsgMultiSend.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    send(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-        value: MsgSend.fromJSON(value)
-      };
-    },
-    multiSend(value) {
-      return {
-        typeUrl: "/cosmos.bank.v1beta1.MsgMultiSend",
-        value: MsgMultiSend.fromJSON(value)
       };
     }
   },

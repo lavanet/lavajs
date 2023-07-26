@@ -57,20 +57,6 @@ var ProtocolVersion = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      p2p: (0, _helpers.isSet)(object.p2p) ? _helpers.Long.fromValue(object.p2p) : _helpers.Long.UZERO,
-      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
-      app: (0, _helpers.isSet)(object.app) ? _helpers.Long.fromValue(object.app) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.p2p !== undefined && (obj.p2p = (message.p2p || _helpers.Long.UZERO).toString());
-    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
-    message.app !== undefined && (obj.app = (message.app || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseProtocolVersion();
     message.p2p = object.p2p !== undefined && object.p2p !== null ? _helpers.Long.fromValue(object.p2p) : _helpers.Long.UZERO;
@@ -159,30 +145,6 @@ var NodeInfo = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      protocolVersion: (0, _helpers.isSet)(object.protocolVersion) ? ProtocolVersion.fromJSON(object.protocolVersion) : undefined,
-      nodeId: (0, _helpers.isSet)(object.nodeId) ? String(object.nodeId) : "",
-      listenAddr: (0, _helpers.isSet)(object.listenAddr) ? String(object.listenAddr) : "",
-      network: (0, _helpers.isSet)(object.network) ? String(object.network) : "",
-      version: (0, _helpers.isSet)(object.version) ? String(object.version) : "",
-      channels: (0, _helpers.isSet)(object.channels) ? (0, _helpers.bytesFromBase64)(object.channels) : new Uint8Array(),
-      moniker: (0, _helpers.isSet)(object.moniker) ? String(object.moniker) : "",
-      other: (0, _helpers.isSet)(object.other) ? NodeInfoOther.fromJSON(object.other) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.protocolVersion !== undefined && (obj.protocolVersion = message.protocolVersion ? ProtocolVersion.toJSON(message.protocolVersion) : undefined);
-    message.nodeId !== undefined && (obj.nodeId = message.nodeId);
-    message.listenAddr !== undefined && (obj.listenAddr = message.listenAddr);
-    message.network !== undefined && (obj.network = message.network);
-    message.version !== undefined && (obj.version = message.version);
-    message.channels !== undefined && (obj.channels = (0, _helpers.base64FromBytes)(message.channels !== undefined ? message.channels : new Uint8Array()));
-    message.moniker !== undefined && (obj.moniker = message.moniker);
-    message.other !== undefined && (obj.other = message.other ? NodeInfoOther.toJSON(message.other) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$nodeId, _object$listenAddr, _object$network, _object$version, _object$channels, _object$moniker;
     var message = createBaseNodeInfo();
@@ -235,18 +197,6 @@ var NodeInfoOther = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      txIndex: (0, _helpers.isSet)(object.txIndex) ? String(object.txIndex) : "",
-      rpcAddress: (0, _helpers.isSet)(object.rpcAddress) ? String(object.rpcAddress) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.txIndex !== undefined && (obj.txIndex = message.txIndex);
-    message.rpcAddress !== undefined && (obj.rpcAddress = message.rpcAddress);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$txIndex, _object$rpcAddress;
     var message = createBaseNodeInfoOther();
@@ -282,7 +232,7 @@ var PeerInfo = {
       _iterator.f();
     }
     if (message.lastConnected !== undefined) {
-      _timestamp.Timestamp.encode(message.lastConnected, writer.uint32(26).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.lastConnected), writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -300,7 +250,7 @@ var PeerInfo = {
           message.addressInfo.push(PeerAddressInfo.decode(reader, reader.uint32()));
           break;
         case 3:
-          message.lastConnected = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.lastConnected = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -309,36 +259,14 @@ var PeerInfo = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      id: (0, _helpers.isSet)(object.id) ? String(object.id) : "",
-      addressInfo: Array.isArray(object === null || object === void 0 ? void 0 : object.addressInfo) ? object.addressInfo.map(function (e) {
-        return PeerAddressInfo.fromJSON(e);
-      }) : [],
-      lastConnected: (0, _helpers.isSet)(object.lastConnected) ? (0, _helpers.fromJsonTimestamp)(object.lastConnected) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.id !== undefined && (obj.id = message.id);
-    if (message.addressInfo) {
-      obj.addressInfo = message.addressInfo.map(function (e) {
-        return e ? PeerAddressInfo.toJSON(e) : undefined;
-      });
-    } else {
-      obj.addressInfo = [];
-    }
-    message.lastConnected !== undefined && (obj.lastConnected = (0, _helpers.fromTimestamp)(message.lastConnected).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$id, _object$addressInfo;
+    var _object$id, _object$addressInfo, _object$lastConnected;
     var message = createBasePeerInfo();
     message.id = (_object$id = object.id) !== null && _object$id !== void 0 ? _object$id : "";
     message.addressInfo = ((_object$addressInfo = object.addressInfo) === null || _object$addressInfo === void 0 ? void 0 : _object$addressInfo.map(function (e) {
       return PeerAddressInfo.fromPartial(e);
     })) || [];
-    message.lastConnected = object.lastConnected !== undefined && object.lastConnected !== null ? _timestamp.Timestamp.fromPartial(object.lastConnected) : undefined;
+    message.lastConnected = (_object$lastConnected = object.lastConnected) !== null && _object$lastConnected !== void 0 ? _object$lastConnected : undefined;
     return message;
   }
 };
@@ -358,10 +286,10 @@ var PeerAddressInfo = {
       writer.uint32(10).string(message.address);
     }
     if (message.lastDialSuccess !== undefined) {
-      _timestamp.Timestamp.encode(message.lastDialSuccess, writer.uint32(18).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.lastDialSuccess), writer.uint32(18).fork()).ldelim();
     }
     if (message.lastDialFailure !== undefined) {
-      _timestamp.Timestamp.encode(message.lastDialFailure, writer.uint32(26).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.lastDialFailure), writer.uint32(26).fork()).ldelim();
     }
     if (message.dialFailures !== 0) {
       writer.uint32(32).uint32(message.dialFailures);
@@ -379,10 +307,10 @@ var PeerAddressInfo = {
           message.address = reader.string();
           break;
         case 2:
-          message.lastDialSuccess = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.lastDialSuccess = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 3:
-          message.lastDialFailure = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.lastDialFailure = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 4:
           message.dialFailures = reader.uint32();
@@ -394,28 +322,12 @@ var PeerAddressInfo = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      lastDialSuccess: (0, _helpers.isSet)(object.lastDialSuccess) ? (0, _helpers.fromJsonTimestamp)(object.lastDialSuccess) : undefined,
-      lastDialFailure: (0, _helpers.isSet)(object.lastDialFailure) ? (0, _helpers.fromJsonTimestamp)(object.lastDialFailure) : undefined,
-      dialFailures: (0, _helpers.isSet)(object.dialFailures) ? Number(object.dialFailures) : 0
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.lastDialSuccess !== undefined && (obj.lastDialSuccess = (0, _helpers.fromTimestamp)(message.lastDialSuccess).toISOString());
-    message.lastDialFailure !== undefined && (obj.lastDialFailure = (0, _helpers.fromTimestamp)(message.lastDialFailure).toISOString());
-    message.dialFailures !== undefined && (obj.dialFailures = Math.round(message.dialFailures));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$address, _object$dialFailures;
+    var _object$address, _object$lastDialSucce, _object$lastDialFailu, _object$dialFailures;
     var message = createBasePeerAddressInfo();
     message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
-    message.lastDialSuccess = object.lastDialSuccess !== undefined && object.lastDialSuccess !== null ? _timestamp.Timestamp.fromPartial(object.lastDialSuccess) : undefined;
-    message.lastDialFailure = object.lastDialFailure !== undefined && object.lastDialFailure !== null ? _timestamp.Timestamp.fromPartial(object.lastDialFailure) : undefined;
+    message.lastDialSuccess = (_object$lastDialSucce = object.lastDialSuccess) !== null && _object$lastDialSucce !== void 0 ? _object$lastDialSucce : undefined;
+    message.lastDialFailure = (_object$lastDialFailu = object.lastDialFailure) !== null && _object$lastDialFailu !== void 0 ? _object$lastDialFailu : undefined;
     message.dialFailures = (_object$dialFailures = object.dialFailures) !== null && _object$dialFailures !== void 0 ? _object$dialFailures : 0;
     return message;
   }

@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgGrantAllowance, MsgRevokeAllowance } from "./tx";
 export const registry = [["/cosmos.feegrant.v1beta1.MsgGrantAllowance", MsgGrantAllowance], ["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance]];
 export const load = protoRegistry => {
@@ -33,34 +31,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
         value
-      };
-    }
-  },
-  toJSON: {
-    grantAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
-        value: MsgGrantAllowance.toJSON(value)
-      };
-    },
-    revokeAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
-        value: MsgRevokeAllowance.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    grantAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
-        value: MsgGrantAllowance.fromJSON(value)
-      };
-    },
-    revokeAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
-        value: MsgRevokeAllowance.fromJSON(value)
       };
     }
   },

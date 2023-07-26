@@ -1,7 +1,7 @@
 import { Coin } from "../cosmos/base/v1beta1/coin";
 import { Endpoint } from "../epochstorage/endpoint";
 import { RelaySession } from "./relay";
-import { Long, isSet } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 function createBaseMsgStakeProvider() {
   return {
@@ -67,30 +67,6 @@ export const MsgStakeProvider = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      chainID: isSet(object.chainID) ? String(object.chainID) : "",
-      amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
-      endpoints: Array.isArray(object === null || object === void 0 ? void 0 : object.endpoints) ? object.endpoints.map(e => Endpoint.fromJSON(e)) : [],
-      geolocation: isSet(object.geolocation) ? Long.fromValue(object.geolocation) : Long.UZERO,
-      moniker: isSet(object.moniker) ? String(object.moniker) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
-    if (message.endpoints) {
-      obj.endpoints = message.endpoints.map(e => e ? Endpoint.toJSON(e) : undefined);
-    } else {
-      obj.endpoints = [];
-    }
-    message.geolocation !== undefined && (obj.geolocation = (message.geolocation || Long.UZERO).toString());
-    message.moniker !== undefined && (obj.moniker = message.moniker);
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator, _object$chainID, _object$endpoints, _object$moniker;
     const message = createBaseMsgStakeProvider();
@@ -123,13 +99,6 @@ export const MsgStakeProviderResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgStakeProviderResponse();
@@ -172,18 +141,6 @@ export const MsgUnstakeProvider = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      chainID: isSet(object.chainID) ? String(object.chainID) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator2, _object$chainID2;
     const message = createBaseMsgUnstakeProvider();
@@ -212,13 +169,6 @@ export const MsgUnstakeProviderResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUnstakeProviderResponse();
@@ -268,24 +218,6 @@ export const MsgRelayPayment = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      relays: Array.isArray(object === null || object === void 0 ? void 0 : object.relays) ? object.relays.map(e => RelaySession.fromJSON(e)) : [],
-      descriptionString: isSet(object.descriptionString) ? String(object.descriptionString) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    if (message.relays) {
-      obj.relays = message.relays.map(e => e ? RelaySession.toJSON(e) : undefined);
-    } else {
-      obj.relays = [];
-    }
-    message.descriptionString !== undefined && (obj.descriptionString = message.descriptionString);
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator3, _object$relays, _object$descriptionSt;
     const message = createBaseMsgRelayPayment();
@@ -315,13 +247,6 @@ export const MsgRelayPaymentResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgRelayPaymentResponse();
@@ -371,24 +296,6 @@ export const MsgFreezeProvider = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      chainIds: Array.isArray(object === null || object === void 0 ? void 0 : object.chainIds) ? object.chainIds.map(e => String(e)) : [],
-      reason: isSet(object.reason) ? String(object.reason) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    if (message.chainIds) {
-      obj.chainIds = message.chainIds.map(e => e);
-    } else {
-      obj.chainIds = [];
-    }
-    message.reason !== undefined && (obj.reason = message.reason);
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator4, _object$chainIds, _object$reason;
     const message = createBaseMsgFreezeProvider();
@@ -418,13 +325,6 @@ export const MsgFreezeProviderResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgFreezeProviderResponse();
@@ -467,22 +367,6 @@ export const MsgUnfreezeProvider = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      chainIds: Array.isArray(object === null || object === void 0 ? void 0 : object.chainIds) ? object.chainIds.map(e => String(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    if (message.chainIds) {
-      obj.chainIds = message.chainIds.map(e => e);
-    } else {
-      obj.chainIds = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator5, _object$chainIds2;
     const message = createBaseMsgUnfreezeProvider();
@@ -511,13 +395,6 @@ export const MsgUnfreezeProviderResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgUnfreezeProviderResponse();

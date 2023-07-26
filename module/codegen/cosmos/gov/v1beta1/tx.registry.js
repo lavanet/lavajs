@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgSubmitProposal, MsgVote, MsgVoteWeighted, MsgDeposit } from "./tx";
 export const registry = [["/cosmos.gov.v1beta1.MsgSubmitProposal", MsgSubmitProposal], ["/cosmos.gov.v1beta1.MsgVote", MsgVote], ["/cosmos.gov.v1beta1.MsgVoteWeighted", MsgVoteWeighted], ["/cosmos.gov.v1beta1.MsgDeposit", MsgDeposit]];
 export const load = protoRegistry => {
@@ -57,58 +55,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
         value
-      };
-    }
-  },
-  toJSON: {
-    submitProposal(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
-        value: MsgSubmitProposal.toJSON(value)
-      };
-    },
-    vote(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
-        value: MsgVote.toJSON(value)
-      };
-    },
-    voteWeighted(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
-        value: MsgVoteWeighted.toJSON(value)
-      };
-    },
-    deposit(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
-        value: MsgDeposit.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    submitProposal(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
-        value: MsgSubmitProposal.fromJSON(value)
-      };
-    },
-    vote(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
-        value: MsgVote.fromJSON(value)
-      };
-    },
-    voteWeighted(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgVoteWeighted",
-        value: MsgVoteWeighted.fromJSON(value)
-      };
-    },
-    deposit(value) {
-      return {
-        typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
-        value: MsgDeposit.fromJSON(value)
       };
     }
   },

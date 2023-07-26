@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/lavanet.lava.projects.MsgAddKeys", _tx.MsgAddKeys], ["/lavanet.lava.projects.MsgDelKeys", _tx.MsgDelKeys], ["/lavanet.lava.projects.MsgSetPolicy", _tx.MsgSetPolicy], ["/lavanet.lava.projects.MsgSetSubscriptionPolicy", _tx.MsgSetSubscriptionPolicy]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -70,58 +68,6 @@ var MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    addKeys: function addKeys(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
-        value: _tx.MsgAddKeys.toJSON(value)
-      };
-    },
-    delKeys: function delKeys(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
-        value: _tx.MsgDelKeys.toJSON(value)
-      };
-    },
-    setPolicy: function setPolicy(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
-        value: _tx.MsgSetPolicy.toJSON(value)
-      };
-    },
-    setSubscriptionPolicy: function setSubscriptionPolicy(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
-        value: _tx.MsgSetSubscriptionPolicy.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    addKeys: function addKeys(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgAddKeys",
-        value: _tx.MsgAddKeys.fromJSON(value)
-      };
-    },
-    delKeys: function delKeys(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgDelKeys",
-        value: _tx.MsgDelKeys.fromJSON(value)
-      };
-    },
-    setPolicy: function setPolicy(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
-        value: _tx.MsgSetPolicy.fromJSON(value)
-      };
-    },
-    setSubscriptionPolicy: function setSubscriptionPolicy(value) {
-      return {
-        typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
-        value: _tx.MsgSetSubscriptionPolicy.fromJSON(value)
       };
     }
   },

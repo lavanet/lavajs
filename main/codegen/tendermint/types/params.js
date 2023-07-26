@@ -108,22 +108,6 @@ var ConsensusParams = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      block: (0, _helpers.isSet)(object.block) ? BlockParams.fromJSON(object.block) : undefined,
-      evidence: (0, _helpers.isSet)(object.evidence) ? EvidenceParams.fromJSON(object.evidence) : undefined,
-      validator: (0, _helpers.isSet)(object.validator) ? ValidatorParams.fromJSON(object.validator) : undefined,
-      version: (0, _helpers.isSet)(object.version) ? VersionParams.fromJSON(object.version) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.block !== undefined && (obj.block = message.block ? BlockParams.toJSON(message.block) : undefined);
-    message.evidence !== undefined && (obj.evidence = message.evidence ? EvidenceParams.toJSON(message.evidence) : undefined);
-    message.validator !== undefined && (obj.validator = message.validator ? ValidatorParams.toJSON(message.validator) : undefined);
-    message.version !== undefined && (obj.version = message.version ? VersionParams.toJSON(message.version) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseConsensusParams();
     message.block = object.block !== undefined && object.block !== null ? BlockParams.fromPartial(object.block) : undefined;
@@ -178,20 +162,6 @@ var BlockParams = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      maxBytes: (0, _helpers.isSet)(object.maxBytes) ? _helpers.Long.fromValue(object.maxBytes) : _helpers.Long.ZERO,
-      maxGas: (0, _helpers.isSet)(object.maxGas) ? _helpers.Long.fromValue(object.maxGas) : _helpers.Long.ZERO,
-      timeIotaMs: (0, _helpers.isSet)(object.timeIotaMs) ? _helpers.Long.fromValue(object.timeIotaMs) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.maxBytes !== undefined && (obj.maxBytes = (message.maxBytes || _helpers.Long.ZERO).toString());
-    message.maxGas !== undefined && (obj.maxGas = (message.maxGas || _helpers.Long.ZERO).toString());
-    message.timeIotaMs !== undefined && (obj.timeIotaMs = (message.timeIotaMs || _helpers.Long.ZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseBlockParams();
     message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? _helpers.Long.fromValue(object.maxBytes) : _helpers.Long.ZERO;
@@ -245,20 +215,6 @@ var EvidenceParams = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      maxAgeNumBlocks: (0, _helpers.isSet)(object.maxAgeNumBlocks) ? _helpers.Long.fromValue(object.maxAgeNumBlocks) : _helpers.Long.ZERO,
-      maxAgeDuration: (0, _helpers.isSet)(object.maxAgeDuration) ? _duration.Duration.fromJSON(object.maxAgeDuration) : undefined,
-      maxBytes: (0, _helpers.isSet)(object.maxBytes) ? _helpers.Long.fromValue(object.maxBytes) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.maxAgeNumBlocks !== undefined && (obj.maxAgeNumBlocks = (message.maxAgeNumBlocks || _helpers.Long.ZERO).toString());
-    message.maxAgeDuration !== undefined && (obj.maxAgeDuration = message.maxAgeDuration ? _duration.Duration.toJSON(message.maxAgeDuration) : undefined);
-    message.maxBytes !== undefined && (obj.maxBytes = (message.maxBytes || _helpers.Long.ZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseEvidenceParams();
     message.maxAgeNumBlocks = object.maxAgeNumBlocks !== undefined && object.maxAgeNumBlocks !== null ? _helpers.Long.fromValue(object.maxAgeNumBlocks) : _helpers.Long.ZERO;
@@ -307,24 +263,6 @@ var ValidatorParams = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      pubKeyTypes: Array.isArray(object === null || object === void 0 ? void 0 : object.pubKeyTypes) ? object.pubKeyTypes.map(function (e) {
-        return String(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.pubKeyTypes) {
-      obj.pubKeyTypes = message.pubKeyTypes.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.pubKeyTypes = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$pubKeyTypes;
     var message = createBaseValidatorParams();
@@ -364,16 +302,6 @@ var VersionParams = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      appVersion: (0, _helpers.isSet)(object.appVersion) ? _helpers.Long.fromValue(object.appVersion) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.appVersion !== undefined && (obj.appVersion = (message.appVersion || _helpers.Long.UZERO).toString());
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseVersionParams();
@@ -418,18 +346,6 @@ var HashedParams = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      blockMaxBytes: (0, _helpers.isSet)(object.blockMaxBytes) ? _helpers.Long.fromValue(object.blockMaxBytes) : _helpers.Long.ZERO,
-      blockMaxGas: (0, _helpers.isSet)(object.blockMaxGas) ? _helpers.Long.fromValue(object.blockMaxGas) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.blockMaxBytes !== undefined && (obj.blockMaxBytes = (message.blockMaxBytes || _helpers.Long.ZERO).toString());
-    message.blockMaxGas !== undefined && (obj.blockMaxGas = (message.blockMaxGas || _helpers.Long.ZERO).toString());
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseHashedParams();

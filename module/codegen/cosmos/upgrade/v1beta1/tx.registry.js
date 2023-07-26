@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgSoftwareUpgrade, MsgCancelUpgrade } from "./tx";
 export const registry = [["/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade", MsgSoftwareUpgrade], ["/cosmos.upgrade.v1beta1.MsgCancelUpgrade", MsgCancelUpgrade]];
 export const load = protoRegistry => {
@@ -33,34 +31,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.upgrade.v1beta1.MsgCancelUpgrade",
         value
-      };
-    }
-  },
-  toJSON: {
-    softwareUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
-        value: MsgSoftwareUpgrade.toJSON(value)
-      };
-    },
-    cancelUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgCancelUpgrade",
-        value: MsgCancelUpgrade.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    softwareUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
-        value: MsgSoftwareUpgrade.fromJSON(value)
-      };
-    },
-    cancelUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgCancelUpgrade",
-        value: MsgCancelUpgrade.fromJSON(value)
       };
     }
   },

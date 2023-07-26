@@ -50,13 +50,6 @@ var QueryParamsRequest = {
     }
     return message;
   },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
-  },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
     return message;
@@ -92,16 +85,6 @@ var QueryParamsResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      params: (0, _helpers.isSet)(object.params) ? _params.Params.fromJSON(object.params) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.params !== undefined && (obj.params = message.params ? _params.Params.toJSON(message.params) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
@@ -146,18 +129,6 @@ var QueryProvidersRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
-      showFrozen: (0, _helpers.isSet)(object.showFrozen) ? Boolean(object.showFrozen) : false
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.showFrozen !== undefined && (obj.showFrozen = message.showFrozen);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$chainID, _object$showFrozen;
@@ -214,26 +185,6 @@ var QueryProvidersResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      stakeEntry: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeEntry) ? object.stakeEntry.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      output: (0, _helpers.isSet)(object.output) ? String(object.output) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.stakeEntry) {
-      obj.stakeEntry = message.stakeEntry.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.stakeEntry = [];
-    }
-    message.output !== undefined && (obj.output = message.output);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$stakeEntry, _object$output;
     var message = createBaseQueryProvidersResponse();
@@ -281,18 +232,6 @@ var QueryGetPairingRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
-      client: (0, _helpers.isSet)(object.client) ? String(object.client) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.client !== undefined && (obj.client = message.client);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$chainID2, _object$client;
@@ -370,32 +309,6 @@ var QueryGetPairingResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      providers: Array.isArray(object === null || object === void 0 ? void 0 : object.providers) ? object.providers.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      currentEpoch: (0, _helpers.isSet)(object.currentEpoch) ? _helpers.Long.fromValue(object.currentEpoch) : _helpers.Long.UZERO,
-      timeLeftToNextPairing: (0, _helpers.isSet)(object.timeLeftToNextPairing) ? _helpers.Long.fromValue(object.timeLeftToNextPairing) : _helpers.Long.UZERO,
-      specLastUpdatedBlock: (0, _helpers.isSet)(object.specLastUpdatedBlock) ? _helpers.Long.fromValue(object.specLastUpdatedBlock) : _helpers.Long.UZERO,
-      blockOfNextPairing: (0, _helpers.isSet)(object.blockOfNextPairing) ? _helpers.Long.fromValue(object.blockOfNextPairing) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.providers) {
-      obj.providers = message.providers.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.providers = [];
-    }
-    message.currentEpoch !== undefined && (obj.currentEpoch = (message.currentEpoch || _helpers.Long.UZERO).toString());
-    message.timeLeftToNextPairing !== undefined && (obj.timeLeftToNextPairing = (message.timeLeftToNextPairing || _helpers.Long.UZERO).toString());
-    message.specLastUpdatedBlock !== undefined && (obj.specLastUpdatedBlock = (message.specLastUpdatedBlock || _helpers.Long.UZERO).toString());
-    message.blockOfNextPairing !== undefined && (obj.blockOfNextPairing = (message.blockOfNextPairing || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$providers;
     var message = createBaseQueryGetPairingResponse();
@@ -461,22 +374,6 @@ var QueryVerifyPairingRequest = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
-      client: (0, _helpers.isSet)(object.client) ? String(object.client) : "",
-      provider: (0, _helpers.isSet)(object.provider) ? String(object.provider) : "",
-      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.client !== undefined && (obj.client = message.client);
-    message.provider !== undefined && (obj.provider = message.provider);
-    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$chainID3, _object$client2, _object$provider;
     var message = createBaseQueryVerifyPairingRequest();
@@ -532,20 +429,6 @@ var QueryVerifyPairingResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      valid: (0, _helpers.isSet)(object.valid) ? Boolean(object.valid) : false,
-      pairedProviders: (0, _helpers.isSet)(object.pairedProviders) ? _helpers.Long.fromValue(object.pairedProviders) : _helpers.Long.UZERO,
-      cuPerEpoch: (0, _helpers.isSet)(object.cuPerEpoch) ? _helpers.Long.fromValue(object.cuPerEpoch) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.valid !== undefined && (obj.valid = message.valid);
-    message.pairedProviders !== undefined && (obj.pairedProviders = (message.pairedProviders || _helpers.Long.UZERO).toString());
-    message.cuPerEpoch !== undefined && (obj.cuPerEpoch = (message.cuPerEpoch || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$valid;
     var message = createBaseQueryVerifyPairingResponse();
@@ -586,16 +469,6 @@ var QueryGetUniquePaymentStorageClientProviderRequest = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index;
     var message = createBaseQueryGetUniquePaymentStorageClientProviderRequest();
@@ -634,16 +507,6 @@ var QueryGetUniquePaymentStorageClientProviderResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      uniquePaymentStorageClientProvider: (0, _helpers.isSet)(object.uniquePaymentStorageClientProvider) ? _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.fromJSON(object.uniquePaymentStorageClientProvider) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.uniquePaymentStorageClientProvider !== undefined && (obj.uniquePaymentStorageClientProvider = message.uniquePaymentStorageClientProvider ? _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.toJSON(message.uniquePaymentStorageClientProvider) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryGetUniquePaymentStorageClientProviderResponse();
     message.uniquePaymentStorageClientProvider = object.uniquePaymentStorageClientProvider !== undefined && object.uniquePaymentStorageClientProvider !== null ? _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.fromPartial(object.uniquePaymentStorageClientProvider) : undefined;
@@ -680,16 +543,6 @@ var QueryAllUniquePaymentStorageClientProviderRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAllUniquePaymentStorageClientProviderRequest();
@@ -744,26 +597,6 @@ var QueryAllUniquePaymentStorageClientProviderResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      uniquePaymentStorageClientProvider: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProvider) ? object.uniquePaymentStorageClientProvider.map(function (e) {
-        return _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.fromJSON(e);
-      }) : [],
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.uniquePaymentStorageClientProvider) {
-      obj.uniquePaymentStorageClientProvider = message.uniquePaymentStorageClientProvider.map(function (e) {
-        return e ? _unique_payment_storage_client_provider.UniquePaymentStorageClientProvider.toJSON(e) : undefined;
-      });
-    } else {
-      obj.uniquePaymentStorageClientProvider = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$uniquePayment;
     var message = createBaseQueryAllUniquePaymentStorageClientProviderResponse();
@@ -805,16 +638,6 @@ var QueryGetProviderPaymentStorageRequest = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index2;
     var message = createBaseQueryGetProviderPaymentStorageRequest();
@@ -853,16 +676,6 @@ var QueryGetProviderPaymentStorageResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      providerPaymentStorage: (0, _helpers.isSet)(object.providerPaymentStorage) ? _provider_payment_storage.ProviderPaymentStorage.fromJSON(object.providerPaymentStorage) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.providerPaymentStorage !== undefined && (obj.providerPaymentStorage = message.providerPaymentStorage ? _provider_payment_storage.ProviderPaymentStorage.toJSON(message.providerPaymentStorage) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryGetProviderPaymentStorageResponse();
     message.providerPaymentStorage = object.providerPaymentStorage !== undefined && object.providerPaymentStorage !== null ? _provider_payment_storage.ProviderPaymentStorage.fromPartial(object.providerPaymentStorage) : undefined;
@@ -899,16 +712,6 @@ var QueryAllProviderPaymentStorageRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAllProviderPaymentStorageRequest();
@@ -963,26 +766,6 @@ var QueryAllProviderPaymentStorageResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      providerPaymentStorage: Array.isArray(object === null || object === void 0 ? void 0 : object.providerPaymentStorage) ? object.providerPaymentStorage.map(function (e) {
-        return _provider_payment_storage.ProviderPaymentStorage.fromJSON(e);
-      }) : [],
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.providerPaymentStorage) {
-      obj.providerPaymentStorage = message.providerPaymentStorage.map(function (e) {
-        return e ? _provider_payment_storage.ProviderPaymentStorage.toJSON(e) : undefined;
-      });
-    } else {
-      obj.providerPaymentStorage = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$providerPayme;
     var message = createBaseQueryAllProviderPaymentStorageResponse();
@@ -1024,16 +807,6 @@ var QueryGetEpochPaymentsRequest = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index3;
     var message = createBaseQueryGetEpochPaymentsRequest();
@@ -1072,16 +845,6 @@ var QueryGetEpochPaymentsResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      epochPayments: (0, _helpers.isSet)(object.epochPayments) ? _epoch_payments.EpochPayments.fromJSON(object.epochPayments) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.epochPayments !== undefined && (obj.epochPayments = message.epochPayments ? _epoch_payments.EpochPayments.toJSON(message.epochPayments) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryGetEpochPaymentsResponse();
     message.epochPayments = object.epochPayments !== undefined && object.epochPayments !== null ? _epoch_payments.EpochPayments.fromPartial(object.epochPayments) : undefined;
@@ -1118,16 +881,6 @@ var QueryAllEpochPaymentsRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAllEpochPaymentsRequest();
@@ -1181,26 +934,6 @@ var QueryAllEpochPaymentsResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      epochPayments: Array.isArray(object === null || object === void 0 ? void 0 : object.epochPayments) ? object.epochPayments.map(function (e) {
-        return _epoch_payments.EpochPayments.fromJSON(e);
-      }) : [],
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.epochPayments) {
-      obj.epochPayments = message.epochPayments.map(function (e) {
-        return e ? _epoch_payments.EpochPayments.toJSON(e) : undefined;
-      });
-    } else {
-      obj.epochPayments = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$epochPayments;
@@ -1257,20 +990,6 @@ var QueryUserEntryRequest = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
-      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$address, _object$chainID4;
     var message = createBaseQueryUserEntryRequest();
@@ -1318,18 +1037,6 @@ var QueryUserEntryResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      consumer: (0, _helpers.isSet)(object.consumer) ? _stake_entry.StakeEntry.fromJSON(object.consumer) : undefined,
-      maxCU: (0, _helpers.isSet)(object.maxCU) ? _helpers.Long.fromValue(object.maxCU) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.consumer !== undefined && (obj.consumer = message.consumer ? _stake_entry.StakeEntry.toJSON(message.consumer) : undefined);
-    message.maxCU !== undefined && (obj.maxCU = (message.maxCU || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryUserEntryResponse();
     message.consumer = object.consumer !== undefined && object.consumer !== null ? _stake_entry.StakeEntry.fromPartial(object.consumer) : undefined;
@@ -1367,16 +1074,6 @@ var QueryStaticProvidersListRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$chainID5;
@@ -1424,24 +1121,6 @@ var QueryStaticProvidersListResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      providers: Array.isArray(object === null || object === void 0 ? void 0 : object.providers) ? object.providers.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.providers) {
-      obj.providers = message.providers.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.providers = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$providers2;
@@ -1553,58 +1232,6 @@ var QueryAccountInfoResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      provider: Array.isArray(object === null || object === void 0 ? void 0 : object.provider) ? object.provider.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      frozen: Array.isArray(object === null || object === void 0 ? void 0 : object.frozen) ? object.frozen.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      consumer: Array.isArray(object === null || object === void 0 ? void 0 : object.consumer) ? object.consumer.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      unstaked: Array.isArray(object === null || object === void 0 ? void 0 : object.unstaked) ? object.unstaked.map(function (e) {
-        return _stake_entry.StakeEntry.fromJSON(e);
-      }) : [],
-      subscription: (0, _helpers.isSet)(object.subscription) ? _subscription.Subscription.fromJSON(object.subscription) : undefined,
-      project: (0, _helpers.isSet)(object.project) ? _project.Project.fromJSON(object.project) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.provider) {
-      obj.provider = message.provider.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.provider = [];
-    }
-    if (message.frozen) {
-      obj.frozen = message.frozen.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.frozen = [];
-    }
-    if (message.consumer) {
-      obj.consumer = message.consumer.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.consumer = [];
-    }
-    if (message.unstaked) {
-      obj.unstaked = message.unstaked.map(function (e) {
-        return e ? _stake_entry.StakeEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.unstaked = [];
-    }
-    message.subscription !== undefined && (obj.subscription = message.subscription ? _subscription.Subscription.toJSON(message.subscription) : undefined);
-    message.project !== undefined && (obj.project = message.project ? _project.Project.toJSON(message.project) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$provider2, _object$frozen, _object$consumer, _object$unstaked;

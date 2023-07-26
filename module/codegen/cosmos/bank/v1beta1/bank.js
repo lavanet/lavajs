@@ -1,6 +1,6 @@
 import { Coin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** Params defines the parameters for the bank module. */
 
 /** Params defines the parameters for the bank module. */
@@ -87,22 +87,6 @@ export const Params = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      sendEnabled: Array.isArray(object === null || object === void 0 ? void 0 : object.sendEnabled) ? object.sendEnabled.map(e => SendEnabled.fromJSON(e)) : [],
-      defaultSendEnabled: isSet(object.defaultSendEnabled) ? Boolean(object.defaultSendEnabled) : false
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.sendEnabled) {
-      obj.sendEnabled = message.sendEnabled.map(e => e ? SendEnabled.toJSON(e) : undefined);
-    } else {
-      obj.sendEnabled = [];
-    }
-    message.defaultSendEnabled !== undefined && (obj.defaultSendEnabled = message.defaultSendEnabled);
-    return obj;
-  },
   fromPartial(object) {
     var _object$sendEnabled, _object$defaultSendEn;
     const message = createBaseParams();
@@ -146,18 +130,6 @@ export const SendEnabled = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
-      enabled: isSet(object.enabled) ? Boolean(object.enabled) : false
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.enabled !== undefined && (obj.enabled = message.enabled);
-    return obj;
   },
   fromPartial(object) {
     var _object$denom, _object$enabled;
@@ -203,22 +175,6 @@ export const Input = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      coins: Array.isArray(object === null || object === void 0 ? void 0 : object.coins) ? object.coins.map(e => Coin.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.coins = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$address, _object$coins;
     const message = createBaseInput();
@@ -263,22 +219,6 @@ export const Output = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      coins: Array.isArray(object === null || object === void 0 ? void 0 : object.coins) ? object.coins.map(e => Coin.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.coins = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$address2, _object$coins2;
     const message = createBaseOutput();
@@ -315,20 +255,6 @@ export const Supply = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      total: Array.isArray(object === null || object === void 0 ? void 0 : object.total) ? object.total.map(e => Coin.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.total) {
-      obj.total = message.total.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.total = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$total;
@@ -379,24 +305,6 @@ export const DenomUnit = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
-      exponent: isSet(object.exponent) ? Number(object.exponent) : 0,
-      aliases: Array.isArray(object === null || object === void 0 ? void 0 : object.aliases) ? object.aliases.map(e => String(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.exponent !== undefined && (obj.exponent = Math.round(message.exponent));
-    if (message.aliases) {
-      obj.aliases = message.aliases.map(e => e);
-    } else {
-      obj.aliases = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$denom2, _object$exponent, _object$aliases;
@@ -484,34 +392,6 @@ export const Metadata = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      description: isSet(object.description) ? String(object.description) : "",
-      denomUnits: Array.isArray(object === null || object === void 0 ? void 0 : object.denomUnits) ? object.denomUnits.map(e => DenomUnit.fromJSON(e)) : [],
-      base: isSet(object.base) ? String(object.base) : "",
-      display: isSet(object.display) ? String(object.display) : "",
-      name: isSet(object.name) ? String(object.name) : "",
-      symbol: isSet(object.symbol) ? String(object.symbol) : "",
-      uri: isSet(object.uri) ? String(object.uri) : "",
-      uriHash: isSet(object.uriHash) ? String(object.uriHash) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.description !== undefined && (obj.description = message.description);
-    if (message.denomUnits) {
-      obj.denomUnits = message.denomUnits.map(e => e ? DenomUnit.toJSON(e) : undefined);
-    } else {
-      obj.denomUnits = [];
-    }
-    message.base !== undefined && (obj.base = message.base);
-    message.display !== undefined && (obj.display = message.display);
-    message.name !== undefined && (obj.name = message.name);
-    message.symbol !== undefined && (obj.symbol = message.symbol);
-    message.uri !== undefined && (obj.uri = message.uri);
-    message.uriHash !== undefined && (obj.uriHash = message.uriHash);
-    return obj;
   },
   fromPartial(object) {
     var _object$description, _object$denomUnits, _object$base, _object$display, _object$name, _object$symbol, _object$uri, _object$uriHash;

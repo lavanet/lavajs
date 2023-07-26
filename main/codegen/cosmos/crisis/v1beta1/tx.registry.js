@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.crisis.v1beta1.MsgVerifyInvariant", _tx.MsgVerifyInvariant]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -34,22 +32,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    verifyInvariant: function verifyInvariant(value) {
-      return {
-        typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
-        value: _tx.MsgVerifyInvariant.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    verifyInvariant: function verifyInvariant(value) {
-      return {
-        typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
-        value: _tx.MsgVerifyInvariant.fromJSON(value)
       };
     }
   },

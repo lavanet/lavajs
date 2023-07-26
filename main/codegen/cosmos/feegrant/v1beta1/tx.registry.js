@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.feegrant.v1beta1.MsgGrantAllowance", _tx.MsgGrantAllowance], ["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", _tx.MsgRevokeAllowance]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -46,34 +44,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    grantAllowance: function grantAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
-        value: _tx.MsgGrantAllowance.toJSON(value)
-      };
-    },
-    revokeAllowance: function revokeAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
-        value: _tx.MsgRevokeAllowance.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    grantAllowance: function grantAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
-        value: _tx.MsgGrantAllowance.fromJSON(value)
-      };
-    },
-    revokeAllowance: function revokeAllowance(value) {
-      return {
-        typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
-        value: _tx.MsgRevokeAllowance.fromJSON(value)
       };
     }
   },

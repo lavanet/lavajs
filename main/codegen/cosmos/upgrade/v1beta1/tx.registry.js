@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade", _tx.MsgSoftwareUpgrade], ["/cosmos.upgrade.v1beta1.MsgCancelUpgrade", _tx.MsgCancelUpgrade]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -46,34 +44,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.upgrade.v1beta1.MsgCancelUpgrade",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    softwareUpgrade: function softwareUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
-        value: _tx.MsgSoftwareUpgrade.toJSON(value)
-      };
-    },
-    cancelUpgrade: function cancelUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgCancelUpgrade",
-        value: _tx.MsgCancelUpgrade.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    softwareUpgrade: function softwareUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
-        value: _tx.MsgSoftwareUpgrade.fromJSON(value)
-      };
-    },
-    cancelUpgrade: function cancelUpgrade(value) {
-      return {
-        typeUrl: "/cosmos.upgrade.v1beta1.MsgCancelUpgrade",
-        value: _tx.MsgCancelUpgrade.fromJSON(value)
       };
     }
   },

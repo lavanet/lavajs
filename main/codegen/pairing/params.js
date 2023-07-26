@@ -99,32 +99,6 @@ var Params = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      mintCoinsPerCU: (0, _helpers.isSet)(object.mintCoinsPerCU) ? String(object.mintCoinsPerCU) : "",
-      fraudStakeSlashingFactor: (0, _helpers.isSet)(object.fraudStakeSlashingFactor) ? String(object.fraudStakeSlashingFactor) : "",
-      fraudSlashingAmount: (0, _helpers.isSet)(object.fraudSlashingAmount) ? _helpers.Long.fromValue(object.fraudSlashingAmount) : _helpers.Long.UZERO,
-      epochBlocksOverlap: (0, _helpers.isSet)(object.epochBlocksOverlap) ? _helpers.Long.fromValue(object.epochBlocksOverlap) : _helpers.Long.UZERO,
-      unpayLimit: (0, _helpers.isSet)(object.unpayLimit) ? String(object.unpayLimit) : "",
-      slashLimit: (0, _helpers.isSet)(object.slashLimit) ? String(object.slashLimit) : "",
-      dataReliabilityReward: (0, _helpers.isSet)(object.dataReliabilityReward) ? String(object.dataReliabilityReward) : "",
-      QoSWeight: (0, _helpers.isSet)(object.QoSWeight) ? String(object.QoSWeight) : "",
-      recommendedEpochNumToCollectPayment: (0, _helpers.isSet)(object.recommendedEpochNumToCollectPayment) ? _helpers.Long.fromValue(object.recommendedEpochNumToCollectPayment) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.mintCoinsPerCU !== undefined && (obj.mintCoinsPerCU = message.mintCoinsPerCU);
-    message.fraudStakeSlashingFactor !== undefined && (obj.fraudStakeSlashingFactor = message.fraudStakeSlashingFactor);
-    message.fraudSlashingAmount !== undefined && (obj.fraudSlashingAmount = (message.fraudSlashingAmount || _helpers.Long.UZERO).toString());
-    message.epochBlocksOverlap !== undefined && (obj.epochBlocksOverlap = (message.epochBlocksOverlap || _helpers.Long.UZERO).toString());
-    message.unpayLimit !== undefined && (obj.unpayLimit = message.unpayLimit);
-    message.slashLimit !== undefined && (obj.slashLimit = message.slashLimit);
-    message.dataReliabilityReward !== undefined && (obj.dataReliabilityReward = message.dataReliabilityReward);
-    message.QoSWeight !== undefined && (obj.QoSWeight = message.QoSWeight);
-    message.recommendedEpochNumToCollectPayment !== undefined && (obj.recommendedEpochNumToCollectPayment = (message.recommendedEpochNumToCollectPayment || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$mintCoinsPerC, _object$fraudStakeSla, _object$unpayLimit, _object$slashLimit, _object$dataReliabili, _object$QoSWeight;
     var message = createBaseParams();

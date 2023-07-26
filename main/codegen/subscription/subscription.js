@@ -19,10 +19,8 @@ function createBaseSubscription() {
     durationTotal: _helpers.Long.UZERO,
     durationLeft: _helpers.Long.UZERO,
     monthExpiryTime: _helpers.Long.UZERO,
-    prevExpiryBlock: _helpers.Long.UZERO,
     monthCuTotal: _helpers.Long.UZERO,
-    monthCuLeft: _helpers.Long.UZERO,
-    prevCuLeft: _helpers.Long.UZERO
+    monthCuLeft: _helpers.Long.UZERO
   };
 }
 var Subscription = {
@@ -52,17 +50,11 @@ var Subscription = {
     if (!message.monthExpiryTime.isZero()) {
       writer.uint32(64).uint64(message.monthExpiryTime);
     }
-    if (!message.prevExpiryBlock.isZero()) {
-      writer.uint32(72).uint64(message.prevExpiryBlock);
-    }
     if (!message.monthCuTotal.isZero()) {
       writer.uint32(80).uint64(message.monthCuTotal);
     }
     if (!message.monthCuLeft.isZero()) {
       writer.uint32(88).uint64(message.monthCuLeft);
-    }
-    if (!message.prevCuLeft.isZero()) {
-      writer.uint32(96).uint64(message.prevCuLeft);
     }
     return writer;
   },
@@ -97,17 +89,11 @@ var Subscription = {
         case 8:
           message.monthExpiryTime = reader.uint64();
           break;
-        case 9:
-          message.prevExpiryBlock = reader.uint64();
-          break;
         case 10:
           message.monthCuTotal = reader.uint64();
           break;
         case 11:
           message.monthCuLeft = reader.uint64();
-          break;
-        case 12:
-          message.prevCuLeft = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -115,38 +101,6 @@ var Subscription = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      creator: (0, _helpers.isSet)(object.creator) ? String(object.creator) : "",
-      consumer: (0, _helpers.isSet)(object.consumer) ? String(object.consumer) : "",
-      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
-      planIndex: (0, _helpers.isSet)(object.planIndex) ? String(object.planIndex) : "",
-      planBlock: (0, _helpers.isSet)(object.planBlock) ? _helpers.Long.fromValue(object.planBlock) : _helpers.Long.UZERO,
-      durationTotal: (0, _helpers.isSet)(object.durationTotal) ? _helpers.Long.fromValue(object.durationTotal) : _helpers.Long.UZERO,
-      durationLeft: (0, _helpers.isSet)(object.durationLeft) ? _helpers.Long.fromValue(object.durationLeft) : _helpers.Long.UZERO,
-      monthExpiryTime: (0, _helpers.isSet)(object.monthExpiryTime) ? _helpers.Long.fromValue(object.monthExpiryTime) : _helpers.Long.UZERO,
-      prevExpiryBlock: (0, _helpers.isSet)(object.prevExpiryBlock) ? _helpers.Long.fromValue(object.prevExpiryBlock) : _helpers.Long.UZERO,
-      monthCuTotal: (0, _helpers.isSet)(object.monthCuTotal) ? _helpers.Long.fromValue(object.monthCuTotal) : _helpers.Long.UZERO,
-      monthCuLeft: (0, _helpers.isSet)(object.monthCuLeft) ? _helpers.Long.fromValue(object.monthCuLeft) : _helpers.Long.UZERO,
-      prevCuLeft: (0, _helpers.isSet)(object.prevCuLeft) ? _helpers.Long.fromValue(object.prevCuLeft) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.consumer !== undefined && (obj.consumer = message.consumer);
-    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
-    message.planIndex !== undefined && (obj.planIndex = message.planIndex);
-    message.planBlock !== undefined && (obj.planBlock = (message.planBlock || _helpers.Long.UZERO).toString());
-    message.durationTotal !== undefined && (obj.durationTotal = (message.durationTotal || _helpers.Long.UZERO).toString());
-    message.durationLeft !== undefined && (obj.durationLeft = (message.durationLeft || _helpers.Long.UZERO).toString());
-    message.monthExpiryTime !== undefined && (obj.monthExpiryTime = (message.monthExpiryTime || _helpers.Long.UZERO).toString());
-    message.prevExpiryBlock !== undefined && (obj.prevExpiryBlock = (message.prevExpiryBlock || _helpers.Long.UZERO).toString());
-    message.monthCuTotal !== undefined && (obj.monthCuTotal = (message.monthCuTotal || _helpers.Long.UZERO).toString());
-    message.monthCuLeft !== undefined && (obj.monthCuLeft = (message.monthCuLeft || _helpers.Long.UZERO).toString());
-    message.prevCuLeft !== undefined && (obj.prevCuLeft = (message.prevCuLeft || _helpers.Long.UZERO).toString());
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$creator, _object$consumer, _object$planIndex;
@@ -159,10 +113,8 @@ var Subscription = {
     message.durationTotal = object.durationTotal !== undefined && object.durationTotal !== null ? _helpers.Long.fromValue(object.durationTotal) : _helpers.Long.UZERO;
     message.durationLeft = object.durationLeft !== undefined && object.durationLeft !== null ? _helpers.Long.fromValue(object.durationLeft) : _helpers.Long.UZERO;
     message.monthExpiryTime = object.monthExpiryTime !== undefined && object.monthExpiryTime !== null ? _helpers.Long.fromValue(object.monthExpiryTime) : _helpers.Long.UZERO;
-    message.prevExpiryBlock = object.prevExpiryBlock !== undefined && object.prevExpiryBlock !== null ? _helpers.Long.fromValue(object.prevExpiryBlock) : _helpers.Long.UZERO;
     message.monthCuTotal = object.monthCuTotal !== undefined && object.monthCuTotal !== null ? _helpers.Long.fromValue(object.monthCuTotal) : _helpers.Long.UZERO;
     message.monthCuLeft = object.monthCuLeft !== undefined && object.monthCuLeft !== null ? _helpers.Long.fromValue(object.monthCuLeft) : _helpers.Long.UZERO;
-    message.prevCuLeft = object.prevCuLeft !== undefined && object.prevCuLeft !== null ? _helpers.Long.fromValue(object.prevCuLeft) : _helpers.Long.UZERO;
     return message;
   }
 };

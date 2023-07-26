@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/lavanet.lava.conflict.MsgDetection", _tx.MsgDetection], ["/lavanet.lava.conflict.MsgConflictVoteCommit", _tx.MsgConflictVoteCommit], ["/lavanet.lava.conflict.MsgConflictVoteReveal", _tx.MsgConflictVoteReveal]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -58,46 +56,6 @@ var MessageComposer = {
       return {
         typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    detection: function detection(value) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgDetection",
-        value: _tx.MsgDetection.toJSON(value)
-      };
-    },
-    conflictVoteCommit: function conflictVoteCommit(value) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
-        value: _tx.MsgConflictVoteCommit.toJSON(value)
-      };
-    },
-    conflictVoteReveal: function conflictVoteReveal(value) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
-        value: _tx.MsgConflictVoteReveal.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    detection: function detection(value) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgDetection",
-        value: _tx.MsgDetection.fromJSON(value)
-      };
-    },
-    conflictVoteCommit: function conflictVoteCommit(value) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
-        value: _tx.MsgConflictVoteCommit.fromJSON(value)
-      };
-    },
-    conflictVoteReveal: function conflictVoteReveal(value) {
-      return {
-        typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
-        value: _tx.MsgConflictVoteReveal.fromJSON(value)
       };
     }
   },

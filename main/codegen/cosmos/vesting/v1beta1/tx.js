@@ -129,32 +129,6 @@ var MsgCreateVestingAccount = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      fromAddress: (0, _helpers.isSet)(object.fromAddress) ? String(object.fromAddress) : "",
-      toAddress: (0, _helpers.isSet)(object.toAddress) ? String(object.toAddress) : "",
-      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : [],
-      endTime: (0, _helpers.isSet)(object.endTime) ? _helpers.Long.fromValue(object.endTime) : _helpers.Long.ZERO,
-      delayed: (0, _helpers.isSet)(object.delayed) ? Boolean(object.delayed) : false
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    if (message.amount) {
-      obj.amount = message.amount.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.amount = [];
-    }
-    message.endTime !== undefined && (obj.endTime = (message.endTime || _helpers.Long.ZERO).toString());
-    message.delayed !== undefined && (obj.delayed = message.delayed);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$fromAddress, _object$toAddress, _object$amount, _object$delayed;
     var message = createBaseMsgCreateVestingAccount();
@@ -190,13 +164,6 @@ var MsgCreateVestingAccountResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgCreateVestingAccountResponse();
@@ -257,28 +224,6 @@ var MsgCreatePermanentLockedAccount = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      fromAddress: (0, _helpers.isSet)(object.fromAddress) ? String(object.fromAddress) : "",
-      toAddress: (0, _helpers.isSet)(object.toAddress) ? String(object.toAddress) : "",
-      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    if (message.amount) {
-      obj.amount = message.amount.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.amount = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$fromAddress2, _object$toAddress2, _object$amount2;
     var message = createBaseMsgCreatePermanentLockedAccount();
@@ -312,13 +257,6 @@ var MsgCreatePermanentLockedAccountResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgCreatePermanentLockedAccountResponse();
@@ -386,30 +324,6 @@ var MsgCreatePeriodicVestingAccount = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      fromAddress: (0, _helpers.isSet)(object.fromAddress) ? String(object.fromAddress) : "",
-      toAddress: (0, _helpers.isSet)(object.toAddress) ? String(object.toAddress) : "",
-      startTime: (0, _helpers.isSet)(object.startTime) ? _helpers.Long.fromValue(object.startTime) : _helpers.Long.ZERO,
-      vestingPeriods: Array.isArray(object === null || object === void 0 ? void 0 : object.vestingPeriods) ? object.vestingPeriods.map(function (e) {
-        return _vesting.Period.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    message.startTime !== undefined && (obj.startTime = (message.startTime || _helpers.Long.ZERO).toString());
-    if (message.vestingPeriods) {
-      obj.vestingPeriods = message.vestingPeriods.map(function (e) {
-        return e ? _vesting.Period.toJSON(e) : undefined;
-      });
-    } else {
-      obj.vestingPeriods = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$fromAddress3, _object$toAddress3, _object$vestingPeriod;
     var message = createBaseMsgCreatePeriodicVestingAccount();
@@ -444,13 +358,6 @@ var MsgCreatePeriodicVestingAccountResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgCreatePeriodicVestingAccountResponse();

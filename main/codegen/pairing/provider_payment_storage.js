@@ -72,30 +72,6 @@ var ProviderPaymentStorage = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
-      epoch: (0, _helpers.isSet)(object.epoch) ? _helpers.Long.fromValue(object.epoch) : _helpers.Long.UZERO,
-      uniquePaymentStorageClientProviderKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProviderKeys) ? object.uniquePaymentStorageClientProviderKeys.map(function (e) {
-        return String(e);
-      }) : [],
-      complainersTotalCu: (0, _helpers.isSet)(object.complainersTotalCu) ? _helpers.Long.fromValue(object.complainersTotalCu) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.epoch !== undefined && (obj.epoch = (message.epoch || _helpers.Long.UZERO).toString());
-    if (message.uniquePaymentStorageClientProviderKeys) {
-      obj.uniquePaymentStorageClientProviderKeys = message.uniquePaymentStorageClientProviderKeys.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.uniquePaymentStorageClientProviderKeys = [];
-    }
-    message.complainersTotalCu !== undefined && (obj.complainersTotalCu = (message.complainersTotalCu || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$uniquePayment;
     var message = createBaseProviderPaymentStorage();

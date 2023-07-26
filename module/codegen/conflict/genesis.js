@@ -1,7 +1,7 @@
 import { Params } from "./params";
 import { ConflictVote } from "./conflict_vote";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
+
 /** GenesisState defines the conflict module's genesis state. */
 
 /** GenesisState defines the conflict module's genesis state. */
@@ -41,22 +41,6 @@ export const GenesisState = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-      conflictVoteList: Array.isArray(object === null || object === void 0 ? void 0 : object.conflictVoteList) ? object.conflictVoteList.map(e => ConflictVote.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.conflictVoteList) {
-      obj.conflictVoteList = message.conflictVoteList.map(e => e ? ConflictVote.toJSON(e) : undefined);
-    } else {
-      obj.conflictVoteList = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$conflictVoteL;

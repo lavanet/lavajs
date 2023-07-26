@@ -55,24 +55,6 @@ var GenesisState = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      authorization: Array.isArray(object === null || object === void 0 ? void 0 : object.authorization) ? object.authorization.map(function (e) {
-        return _authz.GrantAuthorization.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.authorization) {
-      obj.authorization = message.authorization.map(function (e) {
-        return e ? _authz.GrantAuthorization.toJSON(e) : undefined;
-      });
-    } else {
-      obj.authorization = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$authorization;
     var message = createBaseGenesisState();

@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** MsgSend represents a message to send a nft from one account to another account. */
 
 /** MsgSend represents a message to send a nft from one account to another account. */
@@ -58,22 +58,6 @@ export const MsgSend = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      classId: isSet(object.classId) ? String(object.classId) : "",
-      id: isSet(object.id) ? String(object.id) : "",
-      sender: isSet(object.sender) ? String(object.sender) : "",
-      receiver: isSet(object.receiver) ? String(object.receiver) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.classId !== undefined && (obj.classId = message.classId);
-    message.id !== undefined && (obj.id = message.id);
-    message.sender !== undefined && (obj.sender = message.sender);
-    message.receiver !== undefined && (obj.receiver = message.receiver);
-    return obj;
-  },
   fromPartial(object) {
     var _object$classId, _object$id, _object$sender, _object$receiver;
     const message = createBaseMsgSend();
@@ -104,13 +88,6 @@ export const MsgSendResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgSendResponse();

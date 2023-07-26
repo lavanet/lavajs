@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** TableDescriptor describes an ORM table. */
 
 /** TableDescriptor describes an ORM table. */
@@ -59,24 +59,6 @@ export const TableDescriptor = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      primaryKey: isSet(object.primaryKey) ? PrimaryKeyDescriptor.fromJSON(object.primaryKey) : undefined,
-      index: Array.isArray(object === null || object === void 0 ? void 0 : object.index) ? object.index.map(e => SecondaryIndexDescriptor.fromJSON(e)) : [],
-      id: isSet(object.id) ? Number(object.id) : 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.primaryKey !== undefined && (obj.primaryKey = message.primaryKey ? PrimaryKeyDescriptor.toJSON(message.primaryKey) : undefined);
-    if (message.index) {
-      obj.index = message.index.map(e => e ? SecondaryIndexDescriptor.toJSON(e) : undefined);
-    } else {
-      obj.index = [];
-    }
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    return obj;
-  },
   fromPartial(object) {
     var _object$index, _object$id;
     const message = createBaseTableDescriptor();
@@ -121,18 +103,6 @@ export const PrimaryKeyDescriptor = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      fields: isSet(object.fields) ? String(object.fields) : "",
-      autoIncrement: isSet(object.autoIncrement) ? Boolean(object.autoIncrement) : false
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.fields !== undefined && (obj.fields = message.fields);
-    message.autoIncrement !== undefined && (obj.autoIncrement = message.autoIncrement);
-    return obj;
   },
   fromPartial(object) {
     var _object$fields, _object$autoIncrement;
@@ -185,20 +155,6 @@ export const SecondaryIndexDescriptor = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      fields: isSet(object.fields) ? String(object.fields) : "",
-      id: isSet(object.id) ? Number(object.id) : 0,
-      unique: isSet(object.unique) ? Boolean(object.unique) : false
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.fields !== undefined && (obj.fields = message.fields);
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.unique !== undefined && (obj.unique = message.unique);
-    return obj;
-  },
   fromPartial(object) {
     var _object$fields2, _object$id2, _object$unique;
     const message = createBaseSecondaryIndexDescriptor();
@@ -236,16 +192,6 @@ export const SingletonDescriptor = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      id: isSet(object.id) ? Number(object.id) : 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    return obj;
   },
   fromPartial(object) {
     var _object$id3;

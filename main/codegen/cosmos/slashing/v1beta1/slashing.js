@@ -48,7 +48,7 @@ var ValidatorSigningInfo = {
       writer.uint32(24).int64(message.indexOffset);
     }
     if (message.jailedUntil !== undefined) {
-      _timestamp.Timestamp.encode(message.jailedUntil, writer.uint32(34).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.jailedUntil), writer.uint32(34).fork()).ldelim();
     }
     if (message.tombstoned === true) {
       writer.uint32(40).bool(message.tombstoned);
@@ -75,7 +75,7 @@ var ValidatorSigningInfo = {
           message.indexOffset = reader.int64();
           break;
         case 4:
-          message.jailedUntil = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.jailedUntil = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 5:
           message.tombstoned = reader.bool();
@@ -90,33 +90,13 @@ var ValidatorSigningInfo = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      startHeight: (0, _helpers.isSet)(object.startHeight) ? _helpers.Long.fromValue(object.startHeight) : _helpers.Long.ZERO,
-      indexOffset: (0, _helpers.isSet)(object.indexOffset) ? _helpers.Long.fromValue(object.indexOffset) : _helpers.Long.ZERO,
-      jailedUntil: (0, _helpers.isSet)(object.jailedUntil) ? (0, _helpers.fromJsonTimestamp)(object.jailedUntil) : undefined,
-      tombstoned: (0, _helpers.isSet)(object.tombstoned) ? Boolean(object.tombstoned) : false,
-      missedBlocksCounter: (0, _helpers.isSet)(object.missedBlocksCounter) ? _helpers.Long.fromValue(object.missedBlocksCounter) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.startHeight !== undefined && (obj.startHeight = (message.startHeight || _helpers.Long.ZERO).toString());
-    message.indexOffset !== undefined && (obj.indexOffset = (message.indexOffset || _helpers.Long.ZERO).toString());
-    message.jailedUntil !== undefined && (obj.jailedUntil = (0, _helpers.fromTimestamp)(message.jailedUntil).toISOString());
-    message.tombstoned !== undefined && (obj.tombstoned = message.tombstoned);
-    message.missedBlocksCounter !== undefined && (obj.missedBlocksCounter = (message.missedBlocksCounter || _helpers.Long.ZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$address, _object$tombstoned;
+    var _object$address, _object$jailedUntil, _object$tombstoned;
     var message = createBaseValidatorSigningInfo();
     message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
     message.startHeight = object.startHeight !== undefined && object.startHeight !== null ? _helpers.Long.fromValue(object.startHeight) : _helpers.Long.ZERO;
     message.indexOffset = object.indexOffset !== undefined && object.indexOffset !== null ? _helpers.Long.fromValue(object.indexOffset) : _helpers.Long.ZERO;
-    message.jailedUntil = object.jailedUntil !== undefined && object.jailedUntil !== null ? _timestamp.Timestamp.fromPartial(object.jailedUntil) : undefined;
+    message.jailedUntil = (_object$jailedUntil = object.jailedUntil) !== null && _object$jailedUntil !== void 0 ? _object$jailedUntil : undefined;
     message.tombstoned = (_object$tombstoned = object.tombstoned) !== null && _object$tombstoned !== void 0 ? _object$tombstoned : false;
     message.missedBlocksCounter = object.missedBlocksCounter !== undefined && object.missedBlocksCounter !== null ? _helpers.Long.fromValue(object.missedBlocksCounter) : _helpers.Long.ZERO;
     return message;
@@ -180,24 +160,6 @@ var Params = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      signedBlocksWindow: (0, _helpers.isSet)(object.signedBlocksWindow) ? _helpers.Long.fromValue(object.signedBlocksWindow) : _helpers.Long.ZERO,
-      minSignedPerWindow: (0, _helpers.isSet)(object.minSignedPerWindow) ? (0, _helpers.bytesFromBase64)(object.minSignedPerWindow) : new Uint8Array(),
-      downtimeJailDuration: (0, _helpers.isSet)(object.downtimeJailDuration) ? _duration.Duration.fromJSON(object.downtimeJailDuration) : undefined,
-      slashFractionDoubleSign: (0, _helpers.isSet)(object.slashFractionDoubleSign) ? (0, _helpers.bytesFromBase64)(object.slashFractionDoubleSign) : new Uint8Array(),
-      slashFractionDowntime: (0, _helpers.isSet)(object.slashFractionDowntime) ? (0, _helpers.bytesFromBase64)(object.slashFractionDowntime) : new Uint8Array()
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.signedBlocksWindow !== undefined && (obj.signedBlocksWindow = (message.signedBlocksWindow || _helpers.Long.ZERO).toString());
-    message.minSignedPerWindow !== undefined && (obj.minSignedPerWindow = (0, _helpers.base64FromBytes)(message.minSignedPerWindow !== undefined ? message.minSignedPerWindow : new Uint8Array()));
-    message.downtimeJailDuration !== undefined && (obj.downtimeJailDuration = message.downtimeJailDuration ? _duration.Duration.toJSON(message.downtimeJailDuration) : undefined);
-    message.slashFractionDoubleSign !== undefined && (obj.slashFractionDoubleSign = (0, _helpers.base64FromBytes)(message.slashFractionDoubleSign !== undefined ? message.slashFractionDoubleSign : new Uint8Array()));
-    message.slashFractionDowntime !== undefined && (obj.slashFractionDowntime = (0, _helpers.base64FromBytes)(message.slashFractionDowntime !== undefined ? message.slashFractionDowntime : new Uint8Array()));
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$minSignedPerW, _object$slashFraction, _object$slashFraction2;

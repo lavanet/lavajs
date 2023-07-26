@@ -2,7 +2,7 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Coin } from "../../base/v1beta1/coin";
 import { Params, Metadata } from "./bank";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** QueryBalanceRequest is the request type for the Query/Balance RPC method. */
 
 /** QueryBalanceRequest is the request type for the Query/Balance RPC method. */
@@ -173,18 +173,6 @@ export const QueryBalanceRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      denom: isSet(object.denom) ? String(object.denom) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.denom !== undefined && (obj.denom = message.denom);
-    return obj;
-  },
   fromPartial(object) {
     var _object$address, _object$denom;
     const message = createBaseQueryBalanceRequest();
@@ -221,16 +209,6 @@ export const QueryBalanceResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      balance: isSet(object.balance) ? Coin.fromJSON(object.balance) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.balance !== undefined && (obj.balance = message.balance ? Coin.toJSON(message.balance) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryBalanceResponse();
@@ -273,18 +251,6 @@ export const QueryAllBalancesRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$address2;
@@ -330,22 +296,6 @@ export const QueryAllBalancesResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      balances: Array.isArray(object === null || object === void 0 ? void 0 : object.balances) ? object.balances.map(e => Coin.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.balances) {
-      obj.balances = message.balances.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.balances = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$balances;
     const message = createBaseQueryAllBalancesResponse();
@@ -389,18 +339,6 @@ export const QuerySpendableBalancesRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$address3;
@@ -446,22 +384,6 @@ export const QuerySpendableBalancesResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      balances: Array.isArray(object === null || object === void 0 ? void 0 : object.balances) ? object.balances.map(e => Coin.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.balances) {
-      obj.balances = message.balances.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.balances = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$balances2;
     const message = createBaseQuerySpendableBalancesResponse();
@@ -498,16 +420,6 @@ export const QueryTotalSupplyRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryTotalSupplyRequest();
@@ -551,22 +463,6 @@ export const QueryTotalSupplyResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      supply: Array.isArray(object === null || object === void 0 ? void 0 : object.supply) ? object.supply.map(e => Coin.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.supply) {
-      obj.supply = message.supply.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.supply = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$supply;
     const message = createBaseQueryTotalSupplyResponse();
@@ -604,16 +500,6 @@ export const QuerySupplyOfRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    return obj;
-  },
   fromPartial(object) {
     var _object$denom2;
     const message = createBaseQuerySupplyOfRequest();
@@ -650,16 +536,6 @@ export const QuerySupplyOfResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQuerySupplyOfResponse();
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
@@ -686,13 +562,6 @@ export const QueryParamsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
@@ -728,16 +597,6 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
@@ -772,16 +631,6 @@ export const QueryDenomsMetadataRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryDenomsMetadataRequest();
@@ -825,22 +674,6 @@ export const QueryDenomsMetadataResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      metadatas: Array.isArray(object === null || object === void 0 ? void 0 : object.metadatas) ? object.metadatas.map(e => Metadata.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.metadatas) {
-      obj.metadatas = message.metadatas.map(e => e ? Metadata.toJSON(e) : undefined);
-    } else {
-      obj.metadatas = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$metadatas;
     const message = createBaseQueryDenomsMetadataResponse();
@@ -878,16 +711,6 @@ export const QueryDenomMetadataRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    return obj;
-  },
   fromPartial(object) {
     var _object$denom3;
     const message = createBaseQueryDenomMetadataRequest();
@@ -923,16 +746,6 @@ export const QueryDenomMetadataResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.metadata !== undefined && (obj.metadata = message.metadata ? Metadata.toJSON(message.metadata) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryDenomMetadataResponse();
@@ -975,18 +788,6 @@ export const QueryDenomOwnersRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$denom4;
@@ -1032,18 +833,6 @@ export const DenomOwner = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      balance: isSet(object.balance) ? Coin.fromJSON(object.balance) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.balance !== undefined && (obj.balance = message.balance ? Coin.toJSON(message.balance) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$address4;
     const message = createBaseDenomOwner();
@@ -1087,22 +876,6 @@ export const QueryDenomOwnersResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      denomOwners: Array.isArray(object === null || object === void 0 ? void 0 : object.denomOwners) ? object.denomOwners.map(e => DenomOwner.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.denomOwners) {
-      obj.denomOwners = message.denomOwners.map(e => e ? DenomOwner.toJSON(e) : undefined);
-    } else {
-      obj.denomOwners = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$denomOwners;

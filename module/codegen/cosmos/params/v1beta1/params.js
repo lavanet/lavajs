@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** ParameterChangeProposal defines a proposal to change one or more parameters. */
 
 /** ParameterChangeProposal defines a proposal to change one or more parameters. */
@@ -57,24 +57,6 @@ export const ParameterChangeProposal = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      title: isSet(object.title) ? String(object.title) : "",
-      description: isSet(object.description) ? String(object.description) : "",
-      changes: Array.isArray(object === null || object === void 0 ? void 0 : object.changes) ? object.changes.map(e => ParamChange.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.title !== undefined && (obj.title = message.title);
-    message.description !== undefined && (obj.description = message.description);
-    if (message.changes) {
-      obj.changes = message.changes.map(e => e ? ParamChange.toJSON(e) : undefined);
-    } else {
-      obj.changes = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$title, _object$description, _object$changes;
     const message = createBaseParameterChangeProposal();
@@ -126,20 +108,6 @@ export const ParamChange = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      subspace: isSet(object.subspace) ? String(object.subspace) : "",
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.subspace !== undefined && (obj.subspace = message.subspace);
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
-    return obj;
   },
   fromPartial(object) {
     var _object$subspace, _object$key, _object$value;

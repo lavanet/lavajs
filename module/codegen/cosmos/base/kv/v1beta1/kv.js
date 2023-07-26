@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
+
 /** Pairs defines a repeated slice of Pair objects. */
 
 /** Pairs defines a repeated slice of Pair objects. */
@@ -36,20 +36,6 @@ export const Pairs = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pairs: Array.isArray(object === null || object === void 0 ? void 0 : object.pairs) ? object.pairs.map(e => Pair.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.pairs) {
-      obj.pairs = message.pairs.map(e => e ? Pair.toJSON(e) : undefined);
-    } else {
-      obj.pairs = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$pairs;
@@ -93,18 +79,6 @@ export const Pair = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(),
-      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.key !== undefined && (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    message.value !== undefined && (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
-    return obj;
   },
   fromPartial(object) {
     var _object$key, _object$value;

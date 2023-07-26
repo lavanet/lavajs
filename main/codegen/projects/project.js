@@ -4,11 +4,10 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SELECTED_PROVIDERS_MODESDKType = exports.SELECTED_PROVIDERS_MODE = exports.ProtoDeveloperData = exports.ProjectKey_TypeSDKType = exports.ProjectKey_Type = exports.ProjectKey = exports.ProjectData = exports.Project = exports.Policy = exports.ChainPolicy = void 0;
+exports.ProtoDeveloperData = exports.ProjectKey_TypeSDKType = exports.ProjectKey_Type = exports.ProjectKey = exports.ProjectData = exports.Project = void 0;
 exports.projectKey_TypeFromJSON = projectKey_TypeFromJSON;
 exports.projectKey_TypeToJSON = projectKey_TypeToJSON;
-exports.sELECTED_PROVIDERS_MODEFromJSON = sELECTED_PROVIDERS_MODEFromJSON;
-exports.sELECTED_PROVIDERS_MODEToJSON = sELECTED_PROVIDERS_MODEToJSON;
+var _plan = require("../plans/plan");
 var _helpers = require("../helpers");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -56,57 +55,6 @@ function projectKey_TypeToJSON(object) {
       return "UNRECOGNIZED";
   }
 }
-/** the enum below determines the pairing algorithm's behaviour with the selected providers feature */
-var SELECTED_PROVIDERS_MODE = /*#__PURE__*/function (SELECTED_PROVIDERS_MODE) {
-  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["ALLOWED"] = 0] = "ALLOWED";
-  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["MIXED"] = 1] = "MIXED";
-  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["EXCLUSIVE"] = 2] = "EXCLUSIVE";
-  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["DISABLED"] = 3] = "DISABLED";
-  SELECTED_PROVIDERS_MODE[SELECTED_PROVIDERS_MODE["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
-  return SELECTED_PROVIDERS_MODE;
-}({});
-exports.SELECTED_PROVIDERS_MODE = SELECTED_PROVIDERS_MODE;
-var SELECTED_PROVIDERS_MODESDKType = SELECTED_PROVIDERS_MODE;
-exports.SELECTED_PROVIDERS_MODESDKType = SELECTED_PROVIDERS_MODESDKType;
-function sELECTED_PROVIDERS_MODEFromJSON(object) {
-  switch (object) {
-    case 0:
-    case "ALLOWED":
-      return SELECTED_PROVIDERS_MODE.ALLOWED;
-    case 1:
-    case "MIXED":
-      return SELECTED_PROVIDERS_MODE.MIXED;
-    case 2:
-    case "EXCLUSIVE":
-      return SELECTED_PROVIDERS_MODE.EXCLUSIVE;
-    case 3:
-    case "DISABLED":
-      return SELECTED_PROVIDERS_MODE.DISABLED;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return SELECTED_PROVIDERS_MODE.UNRECOGNIZED;
-  }
-}
-function sELECTED_PROVIDERS_MODEToJSON(object) {
-  switch (object) {
-    case SELECTED_PROVIDERS_MODE.ALLOWED:
-      return "ALLOWED";
-    case SELECTED_PROVIDERS_MODE.MIXED:
-      return "MIXED";
-    case SELECTED_PROVIDERS_MODE.EXCLUSIVE:
-      return "EXCLUSIVE";
-    case SELECTED_PROVIDERS_MODE.DISABLED:
-      return "DISABLED";
-    case SELECTED_PROVIDERS_MODE.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-/** protobuf expected in YAML format: used "moretags" to simplify parsing */
-
-/** protobuf expected in YAML format: used "moretags" to simplify parsing */
 
 /** used as a container struct for the subscription module */
 
@@ -149,13 +97,13 @@ var Project = {
       _iterator.f();
     }
     if (message.adminPolicy !== undefined) {
-      Policy.encode(message.adminPolicy, writer.uint32(50).fork()).ldelim();
+      _plan.Policy.encode(message.adminPolicy, writer.uint32(50).fork()).ldelim();
     }
     if (!message.usedCu.isZero()) {
       writer.uint32(56).uint64(message.usedCu);
     }
     if (message.subscriptionPolicy !== undefined) {
-      Policy.encode(message.subscriptionPolicy, writer.uint32(66).fork()).ldelim();
+      _plan.Policy.encode(message.subscriptionPolicy, writer.uint32(66).fork()).ldelim();
     }
     if (!message.snapshot.isZero()) {
       writer.uint32(72).uint64(message.snapshot);
@@ -182,13 +130,13 @@ var Project = {
           message.projectKeys.push(ProjectKey.decode(reader, reader.uint32()));
           break;
         case 6:
-          message.adminPolicy = Policy.decode(reader, reader.uint32());
+          message.adminPolicy = _plan.Policy.decode(reader, reader.uint32());
           break;
         case 7:
           message.usedCu = reader.uint64();
           break;
         case 8:
-          message.subscriptionPolicy = Policy.decode(reader, reader.uint32());
+          message.subscriptionPolicy = _plan.Policy.decode(reader, reader.uint32());
           break;
         case 9:
           message.snapshot = reader.uint64();
@@ -200,38 +148,6 @@ var Project = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
-      subscription: (0, _helpers.isSet)(object.subscription) ? String(object.subscription) : "",
-      enabled: (0, _helpers.isSet)(object.enabled) ? Boolean(object.enabled) : false,
-      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(function (e) {
-        return ProjectKey.fromJSON(e);
-      }) : [],
-      adminPolicy: (0, _helpers.isSet)(object.adminPolicy) ? Policy.fromJSON(object.adminPolicy) : undefined,
-      usedCu: (0, _helpers.isSet)(object.usedCu) ? _helpers.Long.fromValue(object.usedCu) : _helpers.Long.UZERO,
-      subscriptionPolicy: (0, _helpers.isSet)(object.subscriptionPolicy) ? Policy.fromJSON(object.subscriptionPolicy) : undefined,
-      snapshot: (0, _helpers.isSet)(object.snapshot) ? _helpers.Long.fromValue(object.snapshot) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.subscription !== undefined && (obj.subscription = message.subscription);
-    message.enabled !== undefined && (obj.enabled = message.enabled);
-    if (message.projectKeys) {
-      obj.projectKeys = message.projectKeys.map(function (e) {
-        return e ? ProjectKey.toJSON(e) : undefined;
-      });
-    } else {
-      obj.projectKeys = [];
-    }
-    message.adminPolicy !== undefined && (obj.adminPolicy = message.adminPolicy ? Policy.toJSON(message.adminPolicy) : undefined);
-    message.usedCu !== undefined && (obj.usedCu = (message.usedCu || _helpers.Long.UZERO).toString());
-    message.subscriptionPolicy !== undefined && (obj.subscriptionPolicy = message.subscriptionPolicy ? Policy.toJSON(message.subscriptionPolicy) : undefined);
-    message.snapshot !== undefined && (obj.snapshot = (message.snapshot || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$subscription, _object$enabled, _object$projectKeys;
     var message = createBaseProject();
@@ -241,9 +157,9 @@ var Project = {
     message.projectKeys = ((_object$projectKeys = object.projectKeys) === null || _object$projectKeys === void 0 ? void 0 : _object$projectKeys.map(function (e) {
       return ProjectKey.fromPartial(e);
     })) || [];
-    message.adminPolicy = object.adminPolicy !== undefined && object.adminPolicy !== null ? Policy.fromPartial(object.adminPolicy) : undefined;
+    message.adminPolicy = object.adminPolicy !== undefined && object.adminPolicy !== null ? _plan.Policy.fromPartial(object.adminPolicy) : undefined;
     message.usedCu = object.usedCu !== undefined && object.usedCu !== null ? _helpers.Long.fromValue(object.usedCu) : _helpers.Long.UZERO;
-    message.subscriptionPolicy = object.subscriptionPolicy !== undefined && object.subscriptionPolicy !== null ? Policy.fromPartial(object.subscriptionPolicy) : undefined;
+    message.subscriptionPolicy = object.subscriptionPolicy !== undefined && object.subscriptionPolicy !== null ? _plan.Policy.fromPartial(object.subscriptionPolicy) : undefined;
     message.snapshot = object.snapshot !== undefined && object.snapshot !== null ? _helpers.Long.fromValue(object.snapshot) : _helpers.Long.UZERO;
     return message;
   }
@@ -286,18 +202,6 @@ var ProjectKey = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      key: (0, _helpers.isSet)(object.key) ? String(object.key) : "",
-      kinds: (0, _helpers.isSet)(object.kinds) ? Number(object.kinds) : 0
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.kinds !== undefined && (obj.kinds = Math.round(message.kinds));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$key, _object$kinds;
     var message = createBaseProjectKey();
@@ -307,229 +211,6 @@ var ProjectKey = {
   }
 };
 exports.ProjectKey = ProjectKey;
-function createBasePolicy() {
-  return {
-    chainPolicies: [],
-    geolocationProfile: _helpers.Long.UZERO,
-    totalCuLimit: _helpers.Long.UZERO,
-    epochCuLimit: _helpers.Long.UZERO,
-    maxProvidersToPair: _helpers.Long.UZERO,
-    selectedProvidersMode: 0,
-    selectedProviders: []
-  };
-}
-var Policy = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    var _iterator2 = _createForOfIteratorHelper(message.chainPolicies),
-      _step2;
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var v = _step2.value;
-        ChainPolicy.encode(v, writer.uint32(10).fork()).ldelim();
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
-    if (!message.geolocationProfile.isZero()) {
-      writer.uint32(16).uint64(message.geolocationProfile);
-    }
-    if (!message.totalCuLimit.isZero()) {
-      writer.uint32(24).uint64(message.totalCuLimit);
-    }
-    if (!message.epochCuLimit.isZero()) {
-      writer.uint32(32).uint64(message.epochCuLimit);
-    }
-    if (!message.maxProvidersToPair.isZero()) {
-      writer.uint32(40).uint64(message.maxProvidersToPair);
-    }
-    if (message.selectedProvidersMode !== 0) {
-      writer.uint32(48).int32(message.selectedProvidersMode);
-    }
-    var _iterator3 = _createForOfIteratorHelper(message.selectedProviders),
-      _step3;
-    try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var _v = _step3.value;
-        writer.uint32(58).string(_v);
-      }
-    } catch (err) {
-      _iterator3.e(err);
-    } finally {
-      _iterator3.f();
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBasePolicy();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.chainPolicies.push(ChainPolicy.decode(reader, reader.uint32()));
-          break;
-        case 2:
-          message.geolocationProfile = reader.uint64();
-          break;
-        case 3:
-          message.totalCuLimit = reader.uint64();
-          break;
-        case 4:
-          message.epochCuLimit = reader.uint64();
-          break;
-        case 5:
-          message.maxProvidersToPair = reader.uint64();
-          break;
-        case 6:
-          message.selectedProvidersMode = reader.int32();
-          break;
-        case 7:
-          message.selectedProviders.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainPolicies: Array.isArray(object === null || object === void 0 ? void 0 : object.chainPolicies) ? object.chainPolicies.map(function (e) {
-        return ChainPolicy.fromJSON(e);
-      }) : [],
-      geolocationProfile: (0, _helpers.isSet)(object.geolocationProfile) ? _helpers.Long.fromValue(object.geolocationProfile) : _helpers.Long.UZERO,
-      totalCuLimit: (0, _helpers.isSet)(object.totalCuLimit) ? _helpers.Long.fromValue(object.totalCuLimit) : _helpers.Long.UZERO,
-      epochCuLimit: (0, _helpers.isSet)(object.epochCuLimit) ? _helpers.Long.fromValue(object.epochCuLimit) : _helpers.Long.UZERO,
-      maxProvidersToPair: (0, _helpers.isSet)(object.maxProvidersToPair) ? _helpers.Long.fromValue(object.maxProvidersToPair) : _helpers.Long.UZERO,
-      selectedProvidersMode: (0, _helpers.isSet)(object.selectedProvidersMode) ? sELECTED_PROVIDERS_MODEFromJSON(object.selectedProvidersMode) : 0,
-      selectedProviders: Array.isArray(object === null || object === void 0 ? void 0 : object.selectedProviders) ? object.selectedProviders.map(function (e) {
-        return String(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.chainPolicies) {
-      obj.chainPolicies = message.chainPolicies.map(function (e) {
-        return e ? ChainPolicy.toJSON(e) : undefined;
-      });
-    } else {
-      obj.chainPolicies = [];
-    }
-    message.geolocationProfile !== undefined && (obj.geolocationProfile = (message.geolocationProfile || _helpers.Long.UZERO).toString());
-    message.totalCuLimit !== undefined && (obj.totalCuLimit = (message.totalCuLimit || _helpers.Long.UZERO).toString());
-    message.epochCuLimit !== undefined && (obj.epochCuLimit = (message.epochCuLimit || _helpers.Long.UZERO).toString());
-    message.maxProvidersToPair !== undefined && (obj.maxProvidersToPair = (message.maxProvidersToPair || _helpers.Long.UZERO).toString());
-    message.selectedProvidersMode !== undefined && (obj.selectedProvidersMode = sELECTED_PROVIDERS_MODEToJSON(message.selectedProvidersMode));
-    if (message.selectedProviders) {
-      obj.selectedProviders = message.selectedProviders.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.selectedProviders = [];
-    }
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$chainPolicies, _object$selectedProvi, _object$selectedProvi2;
-    var message = createBasePolicy();
-    message.chainPolicies = ((_object$chainPolicies = object.chainPolicies) === null || _object$chainPolicies === void 0 ? void 0 : _object$chainPolicies.map(function (e) {
-      return ChainPolicy.fromPartial(e);
-    })) || [];
-    message.geolocationProfile = object.geolocationProfile !== undefined && object.geolocationProfile !== null ? _helpers.Long.fromValue(object.geolocationProfile) : _helpers.Long.UZERO;
-    message.totalCuLimit = object.totalCuLimit !== undefined && object.totalCuLimit !== null ? _helpers.Long.fromValue(object.totalCuLimit) : _helpers.Long.UZERO;
-    message.epochCuLimit = object.epochCuLimit !== undefined && object.epochCuLimit !== null ? _helpers.Long.fromValue(object.epochCuLimit) : _helpers.Long.UZERO;
-    message.maxProvidersToPair = object.maxProvidersToPair !== undefined && object.maxProvidersToPair !== null ? _helpers.Long.fromValue(object.maxProvidersToPair) : _helpers.Long.UZERO;
-    message.selectedProvidersMode = (_object$selectedProvi = object.selectedProvidersMode) !== null && _object$selectedProvi !== void 0 ? _object$selectedProvi : 0;
-    message.selectedProviders = ((_object$selectedProvi2 = object.selectedProviders) === null || _object$selectedProvi2 === void 0 ? void 0 : _object$selectedProvi2.map(function (e) {
-      return e;
-    })) || [];
-    return message;
-  }
-};
-exports.Policy = Policy;
-function createBaseChainPolicy() {
-  return {
-    chainId: "",
-    apis: []
-  };
-}
-var ChainPolicy = {
-  encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (message.chainId !== "") {
-      writer.uint32(10).string(message.chainId);
-    }
-    var _iterator4 = _createForOfIteratorHelper(message.apis),
-      _step4;
-    try {
-      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-        var v = _step4.value;
-        writer.uint32(18).string(v);
-      }
-    } catch (err) {
-      _iterator4.e(err);
-    } finally {
-      _iterator4.f();
-    }
-    return writer;
-  },
-  decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    var end = length === undefined ? reader.len : reader.pos + length;
-    var message = createBaseChainPolicy();
-    while (reader.pos < end) {
-      var tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.chainId = reader.string();
-          break;
-        case 2:
-          message.apis.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainId: (0, _helpers.isSet)(object.chainId) ? String(object.chainId) : "",
-      apis: Array.isArray(object === null || object === void 0 ? void 0 : object.apis) ? object.apis.map(function (e) {
-        return String(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainId !== undefined && (obj.chainId = message.chainId);
-    if (message.apis) {
-      obj.apis = message.apis.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.apis = [];
-    }
-    return obj;
-  },
-  fromPartial: function fromPartial(object) {
-    var _object$chainId, _object$apis;
-    var message = createBaseChainPolicy();
-    message.chainId = (_object$chainId = object.chainId) !== null && _object$chainId !== void 0 ? _object$chainId : "";
-    message.apis = ((_object$apis = object.apis) === null || _object$apis === void 0 ? void 0 : _object$apis.map(function (e) {
-      return e;
-    })) || [];
-    return message;
-  }
-};
-exports.ChainPolicy = ChainPolicy;
 function createBaseProtoDeveloperData() {
   return {
     projectID: ""
@@ -560,16 +241,6 @@ var ProtoDeveloperData = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      projectID: (0, _helpers.isSet)(object.projectID) ? String(object.projectID) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.projectID !== undefined && (obj.projectID = message.projectID);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$projectID;
     var message = createBaseProtoDeveloperData();
@@ -595,20 +266,20 @@ var ProjectData = {
     if (message.enabled === true) {
       writer.uint32(24).bool(message.enabled);
     }
-    var _iterator5 = _createForOfIteratorHelper(message.projectKeys),
-      _step5;
+    var _iterator2 = _createForOfIteratorHelper(message.projectKeys),
+      _step2;
     try {
-      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-        var v = _step5.value;
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var v = _step2.value;
         ProjectKey.encode(v, writer.uint32(34).fork()).ldelim();
       }
     } catch (err) {
-      _iterator5.e(err);
+      _iterator2.e(err);
     } finally {
-      _iterator5.f();
+      _iterator2.f();
     }
     if (message.policy !== undefined) {
-      Policy.encode(message.policy, writer.uint32(42).fork()).ldelim();
+      _plan.Policy.encode(message.policy, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -629,7 +300,7 @@ var ProjectData = {
           message.projectKeys.push(ProjectKey.decode(reader, reader.uint32()));
           break;
         case 5:
-          message.policy = Policy.decode(reader, reader.uint32());
+          message.policy = _plan.Policy.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -637,30 +308,6 @@ var ProjectData = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
-      enabled: (0, _helpers.isSet)(object.enabled) ? Boolean(object.enabled) : false,
-      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(function (e) {
-        return ProjectKey.fromJSON(e);
-      }) : [],
-      policy: (0, _helpers.isSet)(object.policy) ? Policy.fromJSON(object.policy) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.enabled !== undefined && (obj.enabled = message.enabled);
-    if (message.projectKeys) {
-      obj.projectKeys = message.projectKeys.map(function (e) {
-        return e ? ProjectKey.toJSON(e) : undefined;
-      });
-    } else {
-      obj.projectKeys = [];
-    }
-    message.policy !== undefined && (obj.policy = message.policy ? Policy.toJSON(message.policy) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$name, _object$enabled2, _object$projectKeys2;
@@ -670,7 +317,7 @@ var ProjectData = {
     message.projectKeys = ((_object$projectKeys2 = object.projectKeys) === null || _object$projectKeys2 === void 0 ? void 0 : _object$projectKeys2.map(function (e) {
       return ProjectKey.fromPartial(e);
     })) || [];
-    message.policy = object.policy !== undefined && object.policy !== null ? Policy.fromPartial(object.policy) : undefined;
+    message.policy = object.policy !== undefined && object.policy !== null ? _plan.Policy.fromPartial(object.policy) : undefined;
     return message;
   }
 };

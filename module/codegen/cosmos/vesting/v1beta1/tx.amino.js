@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { Long } from "../../../helpers";
 export const AminoConverter = {
   "/cosmos.vesting.v1beta1.MsgCreateVestingAccount": {

@@ -1,5 +1,4 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** StorageType */
 export let StorageType = /*#__PURE__*/function (StorageType) {
   StorageType[StorageType["STORAGE_TYPE_DEFAULT_UNSPECIFIED"] = 0] = "STORAGE_TYPE_DEFAULT_UNSPECIFIED";
@@ -95,22 +94,6 @@ export const ModuleSchemaDescriptor = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      schemaFile: Array.isArray(object === null || object === void 0 ? void 0 : object.schemaFile) ? object.schemaFile.map(e => ModuleSchemaDescriptor_FileEntry.fromJSON(e)) : [],
-      prefix: isSet(object.prefix) ? bytesFromBase64(object.prefix) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.schemaFile) {
-      obj.schemaFile = message.schemaFile.map(e => e ? ModuleSchemaDescriptor_FileEntry.toJSON(e) : undefined);
-    } else {
-      obj.schemaFile = [];
-    }
-    message.prefix !== undefined && (obj.prefix = base64FromBytes(message.prefix !== undefined ? message.prefix : new Uint8Array()));
-    return obj;
-  },
   fromPartial(object) {
     var _object$schemaFile, _object$prefix;
     const message = createBaseModuleSchemaDescriptor();
@@ -161,20 +144,6 @@ export const ModuleSchemaDescriptor_FileEntry = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      protoFileName: isSet(object.protoFileName) ? String(object.protoFileName) : "",
-      storageType: isSet(object.storageType) ? storageTypeFromJSON(object.storageType) : 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.protoFileName !== undefined && (obj.protoFileName = message.protoFileName);
-    message.storageType !== undefined && (obj.storageType = storageTypeToJSON(message.storageType));
-    return obj;
   },
   fromPartial(object) {
     var _object$id, _object$protoFileName, _object$storageType;

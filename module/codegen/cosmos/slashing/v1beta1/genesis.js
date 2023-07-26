@@ -1,5 +1,5 @@
 import { Params, ValidatorSigningInfo } from "./slashing";
-import { Long, isSet } from "../../../helpers";
+import { Long } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the slashing module's genesis state. */
 
@@ -66,28 +66,6 @@ export const GenesisState = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-      signingInfos: Array.isArray(object === null || object === void 0 ? void 0 : object.signingInfos) ? object.signingInfos.map(e => SigningInfo.fromJSON(e)) : [],
-      missedBlocks: Array.isArray(object === null || object === void 0 ? void 0 : object.missedBlocks) ? object.missedBlocks.map(e => ValidatorMissedBlocks.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.signingInfos) {
-      obj.signingInfos = message.signingInfos.map(e => e ? SigningInfo.toJSON(e) : undefined);
-    } else {
-      obj.signingInfos = [];
-    }
-    if (message.missedBlocks) {
-      obj.missedBlocks = message.missedBlocks.map(e => e ? ValidatorMissedBlocks.toJSON(e) : undefined);
-    } else {
-      obj.missedBlocks = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$signingInfos, _object$missedBlocks;
     const message = createBaseGenesisState();
@@ -133,18 +111,6 @@ export const SigningInfo = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      validatorSigningInfo: isSet(object.validatorSigningInfo) ? ValidatorSigningInfo.fromJSON(object.validatorSigningInfo) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.validatorSigningInfo !== undefined && (obj.validatorSigningInfo = message.validatorSigningInfo ? ValidatorSigningInfo.toJSON(message.validatorSigningInfo) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$address;
     const message = createBaseSigningInfo();
@@ -189,22 +155,6 @@ export const ValidatorMissedBlocks = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      missedBlocks: Array.isArray(object === null || object === void 0 ? void 0 : object.missedBlocks) ? object.missedBlocks.map(e => MissedBlock.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.missedBlocks) {
-      obj.missedBlocks = message.missedBlocks.map(e => e ? MissedBlock.toJSON(e) : undefined);
-    } else {
-      obj.missedBlocks = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$address2, _object$missedBlocks2;
     const message = createBaseValidatorMissedBlocks();
@@ -248,18 +198,6 @@ export const MissedBlock = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? Long.fromValue(object.index) : Long.ZERO,
-      missed: isSet(object.missed) ? Boolean(object.missed) : false
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = (message.index || Long.ZERO).toString());
-    message.missed !== undefined && (obj.missed = message.missed);
-    return obj;
   },
   fromPartial(object) {
     var _object$missed;

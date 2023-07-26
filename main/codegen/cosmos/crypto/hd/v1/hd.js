@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.BIP44Params = void 0;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** BIP44Params is used as path field in ledger item in Record. */
@@ -70,24 +69,6 @@ var BIP44Params = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      purpose: (0, _helpers.isSet)(object.purpose) ? Number(object.purpose) : 0,
-      coinType: (0, _helpers.isSet)(object.coinType) ? Number(object.coinType) : 0,
-      account: (0, _helpers.isSet)(object.account) ? Number(object.account) : 0,
-      change: (0, _helpers.isSet)(object.change) ? Boolean(object.change) : false,
-      addressIndex: (0, _helpers.isSet)(object.addressIndex) ? Number(object.addressIndex) : 0
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.purpose !== undefined && (obj.purpose = Math.round(message.purpose));
-    message.coinType !== undefined && (obj.coinType = Math.round(message.coinType));
-    message.account !== undefined && (obj.account = Math.round(message.account));
-    message.change !== undefined && (obj.change = message.change);
-    message.addressIndex !== undefined && (obj.addressIndex = Math.round(message.addressIndex));
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$purpose, _object$coinType, _object$account, _object$change, _object$addressIndex;

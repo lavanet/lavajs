@@ -1,6 +1,6 @@
 import { ParamChange } from "./params";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -75,18 +75,6 @@ export const QueryParamsRequest = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      subspace: isSet(object.subspace) ? String(object.subspace) : "",
-      key: isSet(object.key) ? String(object.key) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.subspace !== undefined && (obj.subspace = message.subspace);
-    message.key !== undefined && (obj.key = message.key);
-    return obj;
-  },
   fromPartial(object) {
     var _object$subspace, _object$key;
     const message = createBaseQueryParamsRequest();
@@ -124,16 +112,6 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      param: isSet(object.param) ? ParamChange.fromJSON(object.param) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.param !== undefined && (obj.param = message.param ? ParamChange.toJSON(message.param) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
     message.param = object.param !== undefined && object.param !== null ? ParamChange.fromPartial(object.param) : undefined;
@@ -160,13 +138,6 @@ export const QuerySubspacesRequest = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseQuerySubspacesRequest();
@@ -201,20 +172,6 @@ export const QuerySubspacesResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      subspaces: Array.isArray(object === null || object === void 0 ? void 0 : object.subspaces) ? object.subspaces.map(e => Subspace.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.subspaces) {
-      obj.subspaces = message.subspaces.map(e => e ? Subspace.toJSON(e) : undefined);
-    } else {
-      obj.subspaces = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$subspaces;
@@ -258,22 +215,6 @@ export const Subspace = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      subspace: isSet(object.subspace) ? String(object.subspace) : "",
-      keys: Array.isArray(object === null || object === void 0 ? void 0 : object.keys) ? object.keys.map(e => String(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.subspace !== undefined && (obj.subspace = message.subspace);
-    if (message.keys) {
-      obj.keys = message.keys.map(e => e);
-    } else {
-      obj.keys = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$subspace2, _object$keys;

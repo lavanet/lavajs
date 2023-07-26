@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.AminoConverter = void 0;
 var _gov = require("./gov");
 var _helpers = require("../../../helpers");
-//@ts-nocheck
-
 var AminoConverter = {
   "/cosmos.gov.v1beta1.MsgSubmitProposal": {
     aminoType: "cosmos-sdk/MsgSubmitProposal",

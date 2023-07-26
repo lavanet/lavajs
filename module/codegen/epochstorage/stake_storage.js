@@ -1,6 +1,5 @@
 import { StakeEntry } from "./stake_entry";
 import * as _m0 from "protobufjs/minimal";
-import { isSet, bytesFromBase64, base64FromBytes } from "../helpers";
 function createBaseStakeStorage() {
   return {
     index: "",
@@ -43,24 +42,6 @@ export const StakeStorage = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : "",
-      stakeEntries: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeEntries) ? object.stakeEntries.map(e => StakeEntry.fromJSON(e)) : [],
-      epochBlockHash: isSet(object.epochBlockHash) ? bytesFromBase64(object.epochBlockHash) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    if (message.stakeEntries) {
-      obj.stakeEntries = message.stakeEntries.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.stakeEntries = [];
-    }
-    message.epochBlockHash !== undefined && (obj.epochBlockHash = base64FromBytes(message.epochBlockHash !== undefined ? message.epochBlockHash : new Uint8Array()));
-    return obj;
   },
   fromPartial(object) {
     var _object$index, _object$stakeEntries, _object$epochBlockHas;

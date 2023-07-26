@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.slashing.v1beta1.MsgUnjail", _tx.MsgUnjail]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -34,22 +32,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.slashing.v1beta1.MsgUnjail",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    unjail: function unjail(value) {
-      return {
-        typeUrl: "/cosmos.slashing.v1beta1.MsgUnjail",
-        value: _tx.MsgUnjail.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    unjail: function unjail(value) {
-      return {
-        typeUrl: "/cosmos.slashing.v1beta1.MsgUnjail",
-        value: _tx.MsgUnjail.fromJSON(value)
       };
     }
   },

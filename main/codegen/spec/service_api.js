@@ -160,38 +160,6 @@ var ServiceApi = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      name: (0, _helpers.isSet)(object.name) ? String(object.name) : "",
-      blockParsing: (0, _helpers.isSet)(object.blockParsing) ? BlockParser.fromJSON(object.blockParsing) : undefined,
-      computeUnits: (0, _helpers.isSet)(object.computeUnits) ? _helpers.Long.fromValue(object.computeUnits) : _helpers.Long.UZERO,
-      enabled: (0, _helpers.isSet)(object.enabled) ? Boolean(object.enabled) : false,
-      apiInterfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.apiInterfaces) ? object.apiInterfaces.map(function (e) {
-        return ApiInterface.fromJSON(e);
-      }) : [],
-      reserved: (0, _helpers.isSet)(object.reserved) ? SpecCategory.fromJSON(object.reserved) : undefined,
-      parsing: (0, _helpers.isSet)(object.parsing) ? Parsing.fromJSON(object.parsing) : undefined,
-      internalPath: (0, _helpers.isSet)(object.internalPath) ? String(object.internalPath) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.blockParsing !== undefined && (obj.blockParsing = message.blockParsing ? BlockParser.toJSON(message.blockParsing) : undefined);
-    message.computeUnits !== undefined && (obj.computeUnits = (message.computeUnits || _helpers.Long.UZERO).toString());
-    message.enabled !== undefined && (obj.enabled = message.enabled);
-    if (message.apiInterfaces) {
-      obj.apiInterfaces = message.apiInterfaces.map(function (e) {
-        return e ? ApiInterface.toJSON(e) : undefined;
-      });
-    } else {
-      obj.apiInterfaces = [];
-    }
-    message.reserved !== undefined && (obj.reserved = message.reserved ? SpecCategory.toJSON(message.reserved) : undefined);
-    message.parsing !== undefined && (obj.parsing = message.parsing ? Parsing.toJSON(message.parsing) : undefined);
-    message.internalPath !== undefined && (obj.internalPath = message.internalPath);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$name, _object$enabled, _object$apiInterfaces, _object$internalPath;
     var message = createBaseServiceApi();
@@ -252,20 +220,6 @@ var Parsing = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      functionTag: (0, _helpers.isSet)(object.functionTag) ? String(object.functionTag) : "",
-      functionTemplate: (0, _helpers.isSet)(object.functionTemplate) ? String(object.functionTemplate) : "",
-      resultParsing: (0, _helpers.isSet)(object.resultParsing) ? BlockParser.fromJSON(object.resultParsing) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.functionTag !== undefined && (obj.functionTag = message.functionTag);
-    message.functionTemplate !== undefined && (obj.functionTemplate = message.functionTemplate);
-    message.resultParsing !== undefined && (obj.resultParsing = message.resultParsing ? BlockParser.toJSON(message.resultParsing) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$functionTag, _object$functionTempl;
@@ -334,24 +288,6 @@ var ApiInterface = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      "interface": (0, _helpers.isSet)(object["interface"]) ? String(object["interface"]) : "",
-      type: (0, _helpers.isSet)(object.type) ? String(object.type) : "",
-      extraComputeUnits: (0, _helpers.isSet)(object.extraComputeUnits) ? _helpers.Long.fromValue(object.extraComputeUnits) : _helpers.Long.UZERO,
-      category: (0, _helpers.isSet)(object.category) ? SpecCategory.fromJSON(object.category) : undefined,
-      overwriteBlockParsing: (0, _helpers.isSet)(object.overwriteBlockParsing) ? BlockParser.fromJSON(object.overwriteBlockParsing) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message["interface"] !== undefined && (obj["interface"] = message["interface"]);
-    message.type !== undefined && (obj.type = message.type);
-    message.extraComputeUnits !== undefined && (obj.extraComputeUnits = (message.extraComputeUnits || _helpers.Long.UZERO).toString());
-    message.category !== undefined && (obj.category = message.category ? SpecCategory.toJSON(message.category) : undefined);
-    message.overwriteBlockParsing !== undefined && (obj.overwriteBlockParsing = message.overwriteBlockParsing ? BlockParser.toJSON(message.overwriteBlockParsing) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$interface, _object$type;
@@ -425,30 +361,6 @@ var BlockParser = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      parserArg: Array.isArray(object === null || object === void 0 ? void 0 : object.parserArg) ? object.parserArg.map(function (e) {
-        return String(e);
-      }) : [],
-      parserFunc: (0, _helpers.isSet)(object.parserFunc) ? pARSER_FUNCFromJSON(object.parserFunc) : 0,
-      defaultValue: (0, _helpers.isSet)(object.defaultValue) ? String(object.defaultValue) : "",
-      encoding: (0, _helpers.isSet)(object.encoding) ? String(object.encoding) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.parserArg) {
-      obj.parserArg = message.parserArg.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.parserArg = [];
-    }
-    message.parserFunc !== undefined && (obj.parserFunc = pARSER_FUNCToJSON(message.parserFunc));
-    message.defaultValue !== undefined && (obj.defaultValue = message.defaultValue);
-    message.encoding !== undefined && (obj.encoding = message.encoding);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$parserArg, _object$parserFunc, _object$defaultValue, _object$encoding;
     var message = createBaseBlockParser();
@@ -519,24 +431,6 @@ var SpecCategory = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      deterministic: (0, _helpers.isSet)(object.deterministic) ? Boolean(object.deterministic) : false,
-      local: (0, _helpers.isSet)(object.local) ? Boolean(object.local) : false,
-      subscription: (0, _helpers.isSet)(object.subscription) ? Boolean(object.subscription) : false,
-      stateful: (0, _helpers.isSet)(object.stateful) ? Number(object.stateful) : 0,
-      hangingApi: (0, _helpers.isSet)(object.hangingApi) ? Boolean(object.hangingApi) : false
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.deterministic !== undefined && (obj.deterministic = message.deterministic);
-    message.local !== undefined && (obj.local = message.local);
-    message.subscription !== undefined && (obj.subscription = message.subscription);
-    message.stateful !== undefined && (obj.stateful = Math.round(message.stateful));
-    message.hangingApi !== undefined && (obj.hangingApi = message.hangingApi);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$deterministic, _object$local, _object$subscription, _object$stateful, _object$hangingApi;

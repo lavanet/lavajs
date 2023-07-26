@@ -143,28 +143,6 @@ var MsgCreateValidator = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      description: (0, _helpers.isSet)(object.description) ? _staking.Description.fromJSON(object.description) : undefined,
-      commission: (0, _helpers.isSet)(object.commission) ? _staking.CommissionRates.fromJSON(object.commission) : undefined,
-      minSelfDelegation: (0, _helpers.isSet)(object.minSelfDelegation) ? String(object.minSelfDelegation) : "",
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
-      pubkey: (0, _helpers.isSet)(object.pubkey) ? _any.Any.fromJSON(object.pubkey) : undefined,
-      value: (0, _helpers.isSet)(object.value) ? _coin.Coin.fromJSON(object.value) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.description !== undefined && (obj.description = message.description ? _staking.Description.toJSON(message.description) : undefined);
-    message.commission !== undefined && (obj.commission = message.commission ? _staking.CommissionRates.toJSON(message.commission) : undefined);
-    message.minSelfDelegation !== undefined && (obj.minSelfDelegation = message.minSelfDelegation);
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.pubkey !== undefined && (obj.pubkey = message.pubkey ? _any.Any.toJSON(message.pubkey) : undefined);
-    message.value !== undefined && (obj.value = message.value ? _coin.Coin.toJSON(message.value) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$minSelfDelega, _object$delegatorAddr, _object$validatorAddr;
     var message = createBaseMsgCreateValidator();
@@ -200,13 +178,6 @@ var MsgCreateValidatorResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgCreateValidatorResponse();
@@ -265,22 +236,6 @@ var MsgEditValidator = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      description: (0, _helpers.isSet)(object.description) ? _staking.Description.fromJSON(object.description) : undefined,
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
-      commissionRate: (0, _helpers.isSet)(object.commissionRate) ? String(object.commissionRate) : "",
-      minSelfDelegation: (0, _helpers.isSet)(object.minSelfDelegation) ? String(object.minSelfDelegation) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.description !== undefined && (obj.description = message.description ? _staking.Description.toJSON(message.description) : undefined);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.commissionRate !== undefined && (obj.commissionRate = message.commissionRate);
-    message.minSelfDelegation !== undefined && (obj.minSelfDelegation = message.minSelfDelegation);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$validatorAddr2, _object$commissionRat, _object$minSelfDelega2;
     var message = createBaseMsgEditValidator();
@@ -313,13 +268,6 @@ var MsgEditValidatorResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgEditValidatorResponse();
@@ -371,20 +319,6 @@ var MsgDelegate = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
-      amount: (0, _helpers.isSet)(object.amount) ? _coin.Coin.fromJSON(object.amount) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.amount !== undefined && (obj.amount = message.amount ? _coin.Coin.toJSON(message.amount) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr2, _object$validatorAddr3;
     var message = createBaseMsgDelegate();
@@ -416,13 +350,6 @@ var MsgDelegateResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgDelegateResponse();
@@ -481,22 +408,6 @@ var MsgBeginRedelegate = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorSrcAddress: (0, _helpers.isSet)(object.validatorSrcAddress) ? String(object.validatorSrcAddress) : "",
-      validatorDstAddress: (0, _helpers.isSet)(object.validatorDstAddress) ? String(object.validatorDstAddress) : "",
-      amount: (0, _helpers.isSet)(object.amount) ? _coin.Coin.fromJSON(object.amount) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
-    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
-    message.amount !== undefined && (obj.amount = message.amount ? _coin.Coin.toJSON(message.amount) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr3, _object$validatorSrcA, _object$validatorDstA;
     var message = createBaseMsgBeginRedelegate();
@@ -517,7 +428,7 @@ var MsgBeginRedelegateResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
     if (message.completionTime !== undefined) {
-      _timestamp.Timestamp.encode(message.completionTime, writer.uint32(10).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.completionTime), writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -529,7 +440,7 @@ var MsgBeginRedelegateResponse = {
       var tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.completionTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.completionTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -538,19 +449,10 @@ var MsgBeginRedelegateResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      completionTime: (0, _helpers.isSet)(object.completionTime) ? (0, _helpers.fromJsonTimestamp)(object.completionTime) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.completionTime !== undefined && (obj.completionTime = (0, _helpers.fromTimestamp)(message.completionTime).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
+    var _object$completionTim;
     var message = createBaseMsgBeginRedelegateResponse();
-    message.completionTime = object.completionTime !== undefined && object.completionTime !== null ? _timestamp.Timestamp.fromPartial(object.completionTime) : undefined;
+    message.completionTime = (_object$completionTim = object.completionTime) !== null && _object$completionTim !== void 0 ? _object$completionTim : undefined;
     return message;
   }
 };
@@ -599,20 +501,6 @@ var MsgUndelegate = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
-      amount: (0, _helpers.isSet)(object.amount) ? _coin.Coin.fromJSON(object.amount) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.amount !== undefined && (obj.amount = message.amount ? _coin.Coin.toJSON(message.amount) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr4, _object$validatorAddr4;
     var message = createBaseMsgUndelegate();
@@ -632,7 +520,7 @@ var MsgUndelegateResponse = {
   encode: function encode(message) {
     var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
     if (message.completionTime !== undefined) {
-      _timestamp.Timestamp.encode(message.completionTime, writer.uint32(10).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.completionTime), writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -644,7 +532,7 @@ var MsgUndelegateResponse = {
       var tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.completionTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.completionTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -653,19 +541,10 @@ var MsgUndelegateResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      completionTime: (0, _helpers.isSet)(object.completionTime) ? (0, _helpers.fromJsonTimestamp)(object.completionTime) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.completionTime !== undefined && (obj.completionTime = (0, _helpers.fromTimestamp)(message.completionTime).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
+    var _object$completionTim2;
     var message = createBaseMsgUndelegateResponse();
-    message.completionTime = object.completionTime !== undefined && object.completionTime !== null ? _timestamp.Timestamp.fromPartial(object.completionTime) : undefined;
+    message.completionTime = (_object$completionTim2 = object.completionTime) !== null && _object$completionTim2 !== void 0 ? _object$completionTim2 : undefined;
     return message;
   }
 };

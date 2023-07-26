@@ -292,26 +292,6 @@ var HistoricalInfo = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      header: (0, _helpers.isSet)(object.header) ? _types.Header.fromJSON(object.header) : undefined,
-      valset: Array.isArray(object === null || object === void 0 ? void 0 : object.valset) ? object.valset.map(function (e) {
-        return Validator.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.header !== undefined && (obj.header = message.header ? _types.Header.toJSON(message.header) : undefined);
-    if (message.valset) {
-      obj.valset = message.valset.map(function (e) {
-        return e ? Validator.toJSON(e) : undefined;
-      });
-    } else {
-      obj.valset = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$valset;
     var message = createBaseHistoricalInfo();
@@ -367,20 +347,6 @@ var CommissionRates = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      rate: (0, _helpers.isSet)(object.rate) ? String(object.rate) : "",
-      maxRate: (0, _helpers.isSet)(object.maxRate) ? String(object.maxRate) : "",
-      maxChangeRate: (0, _helpers.isSet)(object.maxChangeRate) ? String(object.maxChangeRate) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.rate !== undefined && (obj.rate = message.rate);
-    message.maxRate !== undefined && (obj.maxRate = message.maxRate);
-    message.maxChangeRate !== undefined && (obj.maxChangeRate = message.maxChangeRate);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$rate, _object$maxRate, _object$maxChangeRate;
     var message = createBaseCommissionRates();
@@ -404,7 +370,7 @@ var Commission = {
       CommissionRates.encode(message.commissionRates, writer.uint32(10).fork()).ldelim();
     }
     if (message.updateTime !== undefined) {
-      _timestamp.Timestamp.encode(message.updateTime, writer.uint32(18).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.updateTime), writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -419,7 +385,7 @@ var Commission = {
           message.commissionRates = CommissionRates.decode(reader, reader.uint32());
           break;
         case 2:
-          message.updateTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.updateTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -428,22 +394,11 @@ var Commission = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      commissionRates: (0, _helpers.isSet)(object.commissionRates) ? CommissionRates.fromJSON(object.commissionRates) : undefined,
-      updateTime: (0, _helpers.isSet)(object.updateTime) ? (0, _helpers.fromJsonTimestamp)(object.updateTime) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.commissionRates !== undefined && (obj.commissionRates = message.commissionRates ? CommissionRates.toJSON(message.commissionRates) : undefined);
-    message.updateTime !== undefined && (obj.updateTime = (0, _helpers.fromTimestamp)(message.updateTime).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
+    var _object$updateTime;
     var message = createBaseCommission();
     message.commissionRates = object.commissionRates !== undefined && object.commissionRates !== null ? CommissionRates.fromPartial(object.commissionRates) : undefined;
-    message.updateTime = object.updateTime !== undefined && object.updateTime !== null ? _timestamp.Timestamp.fromPartial(object.updateTime) : undefined;
+    message.updateTime = (_object$updateTime = object.updateTime) !== null && _object$updateTime !== void 0 ? _object$updateTime : undefined;
     return message;
   }
 };
@@ -506,24 +461,6 @@ var Description = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      moniker: (0, _helpers.isSet)(object.moniker) ? String(object.moniker) : "",
-      identity: (0, _helpers.isSet)(object.identity) ? String(object.identity) : "",
-      website: (0, _helpers.isSet)(object.website) ? String(object.website) : "",
-      securityContact: (0, _helpers.isSet)(object.securityContact) ? String(object.securityContact) : "",
-      details: (0, _helpers.isSet)(object.details) ? String(object.details) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.moniker !== undefined && (obj.moniker = message.moniker);
-    message.identity !== undefined && (obj.identity = message.identity);
-    message.website !== undefined && (obj.website = message.website);
-    message.securityContact !== undefined && (obj.securityContact = message.securityContact);
-    message.details !== undefined && (obj.details = message.details);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$moniker, _object$identity, _object$website, _object$securityConta, _object$details;
     var message = createBaseDescription();
@@ -579,7 +516,7 @@ var Validator = {
       writer.uint32(64).int64(message.unbondingHeight);
     }
     if (message.unbondingTime !== undefined) {
-      _timestamp.Timestamp.encode(message.unbondingTime, writer.uint32(74).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.unbondingTime), writer.uint32(74).fork()).ldelim();
     }
     if (message.commission !== undefined) {
       Commission.encode(message.commission, writer.uint32(82).fork()).ldelim();
@@ -621,7 +558,7 @@ var Validator = {
           message.unbondingHeight = reader.int64();
           break;
         case 9:
-          message.unbondingTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.unbondingTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 10:
           message.commission = Commission.decode(reader, reader.uint32());
@@ -636,38 +573,8 @@ var Validator = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      operatorAddress: (0, _helpers.isSet)(object.operatorAddress) ? String(object.operatorAddress) : "",
-      consensusPubkey: (0, _helpers.isSet)(object.consensusPubkey) ? _any.Any.fromJSON(object.consensusPubkey) : undefined,
-      jailed: (0, _helpers.isSet)(object.jailed) ? Boolean(object.jailed) : false,
-      status: (0, _helpers.isSet)(object.status) ? bondStatusFromJSON(object.status) : 0,
-      tokens: (0, _helpers.isSet)(object.tokens) ? String(object.tokens) : "",
-      delegatorShares: (0, _helpers.isSet)(object.delegatorShares) ? String(object.delegatorShares) : "",
-      description: (0, _helpers.isSet)(object.description) ? Description.fromJSON(object.description) : undefined,
-      unbondingHeight: (0, _helpers.isSet)(object.unbondingHeight) ? _helpers.Long.fromValue(object.unbondingHeight) : _helpers.Long.ZERO,
-      unbondingTime: (0, _helpers.isSet)(object.unbondingTime) ? (0, _helpers.fromJsonTimestamp)(object.unbondingTime) : undefined,
-      commission: (0, _helpers.isSet)(object.commission) ? Commission.fromJSON(object.commission) : undefined,
-      minSelfDelegation: (0, _helpers.isSet)(object.minSelfDelegation) ? String(object.minSelfDelegation) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.operatorAddress !== undefined && (obj.operatorAddress = message.operatorAddress);
-    message.consensusPubkey !== undefined && (obj.consensusPubkey = message.consensusPubkey ? _any.Any.toJSON(message.consensusPubkey) : undefined);
-    message.jailed !== undefined && (obj.jailed = message.jailed);
-    message.status !== undefined && (obj.status = bondStatusToJSON(message.status));
-    message.tokens !== undefined && (obj.tokens = message.tokens);
-    message.delegatorShares !== undefined && (obj.delegatorShares = message.delegatorShares);
-    message.description !== undefined && (obj.description = message.description ? Description.toJSON(message.description) : undefined);
-    message.unbondingHeight !== undefined && (obj.unbondingHeight = (message.unbondingHeight || _helpers.Long.ZERO).toString());
-    message.unbondingTime !== undefined && (obj.unbondingTime = (0, _helpers.fromTimestamp)(message.unbondingTime).toISOString());
-    message.commission !== undefined && (obj.commission = message.commission ? Commission.toJSON(message.commission) : undefined);
-    message.minSelfDelegation !== undefined && (obj.minSelfDelegation = message.minSelfDelegation);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$operatorAddre, _object$jailed, _object$status, _object$tokens, _object$delegatorShar, _object$minSelfDelega;
+    var _object$operatorAddre, _object$jailed, _object$status, _object$tokens, _object$delegatorShar, _object$unbondingTime, _object$minSelfDelega;
     var message = createBaseValidator();
     message.operatorAddress = (_object$operatorAddre = object.operatorAddress) !== null && _object$operatorAddre !== void 0 ? _object$operatorAddre : "";
     message.consensusPubkey = object.consensusPubkey !== undefined && object.consensusPubkey !== null ? _any.Any.fromPartial(object.consensusPubkey) : undefined;
@@ -677,7 +584,7 @@ var Validator = {
     message.delegatorShares = (_object$delegatorShar = object.delegatorShares) !== null && _object$delegatorShar !== void 0 ? _object$delegatorShar : "";
     message.description = object.description !== undefined && object.description !== null ? Description.fromPartial(object.description) : undefined;
     message.unbondingHeight = object.unbondingHeight !== undefined && object.unbondingHeight !== null ? _helpers.Long.fromValue(object.unbondingHeight) : _helpers.Long.ZERO;
-    message.unbondingTime = object.unbondingTime !== undefined && object.unbondingTime !== null ? _timestamp.Timestamp.fromPartial(object.unbondingTime) : undefined;
+    message.unbondingTime = (_object$unbondingTime = object.unbondingTime) !== null && _object$unbondingTime !== void 0 ? _object$unbondingTime : undefined;
     message.commission = object.commission !== undefined && object.commission !== null ? Commission.fromPartial(object.commission) : undefined;
     message.minSelfDelegation = (_object$minSelfDelega = object.minSelfDelegation) !== null && _object$minSelfDelega !== void 0 ? _object$minSelfDelega : "";
     return message;
@@ -722,24 +629,6 @@ var ValAddresses = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      addresses: Array.isArray(object === null || object === void 0 ? void 0 : object.addresses) ? object.addresses.map(function (e) {
-        return String(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.addresses) {
-      obj.addresses = message.addresses.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.addresses = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$addresses;
@@ -788,18 +677,6 @@ var DVPair = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr, _object$validatorAddr;
     var message = createBaseDVPair();
@@ -847,24 +724,6 @@ var DVPairs = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      pairs: Array.isArray(object === null || object === void 0 ? void 0 : object.pairs) ? object.pairs.map(function (e) {
-        return DVPair.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.pairs) {
-      obj.pairs = message.pairs.map(function (e) {
-        return e ? DVPair.toJSON(e) : undefined;
-      });
-    } else {
-      obj.pairs = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$pairs;
@@ -920,20 +779,6 @@ var DVVTriplet = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorSrcAddress: (0, _helpers.isSet)(object.validatorSrcAddress) ? String(object.validatorSrcAddress) : "",
-      validatorDstAddress: (0, _helpers.isSet)(object.validatorDstAddress) ? String(object.validatorDstAddress) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
-    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr2, _object$validatorSrcA, _object$validatorDstA;
     var message = createBaseDVVTriplet();
@@ -982,24 +827,6 @@ var DVVTriplets = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      triplets: Array.isArray(object === null || object === void 0 ? void 0 : object.triplets) ? object.triplets.map(function (e) {
-        return DVVTriplet.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.triplets) {
-      obj.triplets = message.triplets.map(function (e) {
-        return e ? DVVTriplet.toJSON(e) : undefined;
-      });
-    } else {
-      obj.triplets = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$triplets;
@@ -1054,20 +881,6 @@ var Delegation = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
-      shares: (0, _helpers.isSet)(object.shares) ? String(object.shares) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.shares !== undefined && (obj.shares = message.shares);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr3, _object$validatorAddr2, _object$shares;
@@ -1132,28 +945,6 @@ var UnbondingDelegation = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorAddress: (0, _helpers.isSet)(object.validatorAddress) ? String(object.validatorAddress) : "",
-      entries: Array.isArray(object === null || object === void 0 ? void 0 : object.entries) ? object.entries.map(function (e) {
-        return UnbondingDelegationEntry.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    if (message.entries) {
-      obj.entries = message.entries.map(function (e) {
-        return e ? UnbondingDelegationEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.entries = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr4, _object$validatorAddr3, _object$entries;
     var message = createBaseUnbondingDelegation();
@@ -1181,7 +972,7 @@ var UnbondingDelegationEntry = {
       writer.uint32(8).int64(message.creationHeight);
     }
     if (message.completionTime !== undefined) {
-      _timestamp.Timestamp.encode(message.completionTime, writer.uint32(18).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.completionTime), writer.uint32(18).fork()).ldelim();
     }
     if (message.initialBalance !== "") {
       writer.uint32(26).string(message.initialBalance);
@@ -1202,7 +993,7 @@ var UnbondingDelegationEntry = {
           message.creationHeight = reader.int64();
           break;
         case 2:
-          message.completionTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.completionTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 3:
           message.initialBalance = reader.string();
@@ -1217,27 +1008,11 @@ var UnbondingDelegationEntry = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      creationHeight: (0, _helpers.isSet)(object.creationHeight) ? _helpers.Long.fromValue(object.creationHeight) : _helpers.Long.ZERO,
-      completionTime: (0, _helpers.isSet)(object.completionTime) ? (0, _helpers.fromJsonTimestamp)(object.completionTime) : undefined,
-      initialBalance: (0, _helpers.isSet)(object.initialBalance) ? String(object.initialBalance) : "",
-      balance: (0, _helpers.isSet)(object.balance) ? String(object.balance) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.creationHeight !== undefined && (obj.creationHeight = (message.creationHeight || _helpers.Long.ZERO).toString());
-    message.completionTime !== undefined && (obj.completionTime = (0, _helpers.fromTimestamp)(message.completionTime).toISOString());
-    message.initialBalance !== undefined && (obj.initialBalance = message.initialBalance);
-    message.balance !== undefined && (obj.balance = message.balance);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$initialBalanc, _object$balance;
+    var _object$completionTim, _object$initialBalanc, _object$balance;
     var message = createBaseUnbondingDelegationEntry();
     message.creationHeight = object.creationHeight !== undefined && object.creationHeight !== null ? _helpers.Long.fromValue(object.creationHeight) : _helpers.Long.ZERO;
-    message.completionTime = object.completionTime !== undefined && object.completionTime !== null ? _timestamp.Timestamp.fromPartial(object.completionTime) : undefined;
+    message.completionTime = (_object$completionTim = object.completionTime) !== null && _object$completionTim !== void 0 ? _object$completionTim : undefined;
     message.initialBalance = (_object$initialBalanc = object.initialBalance) !== null && _object$initialBalanc !== void 0 ? _object$initialBalanc : "";
     message.balance = (_object$balance = object.balance) !== null && _object$balance !== void 0 ? _object$balance : "";
     return message;
@@ -1259,7 +1034,7 @@ var RedelegationEntry = {
       writer.uint32(8).int64(message.creationHeight);
     }
     if (message.completionTime !== undefined) {
-      _timestamp.Timestamp.encode(message.completionTime, writer.uint32(18).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.completionTime), writer.uint32(18).fork()).ldelim();
     }
     if (message.initialBalance !== "") {
       writer.uint32(26).string(message.initialBalance);
@@ -1280,7 +1055,7 @@ var RedelegationEntry = {
           message.creationHeight = reader.int64();
           break;
         case 2:
-          message.completionTime = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.completionTime = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         case 3:
           message.initialBalance = reader.string();
@@ -1295,27 +1070,11 @@ var RedelegationEntry = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      creationHeight: (0, _helpers.isSet)(object.creationHeight) ? _helpers.Long.fromValue(object.creationHeight) : _helpers.Long.ZERO,
-      completionTime: (0, _helpers.isSet)(object.completionTime) ? (0, _helpers.fromJsonTimestamp)(object.completionTime) : undefined,
-      initialBalance: (0, _helpers.isSet)(object.initialBalance) ? String(object.initialBalance) : "",
-      sharesDst: (0, _helpers.isSet)(object.sharesDst) ? String(object.sharesDst) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.creationHeight !== undefined && (obj.creationHeight = (message.creationHeight || _helpers.Long.ZERO).toString());
-    message.completionTime !== undefined && (obj.completionTime = (0, _helpers.fromTimestamp)(message.completionTime).toISOString());
-    message.initialBalance !== undefined && (obj.initialBalance = message.initialBalance);
-    message.sharesDst !== undefined && (obj.sharesDst = message.sharesDst);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$initialBalanc2, _object$sharesDst;
+    var _object$completionTim2, _object$initialBalanc2, _object$sharesDst;
     var message = createBaseRedelegationEntry();
     message.creationHeight = object.creationHeight !== undefined && object.creationHeight !== null ? _helpers.Long.fromValue(object.creationHeight) : _helpers.Long.ZERO;
-    message.completionTime = object.completionTime !== undefined && object.completionTime !== null ? _timestamp.Timestamp.fromPartial(object.completionTime) : undefined;
+    message.completionTime = (_object$completionTim2 = object.completionTime) !== null && _object$completionTim2 !== void 0 ? _object$completionTim2 : undefined;
     message.initialBalance = (_object$initialBalanc2 = object.initialBalance) !== null && _object$initialBalanc2 !== void 0 ? _object$initialBalanc2 : "";
     message.sharesDst = (_object$sharesDst = object.sharesDst) !== null && _object$sharesDst !== void 0 ? _object$sharesDst : "";
     return message;
@@ -1381,30 +1140,6 @@ var Redelegation = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegatorAddress: (0, _helpers.isSet)(object.delegatorAddress) ? String(object.delegatorAddress) : "",
-      validatorSrcAddress: (0, _helpers.isSet)(object.validatorSrcAddress) ? String(object.validatorSrcAddress) : "",
-      validatorDstAddress: (0, _helpers.isSet)(object.validatorDstAddress) ? String(object.validatorDstAddress) : "",
-      entries: Array.isArray(object === null || object === void 0 ? void 0 : object.entries) ? object.entries.map(function (e) {
-        return RedelegationEntry.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
-    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
-    if (message.entries) {
-      obj.entries = message.entries.map(function (e) {
-        return e ? RedelegationEntry.toJSON(e) : undefined;
-      });
-    } else {
-      obj.entries = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$delegatorAddr5, _object$validatorSrcA2, _object$validatorDstA2, _object$entries2;
@@ -1484,26 +1219,6 @@ var Params = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      unbondingTime: (0, _helpers.isSet)(object.unbondingTime) ? _duration.Duration.fromJSON(object.unbondingTime) : undefined,
-      maxValidators: (0, _helpers.isSet)(object.maxValidators) ? Number(object.maxValidators) : 0,
-      maxEntries: (0, _helpers.isSet)(object.maxEntries) ? Number(object.maxEntries) : 0,
-      historicalEntries: (0, _helpers.isSet)(object.historicalEntries) ? Number(object.historicalEntries) : 0,
-      bondDenom: (0, _helpers.isSet)(object.bondDenom) ? String(object.bondDenom) : "",
-      minCommissionRate: (0, _helpers.isSet)(object.minCommissionRate) ? String(object.minCommissionRate) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.unbondingTime !== undefined && (obj.unbondingTime = message.unbondingTime ? _duration.Duration.toJSON(message.unbondingTime) : undefined);
-    message.maxValidators !== undefined && (obj.maxValidators = Math.round(message.maxValidators));
-    message.maxEntries !== undefined && (obj.maxEntries = Math.round(message.maxEntries));
-    message.historicalEntries !== undefined && (obj.historicalEntries = Math.round(message.historicalEntries));
-    message.bondDenom !== undefined && (obj.bondDenom = message.bondDenom);
-    message.minCommissionRate !== undefined && (obj.minCommissionRate = message.minCommissionRate);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$maxValidators, _object$maxEntries, _object$historicalEnt, _object$bondDenom, _object$minCommission;
     var message = createBaseParams();
@@ -1554,18 +1269,6 @@ var DelegationResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      delegation: (0, _helpers.isSet)(object.delegation) ? Delegation.fromJSON(object.delegation) : undefined,
-      balance: (0, _helpers.isSet)(object.balance) ? _coin.Coin.fromJSON(object.balance) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.delegation !== undefined && (obj.delegation = message.delegation ? Delegation.toJSON(message.delegation) : undefined);
-    message.balance !== undefined && (obj.balance = message.balance ? _coin.Coin.toJSON(message.balance) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseDelegationResponse();
     message.delegation = object.delegation !== undefined && object.delegation !== null ? Delegation.fromPartial(object.delegation) : undefined;
@@ -1610,18 +1313,6 @@ var RedelegationEntryResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      redelegationEntry: (0, _helpers.isSet)(object.redelegationEntry) ? RedelegationEntry.fromJSON(object.redelegationEntry) : undefined,
-      balance: (0, _helpers.isSet)(object.balance) ? String(object.balance) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.redelegationEntry !== undefined && (obj.redelegationEntry = message.redelegationEntry ? RedelegationEntry.toJSON(message.redelegationEntry) : undefined);
-    message.balance !== undefined && (obj.balance = message.balance);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$balance2;
@@ -1678,26 +1369,6 @@ var RedelegationResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      redelegation: (0, _helpers.isSet)(object.redelegation) ? Redelegation.fromJSON(object.redelegation) : undefined,
-      entries: Array.isArray(object === null || object === void 0 ? void 0 : object.entries) ? object.entries.map(function (e) {
-        return RedelegationEntryResponse.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.redelegation !== undefined && (obj.redelegation = message.redelegation ? Redelegation.toJSON(message.redelegation) : undefined);
-    if (message.entries) {
-      obj.entries = message.entries.map(function (e) {
-        return e ? RedelegationEntryResponse.toJSON(e) : undefined;
-      });
-    } else {
-      obj.entries = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$entries3;
     var message = createBaseRedelegationResponse();
@@ -1745,18 +1416,6 @@ var Pool = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      notBondedTokens: (0, _helpers.isSet)(object.notBondedTokens) ? String(object.notBondedTokens) : "",
-      bondedTokens: (0, _helpers.isSet)(object.bondedTokens) ? String(object.bondedTokens) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.notBondedTokens !== undefined && (obj.notBondedTokens = message.notBondedTokens);
-    message.bondedTokens !== undefined && (obj.bondedTokens = message.bondedTokens);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$notBondedToke, _object$bondedTokens;

@@ -4,7 +4,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Entry = void 0;
+exports.RawMessage = exports.Entry = void 0;
 var _helpers = require("../helpers");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -74,26 +74,6 @@ var Entry = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
-      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
-      staleAt: (0, _helpers.isSet)(object.staleAt) ? _helpers.Long.fromValue(object.staleAt) : _helpers.Long.UZERO,
-      refcount: (0, _helpers.isSet)(object.refcount) ? _helpers.Long.fromValue(object.refcount) : _helpers.Long.UZERO,
-      data: (0, _helpers.isSet)(object.data) ? (0, _helpers.bytesFromBase64)(object.data) : new Uint8Array(),
-      deleteAt: (0, _helpers.isSet)(object.deleteAt) ? _helpers.Long.fromValue(object.deleteAt) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
-    message.staleAt !== undefined && (obj.staleAt = (message.staleAt || _helpers.Long.UZERO).toString());
-    message.refcount !== undefined && (obj.refcount = (message.refcount || _helpers.Long.UZERO).toString());
-    message.data !== undefined && (obj.data = (0, _helpers.base64FromBytes)(message.data !== undefined ? message.data : new Uint8Array()));
-    message.deleteAt !== undefined && (obj.deleteAt = (message.deleteAt || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$data;
     var message = createBaseEntry();
@@ -107,3 +87,49 @@ var Entry = {
   }
 };
 exports.Entry = Entry;
+function createBaseRawMessage() {
+  return {
+    key: new Uint8Array(),
+    value: new Uint8Array()
+  };
+}
+var RawMessage = {
+  encode: function encode(message) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    if (message.key.length !== 0) {
+      writer.uint32(10).bytes(message.key);
+    }
+    if (message.value.length !== 0) {
+      writer.uint32(18).bytes(message.value);
+    }
+    return writer;
+  },
+  decode: function decode(input, length) {
+    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var end = length === undefined ? reader.len : reader.pos + length;
+    var message = createBaseRawMessage();
+    while (reader.pos < end) {
+      var tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.bytes();
+          break;
+        case 2:
+          message.value = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial: function fromPartial(object) {
+    var _object$key, _object$value;
+    var message = createBaseRawMessage();
+    message.key = (_object$key = object.key) !== null && _object$key !== void 0 ? _object$key : new Uint8Array();
+    message.value = (_object$value = object.value) !== null && _object$value !== void 0 ? _object$value : new Uint8Array();
+    return message;
+  }
+};
+exports.RawMessage = RawMessage;

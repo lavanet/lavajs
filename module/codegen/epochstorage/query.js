@@ -4,7 +4,7 @@ import { StakeStorage } from "./stake_storage";
 import { EpochDetails } from "./epoch_details";
 import { FixatedParams } from "./fixated_params";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
+
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -33,13 +33,6 @@ export const QueryParamsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
@@ -75,16 +68,6 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
@@ -119,16 +102,6 @@ export const QueryGetStakeStorageRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
   },
   fromPartial(object) {
     var _object$index;
@@ -166,16 +139,6 @@ export const QueryGetStakeStorageResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      stakeStorage: isSet(object.stakeStorage) ? StakeStorage.fromJSON(object.stakeStorage) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.stakeStorage !== undefined && (obj.stakeStorage = message.stakeStorage ? StakeStorage.toJSON(message.stakeStorage) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryGetStakeStorageResponse();
     message.stakeStorage = object.stakeStorage !== undefined && object.stakeStorage !== null ? StakeStorage.fromPartial(object.stakeStorage) : undefined;
@@ -210,16 +173,6 @@ export const QueryAllStakeStorageRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryAllStakeStorageRequest();
@@ -263,22 +216,6 @@ export const QueryAllStakeStorageResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      stakeStorage: Array.isArray(object === null || object === void 0 ? void 0 : object.stakeStorage) ? object.stakeStorage.map(e => StakeStorage.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.stakeStorage) {
-      obj.stakeStorage = message.stakeStorage.map(e => e ? StakeStorage.toJSON(e) : undefined);
-    } else {
-      obj.stakeStorage = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$stakeStorage;
     const message = createBaseQueryAllStakeStorageResponse();
@@ -307,13 +244,6 @@ export const QueryGetEpochDetailsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryGetEpochDetailsRequest();
@@ -349,16 +279,6 @@ export const QueryGetEpochDetailsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      EpochDetails: isSet(object.EpochDetails) ? EpochDetails.fromJSON(object.EpochDetails) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.EpochDetails !== undefined && (obj.EpochDetails = message.EpochDetails ? EpochDetails.toJSON(message.EpochDetails) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryGetEpochDetailsResponse();
     message.EpochDetails = object.EpochDetails !== undefined && object.EpochDetails !== null ? EpochDetails.fromPartial(object.EpochDetails) : undefined;
@@ -393,16 +313,6 @@ export const QueryGetFixatedParamsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      index: isSet(object.index) ? String(object.index) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    return obj;
   },
   fromPartial(object) {
     var _object$index2;
@@ -440,16 +350,6 @@ export const QueryGetFixatedParamsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      fixatedParams: isSet(object.fixatedParams) ? FixatedParams.fromJSON(object.fixatedParams) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.fixatedParams !== undefined && (obj.fixatedParams = message.fixatedParams ? FixatedParams.toJSON(message.fixatedParams) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryGetFixatedParamsResponse();
     message.fixatedParams = object.fixatedParams !== undefined && object.fixatedParams !== null ? FixatedParams.fromPartial(object.fixatedParams) : undefined;
@@ -484,16 +384,6 @@ export const QueryAllFixatedParamsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseQueryAllFixatedParamsRequest();
@@ -536,22 +426,6 @@ export const QueryAllFixatedParamsResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      fixatedParams: Array.isArray(object === null || object === void 0 ? void 0 : object.fixatedParams) ? object.fixatedParams.map(e => FixatedParams.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.fixatedParams) {
-      obj.fixatedParams = message.fixatedParams.map(e => e ? FixatedParams.toJSON(e) : undefined);
-    } else {
-      obj.fixatedParams = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial(object) {
     var _object$fixatedParams;

@@ -1,7 +1,7 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import * as _m0 from "protobufjs/minimal";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryCurrentRequest, QueryCurrentResponse, QueryListProjectsRequest, QueryListProjectsResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryCurrentRequest, QueryCurrentResponse, QueryListProjectsRequest, QueryListProjectsResponse, QueryListRequest, QueryListResponse } from "./query";
 /** Query defines the gRPC querier service. */
 
 export class QueryClientImpl {
@@ -11,6 +11,7 @@ export class QueryClientImpl {
     this.params = this.params.bind(this);
     this.current = this.current.bind(this);
     this.listProjects = this.listProjects.bind(this);
+    this.list = this.list.bind(this);
   }
   params(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
@@ -27,6 +28,11 @@ export class QueryClientImpl {
     const promise = this.rpc.request("lavanet.lava.subscription.Query", "ListProjects", data);
     return promise.then(data => QueryListProjectsResponse.decode(new _m0.Reader(data)));
   }
+  list(request = {}) {
+    const data = QueryListRequest.encode(request).finish();
+    const promise = this.rpc.request("lavanet.lava.subscription.Query", "List", data);
+    return promise.then(data => QueryListResponse.decode(new _m0.Reader(data)));
+  }
 }
 export const createRpcQueryExtension = base => {
   const rpc = createProtobufRpcClient(base);
@@ -40,6 +46,9 @@ export const createRpcQueryExtension = base => {
     },
     listProjects(request) {
       return queryService.listProjects(request);
+    },
+    list(request) {
+      return queryService.list(request);
     }
   };
 };

@@ -1,6 +1,6 @@
 import { Any } from "../../../../google/protobuf/any";
 import { Event } from "../../../../tendermint/abci/types";
-import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { Long } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
  * TxResponse defines a structure containing relevant tx data and metadata. The
@@ -187,48 +187,6 @@ export const TxResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      height: isSet(object.height) ? Long.fromValue(object.height) : Long.ZERO,
-      txhash: isSet(object.txhash) ? String(object.txhash) : "",
-      codespace: isSet(object.codespace) ? String(object.codespace) : "",
-      code: isSet(object.code) ? Number(object.code) : 0,
-      data: isSet(object.data) ? String(object.data) : "",
-      rawLog: isSet(object.rawLog) ? String(object.rawLog) : "",
-      logs: Array.isArray(object === null || object === void 0 ? void 0 : object.logs) ? object.logs.map(e => ABCIMessageLog.fromJSON(e)) : [],
-      info: isSet(object.info) ? String(object.info) : "",
-      gasWanted: isSet(object.gasWanted) ? Long.fromValue(object.gasWanted) : Long.ZERO,
-      gasUsed: isSet(object.gasUsed) ? Long.fromValue(object.gasUsed) : Long.ZERO,
-      tx: isSet(object.tx) ? Any.fromJSON(object.tx) : undefined,
-      timestamp: isSet(object.timestamp) ? String(object.timestamp) : "",
-      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(e => Event.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.height !== undefined && (obj.height = (message.height || Long.ZERO).toString());
-    message.txhash !== undefined && (obj.txhash = message.txhash);
-    message.codespace !== undefined && (obj.codespace = message.codespace);
-    message.code !== undefined && (obj.code = Math.round(message.code));
-    message.data !== undefined && (obj.data = message.data);
-    message.rawLog !== undefined && (obj.rawLog = message.rawLog);
-    if (message.logs) {
-      obj.logs = message.logs.map(e => e ? ABCIMessageLog.toJSON(e) : undefined);
-    } else {
-      obj.logs = [];
-    }
-    message.info !== undefined && (obj.info = message.info);
-    message.gasWanted !== undefined && (obj.gasWanted = (message.gasWanted || Long.ZERO).toString());
-    message.gasUsed !== undefined && (obj.gasUsed = (message.gasUsed || Long.ZERO).toString());
-    message.tx !== undefined && (obj.tx = message.tx ? Any.toJSON(message.tx) : undefined);
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp);
-    if (message.events) {
-      obj.events = message.events.map(e => e ? Event.toJSON(e) : undefined);
-    } else {
-      obj.events = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$txhash, _object$codespace, _object$code, _object$data, _object$rawLog, _object$logs, _object$info, _object$timestamp, _object$events;
     const message = createBaseTxResponse();
@@ -291,24 +249,6 @@ export const ABCIMessageLog = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      msgIndex: isSet(object.msgIndex) ? Number(object.msgIndex) : 0,
-      log: isSet(object.log) ? String(object.log) : "",
-      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(e => StringEvent.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.msgIndex !== undefined && (obj.msgIndex = Math.round(message.msgIndex));
-    message.log !== undefined && (obj.log = message.log);
-    if (message.events) {
-      obj.events = message.events.map(e => e ? StringEvent.toJSON(e) : undefined);
-    } else {
-      obj.events = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$msgIndex, _object$log, _object$events2;
     const message = createBaseABCIMessageLog();
@@ -354,22 +294,6 @@ export const StringEvent = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      type: isSet(object.type) ? String(object.type) : "",
-      attributes: Array.isArray(object === null || object === void 0 ? void 0 : object.attributes) ? object.attributes.map(e => Attribute.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.type !== undefined && (obj.type = message.type);
-    if (message.attributes) {
-      obj.attributes = message.attributes.map(e => e ? Attribute.toJSON(e) : undefined);
-    } else {
-      obj.attributes = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$type, _object$attributes;
     const message = createBaseStringEvent();
@@ -414,18 +338,6 @@ export const Attribute = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
-    return obj;
-  },
   fromPartial(object) {
     var _object$key, _object$value;
     const message = createBaseAttribute();
@@ -469,18 +381,6 @@ export const GasInfo = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      gasWanted: isSet(object.gasWanted) ? Long.fromValue(object.gasWanted) : Long.UZERO,
-      gasUsed: isSet(object.gasUsed) ? Long.fromValue(object.gasUsed) : Long.UZERO
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.gasWanted !== undefined && (obj.gasWanted = (message.gasWanted || Long.UZERO).toString());
-    message.gasUsed !== undefined && (obj.gasUsed = (message.gasUsed || Long.UZERO).toString());
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseGasInfo();
@@ -539,30 +439,6 @@ export const Result = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(),
-      log: isSet(object.log) ? String(object.log) : "",
-      events: Array.isArray(object === null || object === void 0 ? void 0 : object.events) ? object.events.map(e => Event.fromJSON(e)) : [],
-      msgResponses: Array.isArray(object === null || object === void 0 ? void 0 : object.msgResponses) ? object.msgResponses.map(e => Any.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
-    message.log !== undefined && (obj.log = message.log);
-    if (message.events) {
-      obj.events = message.events.map(e => e ? Event.toJSON(e) : undefined);
-    } else {
-      obj.events = [];
-    }
-    if (message.msgResponses) {
-      obj.msgResponses = message.msgResponses.map(e => e ? Any.toJSON(e) : undefined);
-    } else {
-      obj.msgResponses = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$data2, _object$log2, _object$events3, _object$msgResponses;
     const message = createBaseResult();
@@ -609,18 +485,6 @@ export const SimulationResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      gasInfo: isSet(object.gasInfo) ? GasInfo.fromJSON(object.gasInfo) : undefined,
-      result: isSet(object.result) ? Result.fromJSON(object.result) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.gasInfo !== undefined && (obj.gasInfo = message.gasInfo ? GasInfo.toJSON(message.gasInfo) : undefined);
-    message.result !== undefined && (obj.result = message.result ? Result.toJSON(message.result) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseSimulationResponse();
     message.gasInfo = object.gasInfo !== undefined && object.gasInfo !== null ? GasInfo.fromPartial(object.gasInfo) : undefined;
@@ -663,18 +527,6 @@ export const MsgData = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      msgType: isSet(object.msgType) ? String(object.msgType) : "",
-      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.msgType !== undefined && (obj.msgType = message.msgType);
-    message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
-    return obj;
   },
   fromPartial(object) {
     var _object$msgType, _object$data3;
@@ -719,26 +571,6 @@ export const TxMsgData = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      data: Array.isArray(object === null || object === void 0 ? void 0 : object.data) ? object.data.map(e => MsgData.fromJSON(e)) : [],
-      msgResponses: Array.isArray(object === null || object === void 0 ? void 0 : object.msgResponses) ? object.msgResponses.map(e => Any.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.data) {
-      obj.data = message.data.map(e => e ? MsgData.toJSON(e) : undefined);
-    } else {
-      obj.data = [];
-    }
-    if (message.msgResponses) {
-      obj.msgResponses = message.msgResponses.map(e => e ? Any.toJSON(e) : undefined);
-    } else {
-      obj.msgResponses = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$data4, _object$msgResponses2;
@@ -811,30 +643,6 @@ export const SearchTxsResult = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      totalCount: isSet(object.totalCount) ? Long.fromValue(object.totalCount) : Long.UZERO,
-      count: isSet(object.count) ? Long.fromValue(object.count) : Long.UZERO,
-      pageNumber: isSet(object.pageNumber) ? Long.fromValue(object.pageNumber) : Long.UZERO,
-      pageTotal: isSet(object.pageTotal) ? Long.fromValue(object.pageTotal) : Long.UZERO,
-      limit: isSet(object.limit) ? Long.fromValue(object.limit) : Long.UZERO,
-      txs: Array.isArray(object === null || object === void 0 ? void 0 : object.txs) ? object.txs.map(e => TxResponse.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.totalCount !== undefined && (obj.totalCount = (message.totalCount || Long.UZERO).toString());
-    message.count !== undefined && (obj.count = (message.count || Long.UZERO).toString());
-    message.pageNumber !== undefined && (obj.pageNumber = (message.pageNumber || Long.UZERO).toString());
-    message.pageTotal !== undefined && (obj.pageTotal = (message.pageTotal || Long.UZERO).toString());
-    message.limit !== undefined && (obj.limit = (message.limit || Long.UZERO).toString());
-    if (message.txs) {
-      obj.txs = message.txs.map(e => e ? TxResponse.toJSON(e) : undefined);
-    } else {
-      obj.txs = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$txs;

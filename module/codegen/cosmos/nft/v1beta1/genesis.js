@@ -1,6 +1,6 @@
 import { Class, NFT } from "./nft";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** GenesisState defines the nft module's genesis state. */
 
 /** GenesisState defines the nft module's genesis state. */
@@ -45,26 +45,6 @@ export const GenesisState = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      classes: Array.isArray(object === null || object === void 0 ? void 0 : object.classes) ? object.classes.map(e => Class.fromJSON(e)) : [],
-      entries: Array.isArray(object === null || object === void 0 ? void 0 : object.entries) ? object.entries.map(e => Entry.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.classes) {
-      obj.classes = message.classes.map(e => e ? Class.toJSON(e) : undefined);
-    } else {
-      obj.classes = [];
-    }
-    if (message.entries) {
-      obj.entries = message.entries.map(e => e ? Entry.toJSON(e) : undefined);
-    } else {
-      obj.entries = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$classes, _object$entries;
     const message = createBaseGenesisState();
@@ -108,22 +88,6 @@ export const Entry = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      owner: isSet(object.owner) ? String(object.owner) : "",
-      nfts: Array.isArray(object === null || object === void 0 ? void 0 : object.nfts) ? object.nfts.map(e => NFT.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.owner !== undefined && (obj.owner = message.owner);
-    if (message.nfts) {
-      obj.nfts = message.nfts.map(e => e ? NFT.toJSON(e) : undefined);
-    } else {
-      obj.nfts = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$owner, _object$nfts;

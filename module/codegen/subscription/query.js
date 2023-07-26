@@ -1,7 +1,7 @@
 import { Params } from "./params";
 import { Subscription } from "./subscription";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -30,13 +30,6 @@ export const QueryParamsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
@@ -72,16 +65,6 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
@@ -116,16 +99,6 @@ export const QueryCurrentRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      consumer: isSet(object.consumer) ? String(object.consumer) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.consumer !== undefined && (obj.consumer = message.consumer);
-    return obj;
   },
   fromPartial(object) {
     var _object$consumer;
@@ -163,16 +136,6 @@ export const QueryCurrentResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      sub: isSet(object.sub) ? Subscription.fromJSON(object.sub) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.sub !== undefined && (obj.sub = message.sub ? Subscription.toJSON(message.sub) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     const message = createBaseQueryCurrentResponse();
     message.sub = object.sub !== undefined && object.sub !== null ? Subscription.fromPartial(object.sub) : undefined;
@@ -207,16 +170,6 @@ export const QueryListProjectsRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      subscription: isSet(object.subscription) ? String(object.subscription) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.subscription !== undefined && (obj.subscription = message.subscription);
-    return obj;
   },
   fromPartial(object) {
     var _object$subscription;
@@ -254,24 +207,156 @@ export const QueryListProjectsResponse = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      projects: Array.isArray(object === null || object === void 0 ? void 0 : object.projects) ? object.projects.map(e => String(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.projects) {
-      obj.projects = message.projects.map(e => e);
-    } else {
-      obj.projects = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$projects;
     const message = createBaseQueryListProjectsResponse();
     message.projects = ((_object$projects = object.projects) === null || _object$projects === void 0 ? void 0 : _object$projects.map(e => e)) || [];
+    return message;
+  }
+};
+function createBaseQueryListRequest() {
+  return {};
+}
+export const QueryListRequest = {
+  encode(_, writer = _m0.Writer.create()) {
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryListRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(_) {
+    const message = createBaseQueryListRequest();
+    return message;
+  }
+};
+function createBaseQueryListResponse() {
+  return {
+    subsInfo: []
+  };
+}
+export const QueryListResponse = {
+  encode(message, writer = _m0.Writer.create()) {
+    for (const v of message.subsInfo) {
+      ListInfoStruct.encode(v, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryListResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.subsInfo.push(ListInfoStruct.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object) {
+    var _object$subsInfo;
+    const message = createBaseQueryListResponse();
+    message.subsInfo = ((_object$subsInfo = object.subsInfo) === null || _object$subsInfo === void 0 ? void 0 : _object$subsInfo.map(e => ListInfoStruct.fromPartial(e))) || [];
+    return message;
+  }
+};
+function createBaseListInfoStruct() {
+  return {
+    consumer: "",
+    plan: "",
+    durationTotal: Long.UZERO,
+    durationLeft: Long.UZERO,
+    monthExpiry: Long.UZERO,
+    monthCuTotal: Long.UZERO,
+    monthCuLeft: Long.UZERO
+  };
+}
+export const ListInfoStruct = {
+  encode(message, writer = _m0.Writer.create()) {
+    if (message.consumer !== "") {
+      writer.uint32(10).string(message.consumer);
+    }
+    if (message.plan !== "") {
+      writer.uint32(18).string(message.plan);
+    }
+    if (!message.durationTotal.isZero()) {
+      writer.uint32(24).uint64(message.durationTotal);
+    }
+    if (!message.durationLeft.isZero()) {
+      writer.uint32(32).uint64(message.durationLeft);
+    }
+    if (!message.monthExpiry.isZero()) {
+      writer.uint32(40).uint64(message.monthExpiry);
+    }
+    if (!message.monthCuTotal.isZero()) {
+      writer.uint32(48).uint64(message.monthCuTotal);
+    }
+    if (!message.monthCuLeft.isZero()) {
+      writer.uint32(56).uint64(message.monthCuLeft);
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseListInfoStruct();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.consumer = reader.string();
+          break;
+        case 2:
+          message.plan = reader.string();
+          break;
+        case 3:
+          message.durationTotal = reader.uint64();
+          break;
+        case 4:
+          message.durationLeft = reader.uint64();
+          break;
+        case 5:
+          message.monthExpiry = reader.uint64();
+          break;
+        case 6:
+          message.monthCuTotal = reader.uint64();
+          break;
+        case 7:
+          message.monthCuLeft = reader.uint64();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object) {
+    var _object$consumer2, _object$plan;
+    const message = createBaseListInfoStruct();
+    message.consumer = (_object$consumer2 = object.consumer) !== null && _object$consumer2 !== void 0 ? _object$consumer2 : "";
+    message.plan = (_object$plan = object.plan) !== null && _object$plan !== void 0 ? _object$plan : "";
+    message.durationTotal = object.durationTotal !== undefined && object.durationTotal !== null ? Long.fromValue(object.durationTotal) : Long.UZERO;
+    message.durationLeft = object.durationLeft !== undefined && object.durationLeft !== null ? Long.fromValue(object.durationLeft) : Long.UZERO;
+    message.monthExpiry = object.monthExpiry !== undefined && object.monthExpiry !== null ? Long.fromValue(object.monthExpiry) : Long.UZERO;
+    message.monthCuTotal = object.monthCuTotal !== undefined && object.monthCuTotal !== null ? Long.fromValue(object.monthCuTotal) : Long.UZERO;
+    message.monthCuLeft = object.monthCuLeft !== undefined && object.monthCuLeft !== null ? Long.fromValue(object.monthCuLeft) : Long.UZERO;
     return message;
   }
 };

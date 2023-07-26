@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-//@ts-nocheck
-
 var AminoConverter = {
   "/cosmos.crisis.v1beta1.MsgVerifyInvariant": {
     aminoType: "cosmos-sdk/MsgVerifyInvariant",

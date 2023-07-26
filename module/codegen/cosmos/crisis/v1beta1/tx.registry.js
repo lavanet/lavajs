@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgVerifyInvariant } from "./tx";
 export const registry = [["/cosmos.crisis.v1beta1.MsgVerifyInvariant", MsgVerifyInvariant]];
 export const load = protoRegistry => {
@@ -21,22 +19,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
         value
-      };
-    }
-  },
-  toJSON: {
-    verifyInvariant(value) {
-      return {
-        typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
-        value: MsgVerifyInvariant.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    verifyInvariant(value) {
-      return {
-        typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
-        value: MsgVerifyInvariant.fromJSON(value)
       };
     }
   },

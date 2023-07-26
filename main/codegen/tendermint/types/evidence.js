@@ -60,18 +60,6 @@ var Evidence = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      duplicateVoteEvidence: (0, _helpers.isSet)(object.duplicateVoteEvidence) ? DuplicateVoteEvidence.fromJSON(object.duplicateVoteEvidence) : undefined,
-      lightClientAttackEvidence: (0, _helpers.isSet)(object.lightClientAttackEvidence) ? LightClientAttackEvidence.fromJSON(object.lightClientAttackEvidence) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.duplicateVoteEvidence !== undefined && (obj.duplicateVoteEvidence = message.duplicateVoteEvidence ? DuplicateVoteEvidence.toJSON(message.duplicateVoteEvidence) : undefined);
-    message.lightClientAttackEvidence !== undefined && (obj.lightClientAttackEvidence = message.lightClientAttackEvidence ? LightClientAttackEvidence.toJSON(message.lightClientAttackEvidence) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseEvidence();
     message.duplicateVoteEvidence = object.duplicateVoteEvidence !== undefined && object.duplicateVoteEvidence !== null ? DuplicateVoteEvidence.fromPartial(object.duplicateVoteEvidence) : undefined;
@@ -105,7 +93,7 @@ var DuplicateVoteEvidence = {
       writer.uint32(32).int64(message.validatorPower);
     }
     if (message.timestamp !== undefined) {
-      _timestamp.Timestamp.encode(message.timestamp, writer.uint32(42).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.timestamp), writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -129,7 +117,7 @@ var DuplicateVoteEvidence = {
           message.validatorPower = reader.int64();
           break;
         case 5:
-          message.timestamp = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.timestamp = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -138,31 +126,14 @@ var DuplicateVoteEvidence = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      voteA: (0, _helpers.isSet)(object.voteA) ? _types.Vote.fromJSON(object.voteA) : undefined,
-      voteB: (0, _helpers.isSet)(object.voteB) ? _types.Vote.fromJSON(object.voteB) : undefined,
-      totalVotingPower: (0, _helpers.isSet)(object.totalVotingPower) ? _helpers.Long.fromValue(object.totalVotingPower) : _helpers.Long.ZERO,
-      validatorPower: (0, _helpers.isSet)(object.validatorPower) ? _helpers.Long.fromValue(object.validatorPower) : _helpers.Long.ZERO,
-      timestamp: (0, _helpers.isSet)(object.timestamp) ? (0, _helpers.fromJsonTimestamp)(object.timestamp) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.voteA !== undefined && (obj.voteA = message.voteA ? _types.Vote.toJSON(message.voteA) : undefined);
-    message.voteB !== undefined && (obj.voteB = message.voteB ? _types.Vote.toJSON(message.voteB) : undefined);
-    message.totalVotingPower !== undefined && (obj.totalVotingPower = (message.totalVotingPower || _helpers.Long.ZERO).toString());
-    message.validatorPower !== undefined && (obj.validatorPower = (message.validatorPower || _helpers.Long.ZERO).toString());
-    message.timestamp !== undefined && (obj.timestamp = (0, _helpers.fromTimestamp)(message.timestamp).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
+    var _object$timestamp;
     var message = createBaseDuplicateVoteEvidence();
     message.voteA = object.voteA !== undefined && object.voteA !== null ? _types.Vote.fromPartial(object.voteA) : undefined;
     message.voteB = object.voteB !== undefined && object.voteB !== null ? _types.Vote.fromPartial(object.voteB) : undefined;
     message.totalVotingPower = object.totalVotingPower !== undefined && object.totalVotingPower !== null ? _helpers.Long.fromValue(object.totalVotingPower) : _helpers.Long.ZERO;
     message.validatorPower = object.validatorPower !== undefined && object.validatorPower !== null ? _helpers.Long.fromValue(object.validatorPower) : _helpers.Long.ZERO;
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? _timestamp.Timestamp.fromPartial(object.timestamp) : undefined;
+    message.timestamp = (_object$timestamp = object.timestamp) !== null && _object$timestamp !== void 0 ? _object$timestamp : undefined;
     return message;
   }
 };
@@ -201,7 +172,7 @@ var LightClientAttackEvidence = {
       writer.uint32(32).int64(message.totalVotingPower);
     }
     if (message.timestamp !== undefined) {
-      _timestamp.Timestamp.encode(message.timestamp, writer.uint32(42).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.timestamp), writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -225,7 +196,7 @@ var LightClientAttackEvidence = {
           message.totalVotingPower = reader.int64();
           break;
         case 5:
-          message.timestamp = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.timestamp = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -234,34 +205,8 @@ var LightClientAttackEvidence = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      conflictingBlock: (0, _helpers.isSet)(object.conflictingBlock) ? _types.LightBlock.fromJSON(object.conflictingBlock) : undefined,
-      commonHeight: (0, _helpers.isSet)(object.commonHeight) ? _helpers.Long.fromValue(object.commonHeight) : _helpers.Long.ZERO,
-      byzantineValidators: Array.isArray(object === null || object === void 0 ? void 0 : object.byzantineValidators) ? object.byzantineValidators.map(function (e) {
-        return _validator.Validator.fromJSON(e);
-      }) : [],
-      totalVotingPower: (0, _helpers.isSet)(object.totalVotingPower) ? _helpers.Long.fromValue(object.totalVotingPower) : _helpers.Long.ZERO,
-      timestamp: (0, _helpers.isSet)(object.timestamp) ? (0, _helpers.fromJsonTimestamp)(object.timestamp) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.conflictingBlock !== undefined && (obj.conflictingBlock = message.conflictingBlock ? _types.LightBlock.toJSON(message.conflictingBlock) : undefined);
-    message.commonHeight !== undefined && (obj.commonHeight = (message.commonHeight || _helpers.Long.ZERO).toString());
-    if (message.byzantineValidators) {
-      obj.byzantineValidators = message.byzantineValidators.map(function (e) {
-        return e ? _validator.Validator.toJSON(e) : undefined;
-      });
-    } else {
-      obj.byzantineValidators = [];
-    }
-    message.totalVotingPower !== undefined && (obj.totalVotingPower = (message.totalVotingPower || _helpers.Long.ZERO).toString());
-    message.timestamp !== undefined && (obj.timestamp = (0, _helpers.fromTimestamp)(message.timestamp).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$byzantineVali;
+    var _object$byzantineVali, _object$timestamp2;
     var message = createBaseLightClientAttackEvidence();
     message.conflictingBlock = object.conflictingBlock !== undefined && object.conflictingBlock !== null ? _types.LightBlock.fromPartial(object.conflictingBlock) : undefined;
     message.commonHeight = object.commonHeight !== undefined && object.commonHeight !== null ? _helpers.Long.fromValue(object.commonHeight) : _helpers.Long.ZERO;
@@ -269,7 +214,7 @@ var LightClientAttackEvidence = {
       return _validator.Validator.fromPartial(e);
     })) || [];
     message.totalVotingPower = object.totalVotingPower !== undefined && object.totalVotingPower !== null ? _helpers.Long.fromValue(object.totalVotingPower) : _helpers.Long.ZERO;
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? _timestamp.Timestamp.fromPartial(object.timestamp) : undefined;
+    message.timestamp = (_object$timestamp2 = object.timestamp) !== null && _object$timestamp2 !== void 0 ? _object$timestamp2 : undefined;
     return message;
   }
 };
@@ -312,24 +257,6 @@ var EvidenceList = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      evidence: Array.isArray(object === null || object === void 0 ? void 0 : object.evidence) ? object.evidence.map(function (e) {
-        return Evidence.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.evidence) {
-      obj.evidence = message.evidence.map(function (e) {
-        return e ? Evidence.toJSON(e) : undefined;
-      });
-    } else {
-      obj.evidence = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$evidence;

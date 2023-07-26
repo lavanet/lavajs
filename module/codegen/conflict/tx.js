@@ -1,5 +1,5 @@
 import { FinalizationConflict, ResponseConflict } from "./conflict_data";
-import { Long, isSet, bytesFromBase64, base64FromBytes } from "../helpers";
+import { Long } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** TODO:: change coin type to another proto (define proto in another file int this directory) */
 
@@ -55,22 +55,6 @@ export const MsgDetection = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      finalizationConflict: isSet(object.finalizationConflict) ? FinalizationConflict.fromJSON(object.finalizationConflict) : undefined,
-      responseConflict: isSet(object.responseConflict) ? ResponseConflict.fromJSON(object.responseConflict) : undefined,
-      sameProviderConflict: isSet(object.sameProviderConflict) ? FinalizationConflict.fromJSON(object.sameProviderConflict) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.finalizationConflict !== undefined && (obj.finalizationConflict = message.finalizationConflict ? FinalizationConflict.toJSON(message.finalizationConflict) : undefined);
-    message.responseConflict !== undefined && (obj.responseConflict = message.responseConflict ? ResponseConflict.toJSON(message.responseConflict) : undefined);
-    message.sameProviderConflict !== undefined && (obj.sameProviderConflict = message.sameProviderConflict ? FinalizationConflict.toJSON(message.sameProviderConflict) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator;
     const message = createBaseMsgDetection();
@@ -101,13 +85,6 @@ export const MsgDetectionResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgDetectionResponse();
@@ -157,20 +134,6 @@ export const MsgConflictVoteCommit = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      voteID: isSet(object.voteID) ? String(object.voteID) : "",
-      hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.voteID !== undefined && (obj.voteID = message.voteID);
-    message.hash !== undefined && (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator2, _object$voteID, _object$hash;
     const message = createBaseMsgConflictVoteCommit();
@@ -200,13 +163,6 @@ export const MsgConflictVoteCommitResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgConflictVoteCommitResponse();
@@ -263,22 +219,6 @@ export const MsgConflictVoteReveal = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      creator: isSet(object.creator) ? String(object.creator) : "",
-      voteID: isSet(object.voteID) ? String(object.voteID) : "",
-      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.ZERO,
-      hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.voteID !== undefined && (obj.voteID = message.voteID);
-    message.nonce !== undefined && (obj.nonce = (message.nonce || Long.ZERO).toString());
-    message.hash !== undefined && (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
-    return obj;
-  },
   fromPartial(object) {
     var _object$creator3, _object$voteID2, _object$hash2;
     const message = createBaseMsgConflictVoteReveal();
@@ -309,13 +249,6 @@ export const MsgConflictVoteRevealResponse = {
       }
     }
     return message;
-  },
-  fromJSON(_) {
-    return {};
-  },
-  toJSON(_) {
-    const obj = {};
-    return obj;
   },
   fromPartial(_) {
     const message = createBaseMsgConflictVoteRevealResponse();

@@ -67,26 +67,6 @@ var BitArray = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      bits: (0, _helpers.isSet)(object.bits) ? _helpers.Long.fromValue(object.bits) : _helpers.Long.ZERO,
-      elems: Array.isArray(object === null || object === void 0 ? void 0 : object.elems) ? object.elems.map(function (e) {
-        return _helpers.Long.fromValue(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.bits !== undefined && (obj.bits = (message.bits || _helpers.Long.ZERO).toString());
-    if (message.elems) {
-      obj.elems = message.elems.map(function (e) {
-        return (e || _helpers.Long.UZERO).toString();
-      });
-    } else {
-      obj.elems = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$elems;
     var message = createBaseBitArray();

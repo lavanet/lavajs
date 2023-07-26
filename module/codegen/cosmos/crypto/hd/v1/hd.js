@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../../helpers";
+
 /** BIP44Params is used as path field in ledger item in Record. */
 
 /** BIP44Params is used as path field in ledger item in Record. */
@@ -60,24 +60,6 @@ export const BIP44Params = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      purpose: isSet(object.purpose) ? Number(object.purpose) : 0,
-      coinType: isSet(object.coinType) ? Number(object.coinType) : 0,
-      account: isSet(object.account) ? Number(object.account) : 0,
-      change: isSet(object.change) ? Boolean(object.change) : false,
-      addressIndex: isSet(object.addressIndex) ? Number(object.addressIndex) : 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.purpose !== undefined && (obj.purpose = Math.round(message.purpose));
-    message.coinType !== undefined && (obj.coinType = Math.round(message.coinType));
-    message.account !== undefined && (obj.account = Math.round(message.account));
-    message.change !== undefined && (obj.change = message.change);
-    message.addressIndex !== undefined && (obj.addressIndex = Math.round(message.addressIndex));
-    return obj;
   },
   fromPartial(object) {
     var _object$purpose, _object$coinType, _object$account, _object$change, _object$addressIndex;

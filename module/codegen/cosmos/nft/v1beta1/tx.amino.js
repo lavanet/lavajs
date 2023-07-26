@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 export const AminoConverter = {
   "/cosmos.nft.v1beta1.MsgSend": {
     aminoType: "cosmos-sdk/MsgNFTSend",

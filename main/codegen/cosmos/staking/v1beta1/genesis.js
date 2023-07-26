@@ -145,70 +145,6 @@ var GenesisState = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      params: (0, _helpers.isSet)(object.params) ? _staking.Params.fromJSON(object.params) : undefined,
-      lastTotalPower: (0, _helpers.isSet)(object.lastTotalPower) ? (0, _helpers.bytesFromBase64)(object.lastTotalPower) : new Uint8Array(),
-      lastValidatorPowers: Array.isArray(object === null || object === void 0 ? void 0 : object.lastValidatorPowers) ? object.lastValidatorPowers.map(function (e) {
-        return LastValidatorPower.fromJSON(e);
-      }) : [],
-      validators: Array.isArray(object === null || object === void 0 ? void 0 : object.validators) ? object.validators.map(function (e) {
-        return _staking.Validator.fromJSON(e);
-      }) : [],
-      delegations: Array.isArray(object === null || object === void 0 ? void 0 : object.delegations) ? object.delegations.map(function (e) {
-        return _staking.Delegation.fromJSON(e);
-      }) : [],
-      unbondingDelegations: Array.isArray(object === null || object === void 0 ? void 0 : object.unbondingDelegations) ? object.unbondingDelegations.map(function (e) {
-        return _staking.UnbondingDelegation.fromJSON(e);
-      }) : [],
-      redelegations: Array.isArray(object === null || object === void 0 ? void 0 : object.redelegations) ? object.redelegations.map(function (e) {
-        return _staking.Redelegation.fromJSON(e);
-      }) : [],
-      exported: (0, _helpers.isSet)(object.exported) ? Boolean(object.exported) : false
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.params !== undefined && (obj.params = message.params ? _staking.Params.toJSON(message.params) : undefined);
-    message.lastTotalPower !== undefined && (obj.lastTotalPower = (0, _helpers.base64FromBytes)(message.lastTotalPower !== undefined ? message.lastTotalPower : new Uint8Array()));
-    if (message.lastValidatorPowers) {
-      obj.lastValidatorPowers = message.lastValidatorPowers.map(function (e) {
-        return e ? LastValidatorPower.toJSON(e) : undefined;
-      });
-    } else {
-      obj.lastValidatorPowers = [];
-    }
-    if (message.validators) {
-      obj.validators = message.validators.map(function (e) {
-        return e ? _staking.Validator.toJSON(e) : undefined;
-      });
-    } else {
-      obj.validators = [];
-    }
-    if (message.delegations) {
-      obj.delegations = message.delegations.map(function (e) {
-        return e ? _staking.Delegation.toJSON(e) : undefined;
-      });
-    } else {
-      obj.delegations = [];
-    }
-    if (message.unbondingDelegations) {
-      obj.unbondingDelegations = message.unbondingDelegations.map(function (e) {
-        return e ? _staking.UnbondingDelegation.toJSON(e) : undefined;
-      });
-    } else {
-      obj.unbondingDelegations = [];
-    }
-    if (message.redelegations) {
-      obj.redelegations = message.redelegations.map(function (e) {
-        return e ? _staking.Redelegation.toJSON(e) : undefined;
-      });
-    } else {
-      obj.redelegations = [];
-    }
-    message.exported !== undefined && (obj.exported = message.exported);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$lastTotalPowe, _object$lastValidator, _object$validators, _object$delegations, _object$unbondingDele, _object$redelegations, _object$exported;
     var message = createBaseGenesisState();
@@ -270,18 +206,6 @@ var LastValidatorPower = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      address: (0, _helpers.isSet)(object.address) ? String(object.address) : "",
-      power: (0, _helpers.isSet)(object.power) ? _helpers.Long.fromValue(object.power) : _helpers.Long.ZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.power !== undefined && (obj.power = (message.power || _helpers.Long.ZERO).toString());
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$address;

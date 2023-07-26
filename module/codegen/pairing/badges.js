@@ -1,7 +1,6 @@
 import { Badge } from "./relay";
 import { StakeEntry } from "../epochstorage/stake_entry";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
 function createBaseGenerateBadgeRequest() {
   return {
     badgeAddress: "",
@@ -44,20 +43,6 @@ export const GenerateBadgeRequest = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      badgeAddress: isSet(object.badgeAddress) ? String(object.badgeAddress) : "",
-      projectId: isSet(object.projectId) ? String(object.projectId) : "",
-      specId: isSet(object.specId) ? String(object.specId) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.badgeAddress !== undefined && (obj.badgeAddress = message.badgeAddress);
-    message.projectId !== undefined && (obj.projectId = message.projectId);
-    message.specId !== undefined && (obj.specId = message.specId);
-    return obj;
   },
   fromPartial(object) {
     var _object$badgeAddress, _object$projectId, _object$specId;
@@ -110,24 +95,6 @@ export const GenerateBadgeResponse = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      badge: isSet(object.badge) ? Badge.fromJSON(object.badge) : undefined,
-      pairingList: Array.isArray(object === null || object === void 0 ? void 0 : object.pairingList) ? object.pairingList.map(e => StakeEntry.fromJSON(e)) : [],
-      badgeSignerAddress: isSet(object.badgeSignerAddress) ? String(object.badgeSignerAddress) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.badge !== undefined && (obj.badge = message.badge ? Badge.toJSON(message.badge) : undefined);
-    if (message.pairingList) {
-      obj.pairingList = message.pairingList.map(e => e ? StakeEntry.toJSON(e) : undefined);
-    } else {
-      obj.pairingList = [];
-    }
-    message.badgeSignerAddress !== undefined && (obj.badgeSignerAddress = message.badgeSignerAddress);
-    return obj;
   },
   fromPartial(object) {
     var _object$pairingList, _object$badgeSignerAd;

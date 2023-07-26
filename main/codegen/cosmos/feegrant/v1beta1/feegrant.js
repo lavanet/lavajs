@@ -66,7 +66,7 @@ var BasicAllowance = {
       _iterator.f();
     }
     if (message.expiration !== undefined) {
-      _timestamp.Timestamp.encode(message.expiration, writer.uint32(18).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.expiration), writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -81,7 +81,7 @@ var BasicAllowance = {
           message.spendLimit.push(_coin.Coin.decode(reader, reader.uint32()));
           break;
         case 2:
-          message.expiration = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.expiration = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -90,33 +90,13 @@ var BasicAllowance = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      spendLimit: Array.isArray(object === null || object === void 0 ? void 0 : object.spendLimit) ? object.spendLimit.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : [],
-      expiration: (0, _helpers.isSet)(object.expiration) ? (0, _helpers.fromJsonTimestamp)(object.expiration) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.spendLimit) {
-      obj.spendLimit = message.spendLimit.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.spendLimit = [];
-    }
-    message.expiration !== undefined && (obj.expiration = (0, _helpers.fromTimestamp)(message.expiration).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$spendLimit;
+    var _object$spendLimit, _object$expiration;
     var message = createBaseBasicAllowance();
     message.spendLimit = ((_object$spendLimit = object.spendLimit) === null || _object$spendLimit === void 0 ? void 0 : _object$spendLimit.map(function (e) {
       return _coin.Coin.fromPartial(e);
     })) || [];
-    message.expiration = object.expiration !== undefined && object.expiration !== null ? _timestamp.Timestamp.fromPartial(object.expiration) : undefined;
+    message.expiration = (_object$expiration = object.expiration) !== null && _object$expiration !== void 0 ? _object$expiration : undefined;
     return message;
   }
 };
@@ -164,7 +144,7 @@ var PeriodicAllowance = {
       _iterator3.f();
     }
     if (message.periodReset !== undefined) {
-      _timestamp.Timestamp.encode(message.periodReset, writer.uint32(42).fork()).ldelim();
+      _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.periodReset), writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -188,7 +168,7 @@ var PeriodicAllowance = {
           message.periodCanSpend.push(_coin.Coin.decode(reader, reader.uint32()));
           break;
         case 5:
-          message.periodReset = _timestamp.Timestamp.decode(reader, reader.uint32());
+          message.periodReset = (0, _helpers.fromTimestamp)(_timestamp.Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -197,42 +177,8 @@ var PeriodicAllowance = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      basic: (0, _helpers.isSet)(object.basic) ? BasicAllowance.fromJSON(object.basic) : undefined,
-      period: (0, _helpers.isSet)(object.period) ? _duration.Duration.fromJSON(object.period) : undefined,
-      periodSpendLimit: Array.isArray(object === null || object === void 0 ? void 0 : object.periodSpendLimit) ? object.periodSpendLimit.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : [],
-      periodCanSpend: Array.isArray(object === null || object === void 0 ? void 0 : object.periodCanSpend) ? object.periodCanSpend.map(function (e) {
-        return _coin.Coin.fromJSON(e);
-      }) : [],
-      periodReset: (0, _helpers.isSet)(object.periodReset) ? (0, _helpers.fromJsonTimestamp)(object.periodReset) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.basic !== undefined && (obj.basic = message.basic ? BasicAllowance.toJSON(message.basic) : undefined);
-    message.period !== undefined && (obj.period = message.period ? _duration.Duration.toJSON(message.period) : undefined);
-    if (message.periodSpendLimit) {
-      obj.periodSpendLimit = message.periodSpendLimit.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.periodSpendLimit = [];
-    }
-    if (message.periodCanSpend) {
-      obj.periodCanSpend = message.periodCanSpend.map(function (e) {
-        return e ? _coin.Coin.toJSON(e) : undefined;
-      });
-    } else {
-      obj.periodCanSpend = [];
-    }
-    message.periodReset !== undefined && (obj.periodReset = (0, _helpers.fromTimestamp)(message.periodReset).toISOString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
-    var _object$periodSpendLi, _object$periodCanSpen;
+    var _object$periodSpendLi, _object$periodCanSpen, _object$periodReset;
     var message = createBasePeriodicAllowance();
     message.basic = object.basic !== undefined && object.basic !== null ? BasicAllowance.fromPartial(object.basic) : undefined;
     message.period = object.period !== undefined && object.period !== null ? _duration.Duration.fromPartial(object.period) : undefined;
@@ -242,7 +188,7 @@ var PeriodicAllowance = {
     message.periodCanSpend = ((_object$periodCanSpen = object.periodCanSpend) === null || _object$periodCanSpen === void 0 ? void 0 : _object$periodCanSpen.map(function (e) {
       return _coin.Coin.fromPartial(e);
     })) || [];
-    message.periodReset = object.periodReset !== undefined && object.periodReset !== null ? _timestamp.Timestamp.fromPartial(object.periodReset) : undefined;
+    message.periodReset = (_object$periodReset = object.periodReset) !== null && _object$periodReset !== void 0 ? _object$periodReset : undefined;
     return message;
   }
 };
@@ -292,26 +238,6 @@ var AllowedMsgAllowance = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      allowance: (0, _helpers.isSet)(object.allowance) ? _any.Any.fromJSON(object.allowance) : undefined,
-      allowedMessages: Array.isArray(object === null || object === void 0 ? void 0 : object.allowedMessages) ? object.allowedMessages.map(function (e) {
-        return String(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.allowance !== undefined && (obj.allowance = message.allowance ? _any.Any.toJSON(message.allowance) : undefined);
-    if (message.allowedMessages) {
-      obj.allowedMessages = message.allowedMessages.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.allowedMessages = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$allowedMessag;
@@ -367,20 +293,6 @@ var Grant = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      granter: (0, _helpers.isSet)(object.granter) ? String(object.granter) : "",
-      grantee: (0, _helpers.isSet)(object.grantee) ? String(object.grantee) : "",
-      allowance: (0, _helpers.isSet)(object.allowance) ? _any.Any.fromJSON(object.allowance) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.granter !== undefined && (obj.granter = message.granter);
-    message.grantee !== undefined && (obj.grantee = message.grantee);
-    message.allowance !== undefined && (obj.allowance = message.allowance ? _any.Any.toJSON(message.allowance) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$granter, _object$grantee;

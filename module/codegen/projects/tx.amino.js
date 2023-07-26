@@ -1,5 +1,4 @@
-//@ts-nocheck
-import { sELECTED_PROVIDERS_MODEFromJSON } from "./project";
+import { sELECTED_PROVIDERS_MODEFromJSON } from "../plans/plan";
 import { Long } from "../helpers";
 export const AminoConverter = {
   "/lavanet.lava.projects.MsgAddKeys": {

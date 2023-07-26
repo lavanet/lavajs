@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.HttpRule = exports.Http = exports.CustomHttpPattern = void 0;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -618,26 +617,6 @@ var Http = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      rules: Array.isArray(object === null || object === void 0 ? void 0 : object.rules) ? object.rules.map(function (e) {
-        return HttpRule.fromJSON(e);
-      }) : [],
-      fullyDecodeReservedExpansion: (0, _helpers.isSet)(object.fullyDecodeReservedExpansion) ? Boolean(object.fullyDecodeReservedExpansion) : false
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.rules) {
-      obj.rules = message.rules.map(function (e) {
-        return e ? HttpRule.toJSON(e) : undefined;
-      });
-    } else {
-      obj.rules = [];
-    }
-    message.fullyDecodeReservedExpansion !== undefined && (obj.fullyDecodeReservedExpansion = message.fullyDecodeReservedExpansion);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$rules, _object$fullyDecodeRe;
     var message = createBaseHttp();
@@ -751,42 +730,6 @@ var HttpRule = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      selector: (0, _helpers.isSet)(object.selector) ? String(object.selector) : "",
-      get: (0, _helpers.isSet)(object.get) ? String(object.get) : undefined,
-      put: (0, _helpers.isSet)(object.put) ? String(object.put) : undefined,
-      post: (0, _helpers.isSet)(object.post) ? String(object.post) : undefined,
-      "delete": (0, _helpers.isSet)(object["delete"]) ? String(object["delete"]) : undefined,
-      patch: (0, _helpers.isSet)(object.patch) ? String(object.patch) : undefined,
-      custom: (0, _helpers.isSet)(object.custom) ? CustomHttpPattern.fromJSON(object.custom) : undefined,
-      body: (0, _helpers.isSet)(object.body) ? String(object.body) : "",
-      responseBody: (0, _helpers.isSet)(object.responseBody) ? String(object.responseBody) : "",
-      additionalBindings: Array.isArray(object === null || object === void 0 ? void 0 : object.additionalBindings) ? object.additionalBindings.map(function (e) {
-        return HttpRule.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.selector !== undefined && (obj.selector = message.selector);
-    message.get !== undefined && (obj.get = message.get);
-    message.put !== undefined && (obj.put = message.put);
-    message.post !== undefined && (obj.post = message.post);
-    message["delete"] !== undefined && (obj["delete"] = message["delete"]);
-    message.patch !== undefined && (obj.patch = message.patch);
-    message.custom !== undefined && (obj.custom = message.custom ? CustomHttpPattern.toJSON(message.custom) : undefined);
-    message.body !== undefined && (obj.body = message.body);
-    message.responseBody !== undefined && (obj.responseBody = message.responseBody);
-    if (message.additionalBindings) {
-      obj.additionalBindings = message.additionalBindings.map(function (e) {
-        return e ? HttpRule.toJSON(e) : undefined;
-      });
-    } else {
-      obj.additionalBindings = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$selector, _object$get, _object$put, _object$post, _object$delete, _object$patch, _object$body, _object$responseBody, _object$additionalBin;
     var message = createBaseHttpRule();
@@ -842,18 +785,6 @@ var CustomHttpPattern = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      kind: (0, _helpers.isSet)(object.kind) ? String(object.kind) : "",
-      path: (0, _helpers.isSet)(object.path) ? String(object.path) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.kind !== undefined && (obj.kind = message.kind);
-    message.path !== undefined && (obj.path = message.path);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$kind, _object$path;

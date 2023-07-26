@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 export const AminoConverter = {
   "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress": {
     aminoType: "cosmos-sdk/MsgModifyWithdrawAddress",

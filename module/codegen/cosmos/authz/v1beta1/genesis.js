@@ -1,5 +1,6 @@
 import { GrantAuthorization } from "./authz";
 import * as _m0 from "protobufjs/minimal";
+
 /** GenesisState defines the authz module's genesis state. */
 
 /** GenesisState defines the authz module's genesis state. */
@@ -32,20 +33,6 @@ export const GenesisState = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      authorization: Array.isArray(object === null || object === void 0 ? void 0 : object.authorization) ? object.authorization.map(e => GrantAuthorization.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.authorization) {
-      obj.authorization = message.authorization.map(e => e ? GrantAuthorization.toJSON(e) : undefined);
-    } else {
-      obj.authorization = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$authorization;

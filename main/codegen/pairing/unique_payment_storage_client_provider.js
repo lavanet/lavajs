@@ -53,20 +53,6 @@ var UniquePaymentStorageClientProvider = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? String(object.index) : "",
-      block: (0, _helpers.isSet)(object.block) ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO,
-      usedCU: (0, _helpers.isSet)(object.usedCU) ? _helpers.Long.fromValue(object.usedCU) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.block !== undefined && (obj.block = (message.block || _helpers.Long.UZERO).toString());
-    message.usedCU !== undefined && (obj.usedCU = (message.usedCU || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index;
     var message = createBaseUniquePaymentStorageClientProvider();

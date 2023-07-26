@@ -45,13 +45,6 @@ var QueryParamsRequest = {
     }
     return message;
   },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
-  },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
     return message;
@@ -87,16 +80,6 @@ var QueryParamsResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      params: (0, _helpers.isSet)(object.params) ? _params.Params.fromJSON(object.params) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.params !== undefined && (obj.params = message.params ? _params.Params.toJSON(message.params) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryParamsResponse();
@@ -134,16 +117,6 @@ var QueryGetSpecRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      ChainID: (0, _helpers.isSet)(object.ChainID) ? String(object.ChainID) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.ChainID !== undefined && (obj.ChainID = message.ChainID);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$ChainID;
@@ -183,16 +156,6 @@ var QueryGetSpecResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      Spec: (0, _helpers.isSet)(object.Spec) ? _spec.Spec.fromJSON(object.Spec) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.Spec !== undefined && (obj.Spec = message.Spec ? _spec.Spec.toJSON(message.Spec) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryGetSpecResponse();
     message.Spec = object.Spec !== undefined && object.Spec !== null ? _spec.Spec.fromPartial(object.Spec) : undefined;
@@ -229,16 +192,6 @@ var QueryAllSpecRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageRequest.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageRequest.toJSON(message.pagination) : undefined);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseQueryAllSpecRequest();
@@ -293,26 +246,6 @@ var QueryAllSpecResponse = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      Spec: Array.isArray(object === null || object === void 0 ? void 0 : object.Spec) ? object.Spec.map(function (e) {
-        return _spec.Spec.fromJSON(e);
-      }) : [],
-      pagination: (0, _helpers.isSet)(object.pagination) ? _pagination.PageResponse.fromJSON(object.pagination) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.Spec) {
-      obj.Spec = message.Spec.map(function (e) {
-        return e ? _spec.Spec.toJSON(e) : undefined;
-      });
-    } else {
-      obj.Spec = [];
-    }
-    message.pagination !== undefined && (obj.pagination = message.pagination ? _pagination.PageResponse.toJSON(message.pagination) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$Spec;
     var message = createBaseQueryAllSpecResponse();
@@ -345,13 +278,6 @@ var QueryShowAllChainsRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryShowAllChainsRequest();
@@ -397,24 +323,6 @@ var QueryShowAllChainsResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainInfoList: Array.isArray(object === null || object === void 0 ? void 0 : object.chainInfoList) ? object.chainInfoList.map(function (e) {
-        return ShowAllChainsInfoStruct.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.chainInfoList) {
-      obj.chainInfoList = message.chainInfoList.map(function (e) {
-        return e ? ShowAllChainsInfoStruct.toJSON(e) : undefined;
-      });
-    } else {
-      obj.chainInfoList = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$chainInfoList;
@@ -486,30 +394,6 @@ var ShowAllChainsInfoStruct = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainName: (0, _helpers.isSet)(object.chainName) ? String(object.chainName) : "",
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
-      enabledApiInterfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.enabledApiInterfaces) ? object.enabledApiInterfaces.map(function (e) {
-        return String(e);
-      }) : [],
-      apiCount: (0, _helpers.isSet)(object.apiCount) ? _helpers.Long.fromValue(object.apiCount) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainName !== undefined && (obj.chainName = message.chainName);
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    if (message.enabledApiInterfaces) {
-      obj.enabledApiInterfaces = message.enabledApiInterfaces.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.enabledApiInterfaces = [];
-    }
-    message.apiCount !== undefined && (obj.apiCount = (message.apiCount || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$chainName, _object$chainID, _object$enabledApiInt;
     var message = createBaseShowAllChainsInfoStruct();
@@ -552,16 +436,6 @@ var QueryShowChainInfoRequest = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainName: (0, _helpers.isSet)(object.chainName) ? String(object.chainName) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainName !== undefined && (obj.chainName = message.chainName);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$chainName2;
@@ -616,26 +490,6 @@ var ApiList = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      "interface": (0, _helpers.isSet)(object["interface"]) ? String(object["interface"]) : "",
-      supportedApis: Array.isArray(object === null || object === void 0 ? void 0 : object.supportedApis) ? object.supportedApis.map(function (e) {
-        return String(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message["interface"] !== undefined && (obj["interface"] = message["interface"]);
-    if (message.supportedApis) {
-      obj.supportedApis = message.supportedApis.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.supportedApis = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$interface, _object$supportedApis;
@@ -709,36 +563,6 @@ var QueryShowChainInfoResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      chainID: (0, _helpers.isSet)(object.chainID) ? String(object.chainID) : "",
-      interfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.interfaces) ? object.interfaces.map(function (e) {
-        return String(e);
-      }) : [],
-      supportedApisInterfaceList: Array.isArray(object === null || object === void 0 ? void 0 : object.supportedApisInterfaceList) ? object.supportedApisInterfaceList.map(function (e) {
-        return ApiList.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.chainID !== undefined && (obj.chainID = message.chainID);
-    if (message.interfaces) {
-      obj.interfaces = message.interfaces.map(function (e) {
-        return e;
-      });
-    } else {
-      obj.interfaces = [];
-    }
-    if (message.supportedApisInterfaceList) {
-      obj.supportedApisInterfaceList = message.supportedApisInterfaceList.map(function (e) {
-        return e ? ApiList.toJSON(e) : undefined;
-      });
-    } else {
-      obj.supportedApisInterfaceList = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$chainID2, _object$interfaces, _object$supportedApis2;

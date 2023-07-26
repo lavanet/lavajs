@@ -72,16 +72,6 @@ var Capability = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      index: (0, _helpers.isSet)(object.index) ? _helpers.Long.fromValue(object.index) : _helpers.Long.UZERO
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.index !== undefined && (obj.index = (message.index || _helpers.Long.UZERO).toString());
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var message = createBaseCapability();
     message.index = object.index !== undefined && object.index !== null ? _helpers.Long.fromValue(object.index) : _helpers.Long.UZERO;
@@ -125,18 +115,6 @@ var Owner = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      module: (0, _helpers.isSet)(object.module) ? String(object.module) : "",
-      name: (0, _helpers.isSet)(object.name) ? String(object.name) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.module !== undefined && (obj.module = message.module);
-    message.name !== undefined && (obj.name = message.name);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$module, _object$name;
@@ -185,24 +163,6 @@ var CapabilityOwners = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      owners: Array.isArray(object === null || object === void 0 ? void 0 : object.owners) ? object.owners.map(function (e) {
-        return Owner.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.owners) {
-      obj.owners = message.owners.map(function (e) {
-        return e ? Owner.toJSON(e) : undefined;
-      });
-    } else {
-      obj.owners = [];
-    }
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$owners;

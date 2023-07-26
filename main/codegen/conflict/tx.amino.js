@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AminoConverter = void 0;
 var _helpers = require("../helpers");
-//@ts-nocheck
-
 var AminoConverter = {
   "/lavanet.lava.conflict.MsgDetection": {
     aminoType: "/lavanet.lava.conflict.MsgDetection",

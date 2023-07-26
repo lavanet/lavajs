@@ -1,7 +1,7 @@
 import { Params, Metadata } from "./bank";
 import { Coin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../../helpers";
+
 /** GenesisState defines the bank module's genesis state. */
 
 /** GenesisState defines the bank module's genesis state. */
@@ -66,34 +66,6 @@ export const GenesisState = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-      balances: Array.isArray(object === null || object === void 0 ? void 0 : object.balances) ? object.balances.map(e => Balance.fromJSON(e)) : [],
-      supply: Array.isArray(object === null || object === void 0 ? void 0 : object.supply) ? object.supply.map(e => Coin.fromJSON(e)) : [],
-      denomMetadata: Array.isArray(object === null || object === void 0 ? void 0 : object.denomMetadata) ? object.denomMetadata.map(e => Metadata.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.balances) {
-      obj.balances = message.balances.map(e => e ? Balance.toJSON(e) : undefined);
-    } else {
-      obj.balances = [];
-    }
-    if (message.supply) {
-      obj.supply = message.supply.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.supply = [];
-    }
-    if (message.denomMetadata) {
-      obj.denomMetadata = message.denomMetadata.map(e => e ? Metadata.toJSON(e) : undefined);
-    } else {
-      obj.denomMetadata = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$balances, _object$supply, _object$denomMetadata;
     const message = createBaseGenesisState();
@@ -139,22 +111,6 @@ export const Balance = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      coins: Array.isArray(object === null || object === void 0 ? void 0 : object.coins) ? object.coins.map(e => Coin.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map(e => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.coins = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$address, _object$coins;

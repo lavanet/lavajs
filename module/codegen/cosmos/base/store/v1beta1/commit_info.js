@@ -1,4 +1,4 @@
-import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { Long } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
  * CommitInfo defines commit information used by the multi-store when committing
@@ -66,22 +66,6 @@ export const CommitInfo = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      version: isSet(object.version) ? Long.fromValue(object.version) : Long.ZERO,
-      storeInfos: Array.isArray(object === null || object === void 0 ? void 0 : object.storeInfos) ? object.storeInfos.map(e => StoreInfo.fromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.version !== undefined && (obj.version = (message.version || Long.ZERO).toString());
-    if (message.storeInfos) {
-      obj.storeInfos = message.storeInfos.map(e => e ? StoreInfo.toJSON(e) : undefined);
-    } else {
-      obj.storeInfos = [];
-    }
-    return obj;
-  },
   fromPartial(object) {
     var _object$storeInfos;
     const message = createBaseCommitInfo();
@@ -126,18 +110,6 @@ export const StoreInfo = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      name: isSet(object.name) ? String(object.name) : "",
-      commitId: isSet(object.commitId) ? CommitID.fromJSON(object.commitId) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.commitId !== undefined && (obj.commitId = message.commitId ? CommitID.toJSON(message.commitId) : undefined);
-    return obj;
-  },
   fromPartial(object) {
     var _object$name;
     const message = createBaseStoreInfo();
@@ -181,18 +153,6 @@ export const CommitID = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      version: isSet(object.version) ? Long.fromValue(object.version) : Long.ZERO,
-      hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.version !== undefined && (obj.version = (message.version || Long.ZERO).toString());
-    message.hash !== undefined && (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
-    return obj;
   },
   fromPartial(object) {
     var _object$hash;

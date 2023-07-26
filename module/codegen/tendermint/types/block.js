@@ -1,7 +1,6 @@
 import { Header, Data, Commit } from "./types";
 import { EvidenceList } from "./evidence";
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../../helpers";
 function createBaseBlock() {
   return {
     header: undefined,
@@ -51,22 +50,6 @@ export const Block = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      header: isSet(object.header) ? Header.fromJSON(object.header) : undefined,
-      data: isSet(object.data) ? Data.fromJSON(object.data) : undefined,
-      evidence: isSet(object.evidence) ? EvidenceList.fromJSON(object.evidence) : undefined,
-      lastCommit: isSet(object.lastCommit) ? Commit.fromJSON(object.lastCommit) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.header !== undefined && (obj.header = message.header ? Header.toJSON(message.header) : undefined);
-    message.data !== undefined && (obj.data = message.data ? Data.toJSON(message.data) : undefined);
-    message.evidence !== undefined && (obj.evidence = message.evidence ? EvidenceList.toJSON(message.evidence) : undefined);
-    message.lastCommit !== undefined && (obj.lastCommit = message.lastCommit ? Commit.toJSON(message.lastCommit) : undefined);
-    return obj;
   },
   fromPartial(object) {
     const message = createBaseBlock();

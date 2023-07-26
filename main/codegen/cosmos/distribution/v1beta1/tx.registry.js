@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.registry = exports.load = exports.MessageComposer = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _tx = require("./tx");
-//@ts-nocheck
-
 var registry = [["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", _tx.MsgSetWithdrawAddress], ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", _tx.MsgWithdrawDelegatorReward], ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", _tx.MsgWithdrawValidatorCommission], ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", _tx.MsgFundCommunityPool]];
 exports.registry = registry;
 var load = function load(protoRegistry) {
@@ -70,58 +68,6 @@ var MessageComposer = {
       return {
         typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
         value: value
-      };
-    }
-  },
-  toJSON: {
-    setWithdrawAddress: function setWithdrawAddress(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
-        value: _tx.MsgSetWithdrawAddress.toJSON(value)
-      };
-    },
-    withdrawDelegatorReward: function withdrawDelegatorReward(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
-        value: _tx.MsgWithdrawDelegatorReward.toJSON(value)
-      };
-    },
-    withdrawValidatorCommission: function withdrawValidatorCommission(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
-        value: _tx.MsgWithdrawValidatorCommission.toJSON(value)
-      };
-    },
-    fundCommunityPool: function fundCommunityPool(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
-        value: _tx.MsgFundCommunityPool.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    setWithdrawAddress: function setWithdrawAddress(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
-        value: _tx.MsgSetWithdrawAddress.fromJSON(value)
-      };
-    },
-    withdrawDelegatorReward: function withdrawDelegatorReward(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
-        value: _tx.MsgWithdrawDelegatorReward.fromJSON(value)
-      };
-    },
-    withdrawValidatorCommission: function withdrawValidatorCommission(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
-        value: _tx.MsgWithdrawValidatorCommission.fromJSON(value)
-      };
-    },
-    fundCommunityPool: function fundCommunityPool(value) {
-      return {
-        typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
-        value: _tx.MsgFundCommunityPool.fromJSON(value)
       };
     }
   },

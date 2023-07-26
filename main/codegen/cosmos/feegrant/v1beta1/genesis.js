@@ -55,24 +55,6 @@ var GenesisState = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      allowances: Array.isArray(object === null || object === void 0 ? void 0 : object.allowances) ? object.allowances.map(function (e) {
-        return _feegrant.Grant.fromJSON(e);
-      }) : []
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    if (message.allowances) {
-      obj.allowances = message.allowances.map(function (e) {
-        return e ? _feegrant.Grant.toJSON(e) : undefined;
-      });
-    } else {
-      obj.allowances = [];
-    }
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$allowances;
     var message = createBaseGenesisState();

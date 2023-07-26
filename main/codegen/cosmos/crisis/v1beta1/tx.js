@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MsgVerifyInvariantResponse = exports.MsgVerifyInvariant = void 0;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** MsgVerifyInvariant represents a message to verify a particular invariance. */
@@ -61,20 +60,6 @@ var MsgVerifyInvariant = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      sender: (0, _helpers.isSet)(object.sender) ? String(object.sender) : "",
-      invariantModuleName: (0, _helpers.isSet)(object.invariantModuleName) ? String(object.invariantModuleName) : "",
-      invariantRoute: (0, _helpers.isSet)(object.invariantRoute) ? String(object.invariantRoute) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.sender !== undefined && (obj.sender = message.sender);
-    message.invariantModuleName !== undefined && (obj.invariantModuleName = message.invariantModuleName);
-    message.invariantRoute !== undefined && (obj.invariantRoute = message.invariantRoute);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$sender, _object$invariantModu, _object$invariantRout;
     var message = createBaseMsgVerifyInvariant();
@@ -106,13 +91,6 @@ var MsgVerifyInvariantResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgVerifyInvariantResponse();

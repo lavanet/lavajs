@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 export const AminoConverter = {
   "/cosmos.authz.v1beta1.MsgGrant": {
     aminoType: "cosmos-sdk/MsgGrant",

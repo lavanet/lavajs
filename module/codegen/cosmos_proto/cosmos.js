@@ -1,5 +1,4 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet } from "../helpers";
 export let ScalarType = /*#__PURE__*/function (ScalarType) {
   ScalarType[ScalarType["SCALAR_TYPE_UNSPECIFIED"] = 0] = "SCALAR_TYPE_UNSPECIFIED";
   ScalarType[ScalarType["SCALAR_TYPE_STRING"] = 1] = "SCALAR_TYPE_STRING";
@@ -104,18 +103,6 @@ export const InterfaceDescriptor = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
-    return obj;
-  },
   fromPartial(object) {
     var _object$name, _object$description;
     const message = createBaseInterfaceDescriptor();
@@ -175,24 +162,6 @@ export const ScalarDescriptor = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      name: isSet(object.name) ? String(object.name) : "",
-      description: isSet(object.description) ? String(object.description) : "",
-      fieldType: Array.isArray(object === null || object === void 0 ? void 0 : object.fieldType) ? object.fieldType.map(e => scalarTypeFromJSON(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined && (obj.description = message.description);
-    if (message.fieldType) {
-      obj.fieldType = message.fieldType.map(e => scalarTypeToJSON(e));
-    } else {
-      obj.fieldType = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$name2, _object$description2, _object$fieldType;

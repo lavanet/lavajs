@@ -1,7 +1,7 @@
 import { Any } from "../../../google/protobuf/any";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import * as _m0 from "protobufjs/minimal";
-import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 /**
  * GenericAuthorization gives the grantee unrestricted permissions to execute
  * the provided method on behalf of the granter's account.
@@ -65,16 +65,6 @@ export const GenericAuthorization = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      msg: isSet(object.msg) ? String(object.msg) : ""
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.msg !== undefined && (obj.msg = message.msg);
-    return obj;
-  },
   fromPartial(object) {
     var _object$msg;
     const message = createBaseGenericAuthorization();
@@ -94,7 +84,7 @@ export const Grant = {
       Any.encode(message.authorization, writer.uint32(10).fork()).ldelim();
     }
     if (message.expiration !== undefined) {
-      Timestamp.encode(message.expiration, writer.uint32(18).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.expiration), writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -109,7 +99,7 @@ export const Grant = {
           message.authorization = Any.decode(reader, reader.uint32());
           break;
         case 2:
-          message.expiration = Timestamp.decode(reader, reader.uint32());
+          message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -118,22 +108,11 @@ export const Grant = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
-      expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.authorization !== undefined && (obj.authorization = message.authorization ? Any.toJSON(message.authorization) : undefined);
-    message.expiration !== undefined && (obj.expiration = fromTimestamp(message.expiration).toISOString());
-    return obj;
-  },
   fromPartial(object) {
+    var _object$expiration;
     const message = createBaseGrant();
     message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
-    message.expiration = object.expiration !== undefined && object.expiration !== null ? Timestamp.fromPartial(object.expiration) : undefined;
+    message.expiration = (_object$expiration = object.expiration) !== null && _object$expiration !== void 0 ? _object$expiration : undefined;
     return message;
   }
 };
@@ -157,7 +136,7 @@ export const GrantAuthorization = {
       Any.encode(message.authorization, writer.uint32(26).fork()).ldelim();
     }
     if (message.expiration !== undefined) {
-      Timestamp.encode(message.expiration, writer.uint32(34).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.expiration), writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -178,7 +157,7 @@ export const GrantAuthorization = {
           message.authorization = Any.decode(reader, reader.uint32());
           break;
         case 4:
-          message.expiration = Timestamp.decode(reader, reader.uint32());
+          message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -187,29 +166,13 @@ export const GrantAuthorization = {
     }
     return message;
   },
-  fromJSON(object) {
-    return {
-      granter: isSet(object.granter) ? String(object.granter) : "",
-      grantee: isSet(object.grantee) ? String(object.grantee) : "",
-      authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
-      expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.granter !== undefined && (obj.granter = message.granter);
-    message.grantee !== undefined && (obj.grantee = message.grantee);
-    message.authorization !== undefined && (obj.authorization = message.authorization ? Any.toJSON(message.authorization) : undefined);
-    message.expiration !== undefined && (obj.expiration = fromTimestamp(message.expiration).toISOString());
-    return obj;
-  },
   fromPartial(object) {
-    var _object$granter, _object$grantee;
+    var _object$granter, _object$grantee, _object$expiration2;
     const message = createBaseGrantAuthorization();
     message.granter = (_object$granter = object.granter) !== null && _object$granter !== void 0 ? _object$granter : "";
     message.grantee = (_object$grantee = object.grantee) !== null && _object$grantee !== void 0 ? _object$grantee : "";
     message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
-    message.expiration = object.expiration !== undefined && object.expiration !== null ? Timestamp.fromPartial(object.expiration) : undefined;
+    message.expiration = (_object$expiration2 = object.expiration) !== null && _object$expiration2 !== void 0 ? _object$expiration2 : undefined;
     return message;
   }
 };
@@ -241,20 +204,6 @@ export const GrantQueueItem = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      msgTypeUrls: Array.isArray(object === null || object === void 0 ? void 0 : object.msgTypeUrls) ? object.msgTypeUrls.map(e => String(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.msgTypeUrls) {
-      obj.msgTypeUrls = message.msgTypeUrls.map(e => e);
-    } else {
-      obj.msgTypeUrls = [];
-    }
-    return obj;
   },
   fromPartial(object) {
     var _object$msgTypeUrls;

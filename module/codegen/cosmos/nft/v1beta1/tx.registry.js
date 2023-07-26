@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgSend } from "./tx";
 export const registry = [["/cosmos.nft.v1beta1.MsgSend", MsgSend]];
 export const load = protoRegistry => {
@@ -21,22 +19,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.nft.v1beta1.MsgSend",
         value
-      };
-    }
-  },
-  toJSON: {
-    send(value) {
-      return {
-        typeUrl: "/cosmos.nft.v1beta1.MsgSend",
-        value: MsgSend.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    send(value) {
-      return {
-        typeUrl: "/cosmos.nft.v1beta1.MsgSend",
-        value: MsgSend.fromJSON(value)
       };
     }
   },

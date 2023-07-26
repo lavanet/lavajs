@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.MsgSoftwareUpgradeResponse = exports.MsgSoftwareUpgrade = exports.MsgCancelUpgradeResponse = exports.MsgCancelUpgrade = void 0;
 var _upgrade = require("./upgrade");
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /**
@@ -95,18 +94,6 @@ var MsgSoftwareUpgrade = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      authority: (0, _helpers.isSet)(object.authority) ? String(object.authority) : "",
-      plan: (0, _helpers.isSet)(object.plan) ? _upgrade.Plan.fromJSON(object.plan) : undefined
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.authority !== undefined && (obj.authority = message.authority);
-    message.plan !== undefined && (obj.plan = message.plan ? _upgrade.Plan.toJSON(message.plan) : undefined);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$authority;
     var message = createBaseMsgSoftwareUpgrade();
@@ -137,13 +124,6 @@ var MsgSoftwareUpgradeResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgSoftwareUpgradeResponse();
@@ -181,16 +161,6 @@ var MsgCancelUpgrade = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      authority: (0, _helpers.isSet)(object.authority) ? String(object.authority) : ""
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.authority !== undefined && (obj.authority = message.authority);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$authority2;
     var message = createBaseMsgCancelUpgrade();
@@ -220,13 +190,6 @@ var MsgCancelUpgradeResponse = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(_) {
-    return {};
-  },
-  toJSON: function toJSON(_) {
-    var obj = {};
-    return obj;
   },
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgCancelUpgradeResponse();

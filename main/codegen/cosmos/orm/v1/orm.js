@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.TableDescriptor = exports.SingletonDescriptor = exports.SecondaryIndexDescriptor = exports.PrimaryKeyDescriptor = void 0;
 var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-var _helpers = require("../../../helpers");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -81,28 +80,6 @@ var TableDescriptor = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      primaryKey: (0, _helpers.isSet)(object.primaryKey) ? PrimaryKeyDescriptor.fromJSON(object.primaryKey) : undefined,
-      index: Array.isArray(object === null || object === void 0 ? void 0 : object.index) ? object.index.map(function (e) {
-        return SecondaryIndexDescriptor.fromJSON(e);
-      }) : [],
-      id: (0, _helpers.isSet)(object.id) ? Number(object.id) : 0
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.primaryKey !== undefined && (obj.primaryKey = message.primaryKey ? PrimaryKeyDescriptor.toJSON(message.primaryKey) : undefined);
-    if (message.index) {
-      obj.index = message.index.map(function (e) {
-        return e ? SecondaryIndexDescriptor.toJSON(e) : undefined;
-      });
-    } else {
-      obj.index = [];
-    }
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$index, _object$id;
     var message = createBaseTableDescriptor();
@@ -151,18 +128,6 @@ var PrimaryKeyDescriptor = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      fields: (0, _helpers.isSet)(object.fields) ? String(object.fields) : "",
-      autoIncrement: (0, _helpers.isSet)(object.autoIncrement) ? Boolean(object.autoIncrement) : false
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.fields !== undefined && (obj.fields = message.fields);
-    message.autoIncrement !== undefined && (obj.autoIncrement = message.autoIncrement);
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$fields, _object$autoIncrement;
@@ -217,20 +182,6 @@ var SecondaryIndexDescriptor = {
     }
     return message;
   },
-  fromJSON: function fromJSON(object) {
-    return {
-      fields: (0, _helpers.isSet)(object.fields) ? String(object.fields) : "",
-      id: (0, _helpers.isSet)(object.id) ? Number(object.id) : 0,
-      unique: (0, _helpers.isSet)(object.unique) ? Boolean(object.unique) : false
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.fields !== undefined && (obj.fields = message.fields);
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.unique !== undefined && (obj.unique = message.unique);
-    return obj;
-  },
   fromPartial: function fromPartial(object) {
     var _object$fields2, _object$id2, _object$unique;
     var message = createBaseSecondaryIndexDescriptor();
@@ -270,16 +221,6 @@ var SingletonDescriptor = {
       }
     }
     return message;
-  },
-  fromJSON: function fromJSON(object) {
-    return {
-      id: (0, _helpers.isSet)(object.id) ? Number(object.id) : 0
-    };
-  },
-  toJSON: function toJSON(message) {
-    var obj = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    return obj;
   },
   fromPartial: function fromPartial(object) {
     var _object$id3;

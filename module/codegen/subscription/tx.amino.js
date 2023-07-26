@@ -1,6 +1,5 @@
-//@ts-nocheck
-import { sELECTED_PROVIDERS_MODEFromJSON } from "../projects/project";
 import { Long } from "../helpers";
+import { sELECTED_PROVIDERS_MODEFromJSON } from "../plans/plan";
 export const AminoConverter = {
   "/lavanet.lava.subscription.MsgBuy": {
     aminoType: "/lavanet.lava.subscription.MsgBuy",

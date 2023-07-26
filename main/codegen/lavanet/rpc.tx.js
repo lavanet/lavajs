@@ -19,7 +19,7 @@ var createRPCMsgClient = /*#__PURE__*/function () {
           rpc = _ref.rpc;
           _context.next = 3;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../proto/conflict/tx.rpc.msg"));
+            return _interopRequireWildcard(require("../conflict/tx.rpc.msg"));
           });
         case 3:
           _context.t0 = _context.sent.MsgClientImpl;
@@ -27,7 +27,7 @@ var createRPCMsgClient = /*#__PURE__*/function () {
           _context.t2 = new _context.t0(_context.t1);
           _context.next = 8;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../proto/pairing/tx.rpc.msg"));
+            return _interopRequireWildcard(require("../pairing/tx.rpc.msg"));
           });
         case 8:
           _context.t3 = _context.sent.MsgClientImpl;
@@ -35,7 +35,7 @@ var createRPCMsgClient = /*#__PURE__*/function () {
           _context.t5 = new _context.t3(_context.t4);
           _context.next = 13;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../proto/projects/tx.rpc.msg"));
+            return _interopRequireWildcard(require("../projects/tx.rpc.msg"));
           });
         case 13:
           _context.t6 = _context.sent.MsgClientImpl;

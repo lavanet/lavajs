@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { MsgGrant, MsgExec, MsgRevoke } from "./tx";
 export const registry = [["/cosmos.authz.v1beta1.MsgGrant", MsgGrant], ["/cosmos.authz.v1beta1.MsgExec", MsgExec], ["/cosmos.authz.v1beta1.MsgRevoke", MsgRevoke]];
 export const load = protoRegistry => {
@@ -45,46 +43,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
         value
-      };
-    }
-  },
-  toJSON: {
-    grant(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
-        value: MsgGrant.toJSON(value)
-      };
-    },
-    exec(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgExec",
-        value: MsgExec.toJSON(value)
-      };
-    },
-    revoke(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
-        value: MsgRevoke.toJSON(value)
-      };
-    }
-  },
-  fromJSON: {
-    grant(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
-        value: MsgGrant.fromJSON(value)
-      };
-    },
-    exec(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgExec",
-        value: MsgExec.fromJSON(value)
-      };
-    },
-    revoke(value) {
-      return {
-        typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
-        value: MsgRevoke.fromJSON(value)
       };
     }
   },

@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { isSet, bytesFromBase64, base64FromBytes } from "../../helpers";
+
 /**
  * `Any` contains an arbitrary serialized protocol buffer message along with a
  * URL that describes the type of the serialized message.
@@ -199,18 +199,6 @@ export const Any = {
       }
     }
     return message;
-  },
-  fromJSON(object) {
-    return {
-      typeUrl: isSet(object.typeUrl) ? String(object.typeUrl) : "",
-      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array()
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    message.typeUrl !== undefined && (obj.typeUrl = message.typeUrl);
-    message.value !== undefined && (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
-    return obj;
   },
   fromPartial(object) {
     var _object$typeUrl, _object$value;
