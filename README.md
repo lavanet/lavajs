@@ -17,6 +17,7 @@ npm install @lavanet/lavajs
   - [Install](#install)
   - [Table of contents](#table-of-contents)
 - [Usage](#usage)
+    - [Full Flow Example](#full-flow-example)
     - [RPC Clients](#rpc-clients)           
 - [Wallets and Signers](#connecting-with-wallets-and-signing-messages)
     - [Stargate Client](#initializing-the-stargate-client)
@@ -27,6 +28,62 @@ npm install @lavanet/lavajs
 - [Credits](#credits)
 
 ## Usage
+
+### Full Flow Example
+```js
+import * as lavajs from '@lavanet/lavajs';
+import { Secp256k1Wallet } from '@cosmjs/amino'
+import { fromHex } from "@cosmjs/encoding";
+import Long from 'long';
+
+const publicRpc = "<RPC-HERE>"
+const privKey = "<PRIV-KEY-HERE>"
+
+// interacting specifically with lava
+async function run() {
+  // create a lava client factory  
+  const client = await lavajs.lavanet.ClientFactory.createRPCQueryClient({ rpcEndpoint: publicRpc})
+  const lavaClient = client.lavanet.lava;
+  const cosmosClient = client.cosmos;
+  
+  // create a wallet from a private key
+  let wallet = await Secp256k1Wallet.fromKey(fromHex(privKey), "lava@")
+  const [firstAccount] = await wallet.getAccounts();
+  console.log(firstAccount)
+  let signingClient = await lavajs.getSigningLavanetClient({
+    rpcEndpoint: publicRpc,
+    signer: wallet,
+  })
+
+  // get subscription info (lava query)
+  let res = await lavaClient.subscription.current({ consumer: firstAccount.address })
+  console.log(res)
+  
+  // get a balance (cosmos sdk query)
+  let res2 = await cosmosClient.bank.v1beta1.allBalances({ address: firstAccount.address })
+  console.log(res2)
+  
+  // buy a subscription (lava tx)
+  const msg = lavajs.lavanet.lava.subscription.MessageComposer.withTypeUrl.buy({
+    creator: firstAccount.address,
+    consumer: firstAccount.address,
+    index: "explorer",
+    duration: new Long(1), /* in months */
+  })
+
+  const fee = {
+    amount: [{ amount: "1", denom: "ulava" }], // Replace with the desired fee amount and token denomination
+    gas: "50000000", // Replace with the desired gas limit
+  }
+  
+  // careful here, uncommenting this code will launch a transaction. 
+  //   await signingClient.signAndBroadcast(firstAccount.address,[msg], fee, "Buying subscription on Lava blockchain!")
+}
+
+run()
+
+```
+
 ### RPC Clients
 
 ```js
