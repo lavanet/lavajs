@@ -1,21 +1,21 @@
 import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
 import { defaultRegistryTypes, AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
 import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
-import * as conflictTxRegistry from "../conflict/tx.registry";
-import * as pairingTxRegistry from "../pairing/tx.registry";
-import * as projectsTxRegistry from "../projects/tx.registry";
-import * as subscriptionTxRegistry from "../subscription/tx.registry";
-import * as conflictTxAmino from "../conflict/tx.amino";
-import * as pairingTxAmino from "../pairing/tx.amino";
-import * as projectsTxAmino from "../projects/tx.amino";
-import * as subscriptionTxAmino from "../subscription/tx.amino";
+import * as lavanetLavaConflictTxRegistry from "./lava/conflict/tx.registry";
+import * as lavanetLavaPairingTxRegistry from "./lava/pairing/tx.registry";
+import * as lavanetLavaProjectsTxRegistry from "./lava/projects/tx.registry";
+import * as lavanetLavaSubscriptionTxRegistry from "./lava/subscription/tx.registry";
+import * as lavanetLavaConflictTxAmino from "./lava/conflict/tx.amino";
+import * as lavanetLavaPairingTxAmino from "./lava/pairing/tx.amino";
+import * as lavanetLavaProjectsTxAmino from "./lava/projects/tx.amino";
+import * as lavanetLavaSubscriptionTxAmino from "./lava/subscription/tx.amino";
 export const lavanetAminoConverters = {
-  ...conflictTxAmino.AminoConverter,
-  ...pairingTxAmino.AminoConverter,
-  ...projectsTxAmino.AminoConverter,
-  ...subscriptionTxAmino.AminoConverter
+  ...lavanetLavaConflictTxAmino.AminoConverter,
+  ...lavanetLavaPairingTxAmino.AminoConverter,
+  ...lavanetLavaProjectsTxAmino.AminoConverter,
+  ...lavanetLavaSubscriptionTxAmino.AminoConverter
 };
-export const lavanetProtoRegistry: ReadonlyArray<[string, GeneratedType]> = [...conflictTxRegistry.registry, ...pairingTxRegistry.registry, ...projectsTxRegistry.registry, ...subscriptionTxRegistry.registry];
+export const lavanetProtoRegistry: ReadonlyArray<[string, GeneratedType]> = [...lavanetLavaConflictTxRegistry.registry, ...lavanetLavaPairingTxRegistry.registry, ...lavanetLavaProjectsTxRegistry.registry, ...lavanetLavaSubscriptionTxRegistry.registry];
 export const getSigningLavanetClientOptions = ({
   defaultTypes = defaultRegistryTypes
 }: {

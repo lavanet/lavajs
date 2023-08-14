@@ -6,34 +6,6 @@ export const createLCDClient = async ({
     restEndpoint
   });
   return {
-    lavanet: {
-      lava: {
-        conflict: new (await import("../conflict/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
-        epochstorage: new (await import("../epochstorage/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
-        pairing: new (await import("../pairing/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
-        plans: new (await import("../plans/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
-        projects: new (await import("../projects/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
-        protocol: new (await import("../protocol/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
-        spec: new (await import("../spec/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
-        subscription: new (await import("../subscription/query.lcd")).LCDQueryClient({
-          requestClient
-        })
-      }
-    },
     cosmos: {
       auth: {
         v1beta1: new (await import("../cosmos/auth/v1beta1/query.lcd")).LCDQueryClient({
@@ -117,6 +89,39 @@ export const createLCDClient = async ({
       },
       upgrade: {
         v1beta1: new (await import("../cosmos/upgrade/v1beta1/query.lcd")).LCDQueryClient({
+          requestClient
+        })
+      }
+    },
+    lavanet: {
+      lava: {
+        conflict: new (await import("./lava/conflict/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        downtime: {
+          v1: new (await import("./lava/downtime/v1/query.lcd")).LCDQueryClient({
+            requestClient
+          })
+        },
+        epochstorage: new (await import("./lava/epochstorage/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        pairing: new (await import("./lava/pairing/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        plans: new (await import("./lava/plans/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        projects: new (await import("./lava/projects/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        protocol: new (await import("./lava/protocol/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        spec: new (await import("./lava/spec/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        subscription: new (await import("./lava/subscription/query.lcd")).LCDQueryClient({
           requestClient
         })
       }

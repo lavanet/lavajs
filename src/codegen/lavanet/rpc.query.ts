@@ -8,18 +8,6 @@ export const createRPCQueryClient = async ({
   const tmClient = await Tendermint34Client.connect(rpcEndpoint);
   const client = new QueryClient(tmClient);
   return {
-    lavanet: {
-      lava: {
-        conflict: (await import("../conflict/query.rpc.Query")).createRpcQueryExtension(client),
-        epochstorage: (await import("../epochstorage/query.rpc.Query")).createRpcQueryExtension(client),
-        pairing: (await import("../pairing/query.rpc.Query")).createRpcQueryExtension(client),
-        plans: (await import("../plans/query.rpc.Query")).createRpcQueryExtension(client),
-        projects: (await import("../projects/query.rpc.Query")).createRpcQueryExtension(client),
-        protocol: (await import("../protocol/query.rpc.Query")).createRpcQueryExtension(client),
-        spec: (await import("../spec/query.rpc.Query")).createRpcQueryExtension(client),
-        subscription: (await import("../subscription/query.rpc.Query")).createRpcQueryExtension(client)
-      }
-    },
     cosmos: {
       app: {
         v1alpha1: (await import("../cosmos/app/v1alpha1/query.rpc.Query")).createRpcQueryExtension(client)
@@ -74,6 +62,21 @@ export const createRPCQueryClient = async ({
       },
       upgrade: {
         v1beta1: (await import("../cosmos/upgrade/v1beta1/query.rpc.Query")).createRpcQueryExtension(client)
+      }
+    },
+    lavanet: {
+      lava: {
+        conflict: (await import("./lava/conflict/query.rpc.Query")).createRpcQueryExtension(client),
+        downtime: {
+          v1: (await import("./lava/downtime/v1/query.rpc.Query")).createRpcQueryExtension(client)
+        },
+        epochstorage: (await import("./lava/epochstorage/query.rpc.Query")).createRpcQueryExtension(client),
+        pairing: (await import("./lava/pairing/query.rpc.Query")).createRpcQueryExtension(client),
+        plans: (await import("./lava/plans/query.rpc.Query")).createRpcQueryExtension(client),
+        projects: (await import("./lava/projects/query.rpc.Query")).createRpcQueryExtension(client),
+        protocol: (await import("./lava/protocol/query.rpc.Query")).createRpcQueryExtension(client),
+        spec: (await import("./lava/spec/query.rpc.Query")).createRpcQueryExtension(client),
+        subscription: (await import("./lava/subscription/query.rpc.Query")).createRpcQueryExtension(client)
       }
     }
   };

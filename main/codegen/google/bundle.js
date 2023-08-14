@@ -7,14 +7,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.google = void 0;
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-var _148 = _interopRequireWildcard(require("./api/annotations"));
-var _149 = _interopRequireWildcard(require("./api/http"));
-var _150 = _interopRequireWildcard(require("./protobuf/any"));
-var _151 = _interopRequireWildcard(require("./protobuf/descriptor"));
-var _152 = _interopRequireWildcard(require("./protobuf/duration"));
-var _153 = _interopRequireWildcard(require("./protobuf/empty"));
-var _154 = _interopRequireWildcard(require("./protobuf/timestamp"));
-var _155 = _interopRequireWildcard(require("./protobuf/wrappers"));
+var _95 = _interopRequireWildcard(require("./api/annotations"));
+var _96 = _interopRequireWildcard(require("./api/http"));
+var _97 = _interopRequireWildcard(require("./protobuf/any"));
+var _98 = _interopRequireWildcard(require("./protobuf/descriptor"));
+var _99 = _interopRequireWildcard(require("./protobuf/duration"));
+var _100 = _interopRequireWildcard(require("./protobuf/empty"));
+var _101 = _interopRequireWildcard(require("./protobuf/timestamp"));
+var _102 = _interopRequireWildcard(require("./protobuf/wrappers"));
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -22,6 +22,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var google;
 exports.google = google;
 (function (_google) {
-  var api = _google.api = _objectSpread(_objectSpread({}, _148), _149);
-  var protobuf = _google.protobuf = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _150), _151), _152), _153), _154), _155);
+  var api = _google.api = _objectSpread(_objectSpread({}, _95), _96);
+  var protobuf = _google.protobuf = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _97), _98), _99), _100), _101), _102);
 })(google || (exports.google = google = {}));

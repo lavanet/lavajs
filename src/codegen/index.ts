@@ -5,11 +5,11 @@
   */
  
 export * from "./amino/bundle";
-export * from "./lavanet/bundle";
-export * from "./lavanet/client";
 export * from "./cosmos_proto/bundle";
 export * from "./cosmos/bundle";
 export * from "./cosmos/client";
 export * from "./gogoproto/bundle";
 export * from "./google/bundle";
+export * from "./lavanet/bundle";
+export * from "./lavanet/client";
 export * from "./tendermint/bundle";

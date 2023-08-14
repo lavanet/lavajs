@@ -26,252 +26,262 @@ var createRPCQueryClient = /*#__PURE__*/function () {
           client = new _stargate.QueryClient(tmClient);
           _context.next = 7;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../conflict/query.rpc.Query"));
+            return _interopRequireWildcard(require("../cosmos/app/v1alpha1/query.rpc.Query"));
           });
         case 7:
           _context.t0 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 10;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../epochstorage/query.rpc.Query"));
-          });
-        case 10:
-          _context.t1 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 13;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../pairing/query.rpc.Query"));
-          });
-        case 13:
-          _context.t2 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 16;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../plans/query.rpc.Query"));
-          });
-        case 16:
-          _context.t3 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 19;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../projects/query.rpc.Query"));
-          });
-        case 19:
-          _context.t4 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 22;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../protocol/query.rpc.Query"));
-          });
-        case 22:
-          _context.t5 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 25;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../spec/query.rpc.Query"));
-          });
-        case 25:
-          _context.t6 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 28;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../subscription/query.rpc.Query"));
-          });
-        case 28:
-          _context.t7 = _context.sent.createRpcQueryExtension(client);
-          _context.t8 = {
-            conflict: _context.t0,
-            epochstorage: _context.t1,
-            pairing: _context.t2,
-            plans: _context.t3,
-            projects: _context.t4,
-            protocol: _context.t5,
-            spec: _context.t6,
-            subscription: _context.t7
+          _context.t1 = {
+            v1alpha1: _context.t0
           };
-          _context.t9 = {
-            lava: _context.t8
-          };
-          _context.next = 33;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/app/v1alpha1/query.rpc.Query"));
-          });
-        case 33:
-          _context.t10 = _context.sent.createRpcQueryExtension(client);
-          _context.t11 = {
-            v1alpha1: _context.t10
-          };
-          _context.next = 37;
+          _context.next = 11;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/auth/v1beta1/query.rpc.Query"));
           });
-        case 37:
-          _context.t12 = _context.sent.createRpcQueryExtension(client);
-          _context.t13 = {
-            v1beta1: _context.t12
+        case 11:
+          _context.t2 = _context.sent.createRpcQueryExtension(client);
+          _context.t3 = {
+            v1beta1: _context.t2
           };
-          _context.next = 41;
+          _context.next = 15;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/authz/v1beta1/query.rpc.Query"));
           });
-        case 41:
-          _context.t14 = _context.sent.createRpcQueryExtension(client);
-          _context.t15 = {
-            v1beta1: _context.t14
+        case 15:
+          _context.t4 = _context.sent.createRpcQueryExtension(client);
+          _context.t5 = {
+            v1beta1: _context.t4
           };
-          _context.next = 45;
+          _context.next = 19;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/bank/v1beta1/query.rpc.Query"));
           });
-        case 45:
-          _context.t16 = _context.sent.createRpcQueryExtension(client);
-          _context.t17 = {
-            v1beta1: _context.t16
+        case 19:
+          _context.t6 = _context.sent.createRpcQueryExtension(client);
+          _context.t7 = {
+            v1beta1: _context.t6
           };
-          _context.next = 49;
+          _context.next = 23;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/base/tendermint/v1beta1/query.rpc.Service"));
           });
-        case 49:
-          _context.t18 = _context.sent.createRpcQueryExtension(client);
-          _context.t19 = {
-            v1beta1: _context.t18
+        case 23:
+          _context.t8 = _context.sent.createRpcQueryExtension(client);
+          _context.t9 = {
+            v1beta1: _context.t8
           };
-          _context.t20 = {
-            tendermint: _context.t19
+          _context.t10 = {
+            tendermint: _context.t9
           };
-          _context.next = 54;
+          _context.next = 28;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/distribution/v1beta1/query.rpc.Query"));
           });
-        case 54:
-          _context.t21 = _context.sent.createRpcQueryExtension(client);
-          _context.t22 = {
-            v1beta1: _context.t21
+        case 28:
+          _context.t11 = _context.sent.createRpcQueryExtension(client);
+          _context.t12 = {
+            v1beta1: _context.t11
           };
-          _context.next = 58;
+          _context.next = 32;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/evidence/v1beta1/query.rpc.Query"));
           });
-        case 58:
-          _context.t23 = _context.sent.createRpcQueryExtension(client);
-          _context.t24 = {
-            v1beta1: _context.t23
+        case 32:
+          _context.t13 = _context.sent.createRpcQueryExtension(client);
+          _context.t14 = {
+            v1beta1: _context.t13
           };
-          _context.next = 62;
+          _context.next = 36;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/feegrant/v1beta1/query.rpc.Query"));
           });
-        case 62:
-          _context.t25 = _context.sent.createRpcQueryExtension(client);
-          _context.t26 = {
-            v1beta1: _context.t25
+        case 36:
+          _context.t15 = _context.sent.createRpcQueryExtension(client);
+          _context.t16 = {
+            v1beta1: _context.t15
           };
-          _context.next = 66;
+          _context.next = 40;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/gov/v1/query.rpc.Query"));
           });
-        case 66:
-          _context.t27 = _context.sent.createRpcQueryExtension(client);
-          _context.next = 69;
+        case 40:
+          _context.t17 = _context.sent.createRpcQueryExtension(client);
+          _context.next = 43;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/gov/v1beta1/query.rpc.Query"));
           });
-        case 69:
-          _context.t28 = _context.sent.createRpcQueryExtension(client);
-          _context.t29 = {
-            v1: _context.t27,
-            v1beta1: _context.t28
+        case 43:
+          _context.t18 = _context.sent.createRpcQueryExtension(client);
+          _context.t19 = {
+            v1: _context.t17,
+            v1beta1: _context.t18
           };
-          _context.next = 73;
+          _context.next = 47;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/group/v1/query.rpc.Query"));
           });
-        case 73:
-          _context.t30 = _context.sent.createRpcQueryExtension(client);
-          _context.t31 = {
-            v1: _context.t30
+        case 47:
+          _context.t20 = _context.sent.createRpcQueryExtension(client);
+          _context.t21 = {
+            v1: _context.t20
           };
-          _context.next = 77;
+          _context.next = 51;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/mint/v1beta1/query.rpc.Query"));
           });
-        case 77:
+        case 51:
+          _context.t22 = _context.sent.createRpcQueryExtension(client);
+          _context.t23 = {
+            v1beta1: _context.t22
+          };
+          _context.next = 55;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/nft/v1beta1/query.rpc.Query"));
+          });
+        case 55:
+          _context.t24 = _context.sent.createRpcQueryExtension(client);
+          _context.t25 = {
+            v1beta1: _context.t24
+          };
+          _context.next = 59;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/params/v1beta1/query.rpc.Query"));
+          });
+        case 59:
+          _context.t26 = _context.sent.createRpcQueryExtension(client);
+          _context.t27 = {
+            v1beta1: _context.t26
+          };
+          _context.next = 63;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/slashing/v1beta1/query.rpc.Query"));
+          });
+        case 63:
+          _context.t28 = _context.sent.createRpcQueryExtension(client);
+          _context.t29 = {
+            v1beta1: _context.t28
+          };
+          _context.next = 67;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/staking/v1beta1/query.rpc.Query"));
+          });
+        case 67:
+          _context.t30 = _context.sent.createRpcQueryExtension(client);
+          _context.t31 = {
+            v1beta1: _context.t30
+          };
+          _context.next = 71;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/tx/v1beta1/service.rpc.Service"));
+          });
+        case 71:
           _context.t32 = _context.sent.createRpcQueryExtension(client);
           _context.t33 = {
             v1beta1: _context.t32
           };
-          _context.next = 81;
+          _context.next = 75;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/nft/v1beta1/query.rpc.Query"));
+            return _interopRequireWildcard(require("../cosmos/upgrade/v1beta1/query.rpc.Query"));
           });
-        case 81:
+        case 75:
           _context.t34 = _context.sent.createRpcQueryExtension(client);
           _context.t35 = {
             v1beta1: _context.t34
           };
-          _context.next = 85;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/params/v1beta1/query.rpc.Query"));
-          });
-        case 85:
-          _context.t36 = _context.sent.createRpcQueryExtension(client);
-          _context.t37 = {
-            v1beta1: _context.t36
+          _context.t36 = {
+            app: _context.t1,
+            auth: _context.t3,
+            authz: _context.t5,
+            bank: _context.t7,
+            base: _context.t10,
+            distribution: _context.t12,
+            evidence: _context.t14,
+            feegrant: _context.t16,
+            gov: _context.t19,
+            group: _context.t21,
+            mint: _context.t23,
+            nft: _context.t25,
+            params: _context.t27,
+            slashing: _context.t29,
+            staking: _context.t31,
+            tx: _context.t33,
+            upgrade: _context.t35
           };
-          _context.next = 89;
+          _context.next = 80;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/slashing/v1beta1/query.rpc.Query"));
+            return _interopRequireWildcard(require("./lava/conflict/query.rpc.Query"));
           });
-        case 89:
+        case 80:
+          _context.t37 = _context.sent.createRpcQueryExtension(client);
+          _context.next = 83;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/downtime/v1/query.rpc.Query"));
+          });
+        case 83:
           _context.t38 = _context.sent.createRpcQueryExtension(client);
           _context.t39 = {
-            v1beta1: _context.t38
+            v1: _context.t38
           };
+          _context.next = 87;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/epochstorage/query.rpc.Query"));
+          });
+        case 87:
+          _context.t40 = _context.sent.createRpcQueryExtension(client);
+          _context.next = 90;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/pairing/query.rpc.Query"));
+          });
+        case 90:
+          _context.t41 = _context.sent.createRpcQueryExtension(client);
           _context.next = 93;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/staking/v1beta1/query.rpc.Query"));
+            return _interopRequireWildcard(require("./lava/plans/query.rpc.Query"));
           });
         case 93:
-          _context.t40 = _context.sent.createRpcQueryExtension(client);
-          _context.t41 = {
-            v1beta1: _context.t40
-          };
-          _context.next = 97;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/tx/v1beta1/service.rpc.Service"));
-          });
-        case 97:
           _context.t42 = _context.sent.createRpcQueryExtension(client);
-          _context.t43 = {
-            v1beta1: _context.t42
-          };
-          _context.next = 101;
+          _context.next = 96;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/upgrade/v1beta1/query.rpc.Query"));
+            return _interopRequireWildcard(require("./lava/projects/query.rpc.Query"));
           });
-        case 101:
+        case 96:
+          _context.t43 = _context.sent.createRpcQueryExtension(client);
+          _context.next = 99;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/protocol/query.rpc.Query"));
+          });
+        case 99:
           _context.t44 = _context.sent.createRpcQueryExtension(client);
-          _context.t45 = {
-            v1beta1: _context.t44
-          };
-          _context.t46 = {
-            app: _context.t11,
-            auth: _context.t13,
-            authz: _context.t15,
-            bank: _context.t17,
-            base: _context.t20,
-            distribution: _context.t22,
-            evidence: _context.t24,
-            feegrant: _context.t26,
-            gov: _context.t29,
-            group: _context.t31,
-            mint: _context.t33,
-            nft: _context.t35,
-            params: _context.t37,
-            slashing: _context.t39,
-            staking: _context.t41,
-            tx: _context.t43,
-            upgrade: _context.t45
-          };
-          return _context.abrupt("return", {
-            lavanet: _context.t9,
-            cosmos: _context.t46
+          _context.next = 102;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/spec/query.rpc.Query"));
+          });
+        case 102:
+          _context.t45 = _context.sent.createRpcQueryExtension(client);
+          _context.next = 105;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/subscription/query.rpc.Query"));
           });
         case 105:
+          _context.t46 = _context.sent.createRpcQueryExtension(client);
+          _context.t47 = {
+            conflict: _context.t37,
+            downtime: _context.t39,
+            epochstorage: _context.t40,
+            pairing: _context.t41,
+            plans: _context.t42,
+            projects: _context.t43,
+            protocol: _context.t44,
+            spec: _context.t45,
+            subscription: _context.t46
+          };
+          _context.t48 = {
+            lava: _context.t47
+          };
+          return _context.abrupt("return", {
+            cosmos: _context.t36,
+            lavanet: _context.t48
+          });
+        case 109:
         case "end":
           return _context.stop();
       }

@@ -23,7 +23,7 @@ var createLCDClient = /*#__PURE__*/function () {
           });
           _context.next = 4;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../conflict/query.lcd"));
+            return _interopRequireWildcard(require("../cosmos/auth/v1beta1/query.lcd"));
           });
         case 4:
           _context.t0 = _context.sent.LCDQueryClient;
@@ -31,334 +31,348 @@ var createLCDClient = /*#__PURE__*/function () {
             requestClient: requestClient
           };
           _context.t2 = new _context.t0(_context.t1);
-          _context.next = 9;
+          _context.t3 = {
+            v1beta1: _context.t2
+          };
+          _context.next = 10;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../epochstorage/query.lcd"));
+            return _interopRequireWildcard(require("../cosmos/authz/v1beta1/query.lcd"));
           });
-        case 9:
-          _context.t3 = _context.sent.LCDQueryClient;
-          _context.t4 = {
+        case 10:
+          _context.t4 = _context.sent.LCDQueryClient;
+          _context.t5 = {
             requestClient: requestClient
           };
-          _context.t5 = new _context.t3(_context.t4);
-          _context.next = 14;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../pairing/query.lcd"));
-          });
-        case 14:
-          _context.t6 = _context.sent.LCDQueryClient;
+          _context.t6 = new _context.t4(_context.t5);
           _context.t7 = {
+            v1beta1: _context.t6
+          };
+          _context.next = 16;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/bank/v1beta1/query.lcd"));
+          });
+        case 16:
+          _context.t8 = _context.sent.LCDQueryClient;
+          _context.t9 = {
             requestClient: requestClient
           };
-          _context.t8 = new _context.t6(_context.t7);
-          _context.next = 19;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../plans/query.lcd"));
-          });
-        case 19:
-          _context.t9 = _context.sent.LCDQueryClient;
-          _context.t10 = {
-            requestClient: requestClient
+          _context.t10 = new _context.t8(_context.t9);
+          _context.t11 = {
+            v1beta1: _context.t10
           };
-          _context.t11 = new _context.t9(_context.t10);
-          _context.next = 24;
+          _context.next = 22;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../projects/query.lcd"));
+            return _interopRequireWildcard(require("../cosmos/base/tendermint/v1beta1/query.lcd"));
           });
-        case 24:
+        case 22:
           _context.t12 = _context.sent.LCDQueryClient;
           _context.t13 = {
             requestClient: requestClient
           };
           _context.t14 = new _context.t12(_context.t13);
+          _context.t15 = {
+            v1beta1: _context.t14
+          };
+          _context.t16 = {
+            tendermint: _context.t15
+          };
           _context.next = 29;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../protocol/query.lcd"));
+            return _interopRequireWildcard(require("../cosmos/distribution/v1beta1/query.lcd"));
           });
         case 29:
-          _context.t15 = _context.sent.LCDQueryClient;
-          _context.t16 = {
+          _context.t17 = _context.sent.LCDQueryClient;
+          _context.t18 = {
             requestClient: requestClient
           };
-          _context.t17 = new _context.t15(_context.t16);
-          _context.next = 34;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../spec/query.lcd"));
-          });
-        case 34:
-          _context.t18 = _context.sent.LCDQueryClient;
-          _context.t19 = {
-            requestClient: requestClient
+          _context.t19 = new _context.t17(_context.t18);
+          _context.t20 = {
+            v1beta1: _context.t19
           };
-          _context.t20 = new _context.t18(_context.t19);
-          _context.next = 39;
+          _context.next = 35;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../subscription/query.lcd"));
+            return _interopRequireWildcard(require("../cosmos/evidence/v1beta1/query.lcd"));
           });
-        case 39:
+        case 35:
           _context.t21 = _context.sent.LCDQueryClient;
           _context.t22 = {
             requestClient: requestClient
           };
           _context.t23 = new _context.t21(_context.t22);
           _context.t24 = {
-            conflict: _context.t2,
-            epochstorage: _context.t5,
-            pairing: _context.t8,
-            plans: _context.t11,
-            projects: _context.t14,
-            protocol: _context.t17,
-            spec: _context.t20,
-            subscription: _context.t23
+            v1beta1: _context.t23
           };
-          _context.t25 = {
-            lava: _context.t24
-          };
-          _context.next = 46;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/auth/v1beta1/query.lcd"));
-          });
-        case 46:
-          _context.t26 = _context.sent.LCDQueryClient;
-          _context.t27 = {
-            requestClient: requestClient
-          };
-          _context.t28 = new _context.t26(_context.t27);
-          _context.t29 = {
-            v1beta1: _context.t28
-          };
-          _context.next = 52;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/authz/v1beta1/query.lcd"));
-          });
-        case 52:
-          _context.t30 = _context.sent.LCDQueryClient;
-          _context.t31 = {
-            requestClient: requestClient
-          };
-          _context.t32 = new _context.t30(_context.t31);
-          _context.t33 = {
-            v1beta1: _context.t32
-          };
-          _context.next = 58;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/bank/v1beta1/query.lcd"));
-          });
-        case 58:
-          _context.t34 = _context.sent.LCDQueryClient;
-          _context.t35 = {
-            requestClient: requestClient
-          };
-          _context.t36 = new _context.t34(_context.t35);
-          _context.t37 = {
-            v1beta1: _context.t36
-          };
-          _context.next = 64;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/base/tendermint/v1beta1/query.lcd"));
-          });
-        case 64:
-          _context.t38 = _context.sent.LCDQueryClient;
-          _context.t39 = {
-            requestClient: requestClient
-          };
-          _context.t40 = new _context.t38(_context.t39);
-          _context.t41 = {
-            v1beta1: _context.t40
-          };
-          _context.t42 = {
-            tendermint: _context.t41
-          };
-          _context.next = 71;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/distribution/v1beta1/query.lcd"));
-          });
-        case 71:
-          _context.t43 = _context.sent.LCDQueryClient;
-          _context.t44 = {
-            requestClient: requestClient
-          };
-          _context.t45 = new _context.t43(_context.t44);
-          _context.t46 = {
-            v1beta1: _context.t45
-          };
-          _context.next = 77;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/evidence/v1beta1/query.lcd"));
-          });
-        case 77:
-          _context.t47 = _context.sent.LCDQueryClient;
-          _context.t48 = {
-            requestClient: requestClient
-          };
-          _context.t49 = new _context.t47(_context.t48);
-          _context.t50 = {
-            v1beta1: _context.t49
-          };
-          _context.next = 83;
+          _context.next = 41;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/feegrant/v1beta1/query.lcd"));
           });
-        case 83:
-          _context.t51 = _context.sent.LCDQueryClient;
-          _context.t52 = {
+        case 41:
+          _context.t25 = _context.sent.LCDQueryClient;
+          _context.t26 = {
             requestClient: requestClient
           };
-          _context.t53 = new _context.t51(_context.t52);
-          _context.t54 = {
-            v1beta1: _context.t53
+          _context.t27 = new _context.t25(_context.t26);
+          _context.t28 = {
+            v1beta1: _context.t27
           };
-          _context.next = 89;
+          _context.next = 47;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/gov/v1/query.lcd"));
           });
-        case 89:
-          _context.t55 = _context.sent.LCDQueryClient;
-          _context.t56 = {
+        case 47:
+          _context.t29 = _context.sent.LCDQueryClient;
+          _context.t30 = {
             requestClient: requestClient
           };
-          _context.t57 = new _context.t55(_context.t56);
-          _context.next = 94;
+          _context.t31 = new _context.t29(_context.t30);
+          _context.next = 52;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/gov/v1beta1/query.lcd"));
           });
-        case 94:
-          _context.t58 = _context.sent.LCDQueryClient;
-          _context.t59 = {
+        case 52:
+          _context.t32 = _context.sent.LCDQueryClient;
+          _context.t33 = {
             requestClient: requestClient
           };
-          _context.t60 = new _context.t58(_context.t59);
-          _context.t61 = {
-            v1: _context.t57,
-            v1beta1: _context.t60
+          _context.t34 = new _context.t32(_context.t33);
+          _context.t35 = {
+            v1: _context.t31,
+            v1beta1: _context.t34
           };
-          _context.next = 100;
+          _context.next = 58;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/group/v1/query.lcd"));
           });
-        case 100:
-          _context.t62 = _context.sent.LCDQueryClient;
-          _context.t63 = {
+        case 58:
+          _context.t36 = _context.sent.LCDQueryClient;
+          _context.t37 = {
             requestClient: requestClient
           };
-          _context.t64 = new _context.t62(_context.t63);
-          _context.t65 = {
-            v1: _context.t64
+          _context.t38 = new _context.t36(_context.t37);
+          _context.t39 = {
+            v1: _context.t38
           };
-          _context.next = 106;
+          _context.next = 64;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/mint/v1beta1/query.lcd"));
           });
-        case 106:
-          _context.t66 = _context.sent.LCDQueryClient;
-          _context.t67 = {
+        case 64:
+          _context.t40 = _context.sent.LCDQueryClient;
+          _context.t41 = {
             requestClient: requestClient
           };
-          _context.t68 = new _context.t66(_context.t67);
-          _context.t69 = {
-            v1beta1: _context.t68
+          _context.t42 = new _context.t40(_context.t41);
+          _context.t43 = {
+            v1beta1: _context.t42
           };
-          _context.next = 112;
+          _context.next = 70;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/nft/v1beta1/query.lcd"));
           });
-        case 112:
-          _context.t70 = _context.sent.LCDQueryClient;
-          _context.t71 = {
+        case 70:
+          _context.t44 = _context.sent.LCDQueryClient;
+          _context.t45 = {
             requestClient: requestClient
           };
-          _context.t72 = new _context.t70(_context.t71);
-          _context.t73 = {
-            v1beta1: _context.t72
+          _context.t46 = new _context.t44(_context.t45);
+          _context.t47 = {
+            v1beta1: _context.t46
           };
-          _context.next = 118;
+          _context.next = 76;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/params/v1beta1/query.lcd"));
           });
-        case 118:
-          _context.t74 = _context.sent.LCDQueryClient;
-          _context.t75 = {
+        case 76:
+          _context.t48 = _context.sent.LCDQueryClient;
+          _context.t49 = {
             requestClient: requestClient
           };
-          _context.t76 = new _context.t74(_context.t75);
-          _context.t77 = {
-            v1beta1: _context.t76
+          _context.t50 = new _context.t48(_context.t49);
+          _context.t51 = {
+            v1beta1: _context.t50
           };
-          _context.next = 124;
+          _context.next = 82;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/slashing/v1beta1/query.lcd"));
           });
-        case 124:
-          _context.t78 = _context.sent.LCDQueryClient;
-          _context.t79 = {
+        case 82:
+          _context.t52 = _context.sent.LCDQueryClient;
+          _context.t53 = {
             requestClient: requestClient
           };
-          _context.t80 = new _context.t78(_context.t79);
-          _context.t81 = {
-            v1beta1: _context.t80
+          _context.t54 = new _context.t52(_context.t53);
+          _context.t55 = {
+            v1beta1: _context.t54
           };
-          _context.next = 130;
+          _context.next = 88;
           return Promise.resolve().then(function () {
             return _interopRequireWildcard(require("../cosmos/staking/v1beta1/query.lcd"));
           });
-        case 130:
+        case 88:
+          _context.t56 = _context.sent.LCDQueryClient;
+          _context.t57 = {
+            requestClient: requestClient
+          };
+          _context.t58 = new _context.t56(_context.t57);
+          _context.t59 = {
+            v1beta1: _context.t58
+          };
+          _context.next = 94;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/tx/v1beta1/service.lcd"));
+          });
+        case 94:
+          _context.t60 = _context.sent.LCDQueryClient;
+          _context.t61 = {
+            requestClient: requestClient
+          };
+          _context.t62 = new _context.t60(_context.t61);
+          _context.t63 = {
+            v1beta1: _context.t62
+          };
+          _context.next = 100;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("../cosmos/upgrade/v1beta1/query.lcd"));
+          });
+        case 100:
+          _context.t64 = _context.sent.LCDQueryClient;
+          _context.t65 = {
+            requestClient: requestClient
+          };
+          _context.t66 = new _context.t64(_context.t65);
+          _context.t67 = {
+            v1beta1: _context.t66
+          };
+          _context.t68 = {
+            auth: _context.t3,
+            authz: _context.t7,
+            bank: _context.t11,
+            base: _context.t16,
+            distribution: _context.t20,
+            evidence: _context.t24,
+            feegrant: _context.t28,
+            gov: _context.t35,
+            group: _context.t39,
+            mint: _context.t43,
+            nft: _context.t47,
+            params: _context.t51,
+            slashing: _context.t55,
+            staking: _context.t59,
+            tx: _context.t63,
+            upgrade: _context.t67
+          };
+          _context.next = 107;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/conflict/query.lcd"));
+          });
+        case 107:
+          _context.t69 = _context.sent.LCDQueryClient;
+          _context.t70 = {
+            requestClient: requestClient
+          };
+          _context.t71 = new _context.t69(_context.t70);
+          _context.next = 112;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/downtime/v1/query.lcd"));
+          });
+        case 112:
+          _context.t72 = _context.sent.LCDQueryClient;
+          _context.t73 = {
+            requestClient: requestClient
+          };
+          _context.t74 = new _context.t72(_context.t73);
+          _context.t75 = {
+            v1: _context.t74
+          };
+          _context.next = 118;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/epochstorage/query.lcd"));
+          });
+        case 118:
+          _context.t76 = _context.sent.LCDQueryClient;
+          _context.t77 = {
+            requestClient: requestClient
+          };
+          _context.t78 = new _context.t76(_context.t77);
+          _context.next = 123;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/pairing/query.lcd"));
+          });
+        case 123:
+          _context.t79 = _context.sent.LCDQueryClient;
+          _context.t80 = {
+            requestClient: requestClient
+          };
+          _context.t81 = new _context.t79(_context.t80);
+          _context.next = 128;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/plans/query.lcd"));
+          });
+        case 128:
           _context.t82 = _context.sent.LCDQueryClient;
           _context.t83 = {
             requestClient: requestClient
           };
           _context.t84 = new _context.t82(_context.t83);
-          _context.t85 = {
-            v1beta1: _context.t84
-          };
-          _context.next = 136;
+          _context.next = 133;
           return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/tx/v1beta1/service.lcd"));
+            return _interopRequireWildcard(require("./lava/projects/query.lcd"));
           });
-        case 136:
-          _context.t86 = _context.sent.LCDQueryClient;
-          _context.t87 = {
+        case 133:
+          _context.t85 = _context.sent.LCDQueryClient;
+          _context.t86 = {
             requestClient: requestClient
           };
-          _context.t88 = new _context.t86(_context.t87);
+          _context.t87 = new _context.t85(_context.t86);
+          _context.next = 138;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/protocol/query.lcd"));
+          });
+        case 138:
+          _context.t88 = _context.sent.LCDQueryClient;
           _context.t89 = {
-            v1beta1: _context.t88
-          };
-          _context.next = 142;
-          return Promise.resolve().then(function () {
-            return _interopRequireWildcard(require("../cosmos/upgrade/v1beta1/query.lcd"));
-          });
-        case 142:
-          _context.t90 = _context.sent.LCDQueryClient;
-          _context.t91 = {
             requestClient: requestClient
           };
-          _context.t92 = new _context.t90(_context.t91);
-          _context.t93 = {
-            v1beta1: _context.t92
+          _context.t90 = new _context.t88(_context.t89);
+          _context.next = 143;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/spec/query.lcd"));
+          });
+        case 143:
+          _context.t91 = _context.sent.LCDQueryClient;
+          _context.t92 = {
+            requestClient: requestClient
           };
-          _context.t94 = {
-            auth: _context.t29,
-            authz: _context.t33,
-            bank: _context.t37,
-            base: _context.t42,
-            distribution: _context.t46,
-            evidence: _context.t50,
-            feegrant: _context.t54,
-            gov: _context.t61,
-            group: _context.t65,
-            mint: _context.t69,
-            nft: _context.t73,
-            params: _context.t77,
-            slashing: _context.t81,
-            staking: _context.t85,
-            tx: _context.t89,
-            upgrade: _context.t93
-          };
-          return _context.abrupt("return", {
-            lavanet: _context.t25,
-            cosmos: _context.t94
+          _context.t93 = new _context.t91(_context.t92);
+          _context.next = 148;
+          return Promise.resolve().then(function () {
+            return _interopRequireWildcard(require("./lava/subscription/query.lcd"));
           });
         case 148:
+          _context.t94 = _context.sent.LCDQueryClient;
+          _context.t95 = {
+            requestClient: requestClient
+          };
+          _context.t96 = new _context.t94(_context.t95);
+          _context.t97 = {
+            conflict: _context.t71,
+            downtime: _context.t75,
+            epochstorage: _context.t78,
+            pairing: _context.t81,
+            plans: _context.t84,
+            projects: _context.t87,
+            protocol: _context.t90,
+            spec: _context.t93,
+            subscription: _context.t96
+          };
+          _context.t98 = {
+            lava: _context.t97
+          };
+          return _context.abrupt("return", {
+            cosmos: _context.t68,
+            lavanet: _context.t98
+          });
+        case 154:
         case "end":
           return _context.stop();
       }

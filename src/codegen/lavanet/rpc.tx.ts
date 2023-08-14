@@ -4,14 +4,6 @@ export const createRPCMsgClient = async ({
 }: {
   rpc: Rpc;
 }) => ({
-  lavanet: {
-    lava: {
-      conflict: new (await import("../conflict/tx.rpc.msg")).MsgClientImpl(rpc),
-      pairing: new (await import("../pairing/tx.rpc.msg")).MsgClientImpl(rpc),
-      projects: new (await import("../projects/tx.rpc.msg")).MsgClientImpl(rpc),
-      subscription: new (await import("../subscription/tx.rpc.msg")).MsgClientImpl(rpc)
-    }
-  },
   cosmos: {
     authz: {
       v1beta1: new (await import("../cosmos/authz/v1beta1/tx.rpc.msg")).MsgClientImpl(rpc)
@@ -52,6 +44,14 @@ export const createRPCMsgClient = async ({
     },
     vesting: {
       v1beta1: new (await import("../cosmos/vesting/v1beta1/tx.rpc.msg")).MsgClientImpl(rpc)
+    }
+  },
+  lavanet: {
+    lava: {
+      conflict: new (await import("./lava/conflict/tx.rpc.msg")).MsgClientImpl(rpc),
+      pairing: new (await import("./lava/pairing/tx.rpc.msg")).MsgClientImpl(rpc),
+      projects: new (await import("./lava/projects/tx.rpc.msg")).MsgClientImpl(rpc),
+      subscription: new (await import("./lava/subscription/tx.rpc.msg")).MsgClientImpl(rpc)
     }
   }
 });
