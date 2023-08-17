@@ -1,37 +1,37 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface UniquePaymentStorageClientProvider {
   index: string;
-  block: Long;
-  usedCU: Long;
+  block: bigint;
+  usedCU: bigint;
 }
 export interface UniquePaymentStorageClientProviderSDKType {
   index: string;
-  block: Long;
-  usedCU: Long;
+  block: bigint;
+  usedCU: bigint;
 }
 function createBaseUniquePaymentStorageClientProvider(): UniquePaymentStorageClientProvider {
   return {
     index: "",
-    block: Long.UZERO,
-    usedCU: Long.UZERO
+    block: BigInt(0),
+    usedCU: BigInt(0)
   };
 }
 export const UniquePaymentStorageClientProvider = {
-  encode(message: UniquePaymentStorageClientProvider, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.pairing.UniquePaymentStorageClientProvider",
+  encode(message: UniquePaymentStorageClientProvider, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
-    if (!message.block.isZero()) {
+    if (message.block !== BigInt(0)) {
       writer.uint32(16).uint64(message.block);
     }
-    if (!message.usedCU.isZero()) {
+    if (message.usedCU !== BigInt(0)) {
       writer.uint32(24).uint64(message.usedCU);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): UniquePaymentStorageClientProvider {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): UniquePaymentStorageClientProvider {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUniquePaymentStorageClientProvider();
     while (reader.pos < end) {
@@ -41,10 +41,10 @@ export const UniquePaymentStorageClientProvider = {
           message.index = reader.string();
           break;
         case 2:
-          message.block = (reader.uint64() as Long);
+          message.block = reader.uint64();
           break;
         case 3:
-          message.usedCU = (reader.uint64() as Long);
+          message.usedCU = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -53,11 +53,40 @@ export const UniquePaymentStorageClientProvider = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<UniquePaymentStorageClientProvider>): UniquePaymentStorageClientProvider {
+  fromPartial(object: Partial<UniquePaymentStorageClientProvider>): UniquePaymentStorageClientProvider {
     const message = createBaseUniquePaymentStorageClientProvider();
     message.index = object.index ?? "";
-    message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
-    message.usedCU = object.usedCU !== undefined && object.usedCU !== null ? Long.fromValue(object.usedCU) : Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
+    message.usedCU = object.usedCU !== undefined && object.usedCU !== null ? BigInt(object.usedCU.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: UniquePaymentStorageClientProviderAmino): UniquePaymentStorageClientProvider {
+    return {
+      index: object.index,
+      block: BigInt(object.block),
+      usedCU: BigInt(object.usedCU)
+    };
+  },
+  toAmino(message: UniquePaymentStorageClientProvider): UniquePaymentStorageClientProviderAmino {
+    const obj: any = {};
+    obj.index = message.index;
+    obj.block = message.block ? message.block.toString() : undefined;
+    obj.usedCU = message.usedCU ? message.usedCU.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: UniquePaymentStorageClientProviderAminoMsg): UniquePaymentStorageClientProvider {
+    return UniquePaymentStorageClientProvider.fromAmino(object.value);
+  },
+  fromProtoMsg(message: UniquePaymentStorageClientProviderProtoMsg): UniquePaymentStorageClientProvider {
+    return UniquePaymentStorageClientProvider.decode(message.value);
+  },
+  toProto(message: UniquePaymentStorageClientProvider): Uint8Array {
+    return UniquePaymentStorageClientProvider.encode(message).finish();
+  },
+  toProtoMsg(message: UniquePaymentStorageClientProvider): UniquePaymentStorageClientProviderProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.pairing.UniquePaymentStorageClientProvider",
+      value: UniquePaymentStorageClientProvider.encode(message).finish()
+    };
   }
 };

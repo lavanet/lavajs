@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgDetection, MsgDetectionResponse, MsgConflictVoteCommit, MsgConflictVoteCommitResponse, MsgConflictVoteReveal, MsgConflictVoteRevealResponse } from "./tx";
 /** Msg defines the Msg service. */
 export interface Msg {
@@ -18,16 +18,16 @@ export class MsgClientImpl implements Msg {
   detection(request: MsgDetection): Promise<MsgDetectionResponse> {
     const data = MsgDetection.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Msg", "Detection", data);
-    return promise.then(data => MsgDetectionResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDetectionResponse.decode(new BinaryReader(data)));
   }
   conflictVoteCommit(request: MsgConflictVoteCommit): Promise<MsgConflictVoteCommitResponse> {
     const data = MsgConflictVoteCommit.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Msg", "ConflictVoteCommit", data);
-    return promise.then(data => MsgConflictVoteCommitResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgConflictVoteCommitResponse.decode(new BinaryReader(data)));
   }
   conflictVoteReveal(request: MsgConflictVoteReveal): Promise<MsgConflictVoteRevealResponse> {
     const data = MsgConflictVoteReveal.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Msg", "ConflictVoteReveal", data);
-    return promise.then(data => MsgConflictVoteRevealResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgConflictVoteRevealResponse.decode(new BinaryReader(data)));
   }
 }

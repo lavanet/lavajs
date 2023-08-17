@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** Params defines the parameters for the module. */
 export interface Version {
   providerTarget: string;
@@ -15,10 +14,10 @@ export interface VersionSDKType {
   consumer_min: string;
 }
 export interface Params {
-  version?: Version;
+  version: Version;
 }
 export interface ParamsSDKType {
-  version?: VersionSDKType;
+  version: VersionSDKType;
 }
 function createBaseVersion(): Version {
   return {
@@ -29,7 +28,8 @@ function createBaseVersion(): Version {
   };
 }
 export const Version = {
-  encode(message: Version, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.protocol.Version",
+  encode(message: Version, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.providerTarget !== "") {
       writer.uint32(10).string(message.providerTarget);
     }
@@ -44,8 +44,8 @@ export const Version = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Version {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Version {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVersion();
     while (reader.pos < end) {
@@ -70,29 +70,61 @@ export const Version = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Version>): Version {
+  fromPartial(object: Partial<Version>): Version {
     const message = createBaseVersion();
     message.providerTarget = object.providerTarget ?? "";
     message.providerMin = object.providerMin ?? "";
     message.consumerTarget = object.consumerTarget ?? "";
     message.consumerMin = object.consumerMin ?? "";
     return message;
+  },
+  fromAmino(object: VersionAmino): Version {
+    return {
+      providerTarget: object.provider_target,
+      providerMin: object.provider_min,
+      consumerTarget: object.consumer_target,
+      consumerMin: object.consumer_min
+    };
+  },
+  toAmino(message: Version): VersionAmino {
+    const obj: any = {};
+    obj.provider_target = message.providerTarget;
+    obj.provider_min = message.providerMin;
+    obj.consumer_target = message.consumerTarget;
+    obj.consumer_min = message.consumerMin;
+    return obj;
+  },
+  fromAminoMsg(object: VersionAminoMsg): Version {
+    return Version.fromAmino(object.value);
+  },
+  fromProtoMsg(message: VersionProtoMsg): Version {
+    return Version.decode(message.value);
+  },
+  toProto(message: Version): Uint8Array {
+    return Version.encode(message).finish();
+  },
+  toProtoMsg(message: Version): VersionProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.protocol.Version",
+      value: Version.encode(message).finish()
+    };
   }
 };
 function createBaseParams(): Params {
   return {
-    version: undefined
+    version: Version.fromPartial({})
   };
 }
 export const Params = {
-  encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.protocol.Params",
+  encode(message: Params, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.version !== undefined) {
       Version.encode(message.version, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Params {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
     while (reader.pos < end) {
@@ -108,9 +140,34 @@ export const Params = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Params>): Params {
+  fromPartial(object: Partial<Params>): Params {
     const message = createBaseParams();
     message.version = object.version !== undefined && object.version !== null ? Version.fromPartial(object.version) : undefined;
     return message;
+  },
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      version: object?.version ? Version.fromAmino(object.version) : undefined
+    };
+  },
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+    obj.version = message.version ? Version.toAmino(message.version) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ParamsAminoMsg): Params {
+    return Params.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ParamsProtoMsg): Params {
+    return Params.decode(message.value);
+  },
+  toProto(message: Params): Uint8Array {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg(message: Params): ParamsProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.protocol.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };

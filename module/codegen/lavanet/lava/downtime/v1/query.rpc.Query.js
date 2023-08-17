@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryParamsRequest, QueryParamsResponse, QueryDowntimeRequest, QueryDowntimeResponse } from "./query";
 /** Query represents the query service API for the downtime module. */
@@ -14,12 +14,12 @@ export class QueryClientImpl {
   queryParams(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.downtime.v1.Query", "QueryParams", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   queryDowntime(request) {
     const data = QueryDowntimeRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.downtime.v1.Query", "QueryDowntime", data);
-    return promise.then(data => QueryDowntimeResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryDowntimeResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

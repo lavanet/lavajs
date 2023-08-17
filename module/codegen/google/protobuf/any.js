@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../binary";
 /**
  * `Any` contains an arbitrary serialized protocol buffer message along with a
  * URL that describes the type of the serialized message.
@@ -166,12 +165,14 @@ import * as _m0 from "protobufjs/minimal";
 
 function createBaseAny() {
   return {
+    $typeUrl: "/google.protobuf.Any",
     typeUrl: "",
     value: new Uint8Array()
   };
 }
 export const Any = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.Any",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.typeUrl !== "") {
       writer.uint32(10).string(message.typeUrl);
     }
@@ -181,7 +182,7 @@ export const Any = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAny();
     while (reader.pos < end) {
@@ -206,5 +207,32 @@ export const Any = {
     message.typeUrl = (_object$typeUrl = object.typeUrl) !== null && _object$typeUrl !== void 0 ? _object$typeUrl : "";
     message.value = (_object$value = object.value) !== null && _object$value !== void 0 ? _object$value : new Uint8Array();
     return message;
+  },
+  fromAmino(object) {
+    return {
+      typeUrl: object.type,
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.type = message.typeUrl;
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Any.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Any.decode(message.value);
+  },
+  toProto(message) {
+    return Any.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Any",
+      value: Any.encode(message).finish()
+    };
   }
 };

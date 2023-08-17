@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AminoConverter = void 0;
 var _types = require("./types");
-var _helpers = require("../../../helpers");
 var _tx = require("./tx");
 var AminoConverter = {
   "/cosmos.group.v1.MsgCreateGroup": {
@@ -70,7 +69,7 @@ var AminoConverter = {
         member_updates = _ref4.member_updates;
       return {
         admin: admin,
-        groupId: _helpers.Long.fromString(group_id),
+        groupId: BigInt(group_id),
         memberUpdates: member_updates.map(function (el0) {
           return {
             address: el0.address,
@@ -100,7 +99,7 @@ var AminoConverter = {
         new_admin = _ref6.new_admin;
       return {
         admin: admin,
-        groupId: _helpers.Long.fromString(group_id),
+        groupId: BigInt(group_id),
         newAdmin: new_admin
       };
     }
@@ -123,7 +122,7 @@ var AminoConverter = {
         metadata = _ref8.metadata;
       return {
         admin: admin,
-        groupId: _helpers.Long.fromString(group_id),
+        groupId: BigInt(group_id),
         metadata: metadata
       };
     }
@@ -152,7 +151,7 @@ var AminoConverter = {
         decision_policy = _ref10.decision_policy;
       return {
         admin: admin,
-        groupId: _helpers.Long.fromString(group_id),
+        groupId: BigInt(group_id),
         metadata: metadata,
         decisionPolicy: {
           typeUrl: decision_policy.type_url,
@@ -346,7 +345,7 @@ var AminoConverter = {
       var proposal_id = _ref22.proposal_id,
         address = _ref22.address;
       return {
-        proposalId: _helpers.Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         address: address
       };
     }
@@ -374,7 +373,7 @@ var AminoConverter = {
         metadata = _ref24.metadata,
         exec = _ref24.exec;
       return {
-        proposalId: _helpers.Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         voter: voter,
         option: (0, _types.voteOptionFromJSON)(option),
         metadata: metadata,
@@ -396,7 +395,7 @@ var AminoConverter = {
       var proposal_id = _ref26.proposal_id,
         signer = _ref26.signer;
       return {
-        proposalId: _helpers.Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         signer: signer
       };
     }
@@ -416,7 +415,7 @@ var AminoConverter = {
         group_id = _ref28.group_id;
       return {
         address: address,
-        groupId: _helpers.Long.fromString(group_id)
+        groupId: BigInt(group_id)
       };
     }
   }

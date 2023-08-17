@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** EventGrant is emitted on Msg/Grant */
 
 /** EventGrant is emitted on Msg/Grant */
@@ -16,7 +15,8 @@ function createBaseEventGrant() {
   };
 }
 export const EventGrant = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.authz.v1beta1.EventGrant",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.msgTypeUrl !== "") {
       writer.uint32(18).string(message.msgTypeUrl);
     }
@@ -29,7 +29,7 @@ export const EventGrant = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEventGrant();
     while (reader.pos < end) {
@@ -58,6 +58,41 @@ export const EventGrant = {
     message.granter = (_object$granter = object.granter) !== null && _object$granter !== void 0 ? _object$granter : "";
     message.grantee = (_object$grantee = object.grantee) !== null && _object$grantee !== void 0 ? _object$grantee : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      msgTypeUrl: object.msg_type_url,
+      granter: object.granter,
+      grantee: object.grantee
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.msg_type_url = message.msgTypeUrl;
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EventGrant.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/EventGrant",
+      value: EventGrant.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return EventGrant.decode(message.value);
+  },
+  toProto(message) {
+    return EventGrant.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.EventGrant",
+      value: EventGrant.encode(message).finish()
+    };
   }
 };
 function createBaseEventRevoke() {
@@ -68,7 +103,8 @@ function createBaseEventRevoke() {
   };
 }
 export const EventRevoke = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.authz.v1beta1.EventRevoke",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.msgTypeUrl !== "") {
       writer.uint32(18).string(message.msgTypeUrl);
     }
@@ -81,7 +117,7 @@ export const EventRevoke = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEventRevoke();
     while (reader.pos < end) {
@@ -110,5 +146,40 @@ export const EventRevoke = {
     message.granter = (_object$granter2 = object.granter) !== null && _object$granter2 !== void 0 ? _object$granter2 : "";
     message.grantee = (_object$grantee2 = object.grantee) !== null && _object$grantee2 !== void 0 ? _object$grantee2 : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      msgTypeUrl: object.msg_type_url,
+      granter: object.granter,
+      grantee: object.grantee
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.msg_type_url = message.msgTypeUrl;
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EventRevoke.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/EventRevoke",
+      value: EventRevoke.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return EventRevoke.decode(message.value);
+  },
+  toProto(message) {
+    return EventRevoke.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.EventRevoke",
+      value: EventRevoke.encode(message).finish()
+    };
   }
 };

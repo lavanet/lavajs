@@ -1,15 +1,12 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Equivocation = void 0;
 var _timestamp = require("../../../google/protobuf/timestamp");
+var _binary = require("../../../binary");
 var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /**
  * Equivocation implements the Evidence interface and defines evidence of double
  * signing misbehavior.
@@ -22,22 +19,23 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function createBaseEquivocation() {
   return {
-    height: _helpers.Long.ZERO,
-    time: undefined,
-    power: _helpers.Long.ZERO,
+    height: BigInt(0),
+    time: new Date(),
+    power: BigInt(0),
     consensusAddress: ""
   };
 }
 var Equivocation = {
+  typeUrl: "/cosmos.evidence.v1beta1.Equivocation",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.height.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.height !== BigInt(0)) {
       writer.uint32(8).int64(message.height);
     }
     if (message.time !== undefined) {
       _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.time), writer.uint32(18).fork()).ldelim();
     }
-    if (!message.power.isZero()) {
+    if (message.power !== BigInt(0)) {
       writer.uint32(24).int64(message.power);
     }
     if (message.consensusAddress !== "") {
@@ -46,7 +44,7 @@ var Equivocation = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEquivocation();
     while (reader.pos < end) {
@@ -74,11 +72,48 @@ var Equivocation = {
   fromPartial: function fromPartial(object) {
     var _object$time, _object$consensusAddr;
     var message = createBaseEquivocation();
-    message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     message.time = (_object$time = object.time) !== null && _object$time !== void 0 ? _object$time : undefined;
-    message.power = object.power !== undefined && object.power !== null ? _helpers.Long.fromValue(object.power) : _helpers.Long.ZERO;
+    message.power = object.power !== undefined && object.power !== null ? BigInt(object.power.toString()) : BigInt(0);
     message.consensusAddress = (_object$consensusAddr = object.consensusAddress) !== null && _object$consensusAddr !== void 0 ? _object$consensusAddr : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      height: BigInt(object.height),
+      time: object.time,
+      power: BigInt(object.power),
+      consensusAddress: object.consensus_address
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.height = message.height ? message.height.toString() : undefined;
+    obj.time = message.time;
+    obj.power = message.power ? message.power.toString() : undefined;
+    obj.consensus_address = message.consensusAddress;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Equivocation.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Equivocation",
+      value: Equivocation.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Equivocation.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Equivocation.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.evidence.v1beta1.Equivocation",
+      value: Equivocation.encode(message).finish()
+    };
   }
 };
 exports.Equivocation = Equivocation;

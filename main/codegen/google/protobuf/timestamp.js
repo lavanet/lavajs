@@ -1,14 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Timestamp = void 0;
+var _binary = require("../../binary");
 var _helpers = require("../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /**
  * A Timestamp represents a point in time independent of any time zone or local
  * calendar, encoded as a count of seconds and fractions of seconds at
@@ -181,14 +178,15 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function createBaseTimestamp() {
   return {
-    seconds: _helpers.Long.ZERO,
+    seconds: BigInt(0),
     nanos: 0
   };
 }
 var Timestamp = {
+  typeUrl: "/google.protobuf.Timestamp",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.seconds.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.seconds !== BigInt(0)) {
       writer.uint32(8).int64(message.seconds);
     }
     if (message.nanos !== 0) {
@@ -197,7 +195,7 @@ var Timestamp = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTimestamp();
     while (reader.pos < end) {
@@ -219,9 +217,30 @@ var Timestamp = {
   fromPartial: function fromPartial(object) {
     var _object$nanos;
     var message = createBaseTimestamp();
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? _helpers.Long.fromValue(object.seconds) : _helpers.Long.ZERO;
+    message.seconds = object.seconds !== undefined && object.seconds !== null ? BigInt(object.seconds.toString()) : BigInt(0);
     message.nanos = (_object$nanos = object.nanos) !== null && _object$nanos !== void 0 ? _object$nanos : 0;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return (0, _helpers.fromJsonTimestamp)(object);
+  },
+  toAmino: function toAmino(message) {
+    return (0, _helpers.fromTimestamp)(message).toString();
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Timestamp.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Timestamp.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Timestamp.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Timestamp",
+      value: Timestamp.encode(message).finish()
+    };
   }
 };
 exports.Timestamp = Timestamp;

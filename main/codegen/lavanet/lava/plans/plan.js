@@ -1,6 +1,5 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -9,10 +8,7 @@ exports.geolocationFromJSON = geolocationFromJSON;
 exports.geolocationToJSON = geolocationToJSON;
 var _coin = require("../../../cosmos/base/v1beta1/coin");
 var _policy = require("./policy");
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /**
  * The geolocation values are encoded as bits in a bitmask, with two special values:
  * GLS is set to 0 so it will be restrictive with the AND operator.
@@ -97,23 +93,24 @@ function geolocationToJSON(object) {
 function createBasePlan() {
   return {
     index: "",
-    block: _helpers.Long.UZERO,
-    price: undefined,
+    block: BigInt(0),
+    price: _coin.Coin.fromPartial({}),
     allowOveruse: false,
-    overuseRate: _helpers.Long.UZERO,
+    overuseRate: BigInt(0),
     description: "",
     type: "",
-    annualDiscountPercentage: _helpers.Long.UZERO,
-    planPolicy: undefined
+    annualDiscountPercentage: BigInt(0),
+    planPolicy: _policy.Policy.fromPartial({})
   };
 }
 var Plan = {
+  typeUrl: "/lavanet.lava.plans.Plan",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
-    if (!message.block.isZero()) {
+    if (message.block !== BigInt(0)) {
       writer.uint32(24).uint64(message.block);
     }
     if (message.price !== undefined) {
@@ -122,7 +119,7 @@ var Plan = {
     if (message.allowOveruse === true) {
       writer.uint32(64).bool(message.allowOveruse);
     }
-    if (!message.overuseRate.isZero()) {
+    if (message.overuseRate !== BigInt(0)) {
       writer.uint32(72).uint64(message.overuseRate);
     }
     if (message.description !== "") {
@@ -131,7 +128,7 @@ var Plan = {
     if (message.type !== "") {
       writer.uint32(98).string(message.type);
     }
-    if (!message.annualDiscountPercentage.isZero()) {
+    if (message.annualDiscountPercentage !== BigInt(0)) {
       writer.uint32(104).uint64(message.annualDiscountPercentage);
     }
     if (message.planPolicy !== undefined) {
@@ -140,7 +137,7 @@ var Plan = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBasePlan();
     while (reader.pos < end) {
@@ -184,15 +181,56 @@ var Plan = {
     var _object$index, _object$allowOveruse, _object$description, _object$type;
     var message = createBasePlan();
     message.index = (_object$index = object.index) !== null && _object$index !== void 0 ? _object$index : "";
-    message.block = object.block !== undefined && object.block !== null ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
     message.price = object.price !== undefined && object.price !== null ? _coin.Coin.fromPartial(object.price) : undefined;
     message.allowOveruse = (_object$allowOveruse = object.allowOveruse) !== null && _object$allowOveruse !== void 0 ? _object$allowOveruse : false;
-    message.overuseRate = object.overuseRate !== undefined && object.overuseRate !== null ? _helpers.Long.fromValue(object.overuseRate) : _helpers.Long.UZERO;
+    message.overuseRate = object.overuseRate !== undefined && object.overuseRate !== null ? BigInt(object.overuseRate.toString()) : BigInt(0);
     message.description = (_object$description = object.description) !== null && _object$description !== void 0 ? _object$description : "";
     message.type = (_object$type = object.type) !== null && _object$type !== void 0 ? _object$type : "";
-    message.annualDiscountPercentage = object.annualDiscountPercentage !== undefined && object.annualDiscountPercentage !== null ? _helpers.Long.fromValue(object.annualDiscountPercentage) : _helpers.Long.UZERO;
+    message.annualDiscountPercentage = object.annualDiscountPercentage !== undefined && object.annualDiscountPercentage !== null ? BigInt(object.annualDiscountPercentage.toString()) : BigInt(0);
     message.planPolicy = object.planPolicy !== undefined && object.planPolicy !== null ? _policy.Policy.fromPartial(object.planPolicy) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      index: object.index,
+      block: BigInt(object.block),
+      price: object !== null && object !== void 0 && object.price ? _coin.Coin.fromAmino(object.price) : undefined,
+      allowOveruse: object.allow_overuse,
+      overuseRate: BigInt(object.overuse_rate),
+      description: object.description,
+      type: object.type,
+      annualDiscountPercentage: BigInt(object.annual_discount_percentage),
+      planPolicy: object !== null && object !== void 0 && object.plan_policy ? _policy.Policy.fromAmino(object.plan_policy) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.index = message.index;
+    obj.block = message.block ? message.block.toString() : undefined;
+    obj.price = message.price ? _coin.Coin.toAmino(message.price) : undefined;
+    obj.allow_overuse = message.allowOveruse;
+    obj.overuse_rate = message.overuseRate ? message.overuseRate.toString() : undefined;
+    obj.description = message.description;
+    obj.type = message.type;
+    obj.annual_discount_percentage = message.annualDiscountPercentage ? message.annualDiscountPercentage.toString() : undefined;
+    obj.plan_policy = message.planPolicy ? _policy.Policy.toAmino(message.planPolicy) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Plan.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Plan.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Plan.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.Plan",
+      value: Plan.encode(message).finish()
+    };
   }
 };
 exports.Plan = Plan;

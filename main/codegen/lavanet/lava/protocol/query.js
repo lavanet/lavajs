@@ -1,14 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.QueryParamsResponse = exports.QueryParamsRequest = void 0;
 var _params = require("./params");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -21,12 +18,13 @@ function createBaseQueryParamsRequest() {
   return {};
 }
 var QueryParamsRequest = {
+  typeUrl: "/lavanet.lava.protocol.QueryParamsRequest",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -42,24 +40,47 @@ var QueryParamsRequest = {
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryParamsRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryParamsRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryParamsRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.protocol.QueryParamsRequest",
+      value: QueryParamsRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryParamsRequest = QueryParamsRequest;
 function createBaseQueryParamsResponse() {
   return {
-    params: undefined
+    params: _params.Params.fromPartial({})
   };
 }
 var QueryParamsResponse = {
+  typeUrl: "/lavanet.lava.protocol.QueryParamsResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.params !== undefined) {
       _params.Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -79,6 +100,31 @@ var QueryParamsResponse = {
     var message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? _params.Params.fromPartial(object.params) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      params: object !== null && object !== void 0 && object.params ? _params.Params.fromAmino(object.params) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.params = message.params ? _params.Params.toAmino(message.params) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryParamsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryParamsResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryParamsResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.protocol.QueryParamsResponse",
+      value: QueryParamsResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryParamsResponse = QueryParamsResponse;

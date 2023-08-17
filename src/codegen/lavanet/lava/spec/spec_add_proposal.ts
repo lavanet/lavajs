@@ -1,6 +1,5 @@
 import { Spec, SpecSDKType } from "./spec";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface SpecAddProposal {
   title: string;
   description: string;
@@ -19,7 +18,8 @@ function createBaseSpecAddProposal(): SpecAddProposal {
   };
 }
 export const SpecAddProposal = {
-  encode(message: SpecAddProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.SpecAddProposal",
+  encode(message: SpecAddProposal, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -31,8 +31,8 @@ export const SpecAddProposal = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SpecAddProposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SpecAddProposal {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSpecAddProposal();
     while (reader.pos < end) {
@@ -54,11 +54,44 @@ export const SpecAddProposal = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<SpecAddProposal>): SpecAddProposal {
+  fromPartial(object: Partial<SpecAddProposal>): SpecAddProposal {
     const message = createBaseSpecAddProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
     message.specs = object.specs?.map(e => Spec.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: SpecAddProposalAmino): SpecAddProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      specs: Array.isArray(object?.specs) ? object.specs.map((e: any) => Spec.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: SpecAddProposal): SpecAddProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    if (message.specs) {
+      obj.specs = message.specs.map(e => e ? Spec.toAmino(e) : undefined);
+    } else {
+      obj.specs = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: SpecAddProposalAminoMsg): SpecAddProposal {
+    return SpecAddProposal.fromAmino(object.value);
+  },
+  fromProtoMsg(message: SpecAddProposalProtoMsg): SpecAddProposal {
+    return SpecAddProposal.decode(message.value);
+  },
+  toProto(message: SpecAddProposal): Uint8Array {
+    return SpecAddProposal.encode(message).finish();
+  },
+  toProtoMsg(message: SpecAddProposal): SpecAddProposalProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.SpecAddProposal",
+      value: SpecAddProposal.encode(message).finish()
+    };
   }
 };

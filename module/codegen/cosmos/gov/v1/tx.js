@@ -1,8 +1,8 @@
 import { Any } from "../../../google/protobuf/any";
 import { Coin } from "../../base/v1beta1/coin";
-import { WeightedVoteOption } from "./gov";
-import { Long } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { WeightedVoteOption, voteOptionFromJSON } from "./gov";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 /**
  * MsgSubmitProposal defines an sdk.Msg type that supports submitting arbitrary
  * proposal Content.
@@ -64,7 +64,8 @@ function createBaseMsgSubmitProposal() {
   };
 }
 export const MsgSubmitProposal = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.gov.v1.MsgSubmitProposal",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.messages) {
       Any.encode(v, writer.uint32(10).fork()).ldelim();
     }
@@ -80,7 +81,7 @@ export const MsgSubmitProposal = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitProposal();
     while (reader.pos < end) {
@@ -113,22 +114,68 @@ export const MsgSubmitProposal = {
     message.proposer = (_object$proposer = object.proposer) !== null && _object$proposer !== void 0 ? _object$proposer : "";
     message.metadata = (_object$metadata = object.metadata) !== null && _object$metadata !== void 0 ? _object$metadata : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      messages: Array.isArray(object === null || object === void 0 ? void 0 : object.messages) ? object.messages.map(e => Any.fromAmino(e)) : [],
+      initialDeposit: Array.isArray(object === null || object === void 0 ? void 0 : object.initial_deposit) ? object.initial_deposit.map(e => Coin.fromAmino(e)) : [],
+      proposer: object.proposer,
+      metadata: object.metadata
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.messages) {
+      obj.messages = message.messages.map(e => e ? Any.toAmino(e) : undefined);
+    } else {
+      obj.messages = [];
+    }
+    if (message.initialDeposit) {
+      obj.initial_deposit = message.initialDeposit.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.initial_deposit = [];
+    }
+    obj.proposer = message.proposer;
+    obj.metadata = message.metadata;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSubmitProposal.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgSubmitProposal",
+      value: MsgSubmitProposal.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgSubmitProposal.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSubmitProposal.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgSubmitProposal",
+      value: MsgSubmitProposal.encode(message).finish()
+    };
   }
 };
 function createBaseMsgSubmitProposalResponse() {
   return {
-    proposalId: Long.UZERO
+    proposalId: BigInt(0)
   };
 }
 export const MsgSubmitProposalResponse = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.proposalId.isZero()) {
+  typeUrl: "/cosmos.gov.v1.MsgSubmitProposalResponse",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitProposalResponse();
     while (reader.pos < end) {
@@ -146,18 +193,50 @@ export const MsgSubmitProposalResponse = {
   },
   fromPartial(object) {
     const message = createBaseMsgSubmitProposalResponse();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      proposalId: BigInt(object.proposal_id)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSubmitProposalResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgSubmitProposalResponse",
+      value: MsgSubmitProposalResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgSubmitProposalResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSubmitProposalResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgSubmitProposalResponse",
+      value: MsgSubmitProposalResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgExecLegacyContent() {
   return {
-    content: undefined,
+    content: Any.fromPartial({}),
     authority: ""
   };
 }
 export const MsgExecLegacyContent = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.gov.v1.MsgExecLegacyContent",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.content !== undefined) {
       Any.encode(message.content, writer.uint32(10).fork()).ldelim();
     }
@@ -167,7 +246,7 @@ export const MsgExecLegacyContent = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExecLegacyContent();
     while (reader.pos < end) {
@@ -192,17 +271,51 @@ export const MsgExecLegacyContent = {
     message.content = object.content !== undefined && object.content !== null ? Any.fromPartial(object.content) : undefined;
     message.authority = (_object$authority = object.authority) !== null && _object$authority !== void 0 ? _object$authority : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      content: object !== null && object !== void 0 && object.content ? Any.fromAmino(object.content) : undefined,
+      authority: object.authority
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.content = message.content ? Any.toAmino(message.content) : undefined;
+    obj.authority = message.authority;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgExecLegacyContent.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgExecLegacyContent",
+      value: MsgExecLegacyContent.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgExecLegacyContent.decode(message.value);
+  },
+  toProto(message) {
+    return MsgExecLegacyContent.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgExecLegacyContent",
+      value: MsgExecLegacyContent.encode(message).finish()
+    };
   }
 };
 function createBaseMsgExecLegacyContentResponse() {
   return {};
 }
 export const MsgExecLegacyContentResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.gov.v1.MsgExecLegacyContentResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExecLegacyContentResponse();
     while (reader.pos < end) {
@@ -218,19 +331,48 @@ export const MsgExecLegacyContentResponse = {
   fromPartial(_) {
     const message = createBaseMsgExecLegacyContentResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgExecLegacyContentResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgExecLegacyContentResponse",
+      value: MsgExecLegacyContentResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgExecLegacyContentResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgExecLegacyContentResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgExecLegacyContentResponse",
+      value: MsgExecLegacyContentResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgVote() {
   return {
-    proposalId: Long.UZERO,
+    proposalId: BigInt(0),
     voter: "",
     option: 0,
     metadata: ""
   };
 }
 export const MsgVote = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.proposalId.isZero()) {
+  typeUrl: "/cosmos.gov.v1.MsgVote",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.voter !== "") {
@@ -245,7 +387,7 @@ export const MsgVote = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVote();
     while (reader.pos < end) {
@@ -273,22 +415,60 @@ export const MsgVote = {
   fromPartial(object) {
     var _object$voter, _object$option, _object$metadata2;
     const message = createBaseMsgVote();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.voter = (_object$voter = object.voter) !== null && _object$voter !== void 0 ? _object$voter : "";
     message.option = (_object$option = object.option) !== null && _object$option !== void 0 ? _object$option : 0;
     message.metadata = (_object$metadata2 = object.metadata) !== null && _object$metadata2 !== void 0 ? _object$metadata2 : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      voter: object.voter,
+      option: isSet(object.option) ? voteOptionFromJSON(object.option) : -1,
+      metadata: object.metadata
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.voter = message.voter;
+    obj.option = message.option;
+    obj.metadata = message.metadata;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgVote.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgVote",
+      value: MsgVote.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgVote.decode(message.value);
+  },
+  toProto(message) {
+    return MsgVote.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgVote",
+      value: MsgVote.encode(message).finish()
+    };
   }
 };
 function createBaseMsgVoteResponse() {
   return {};
 }
 export const MsgVoteResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.gov.v1.MsgVoteResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVoteResponse();
     while (reader.pos < end) {
@@ -304,19 +484,48 @@ export const MsgVoteResponse = {
   fromPartial(_) {
     const message = createBaseMsgVoteResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgVoteResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgVoteResponse",
+      value: MsgVoteResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgVoteResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgVoteResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgVoteResponse",
+      value: MsgVoteResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgVoteWeighted() {
   return {
-    proposalId: Long.UZERO,
+    proposalId: BigInt(0),
     voter: "",
     options: [],
     metadata: ""
   };
 }
 export const MsgVoteWeighted = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.proposalId.isZero()) {
+  typeUrl: "/cosmos.gov.v1.MsgVoteWeighted",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.voter !== "") {
@@ -331,7 +540,7 @@ export const MsgVoteWeighted = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVoteWeighted();
     while (reader.pos < end) {
@@ -359,22 +568,64 @@ export const MsgVoteWeighted = {
   fromPartial(object) {
     var _object$voter2, _object$options, _object$metadata3;
     const message = createBaseMsgVoteWeighted();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.voter = (_object$voter2 = object.voter) !== null && _object$voter2 !== void 0 ? _object$voter2 : "";
     message.options = ((_object$options = object.options) === null || _object$options === void 0 ? void 0 : _object$options.map(e => WeightedVoteOption.fromPartial(e))) || [];
     message.metadata = (_object$metadata3 = object.metadata) !== null && _object$metadata3 !== void 0 ? _object$metadata3 : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      voter: object.voter,
+      options: Array.isArray(object === null || object === void 0 ? void 0 : object.options) ? object.options.map(e => WeightedVoteOption.fromAmino(e)) : [],
+      metadata: object.metadata
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.voter = message.voter;
+    if (message.options) {
+      obj.options = message.options.map(e => e ? WeightedVoteOption.toAmino(e) : undefined);
+    } else {
+      obj.options = [];
+    }
+    obj.metadata = message.metadata;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgVoteWeighted.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgVoteWeighted",
+      value: MsgVoteWeighted.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgVoteWeighted.decode(message.value);
+  },
+  toProto(message) {
+    return MsgVoteWeighted.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgVoteWeighted",
+      value: MsgVoteWeighted.encode(message).finish()
+    };
   }
 };
 function createBaseMsgVoteWeightedResponse() {
   return {};
 }
 export const MsgVoteWeightedResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.gov.v1.MsgVoteWeightedResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVoteWeightedResponse();
     while (reader.pos < end) {
@@ -390,18 +641,47 @@ export const MsgVoteWeightedResponse = {
   fromPartial(_) {
     const message = createBaseMsgVoteWeightedResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgVoteWeightedResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgVoteWeightedResponse",
+      value: MsgVoteWeightedResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgVoteWeightedResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgVoteWeightedResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgVoteWeightedResponse",
+      value: MsgVoteWeightedResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDeposit() {
   return {
-    proposalId: Long.UZERO,
+    proposalId: BigInt(0),
     depositor: "",
     amount: []
   };
 }
 export const MsgDeposit = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.proposalId.isZero()) {
+  typeUrl: "/cosmos.gov.v1.MsgDeposit",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.depositor !== "") {
@@ -413,7 +693,7 @@ export const MsgDeposit = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDeposit();
     while (reader.pos < end) {
@@ -438,21 +718,61 @@ export const MsgDeposit = {
   fromPartial(object) {
     var _object$depositor, _object$amount;
     const message = createBaseMsgDeposit();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.depositor = (_object$depositor = object.depositor) !== null && _object$depositor !== void 0 ? _object$depositor : "";
     message.amount = ((_object$amount = object.amount) === null || _object$amount === void 0 ? void 0 : _object$amount.map(e => Coin.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      depositor: object.depositor,
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(e => Coin.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.depositor = message.depositor;
+    if (message.amount) {
+      obj.amount = message.amount.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.amount = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDeposit.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgDeposit",
+      value: MsgDeposit.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgDeposit.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDeposit.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgDeposit",
+      value: MsgDeposit.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDepositResponse() {
   return {};
 }
 export const MsgDepositResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.gov.v1.MsgDepositResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositResponse();
     while (reader.pos < end) {
@@ -468,5 +788,33 @@ export const MsgDepositResponse = {
   fromPartial(_) {
     const message = createBaseMsgDepositResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDepositResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/MsgDepositResponse",
+      value: MsgDepositResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgDepositResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDepositResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.MsgDepositResponse",
+      value: MsgDepositResponse.encode(message).finish()
+    };
   }
 };

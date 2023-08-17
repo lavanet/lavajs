@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** MsgSend represents a message to send a nft from one account to another account. */
 
 /** MsgSend represents a message to send a nft from one account to another account. */
@@ -17,7 +16,8 @@ function createBaseMsgSend() {
   };
 }
 export const MsgSend = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.nft.v1beta1.MsgSend",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.classId !== "") {
       writer.uint32(10).string(message.classId);
     }
@@ -33,7 +33,7 @@ export const MsgSend = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSend();
     while (reader.pos < end) {
@@ -66,17 +66,55 @@ export const MsgSend = {
     message.sender = (_object$sender = object.sender) !== null && _object$sender !== void 0 ? _object$sender : "";
     message.receiver = (_object$receiver = object.receiver) !== null && _object$receiver !== void 0 ? _object$receiver : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      classId: object.class_id,
+      id: object.id,
+      sender: object.sender,
+      receiver: object.receiver
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.class_id = message.classId;
+    obj.id = message.id;
+    obj.sender = message.sender;
+    obj.receiver = message.receiver;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSend.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgNFTSend",
+      value: MsgSend.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgSend.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSend.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.nft.v1beta1.MsgSend",
+      value: MsgSend.encode(message).finish()
+    };
   }
 };
 function createBaseMsgSendResponse() {
   return {};
 }
 export const MsgSendResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.nft.v1beta1.MsgSendResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSendResponse();
     while (reader.pos < end) {
@@ -92,5 +130,33 @@ export const MsgSendResponse = {
   fromPartial(_) {
     const message = createBaseMsgSendResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSendResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgSendResponse",
+      value: MsgSendResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgSendResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSendResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.nft.v1beta1.MsgSendResponse",
+      value: MsgSendResponse.encode(message).finish()
+    };
   }
 };

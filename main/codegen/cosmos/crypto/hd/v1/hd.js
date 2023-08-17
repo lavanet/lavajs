@@ -1,13 +1,10 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.BIP44Params = void 0;
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../../binary");
 /** BIP44Params is used as path field in ledger item in Record. */
 
 /** BIP44Params is used as path field in ledger item in Record. */
@@ -22,8 +19,9 @@ function createBaseBIP44Params() {
   };
 }
 var BIP44Params = {
+  typeUrl: "/cosmos.crypto.hd.v1.BIP44Params",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.purpose !== 0) {
       writer.uint32(8).uint32(message.purpose);
     }
@@ -42,7 +40,7 @@ var BIP44Params = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseBIP44Params();
     while (reader.pos < end) {
@@ -79,6 +77,45 @@ var BIP44Params = {
     message.change = (_object$change = object.change) !== null && _object$change !== void 0 ? _object$change : false;
     message.addressIndex = (_object$addressIndex = object.addressIndex) !== null && _object$addressIndex !== void 0 ? _object$addressIndex : 0;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      purpose: object.purpose,
+      coinType: object.coin_type,
+      account: object.account,
+      change: object.change,
+      addressIndex: object.address_index
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.purpose = message.purpose;
+    obj.coin_type = message.coinType;
+    obj.account = message.account;
+    obj.change = message.change;
+    obj.address_index = message.addressIndex;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return BIP44Params.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/BIP44Params",
+      value: BIP44Params.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return BIP44Params.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return BIP44Params.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.crypto.hd.v1.BIP44Params",
+      value: BIP44Params.encode(message).finish()
+    };
   }
 };
 exports.BIP44Params = BIP44Params;

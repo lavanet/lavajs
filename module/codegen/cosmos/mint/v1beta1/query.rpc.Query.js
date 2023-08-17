@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryParamsRequest, QueryParamsResponse, QueryInflationRequest, QueryInflationResponse, QueryAnnualProvisionsRequest, QueryAnnualProvisionsResponse } from "./query";
 /** Query provides defines the gRPC querier service. */
@@ -15,17 +15,17 @@ export class QueryClientImpl {
   params(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.mint.v1beta1.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   inflation(request = {}) {
     const data = QueryInflationRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.mint.v1beta1.Query", "Inflation", data);
-    return promise.then(data => QueryInflationResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryInflationResponse.decode(new BinaryReader(data)));
   }
   annualProvisions(request = {}) {
     const data = QueryAnnualProvisionsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.mint.v1beta1.Query", "AnnualProvisions", data);
-    return promise.then(data => QueryAnnualProvisionsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAnnualProvisionsResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

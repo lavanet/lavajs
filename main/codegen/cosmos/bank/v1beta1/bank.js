@@ -1,14 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Supply = exports.SendEnabled = exports.Params = exports.Output = exports.Metadata = exports.Input = exports.DenomUnit = void 0;
 var _coin = require("../../base/v1beta1/coin");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -69,8 +66,9 @@ function createBaseParams() {
   };
 }
 var Params = {
+  typeUrl: "/cosmos.bank.v1beta1.Params",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.sendEnabled),
       _step;
     try {
@@ -89,7 +87,7 @@ var Params = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseParams();
     while (reader.pos < end) {
@@ -116,6 +114,47 @@ var Params = {
     })) || [];
     message.defaultSendEnabled = (_object$defaultSendEn = object.defaultSendEnabled) !== null && _object$defaultSendEn !== void 0 ? _object$defaultSendEn : false;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      sendEnabled: Array.isArray(object === null || object === void 0 ? void 0 : object.send_enabled) ? object.send_enabled.map(function (e) {
+        return SendEnabled.fromAmino(e);
+      }) : [],
+      defaultSendEnabled: object.default_send_enabled
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.sendEnabled) {
+      obj.send_enabled = message.sendEnabled.map(function (e) {
+        return e ? SendEnabled.toAmino(e) : undefined;
+      });
+    } else {
+      obj.send_enabled = [];
+    }
+    obj.default_send_enabled = message.defaultSendEnabled;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Params",
+      value: Params.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };
 exports.Params = Params;
@@ -126,8 +165,9 @@ function createBaseSendEnabled() {
   };
 }
 var SendEnabled = {
+  typeUrl: "/cosmos.bank.v1beta1.SendEnabled",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -137,7 +177,7 @@ var SendEnabled = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSendEnabled();
     while (reader.pos < end) {
@@ -162,6 +202,39 @@ var SendEnabled = {
     message.denom = (_object$denom = object.denom) !== null && _object$denom !== void 0 ? _object$denom : "";
     message.enabled = (_object$enabled = object.enabled) !== null && _object$enabled !== void 0 ? _object$enabled : false;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      denom: object.denom,
+      enabled: object.enabled
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.denom = message.denom;
+    obj.enabled = message.enabled;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return SendEnabled.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/SendEnabled",
+      value: SendEnabled.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return SendEnabled.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return SendEnabled.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.SendEnabled",
+      value: SendEnabled.encode(message).finish()
+    };
   }
 };
 exports.SendEnabled = SendEnabled;
@@ -172,8 +245,9 @@ function createBaseInput() {
   };
 }
 var Input = {
+  typeUrl: "/cosmos.bank.v1beta1.Input",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -192,7 +266,7 @@ var Input = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseInput();
     while (reader.pos < end) {
@@ -219,6 +293,47 @@ var Input = {
       return _coin.Coin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      address: object.address,
+      coins: Array.isArray(object === null || object === void 0 ? void 0 : object.coins) ? object.coins.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.address = message.address;
+    if (message.coins) {
+      obj.coins = message.coins.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.coins = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Input.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Input",
+      value: Input.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Input.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Input.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.Input",
+      value: Input.encode(message).finish()
+    };
   }
 };
 exports.Input = Input;
@@ -229,8 +344,9 @@ function createBaseOutput() {
   };
 }
 var Output = {
+  typeUrl: "/cosmos.bank.v1beta1.Output",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -249,7 +365,7 @@ var Output = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseOutput();
     while (reader.pos < end) {
@@ -276,6 +392,47 @@ var Output = {
       return _coin.Coin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      address: object.address,
+      coins: Array.isArray(object === null || object === void 0 ? void 0 : object.coins) ? object.coins.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.address = message.address;
+    if (message.coins) {
+      obj.coins = message.coins.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.coins = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Output.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Output",
+      value: Output.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Output.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Output.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.Output",
+      value: Output.encode(message).finish()
+    };
   }
 };
 exports.Output = Output;
@@ -285,8 +442,9 @@ function createBaseSupply() {
   };
 }
 var Supply = {
+  typeUrl: "/cosmos.bank.v1beta1.Supply",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator4 = _createForOfIteratorHelper(message.total),
       _step4;
     try {
@@ -302,7 +460,7 @@ var Supply = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSupply();
     while (reader.pos < end) {
@@ -325,6 +483,45 @@ var Supply = {
       return _coin.Coin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      total: Array.isArray(object === null || object === void 0 ? void 0 : object.total) ? object.total.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.total) {
+      obj.total = message.total.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.total = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Supply.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Supply",
+      value: Supply.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Supply.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Supply.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.Supply",
+      value: Supply.encode(message).finish()
+    };
   }
 };
 exports.Supply = Supply;
@@ -336,8 +533,9 @@ function createBaseDenomUnit() {
   };
 }
 var DenomUnit = {
+  typeUrl: "/cosmos.bank.v1beta1.DenomUnit",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -359,7 +557,7 @@ var DenomUnit = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseDenomUnit();
     while (reader.pos < end) {
@@ -390,6 +588,49 @@ var DenomUnit = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      denom: object.denom,
+      exponent: object.exponent,
+      aliases: Array.isArray(object === null || object === void 0 ? void 0 : object.aliases) ? object.aliases.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.denom = message.denom;
+    obj.exponent = message.exponent;
+    if (message.aliases) {
+      obj.aliases = message.aliases.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.aliases = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return DenomUnit.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/DenomUnit",
+      value: DenomUnit.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return DenomUnit.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return DenomUnit.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.DenomUnit",
+      value: DenomUnit.encode(message).finish()
+    };
   }
 };
 exports.DenomUnit = DenomUnit;
@@ -406,8 +647,9 @@ function createBaseMetadata() {
   };
 }
 var Metadata = {
+  typeUrl: "/cosmos.bank.v1beta1.Metadata",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.description !== "") {
       writer.uint32(10).string(message.description);
     }
@@ -444,7 +686,7 @@ var Metadata = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMetadata();
     while (reader.pos < end) {
@@ -495,6 +737,59 @@ var Metadata = {
     message.uri = (_object$uri = object.uri) !== null && _object$uri !== void 0 ? _object$uri : "";
     message.uriHash = (_object$uriHash = object.uriHash) !== null && _object$uriHash !== void 0 ? _object$uriHash : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      description: object.description,
+      denomUnits: Array.isArray(object === null || object === void 0 ? void 0 : object.denom_units) ? object.denom_units.map(function (e) {
+        return DenomUnit.fromAmino(e);
+      }) : [],
+      base: object.base,
+      display: object.display,
+      name: object.name,
+      symbol: object.symbol,
+      uri: object.uri,
+      uriHash: object.uri_hash
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.description = message.description;
+    if (message.denomUnits) {
+      obj.denom_units = message.denomUnits.map(function (e) {
+        return e ? DenomUnit.toAmino(e) : undefined;
+      });
+    } else {
+      obj.denom_units = [];
+    }
+    obj.base = message.base;
+    obj.display = message.display;
+    obj.name = message.name;
+    obj.symbol = message.symbol;
+    obj.uri = message.uri;
+    obj.uri_hash = message.uriHash;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Metadata.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Metadata",
+      value: Metadata.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Metadata.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Metadata.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.Metadata",
+      value: Metadata.encode(message).finish()
+    };
   }
 };
 exports.Metadata = Metadata;

@@ -1,5 +1,5 @@
-import { Long } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
+import { fromJsonTimestamp, fromTimestamp } from "../../helpers";
 /**
  * A Timestamp represents a point in time independent of any time zone or local
  * calendar, encoded as a count of seconds and fractions of seconds at
@@ -172,13 +172,14 @@ import * as _m0 from "protobufjs/minimal";
 
 function createBaseTimestamp() {
   return {
-    seconds: Long.ZERO,
+    seconds: BigInt(0),
     nanos: 0
   };
 }
 export const Timestamp = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.seconds.isZero()) {
+  typeUrl: "/google.protobuf.Timestamp",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.seconds !== BigInt(0)) {
       writer.uint32(8).int64(message.seconds);
     }
     if (message.nanos !== 0) {
@@ -187,7 +188,7 @@ export const Timestamp = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTimestamp();
     while (reader.pos < end) {
@@ -209,8 +210,29 @@ export const Timestamp = {
   fromPartial(object) {
     var _object$nanos;
     const message = createBaseTimestamp();
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? Long.fromValue(object.seconds) : Long.ZERO;
+    message.seconds = object.seconds !== undefined && object.seconds !== null ? BigInt(object.seconds.toString()) : BigInt(0);
     message.nanos = (_object$nanos = object.nanos) !== null && _object$nanos !== void 0 ? _object$nanos : 0;
     return message;
+  },
+  fromAmino(object) {
+    return fromJsonTimestamp(object);
+  },
+  toAmino(message) {
+    return fromTimestamp(message).toString();
+  },
+  fromAminoMsg(object) {
+    return Timestamp.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Timestamp.decode(message.value);
+  },
+  toProto(message) {
+    return Timestamp.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Timestamp",
+      value: Timestamp.encode(message).finish()
+    };
   }
 };

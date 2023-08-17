@@ -1,8 +1,7 @@
 import { PageRequest, PageResponse } from "../../../cosmos/base/query/v1beta1/pagination";
 import { Params } from "./params";
 import { ConflictVote } from "./conflict_vote";
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -15,11 +14,12 @@ function createBaseQueryParamsRequest() {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.QueryParamsRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -35,22 +35,45 @@ export const QueryParamsRequest = {
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryParamsRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryParamsRequest.decode(message.value);
+  },
+  toProto(message) {
+    return QueryParamsRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.QueryParamsRequest",
+      value: QueryParamsRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryParamsResponse() {
   return {
-    params: undefined
+    params: Params.fromPartial({})
   };
 }
 export const QueryParamsResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.QueryParamsResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -70,6 +93,31 @@ export const QueryParamsResponse = {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      params: object !== null && object !== void 0 && object.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryParamsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryParamsResponse.decode(message.value);
+  },
+  toProto(message) {
+    return QueryParamsResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.QueryParamsResponse",
+      value: QueryParamsResponse.encode(message).finish()
+    };
   }
 };
 function createBaseQueryGetConflictVoteRequest() {
@@ -78,14 +126,15 @@ function createBaseQueryGetConflictVoteRequest() {
   };
 }
 export const QueryGetConflictVoteRequest = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.QueryGetConflictVoteRequest",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetConflictVoteRequest();
     while (reader.pos < end) {
@@ -106,22 +155,48 @@ export const QueryGetConflictVoteRequest = {
     const message = createBaseQueryGetConflictVoteRequest();
     message.index = (_object$index = object.index) !== null && _object$index !== void 0 ? _object$index : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      index: object.index
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.index = message.index;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryGetConflictVoteRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryGetConflictVoteRequest.decode(message.value);
+  },
+  toProto(message) {
+    return QueryGetConflictVoteRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.QueryGetConflictVoteRequest",
+      value: QueryGetConflictVoteRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryGetConflictVoteResponse() {
   return {
-    conflictVote: undefined
+    conflictVote: ConflictVote.fromPartial({})
   };
 }
 export const QueryGetConflictVoteResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.QueryGetConflictVoteResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.conflictVote !== undefined) {
       ConflictVote.encode(message.conflictVote, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetConflictVoteResponse();
     while (reader.pos < end) {
@@ -141,22 +216,48 @@ export const QueryGetConflictVoteResponse = {
     const message = createBaseQueryGetConflictVoteResponse();
     message.conflictVote = object.conflictVote !== undefined && object.conflictVote !== null ? ConflictVote.fromPartial(object.conflictVote) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      conflictVote: object !== null && object !== void 0 && object.conflictVote ? ConflictVote.fromAmino(object.conflictVote) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.conflictVote = message.conflictVote ? ConflictVote.toAmino(message.conflictVote) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryGetConflictVoteResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryGetConflictVoteResponse.decode(message.value);
+  },
+  toProto(message) {
+    return QueryGetConflictVoteResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.QueryGetConflictVoteResponse",
+      value: QueryGetConflictVoteResponse.encode(message).finish()
+    };
   }
 };
 function createBaseQueryAllConflictVoteRequest() {
   return {
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryAllConflictVoteRequest = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.QueryAllConflictVoteRequest",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllConflictVoteRequest();
     while (reader.pos < end) {
@@ -176,16 +277,42 @@ export const QueryAllConflictVoteRequest = {
     const message = createBaseQueryAllConflictVoteRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      pagination: object !== null && object !== void 0 && object.pagination ? PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryAllConflictVoteRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryAllConflictVoteRequest.decode(message.value);
+  },
+  toProto(message) {
+    return QueryAllConflictVoteRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.QueryAllConflictVoteRequest",
+      value: QueryAllConflictVoteRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryAllConflictVoteResponse() {
   return {
     conflictVote: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryAllConflictVoteResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.QueryAllConflictVoteResponse",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.conflictVote) {
       ConflictVote.encode(v, writer.uint32(10).fork()).ldelim();
     }
@@ -195,7 +322,7 @@ export const QueryAllConflictVoteResponse = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllConflictVoteResponse();
     while (reader.pos < end) {
@@ -220,5 +347,36 @@ export const QueryAllConflictVoteResponse = {
     message.conflictVote = ((_object$conflictVote = object.conflictVote) === null || _object$conflictVote === void 0 ? void 0 : _object$conflictVote.map(e => ConflictVote.fromPartial(e))) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      conflictVote: Array.isArray(object === null || object === void 0 ? void 0 : object.conflictVote) ? object.conflictVote.map(e => ConflictVote.fromAmino(e)) : [],
+      pagination: object !== null && object !== void 0 && object.pagination ? PageResponse.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.conflictVote) {
+      obj.conflictVote = message.conflictVote.map(e => e ? ConflictVote.toAmino(e) : undefined);
+    } else {
+      obj.conflictVote = [];
+    }
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryAllConflictVoteResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryAllConflictVoteResponse.decode(message.value);
+  },
+  toProto(message) {
+    return QueryAllConflictVoteResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.QueryAllConflictVoteResponse",
+      value: QueryAllConflictVoteResponse.encode(message).finish()
+    };
   }
 };

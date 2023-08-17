@@ -1,6 +1,5 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -8,9 +7,7 @@ exports.QueryParamsResponse = exports.QueryParamsRequest = exports.QueryListResp
 var _params = require("./params");
 var _coin = require("../../../cosmos/base/v1beta1/coin");
 var _plan = require("./plan");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -26,12 +23,13 @@ function createBaseQueryParamsRequest() {
   return {};
 }
 var QueryParamsRequest = {
+  typeUrl: "/lavanet.lava.plans.QueryParamsRequest",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -47,24 +45,47 @@ var QueryParamsRequest = {
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryParamsRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryParamsRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryParamsRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.QueryParamsRequest",
+      value: QueryParamsRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryParamsRequest = QueryParamsRequest;
 function createBaseQueryParamsResponse() {
   return {
-    params: undefined
+    params: _params.Params.fromPartial({})
   };
 }
 var QueryParamsResponse = {
+  typeUrl: "/lavanet.lava.plans.QueryParamsResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.params !== undefined) {
       _params.Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -84,6 +105,31 @@ var QueryParamsResponse = {
     var message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? _params.Params.fromPartial(object.params) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      params: object !== null && object !== void 0 && object.params ? _params.Params.fromAmino(object.params) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.params = message.params ? _params.Params.toAmino(message.params) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryParamsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryParamsResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryParamsResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.QueryParamsResponse",
+      value: QueryParamsResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryParamsResponse = QueryParamsResponse;
@@ -91,12 +137,13 @@ function createBaseQueryListRequest() {
   return {};
 }
 var QueryListRequest = {
+  typeUrl: "/lavanet.lava.plans.QueryListRequest",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryListRequest();
     while (reader.pos < end) {
@@ -112,6 +159,28 @@ var QueryListRequest = {
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryListRequest();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryListRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryListRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryListRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.QueryListRequest",
+      value: QueryListRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryListRequest = QueryListRequest;
@@ -121,8 +190,9 @@ function createBaseQueryListResponse() {
   };
 }
 var QueryListResponse = {
+  typeUrl: "/lavanet.lava.plans.QueryListResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.plansInfo),
       _step;
     try {
@@ -138,7 +208,7 @@ var QueryListResponse = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryListResponse();
     while (reader.pos < end) {
@@ -161,6 +231,39 @@ var QueryListResponse = {
       return ListInfoStruct.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      plansInfo: Array.isArray(object === null || object === void 0 ? void 0 : object.plans_info) ? object.plans_info.map(function (e) {
+        return ListInfoStruct.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.plansInfo) {
+      obj.plans_info = message.plansInfo.map(function (e) {
+        return e ? ListInfoStruct.toAmino(e) : undefined;
+      });
+    } else {
+      obj.plans_info = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryListResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryListResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryListResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.QueryListResponse",
+      value: QueryListResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryListResponse = QueryListResponse;
@@ -168,12 +271,13 @@ function createBaseListInfoStruct() {
   return {
     index: "",
     description: "",
-    price: undefined
+    price: _coin.Coin.fromPartial({})
   };
 }
 var ListInfoStruct = {
+  typeUrl: "/lavanet.lava.plans.ListInfoStruct",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
@@ -186,7 +290,7 @@ var ListInfoStruct = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseListInfoStruct();
     while (reader.pos < end) {
@@ -215,6 +319,35 @@ var ListInfoStruct = {
     message.description = (_object$description = object.description) !== null && _object$description !== void 0 ? _object$description : "";
     message.price = object.price !== undefined && object.price !== null ? _coin.Coin.fromPartial(object.price) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      index: object.index,
+      description: object.description,
+      price: object !== null && object !== void 0 && object.price ? _coin.Coin.fromAmino(object.price) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.index = message.index;
+    obj.description = message.description;
+    obj.price = message.price ? _coin.Coin.toAmino(message.price) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ListInfoStruct.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ListInfoStruct.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ListInfoStruct.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.ListInfoStruct",
+      value: ListInfoStruct.encode(message).finish()
+    };
   }
 };
 exports.ListInfoStruct = ListInfoStruct;
@@ -224,15 +357,16 @@ function createBaseQueryInfoRequest() {
   };
 }
 var QueryInfoRequest = {
+  typeUrl: "/lavanet.lava.plans.QueryInfoRequest",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.planIndex !== "") {
       writer.uint32(10).string(message.planIndex);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryInfoRequest();
     while (reader.pos < end) {
@@ -253,24 +387,50 @@ var QueryInfoRequest = {
     var message = createBaseQueryInfoRequest();
     message.planIndex = (_object$planIndex = object.planIndex) !== null && _object$planIndex !== void 0 ? _object$planIndex : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      planIndex: object.plan_index
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.plan_index = message.planIndex;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryInfoRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryInfoRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryInfoRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.QueryInfoRequest",
+      value: QueryInfoRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryInfoRequest = QueryInfoRequest;
 function createBaseQueryInfoResponse() {
   return {
-    planInfo: undefined
+    planInfo: _plan.Plan.fromPartial({})
   };
 }
 var QueryInfoResponse = {
+  typeUrl: "/lavanet.lava.plans.QueryInfoResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.planInfo !== undefined) {
       _plan.Plan.encode(message.planInfo, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryInfoResponse();
     while (reader.pos < end) {
@@ -290,6 +450,31 @@ var QueryInfoResponse = {
     var message = createBaseQueryInfoResponse();
     message.planInfo = object.planInfo !== undefined && object.planInfo !== null ? _plan.Plan.fromPartial(object.planInfo) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      planInfo: object !== null && object !== void 0 && object.plan_info ? _plan.Plan.fromAmino(object.plan_info) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.plan_info = message.planInfo ? _plan.Plan.toAmino(message.planInfo) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryInfoResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryInfoResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryInfoResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.QueryInfoResponse",
+      value: QueryInfoResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryInfoResponse = QueryInfoResponse;

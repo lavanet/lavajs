@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 /**
  * StoreKVPair is a KVStore KVPair used for listening to state changes (Sets and Deletes)
  * It optionally includes the StoreKey for the originating KVStore and a Boolean flag to distinguish between Sets and
@@ -37,7 +36,8 @@ function createBaseStoreKVPair(): StoreKVPair {
   };
 }
 export const StoreKVPair = {
-  encode(message: StoreKVPair, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.base.store.v1beta1.StoreKVPair",
+  encode(message: StoreKVPair, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.storeKey !== "") {
       writer.uint32(10).string(message.storeKey);
     }
@@ -52,8 +52,8 @@ export const StoreKVPair = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): StoreKVPair {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): StoreKVPair {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStoreKVPair();
     while (reader.pos < end) {
@@ -78,12 +78,49 @@ export const StoreKVPair = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<StoreKVPair>): StoreKVPair {
+  fromPartial(object: Partial<StoreKVPair>): StoreKVPair {
     const message = createBaseStoreKVPair();
     message.storeKey = object.storeKey ?? "";
     message.delete = object.delete ?? false;
     message.key = object.key ?? new Uint8Array();
     message.value = object.value ?? new Uint8Array();
     return message;
+  },
+  fromAmino(object: StoreKVPairAmino): StoreKVPair {
+    return {
+      storeKey: object.store_key,
+      delete: object.delete,
+      key: object.key,
+      value: object.value
+    };
+  },
+  toAmino(message: StoreKVPair): StoreKVPairAmino {
+    const obj: any = {};
+    obj.store_key = message.storeKey;
+    obj.delete = message.delete;
+    obj.key = message.key;
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object: StoreKVPairAminoMsg): StoreKVPair {
+    return StoreKVPair.fromAmino(object.value);
+  },
+  toAminoMsg(message: StoreKVPair): StoreKVPairAminoMsg {
+    return {
+      type: "cosmos-sdk/StoreKVPair",
+      value: StoreKVPair.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: StoreKVPairProtoMsg): StoreKVPair {
+    return StoreKVPair.decode(message.value);
+  },
+  toProto(message: StoreKVPair): Uint8Array {
+    return StoreKVPair.encode(message).finish();
+  },
+  toProtoMsg(message: StoreKVPair): StoreKVPairProtoMsg {
+    return {
+      typeUrl: "/cosmos.base.store.v1beta1.StoreKVPair",
+      value: StoreKVPair.encode(message).finish()
+    };
   }
 };

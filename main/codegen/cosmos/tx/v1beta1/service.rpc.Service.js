@@ -1,7 +1,6 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -9,11 +8,9 @@ exports.createRpcQueryExtension = exports.ServiceClientImpl = void 0;
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _binary = require("../../../binary");
 var _stargate = require("@cosmjs/stargate");
 var _service = require("./service");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** Service defines a gRPC service for interacting with transactions. */
 var ServiceClientImpl = /*#__PURE__*/function () {
   function ServiceClientImpl(rpc) {
@@ -32,7 +29,7 @@ var ServiceClientImpl = /*#__PURE__*/function () {
       var data = _service.SimulateRequest.encode(request).finish();
       var promise = this.rpc.request("cosmos.tx.v1beta1.Service", "Simulate", data);
       return promise.then(function (data) {
-        return _service.SimulateResponse.decode(new _m0.Reader(data));
+        return _service.SimulateResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -41,7 +38,7 @@ var ServiceClientImpl = /*#__PURE__*/function () {
       var data = _service.GetTxRequest.encode(request).finish();
       var promise = this.rpc.request("cosmos.tx.v1beta1.Service", "GetTx", data);
       return promise.then(function (data) {
-        return _service.GetTxResponse.decode(new _m0.Reader(data));
+        return _service.GetTxResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -50,7 +47,7 @@ var ServiceClientImpl = /*#__PURE__*/function () {
       var data = _service.BroadcastTxRequest.encode(request).finish();
       var promise = this.rpc.request("cosmos.tx.v1beta1.Service", "BroadcastTx", data);
       return promise.then(function (data) {
-        return _service.BroadcastTxResponse.decode(new _m0.Reader(data));
+        return _service.BroadcastTxResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -59,7 +56,7 @@ var ServiceClientImpl = /*#__PURE__*/function () {
       var data = _service.GetTxsEventRequest.encode(request).finish();
       var promise = this.rpc.request("cosmos.tx.v1beta1.Service", "GetTxsEvent", data);
       return promise.then(function (data) {
-        return _service.GetTxsEventResponse.decode(new _m0.Reader(data));
+        return _service.GetTxsEventResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -68,7 +65,7 @@ var ServiceClientImpl = /*#__PURE__*/function () {
       var data = _service.GetBlockWithTxsRequest.encode(request).finish();
       var promise = this.rpc.request("cosmos.tx.v1beta1.Service", "GetBlockWithTxs", data);
       return promise.then(function (data) {
-        return _service.GetBlockWithTxsResponse.decode(new _m0.Reader(data));
+        return _service.GetBlockWithTxsResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }]);

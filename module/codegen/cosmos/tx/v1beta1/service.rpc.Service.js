@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { SimulateRequest, SimulateResponse, GetTxRequest, GetTxResponse, BroadcastTxRequest, BroadcastTxResponse, GetTxsEventRequest, GetTxsEventResponse, GetBlockWithTxsRequest, GetBlockWithTxsResponse } from "./service";
 /** Service defines a gRPC service for interacting with transactions. */
@@ -17,27 +17,27 @@ export class ServiceClientImpl {
   simulate(request) {
     const data = SimulateRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.tx.v1beta1.Service", "Simulate", data);
-    return promise.then(data => SimulateResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => SimulateResponse.decode(new BinaryReader(data)));
   }
   getTx(request) {
     const data = GetTxRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.tx.v1beta1.Service", "GetTx", data);
-    return promise.then(data => GetTxResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => GetTxResponse.decode(new BinaryReader(data)));
   }
   broadcastTx(request) {
     const data = BroadcastTxRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.tx.v1beta1.Service", "BroadcastTx", data);
-    return promise.then(data => BroadcastTxResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => BroadcastTxResponse.decode(new BinaryReader(data)));
   }
   getTxsEvent(request) {
     const data = GetTxsEventRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.tx.v1beta1.Service", "GetTxsEvent", data);
-    return promise.then(data => GetTxsEventResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => GetTxsEventResponse.decode(new BinaryReader(data)));
   }
   getBlockWithTxs(request) {
     const data = GetBlockWithTxsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.tx.v1beta1.Service", "GetBlockWithTxs", data);
-    return promise.then(data => GetBlockWithTxsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => GetBlockWithTxsResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

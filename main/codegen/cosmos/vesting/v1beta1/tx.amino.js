@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-var _helpers = require("../../../helpers");
 var AminoConverter = {
   "/cosmos.vesting.v1beta1.MsgCreateVestingAccount": {
     aminoType: "cosmos-sdk/MsgCreateVestingAccount",
@@ -42,7 +41,7 @@ var AminoConverter = {
             amount: el0.amount
           };
         }),
-        endTime: _helpers.Long.fromString(end_time),
+        endTime: BigInt(end_time),
         delayed: delayed
       };
     }
@@ -112,10 +111,10 @@ var AminoConverter = {
       return {
         fromAddress: from_address,
         toAddress: to_address,
-        startTime: _helpers.Long.fromString(start_time),
+        startTime: BigInt(start_time),
         vestingPeriods: vesting_periods.map(function (el0) {
           return {
-            length: _helpers.Long.fromString(el0.length),
+            length: BigInt(el0.length),
             amount: el0.amount.map(function (el1) {
               return {
                 denom: el1.denom,

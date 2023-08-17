@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** Params defines the parameters for the module. */
 
 /** Params defines the parameters for the module. */
@@ -8,11 +7,12 @@ function createBaseParams() {
   return {};
 }
 export const Params = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.plans.Params",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
     while (reader.pos < end) {
@@ -28,5 +28,27 @@ export const Params = {
   fromPartial(_) {
     const message = createBaseParams();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };

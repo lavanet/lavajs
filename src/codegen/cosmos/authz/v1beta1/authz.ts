@@ -1,7 +1,7 @@
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, toTimestamp, fromTimestamp } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp } from "../../../helpers";
 /**
  * GenericAuthorization gives the grantee unrestricted permissions to execute
  * the provided method on behalf of the granter's account.
@@ -22,7 +22,7 @@ export interface GenericAuthorizationSDKType {
  * the provide method with expiration time.
  */
 export interface Grant {
-  authorization?: Any;
+  authorization: Any;
   /**
    * time when the grant will expire and will be pruned. If null, then the grant
    * doesn't have a time expiration (other conditions  in `authorization`
@@ -35,7 +35,7 @@ export interface Grant {
  * the provide method with expiration time.
  */
 export interface GrantSDKType {
-  authorization?: AnySDKType;
+  authorization: AnySDKType;
   expiration?: Date;
 }
 /**
@@ -45,8 +45,8 @@ export interface GrantSDKType {
 export interface GrantAuthorization {
   granter: string;
   grantee: string;
-  authorization?: Any;
-  expiration?: Date;
+  authorization: Any;
+  expiration: Date;
 }
 /**
  * GrantAuthorization extends a grant with both the addresses of the grantee and granter.
@@ -55,8 +55,8 @@ export interface GrantAuthorization {
 export interface GrantAuthorizationSDKType {
   granter: string;
   grantee: string;
-  authorization?: AnySDKType;
-  expiration?: Date;
+  authorization: AnySDKType;
+  expiration: Date;
 }
 /** GrantQueueItem contains the list of TypeURL of a sdk.Msg. */
 export interface GrantQueueItem {
@@ -73,14 +73,15 @@ function createBaseGenericAuthorization(): GenericAuthorization {
   };
 }
 export const GenericAuthorization = {
-  encode(message: GenericAuthorization, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+  encode(message: GenericAuthorization, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.msg !== "") {
       writer.uint32(10).string(message.msg);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenericAuthorization {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenericAuthorization {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenericAuthorization();
     while (reader.pos < end) {
@@ -96,20 +97,52 @@ export const GenericAuthorization = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenericAuthorization>): GenericAuthorization {
+  fromPartial(object: Partial<GenericAuthorization>): GenericAuthorization {
     const message = createBaseGenericAuthorization();
     message.msg = object.msg ?? "";
     return message;
+  },
+  fromAmino(object: GenericAuthorizationAmino): GenericAuthorization {
+    return {
+      msg: object.msg
+    };
+  },
+  toAmino(message: GenericAuthorization): GenericAuthorizationAmino {
+    const obj: any = {};
+    obj.msg = message.msg;
+    return obj;
+  },
+  fromAminoMsg(object: GenericAuthorizationAminoMsg): GenericAuthorization {
+    return GenericAuthorization.fromAmino(object.value);
+  },
+  toAminoMsg(message: GenericAuthorization): GenericAuthorizationAminoMsg {
+    return {
+      type: "cosmos-sdk/GenericAuthorization",
+      value: GenericAuthorization.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: GenericAuthorizationProtoMsg): GenericAuthorization {
+    return GenericAuthorization.decode(message.value);
+  },
+  toProto(message: GenericAuthorization): Uint8Array {
+    return GenericAuthorization.encode(message).finish();
+  },
+  toProtoMsg(message: GenericAuthorization): GenericAuthorizationProtoMsg {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+      value: GenericAuthorization.encode(message).finish()
+    };
   }
 };
 function createBaseGrant(): Grant {
   return {
-    authorization: undefined,
+    authorization: Any.fromPartial({}),
     expiration: undefined
   };
 }
 export const Grant = {
-  encode(message: Grant, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.authz.v1beta1.Grant",
+  encode(message: Grant, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.authorization !== undefined) {
       Any.encode(message.authorization, writer.uint32(10).fork()).ldelim();
     }
@@ -118,8 +151,8 @@ export const Grant = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Grant {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Grant {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGrant();
     while (reader.pos < end) {
@@ -138,23 +171,57 @@ export const Grant = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Grant>): Grant {
+  fromPartial(object: Partial<Grant>): Grant {
     const message = createBaseGrant();
     message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
     message.expiration = object.expiration ?? undefined;
     return message;
+  },
+  fromAmino(object: GrantAmino): Grant {
+    return {
+      authorization: object?.authorization ? Any.fromAmino(object.authorization) : undefined,
+      expiration: object?.expiration
+    };
+  },
+  toAmino(message: Grant): GrantAmino {
+    const obj: any = {};
+    obj.authorization = message.authorization ? Any.toAmino(message.authorization) : undefined;
+    obj.expiration = message.expiration;
+    return obj;
+  },
+  fromAminoMsg(object: GrantAminoMsg): Grant {
+    return Grant.fromAmino(object.value);
+  },
+  toAminoMsg(message: Grant): GrantAminoMsg {
+    return {
+      type: "cosmos-sdk/Grant",
+      value: Grant.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: GrantProtoMsg): Grant {
+    return Grant.decode(message.value);
+  },
+  toProto(message: Grant): Uint8Array {
+    return Grant.encode(message).finish();
+  },
+  toProtoMsg(message: Grant): GrantProtoMsg {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.Grant",
+      value: Grant.encode(message).finish()
+    };
   }
 };
 function createBaseGrantAuthorization(): GrantAuthorization {
   return {
     granter: "",
     grantee: "",
-    authorization: undefined,
-    expiration: undefined
+    authorization: Any.fromPartial({}),
+    expiration: new Date()
   };
 }
 export const GrantAuthorization = {
-  encode(message: GrantAuthorization, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.authz.v1beta1.GrantAuthorization",
+  encode(message: GrantAuthorization, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -169,8 +236,8 @@ export const GrantAuthorization = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GrantAuthorization {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GrantAuthorization {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGrantAuthorization();
     while (reader.pos < end) {
@@ -195,13 +262,50 @@ export const GrantAuthorization = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GrantAuthorization>): GrantAuthorization {
+  fromPartial(object: Partial<GrantAuthorization>): GrantAuthorization {
     const message = createBaseGrantAuthorization();
     message.granter = object.granter ?? "";
     message.grantee = object.grantee ?? "";
     message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
     message.expiration = object.expiration ?? undefined;
     return message;
+  },
+  fromAmino(object: GrantAuthorizationAmino): GrantAuthorization {
+    return {
+      granter: object.granter,
+      grantee: object.grantee,
+      authorization: object?.authorization ? Any.fromAmino(object.authorization) : undefined,
+      expiration: object.expiration
+    };
+  },
+  toAmino(message: GrantAuthorization): GrantAuthorizationAmino {
+    const obj: any = {};
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    obj.authorization = message.authorization ? Any.toAmino(message.authorization) : undefined;
+    obj.expiration = message.expiration;
+    return obj;
+  },
+  fromAminoMsg(object: GrantAuthorizationAminoMsg): GrantAuthorization {
+    return GrantAuthorization.fromAmino(object.value);
+  },
+  toAminoMsg(message: GrantAuthorization): GrantAuthorizationAminoMsg {
+    return {
+      type: "cosmos-sdk/GrantAuthorization",
+      value: GrantAuthorization.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: GrantAuthorizationProtoMsg): GrantAuthorization {
+    return GrantAuthorization.decode(message.value);
+  },
+  toProto(message: GrantAuthorization): Uint8Array {
+    return GrantAuthorization.encode(message).finish();
+  },
+  toProtoMsg(message: GrantAuthorization): GrantAuthorizationProtoMsg {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.GrantAuthorization",
+      value: GrantAuthorization.encode(message).finish()
+    };
   }
 };
 function createBaseGrantQueueItem(): GrantQueueItem {
@@ -210,14 +314,15 @@ function createBaseGrantQueueItem(): GrantQueueItem {
   };
 }
 export const GrantQueueItem = {
-  encode(message: GrantQueueItem, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.authz.v1beta1.GrantQueueItem",
+  encode(message: GrantQueueItem, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.msgTypeUrls) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GrantQueueItem {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GrantQueueItem {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGrantQueueItem();
     while (reader.pos < end) {
@@ -233,9 +338,44 @@ export const GrantQueueItem = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GrantQueueItem>): GrantQueueItem {
+  fromPartial(object: Partial<GrantQueueItem>): GrantQueueItem {
     const message = createBaseGrantQueueItem();
     message.msgTypeUrls = object.msgTypeUrls?.map(e => e) || [];
     return message;
+  },
+  fromAmino(object: GrantQueueItemAmino): GrantQueueItem {
+    return {
+      msgTypeUrls: Array.isArray(object?.msg_type_urls) ? object.msg_type_urls.map((e: any) => e) : []
+    };
+  },
+  toAmino(message: GrantQueueItem): GrantQueueItemAmino {
+    const obj: any = {};
+    if (message.msgTypeUrls) {
+      obj.msg_type_urls = message.msgTypeUrls.map(e => e);
+    } else {
+      obj.msg_type_urls = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: GrantQueueItemAminoMsg): GrantQueueItem {
+    return GrantQueueItem.fromAmino(object.value);
+  },
+  toAminoMsg(message: GrantQueueItem): GrantQueueItemAminoMsg {
+    return {
+      type: "cosmos-sdk/GrantQueueItem",
+      value: GrantQueueItem.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: GrantQueueItemProtoMsg): GrantQueueItem {
+    return GrantQueueItem.decode(message.value);
+  },
+  toProto(message: GrantQueueItem): Uint8Array {
+    return GrantQueueItem.encode(message).finish();
+  },
+  toProtoMsg(message: GrantQueueItem): GrantQueueItemProtoMsg {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.GrantQueueItem",
+      value: GrantQueueItem.encode(message).finish()
+    };
   }
 };

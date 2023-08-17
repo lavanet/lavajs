@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AminoConverter = void 0;
 var _policy = require("../plans/policy");
-var _helpers = require("../../../helpers");
 var AminoConverter = {
   "/lavanet.lava.projects.MsgAddKeys": {
     aminoType: "/lavanet.lava.projects.MsgAddKeys",
@@ -134,10 +133,10 @@ var AminoConverter = {
               })
             };
           }),
-          geolocationProfile: _helpers.Long.fromString(policy.geolocation_profile),
-          totalCuLimit: _helpers.Long.fromString(policy.total_cu_limit),
-          epochCuLimit: _helpers.Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair),
+          geolocationProfile: BigInt(policy.geolocation_profile),
+          totalCuLimit: BigInt(policy.total_cu_limit),
+          epochCuLimit: BigInt(policy.epoch_cu_limit),
+          maxProvidersToPair: BigInt(policy.max_providers_to_pair),
           selectedProvidersMode: (0, _policy.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
           selectedProviders: policy.selected_providers
         }
@@ -205,10 +204,10 @@ var AminoConverter = {
               })
             };
           }),
-          geolocationProfile: _helpers.Long.fromString(policy.geolocation_profile),
-          totalCuLimit: _helpers.Long.fromString(policy.total_cu_limit),
-          epochCuLimit: _helpers.Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: _helpers.Long.fromString(policy.max_providers_to_pair),
+          geolocationProfile: BigInt(policy.geolocation_profile),
+          totalCuLimit: BigInt(policy.total_cu_limit),
+          epochCuLimit: BigInt(policy.epoch_cu_limit),
+          maxProvidersToPair: BigInt(policy.max_providers_to_pair),
           selectedProvidersMode: (0, _policy.sELECTED_PROVIDERS_MODEFromJSON)(policy.selected_providers_mode),
           selectedProviders: policy.selected_providers
         }

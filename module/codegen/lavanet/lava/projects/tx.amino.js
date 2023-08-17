@@ -1,5 +1,4 @@
 import { sELECTED_PROVIDERS_MODEFromJSON } from "../plans/policy";
-import { Long } from "../../../helpers";
 export const AminoConverter = {
   "/lavanet.lava.projects.MsgAddKeys": {
     aminoType: "/lavanet.lava.projects.MsgAddKeys",
@@ -118,10 +117,10 @@ export const AminoConverter = {
               extensions: el2.extensions
             }))
           })),
-          geolocationProfile: Long.fromString(policy.geolocation_profile),
-          totalCuLimit: Long.fromString(policy.total_cu_limit),
-          epochCuLimit: Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: Long.fromString(policy.max_providers_to_pair),
+          geolocationProfile: BigInt(policy.geolocation_profile),
+          totalCuLimit: BigInt(policy.total_cu_limit),
+          epochCuLimit: BigInt(policy.epoch_cu_limit),
+          maxProvidersToPair: BigInt(policy.max_providers_to_pair),
           selectedProvidersMode: sELECTED_PROVIDERS_MODEFromJSON(policy.selected_providers_mode),
           selectedProviders: policy.selected_providers
         }
@@ -183,10 +182,10 @@ export const AminoConverter = {
               extensions: el2.extensions
             }))
           })),
-          geolocationProfile: Long.fromString(policy.geolocation_profile),
-          totalCuLimit: Long.fromString(policy.total_cu_limit),
-          epochCuLimit: Long.fromString(policy.epoch_cu_limit),
-          maxProvidersToPair: Long.fromString(policy.max_providers_to_pair),
+          geolocationProfile: BigInt(policy.geolocation_profile),
+          totalCuLimit: BigInt(policy.total_cu_limit),
+          epochCuLimit: BigInt(policy.epoch_cu_limit),
+          maxProvidersToPair: BigInt(policy.max_providers_to_pair),
           selectedProvidersMode: sELECTED_PROVIDERS_MODEFromJSON(policy.selected_providers_mode),
           selectedProviders: policy.selected_providers
         }

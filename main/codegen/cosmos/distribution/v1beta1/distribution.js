@@ -1,15 +1,12 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ValidatorSlashEvents = exports.ValidatorSlashEvent = exports.ValidatorOutstandingRewards = exports.ValidatorHistoricalRewards = exports.ValidatorCurrentRewards = exports.ValidatorAccumulatedCommission = exports.Params = exports.FeePool = exports.DelegatorStartingInfo = exports.DelegationDelegatorReward = exports.CommunityPoolSpendProposalWithDeposit = exports.CommunityPoolSpendProposal = void 0;
 var _coin = require("../../base/v1beta1/coin");
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
+var _math = require("@cosmjs/math");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -160,16 +157,17 @@ function createBaseParams() {
   };
 }
 var Params = {
+  typeUrl: "/cosmos.distribution.v1beta1.Params",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.communityTax !== "") {
-      writer.uint32(10).string(message.communityTax);
+      writer.uint32(10).string(_math.Decimal.fromUserInput(message.communityTax, 18).atomics);
     }
     if (message.baseProposerReward !== "") {
-      writer.uint32(18).string(message.baseProposerReward);
+      writer.uint32(18).string(_math.Decimal.fromUserInput(message.baseProposerReward, 18).atomics);
     }
     if (message.bonusProposerReward !== "") {
-      writer.uint32(26).string(message.bonusProposerReward);
+      writer.uint32(26).string(_math.Decimal.fromUserInput(message.bonusProposerReward, 18).atomics);
     }
     if (message.withdrawAddrEnabled === true) {
       writer.uint32(32).bool(message.withdrawAddrEnabled);
@@ -177,20 +175,20 @@ var Params = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseParams();
     while (reader.pos < end) {
       var tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.communityTax = reader.string();
+          message.communityTax = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 2:
-          message.baseProposerReward = reader.string();
+          message.baseProposerReward = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
-          message.bonusProposerReward = reader.string();
+          message.bonusProposerReward = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 4:
           message.withdrawAddrEnabled = reader.bool();
@@ -210,6 +208,43 @@ var Params = {
     message.bonusProposerReward = (_object$bonusProposer = object.bonusProposerReward) !== null && _object$bonusProposer !== void 0 ? _object$bonusProposer : "";
     message.withdrawAddrEnabled = (_object$withdrawAddrE = object.withdrawAddrEnabled) !== null && _object$withdrawAddrE !== void 0 ? _object$withdrawAddrE : false;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      communityTax: object.community_tax,
+      baseProposerReward: object.base_proposer_reward,
+      bonusProposerReward: object.bonus_proposer_reward,
+      withdrawAddrEnabled: object.withdraw_addr_enabled
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.community_tax = message.communityTax;
+    obj.base_proposer_reward = message.baseProposerReward;
+    obj.bonus_proposer_reward = message.bonusProposerReward;
+    obj.withdraw_addr_enabled = message.withdrawAddrEnabled;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Params",
+      value: Params.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };
 exports.Params = Params;
@@ -220,8 +255,9 @@ function createBaseValidatorHistoricalRewards() {
   };
 }
 var ValidatorHistoricalRewards = {
+  typeUrl: "/cosmos.distribution.v1beta1.ValidatorHistoricalRewards",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.cumulativeRewardRatio),
       _step;
     try {
@@ -240,7 +276,7 @@ var ValidatorHistoricalRewards = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorHistoricalRewards();
     while (reader.pos < end) {
@@ -267,18 +303,60 @@ var ValidatorHistoricalRewards = {
     })) || [];
     message.referenceCount = (_object$referenceCoun = object.referenceCount) !== null && _object$referenceCoun !== void 0 ? _object$referenceCoun : 0;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      cumulativeRewardRatio: Array.isArray(object === null || object === void 0 ? void 0 : object.cumulative_reward_ratio) ? object.cumulative_reward_ratio.map(function (e) {
+        return _coin.DecCoin.fromAmino(e);
+      }) : [],
+      referenceCount: object.reference_count
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.cumulativeRewardRatio) {
+      obj.cumulative_reward_ratio = message.cumulativeRewardRatio.map(function (e) {
+        return e ? _coin.DecCoin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.cumulative_reward_ratio = [];
+    }
+    obj.reference_count = message.referenceCount;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorHistoricalRewards.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorHistoricalRewards",
+      value: ValidatorHistoricalRewards.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorHistoricalRewards.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorHistoricalRewards.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.ValidatorHistoricalRewards",
+      value: ValidatorHistoricalRewards.encode(message).finish()
+    };
   }
 };
 exports.ValidatorHistoricalRewards = ValidatorHistoricalRewards;
 function createBaseValidatorCurrentRewards() {
   return {
     rewards: [],
-    period: _helpers.Long.UZERO
+    period: BigInt(0)
   };
 }
 var ValidatorCurrentRewards = {
+  typeUrl: "/cosmos.distribution.v1beta1.ValidatorCurrentRewards",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator2 = _createForOfIteratorHelper(message.rewards),
       _step2;
     try {
@@ -291,13 +369,13 @@ var ValidatorCurrentRewards = {
     } finally {
       _iterator2.f();
     }
-    if (!message.period.isZero()) {
+    if (message.period !== BigInt(0)) {
       writer.uint32(16).uint64(message.period);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorCurrentRewards();
     while (reader.pos < end) {
@@ -322,8 +400,49 @@ var ValidatorCurrentRewards = {
     message.rewards = ((_object$rewards = object.rewards) === null || _object$rewards === void 0 ? void 0 : _object$rewards.map(function (e) {
       return _coin.DecCoin.fromPartial(e);
     })) || [];
-    message.period = object.period !== undefined && object.period !== null ? _helpers.Long.fromValue(object.period) : _helpers.Long.UZERO;
+    message.period = object.period !== undefined && object.period !== null ? BigInt(object.period.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(function (e) {
+        return _coin.DecCoin.fromAmino(e);
+      }) : [],
+      period: BigInt(object.period)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(function (e) {
+        return e ? _coin.DecCoin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.rewards = [];
+    }
+    obj.period = message.period ? message.period.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorCurrentRewards.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorCurrentRewards",
+      value: ValidatorCurrentRewards.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorCurrentRewards.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorCurrentRewards.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.ValidatorCurrentRewards",
+      value: ValidatorCurrentRewards.encode(message).finish()
+    };
   }
 };
 exports.ValidatorCurrentRewards = ValidatorCurrentRewards;
@@ -333,8 +452,9 @@ function createBaseValidatorAccumulatedCommission() {
   };
 }
 var ValidatorAccumulatedCommission = {
+  typeUrl: "/cosmos.distribution.v1beta1.ValidatorAccumulatedCommission",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator3 = _createForOfIteratorHelper(message.commission),
       _step3;
     try {
@@ -350,7 +470,7 @@ var ValidatorAccumulatedCommission = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorAccumulatedCommission();
     while (reader.pos < end) {
@@ -373,6 +493,45 @@ var ValidatorAccumulatedCommission = {
       return _coin.DecCoin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      commission: Array.isArray(object === null || object === void 0 ? void 0 : object.commission) ? object.commission.map(function (e) {
+        return _coin.DecCoin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.commission) {
+      obj.commission = message.commission.map(function (e) {
+        return e ? _coin.DecCoin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.commission = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorAccumulatedCommission.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorAccumulatedCommission",
+      value: ValidatorAccumulatedCommission.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorAccumulatedCommission.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorAccumulatedCommission.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.ValidatorAccumulatedCommission",
+      value: ValidatorAccumulatedCommission.encode(message).finish()
+    };
   }
 };
 exports.ValidatorAccumulatedCommission = ValidatorAccumulatedCommission;
@@ -382,8 +541,9 @@ function createBaseValidatorOutstandingRewards() {
   };
 }
 var ValidatorOutstandingRewards = {
+  typeUrl: "/cosmos.distribution.v1beta1.ValidatorOutstandingRewards",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator4 = _createForOfIteratorHelper(message.rewards),
       _step4;
     try {
@@ -399,7 +559,7 @@ var ValidatorOutstandingRewards = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorOutstandingRewards();
     while (reader.pos < end) {
@@ -422,28 +582,68 @@ var ValidatorOutstandingRewards = {
       return _coin.DecCoin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      rewards: Array.isArray(object === null || object === void 0 ? void 0 : object.rewards) ? object.rewards.map(function (e) {
+        return _coin.DecCoin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.rewards) {
+      obj.rewards = message.rewards.map(function (e) {
+        return e ? _coin.DecCoin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.rewards = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorOutstandingRewards.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorOutstandingRewards",
+      value: ValidatorOutstandingRewards.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorOutstandingRewards.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorOutstandingRewards.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.ValidatorOutstandingRewards",
+      value: ValidatorOutstandingRewards.encode(message).finish()
+    };
   }
 };
 exports.ValidatorOutstandingRewards = ValidatorOutstandingRewards;
 function createBaseValidatorSlashEvent() {
   return {
-    validatorPeriod: _helpers.Long.UZERO,
+    validatorPeriod: BigInt(0),
     fraction: ""
   };
 }
 var ValidatorSlashEvent = {
+  typeUrl: "/cosmos.distribution.v1beta1.ValidatorSlashEvent",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.validatorPeriod.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.validatorPeriod !== BigInt(0)) {
       writer.uint32(8).uint64(message.validatorPeriod);
     }
     if (message.fraction !== "") {
-      writer.uint32(18).string(message.fraction);
+      writer.uint32(18).string(_math.Decimal.fromUserInput(message.fraction, 18).atomics);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorSlashEvent();
     while (reader.pos < end) {
@@ -453,7 +653,7 @@ var ValidatorSlashEvent = {
           message.validatorPeriod = reader.uint64();
           break;
         case 2:
-          message.fraction = reader.string();
+          message.fraction = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -465,9 +665,42 @@ var ValidatorSlashEvent = {
   fromPartial: function fromPartial(object) {
     var _object$fraction;
     var message = createBaseValidatorSlashEvent();
-    message.validatorPeriod = object.validatorPeriod !== undefined && object.validatorPeriod !== null ? _helpers.Long.fromValue(object.validatorPeriod) : _helpers.Long.UZERO;
+    message.validatorPeriod = object.validatorPeriod !== undefined && object.validatorPeriod !== null ? BigInt(object.validatorPeriod.toString()) : BigInt(0);
     message.fraction = (_object$fraction = object.fraction) !== null && _object$fraction !== void 0 ? _object$fraction : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      validatorPeriod: BigInt(object.validator_period),
+      fraction: object.fraction
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.validator_period = message.validatorPeriod ? message.validatorPeriod.toString() : undefined;
+    obj.fraction = message.fraction;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorSlashEvent.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorSlashEvent",
+      value: ValidatorSlashEvent.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorSlashEvent.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorSlashEvent.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.ValidatorSlashEvent",
+      value: ValidatorSlashEvent.encode(message).finish()
+    };
   }
 };
 exports.ValidatorSlashEvent = ValidatorSlashEvent;
@@ -477,8 +710,9 @@ function createBaseValidatorSlashEvents() {
   };
 }
 var ValidatorSlashEvents = {
+  typeUrl: "/cosmos.distribution.v1beta1.ValidatorSlashEvents",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator5 = _createForOfIteratorHelper(message.validatorSlashEvents),
       _step5;
     try {
@@ -494,7 +728,7 @@ var ValidatorSlashEvents = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorSlashEvents();
     while (reader.pos < end) {
@@ -517,6 +751,45 @@ var ValidatorSlashEvents = {
       return ValidatorSlashEvent.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      validatorSlashEvents: Array.isArray(object === null || object === void 0 ? void 0 : object.validator_slash_events) ? object.validator_slash_events.map(function (e) {
+        return ValidatorSlashEvent.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.validatorSlashEvents) {
+      obj.validator_slash_events = message.validatorSlashEvents.map(function (e) {
+        return e ? ValidatorSlashEvent.toAmino(e) : undefined;
+      });
+    } else {
+      obj.validator_slash_events = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorSlashEvents.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorSlashEvents",
+      value: ValidatorSlashEvents.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorSlashEvents.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorSlashEvents.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.ValidatorSlashEvents",
+      value: ValidatorSlashEvents.encode(message).finish()
+    };
   }
 };
 exports.ValidatorSlashEvents = ValidatorSlashEvents;
@@ -526,8 +799,9 @@ function createBaseFeePool() {
   };
 }
 var FeePool = {
+  typeUrl: "/cosmos.distribution.v1beta1.FeePool",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator6 = _createForOfIteratorHelper(message.communityPool),
       _step6;
     try {
@@ -543,7 +817,7 @@ var FeePool = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseFeePool();
     while (reader.pos < end) {
@@ -566,6 +840,45 @@ var FeePool = {
       return _coin.DecCoin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      communityPool: Array.isArray(object === null || object === void 0 ? void 0 : object.community_pool) ? object.community_pool.map(function (e) {
+        return _coin.DecCoin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.communityPool) {
+      obj.community_pool = message.communityPool.map(function (e) {
+        return e ? _coin.DecCoin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.community_pool = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return FeePool.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/FeePool",
+      value: FeePool.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return FeePool.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return FeePool.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.FeePool",
+      value: FeePool.encode(message).finish()
+    };
   }
 };
 exports.FeePool = FeePool;
@@ -578,8 +891,9 @@ function createBaseCommunityPoolSpendProposal() {
   };
 }
 var CommunityPoolSpendProposal = {
+  typeUrl: "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -604,7 +918,7 @@ var CommunityPoolSpendProposal = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseCommunityPoolSpendProposal();
     while (reader.pos < end) {
@@ -639,32 +953,78 @@ var CommunityPoolSpendProposal = {
       return _coin.Coin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      title: object.title,
+      description: object.description,
+      recipient: object.recipient,
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    obj.recipient = message.recipient;
+    if (message.amount) {
+      obj.amount = message.amount.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.amount = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return CommunityPoolSpendProposal.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/CommunityPoolSpendProposal",
+      value: CommunityPoolSpendProposal.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return CommunityPoolSpendProposal.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return CommunityPoolSpendProposal.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      value: CommunityPoolSpendProposal.encode(message).finish()
+    };
   }
 };
 exports.CommunityPoolSpendProposal = CommunityPoolSpendProposal;
 function createBaseDelegatorStartingInfo() {
   return {
-    previousPeriod: _helpers.Long.UZERO,
+    previousPeriod: BigInt(0),
     stake: "",
-    height: _helpers.Long.UZERO
+    height: BigInt(0)
   };
 }
 var DelegatorStartingInfo = {
+  typeUrl: "/cosmos.distribution.v1beta1.DelegatorStartingInfo",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.previousPeriod.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.previousPeriod !== BigInt(0)) {
       writer.uint32(8).uint64(message.previousPeriod);
     }
     if (message.stake !== "") {
-      writer.uint32(18).string(message.stake);
+      writer.uint32(18).string(_math.Decimal.fromUserInput(message.stake, 18).atomics);
     }
-    if (!message.height.isZero()) {
+    if (message.height !== BigInt(0)) {
       writer.uint32(24).uint64(message.height);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseDelegatorStartingInfo();
     while (reader.pos < end) {
@@ -674,7 +1034,7 @@ var DelegatorStartingInfo = {
           message.previousPeriod = reader.uint64();
           break;
         case 2:
-          message.stake = reader.string();
+          message.stake = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
           message.height = reader.uint64();
@@ -689,10 +1049,45 @@ var DelegatorStartingInfo = {
   fromPartial: function fromPartial(object) {
     var _object$stake;
     var message = createBaseDelegatorStartingInfo();
-    message.previousPeriod = object.previousPeriod !== undefined && object.previousPeriod !== null ? _helpers.Long.fromValue(object.previousPeriod) : _helpers.Long.UZERO;
+    message.previousPeriod = object.previousPeriod !== undefined && object.previousPeriod !== null ? BigInt(object.previousPeriod.toString()) : BigInt(0);
     message.stake = (_object$stake = object.stake) !== null && _object$stake !== void 0 ? _object$stake : "";
-    message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.UZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      previousPeriod: BigInt(object.previous_period),
+      stake: object.stake,
+      height: BigInt(object.height)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.previous_period = message.previousPeriod ? message.previousPeriod.toString() : undefined;
+    obj.stake = message.stake;
+    obj.height = message.height ? message.height.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return DelegatorStartingInfo.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/DelegatorStartingInfo",
+      value: DelegatorStartingInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return DelegatorStartingInfo.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return DelegatorStartingInfo.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.DelegatorStartingInfo",
+      value: DelegatorStartingInfo.encode(message).finish()
+    };
   }
 };
 exports.DelegatorStartingInfo = DelegatorStartingInfo;
@@ -703,8 +1098,9 @@ function createBaseDelegationDelegatorReward() {
   };
 }
 var DelegationDelegatorReward = {
+  typeUrl: "/cosmos.distribution.v1beta1.DelegationDelegatorReward",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.validatorAddress !== "") {
       writer.uint32(10).string(message.validatorAddress);
     }
@@ -723,7 +1119,7 @@ var DelegationDelegatorReward = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseDelegationDelegatorReward();
     while (reader.pos < end) {
@@ -750,6 +1146,47 @@ var DelegationDelegatorReward = {
       return _coin.DecCoin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      validatorAddress: object.validator_address,
+      reward: Array.isArray(object === null || object === void 0 ? void 0 : object.reward) ? object.reward.map(function (e) {
+        return _coin.DecCoin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.validator_address = message.validatorAddress;
+    if (message.reward) {
+      obj.reward = message.reward.map(function (e) {
+        return e ? _coin.DecCoin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.reward = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return DelegationDelegatorReward.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/DelegationDelegatorReward",
+      value: DelegationDelegatorReward.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return DelegationDelegatorReward.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return DelegationDelegatorReward.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.DelegationDelegatorReward",
+      value: DelegationDelegatorReward.encode(message).finish()
+    };
   }
 };
 exports.DelegationDelegatorReward = DelegationDelegatorReward;
@@ -763,8 +1200,9 @@ function createBaseCommunityPoolSpendProposalWithDeposit() {
   };
 }
 var CommunityPoolSpendProposalWithDeposit = {
+  typeUrl: "/cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -783,7 +1221,7 @@ var CommunityPoolSpendProposalWithDeposit = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseCommunityPoolSpendProposalWithDeposit();
     while (reader.pos < end) {
@@ -820,6 +1258,45 @@ var CommunityPoolSpendProposalWithDeposit = {
     message.amount = (_object$amount2 = object.amount) !== null && _object$amount2 !== void 0 ? _object$amount2 : "";
     message.deposit = (_object$deposit = object.deposit) !== null && _object$deposit !== void 0 ? _object$deposit : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      title: object.title,
+      description: object.description,
+      recipient: object.recipient,
+      amount: object.amount,
+      deposit: object.deposit
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    obj.recipient = message.recipient;
+    obj.amount = message.amount;
+    obj.deposit = message.deposit;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return CommunityPoolSpendProposalWithDeposit.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/CommunityPoolSpendProposalWithDeposit",
+      value: CommunityPoolSpendProposalWithDeposit.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return CommunityPoolSpendProposalWithDeposit.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return CommunityPoolSpendProposalWithDeposit.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit",
+      value: CommunityPoolSpendProposalWithDeposit.encode(message).finish()
+    };
   }
 };
 exports.CommunityPoolSpendProposalWithDeposit = CommunityPoolSpendProposalWithDeposit;

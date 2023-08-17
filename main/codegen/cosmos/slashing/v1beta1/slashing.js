@@ -1,16 +1,13 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ValidatorSigningInfo = exports.Params = void 0;
 var _timestamp = require("../../../google/protobuf/timestamp");
 var _duration = require("../../../google/protobuf/duration");
+var _binary = require("../../../binary");
 var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /**
  * ValidatorSigningInfo defines a validator's signing info for monitoring their
  * liveness activity.
@@ -28,23 +25,24 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function createBaseValidatorSigningInfo() {
   return {
     address: "",
-    startHeight: _helpers.Long.ZERO,
-    indexOffset: _helpers.Long.ZERO,
-    jailedUntil: undefined,
+    startHeight: BigInt(0),
+    indexOffset: BigInt(0),
+    jailedUntil: new Date(),
     tombstoned: false,
-    missedBlocksCounter: _helpers.Long.ZERO
+    missedBlocksCounter: BigInt(0)
   };
 }
 var ValidatorSigningInfo = {
+  typeUrl: "/cosmos.slashing.v1beta1.ValidatorSigningInfo",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
-    if (!message.startHeight.isZero()) {
+    if (message.startHeight !== BigInt(0)) {
       writer.uint32(16).int64(message.startHeight);
     }
-    if (!message.indexOffset.isZero()) {
+    if (message.indexOffset !== BigInt(0)) {
       writer.uint32(24).int64(message.indexOffset);
     }
     if (message.jailedUntil !== undefined) {
@@ -53,13 +51,13 @@ var ValidatorSigningInfo = {
     if (message.tombstoned === true) {
       writer.uint32(40).bool(message.tombstoned);
     }
-    if (!message.missedBlocksCounter.isZero()) {
+    if (message.missedBlocksCounter !== BigInt(0)) {
       writer.uint32(48).int64(message.missedBlocksCounter);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorSigningInfo();
     while (reader.pos < end) {
@@ -94,28 +92,70 @@ var ValidatorSigningInfo = {
     var _object$address, _object$jailedUntil, _object$tombstoned;
     var message = createBaseValidatorSigningInfo();
     message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
-    message.startHeight = object.startHeight !== undefined && object.startHeight !== null ? _helpers.Long.fromValue(object.startHeight) : _helpers.Long.ZERO;
-    message.indexOffset = object.indexOffset !== undefined && object.indexOffset !== null ? _helpers.Long.fromValue(object.indexOffset) : _helpers.Long.ZERO;
+    message.startHeight = object.startHeight !== undefined && object.startHeight !== null ? BigInt(object.startHeight.toString()) : BigInt(0);
+    message.indexOffset = object.indexOffset !== undefined && object.indexOffset !== null ? BigInt(object.indexOffset.toString()) : BigInt(0);
     message.jailedUntil = (_object$jailedUntil = object.jailedUntil) !== null && _object$jailedUntil !== void 0 ? _object$jailedUntil : undefined;
     message.tombstoned = (_object$tombstoned = object.tombstoned) !== null && _object$tombstoned !== void 0 ? _object$tombstoned : false;
-    message.missedBlocksCounter = object.missedBlocksCounter !== undefined && object.missedBlocksCounter !== null ? _helpers.Long.fromValue(object.missedBlocksCounter) : _helpers.Long.ZERO;
+    message.missedBlocksCounter = object.missedBlocksCounter !== undefined && object.missedBlocksCounter !== null ? BigInt(object.missedBlocksCounter.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      address: object.address,
+      startHeight: BigInt(object.start_height),
+      indexOffset: BigInt(object.index_offset),
+      jailedUntil: object.jailed_until,
+      tombstoned: object.tombstoned,
+      missedBlocksCounter: BigInt(object.missed_blocks_counter)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.address = message.address;
+    obj.start_height = message.startHeight ? message.startHeight.toString() : undefined;
+    obj.index_offset = message.indexOffset ? message.indexOffset.toString() : undefined;
+    obj.jailed_until = message.jailedUntil;
+    obj.tombstoned = message.tombstoned;
+    obj.missed_blocks_counter = message.missedBlocksCounter ? message.missedBlocksCounter.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorSigningInfo.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorSigningInfo",
+      value: ValidatorSigningInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorSigningInfo.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorSigningInfo.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.ValidatorSigningInfo",
+      value: ValidatorSigningInfo.encode(message).finish()
+    };
   }
 };
 exports.ValidatorSigningInfo = ValidatorSigningInfo;
 function createBaseParams() {
   return {
-    signedBlocksWindow: _helpers.Long.ZERO,
+    signedBlocksWindow: BigInt(0),
     minSignedPerWindow: new Uint8Array(),
-    downtimeJailDuration: undefined,
+    downtimeJailDuration: _duration.Duration.fromPartial({}),
     slashFractionDoubleSign: new Uint8Array(),
     slashFractionDowntime: new Uint8Array()
   };
 }
 var Params = {
+  typeUrl: "/cosmos.slashing.v1beta1.Params",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.signedBlocksWindow.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.signedBlocksWindow !== BigInt(0)) {
       writer.uint32(8).int64(message.signedBlocksWindow);
     }
     if (message.minSignedPerWindow.length !== 0) {
@@ -133,7 +173,7 @@ var Params = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseParams();
     while (reader.pos < end) {
@@ -164,12 +204,51 @@ var Params = {
   fromPartial: function fromPartial(object) {
     var _object$minSignedPerW, _object$slashFraction, _object$slashFraction2;
     var message = createBaseParams();
-    message.signedBlocksWindow = object.signedBlocksWindow !== undefined && object.signedBlocksWindow !== null ? _helpers.Long.fromValue(object.signedBlocksWindow) : _helpers.Long.ZERO;
+    message.signedBlocksWindow = object.signedBlocksWindow !== undefined && object.signedBlocksWindow !== null ? BigInt(object.signedBlocksWindow.toString()) : BigInt(0);
     message.minSignedPerWindow = (_object$minSignedPerW = object.minSignedPerWindow) !== null && _object$minSignedPerW !== void 0 ? _object$minSignedPerW : new Uint8Array();
     message.downtimeJailDuration = object.downtimeJailDuration !== undefined && object.downtimeJailDuration !== null ? _duration.Duration.fromPartial(object.downtimeJailDuration) : undefined;
     message.slashFractionDoubleSign = (_object$slashFraction = object.slashFractionDoubleSign) !== null && _object$slashFraction !== void 0 ? _object$slashFraction : new Uint8Array();
     message.slashFractionDowntime = (_object$slashFraction2 = object.slashFractionDowntime) !== null && _object$slashFraction2 !== void 0 ? _object$slashFraction2 : new Uint8Array();
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      signedBlocksWindow: BigInt(object.signed_blocks_window),
+      minSignedPerWindow: object.min_signed_per_window,
+      downtimeJailDuration: object !== null && object !== void 0 && object.downtime_jail_duration ? _duration.Duration.fromAmino(object.downtime_jail_duration) : undefined,
+      slashFractionDoubleSign: object.slash_fraction_double_sign,
+      slashFractionDowntime: object.slash_fraction_downtime
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.signed_blocks_window = message.signedBlocksWindow ? message.signedBlocksWindow.toString() : undefined;
+    obj.min_signed_per_window = message.minSignedPerWindow;
+    obj.downtime_jail_duration = message.downtimeJailDuration ? _duration.Duration.toAmino(message.downtimeJailDuration) : undefined;
+    obj.slash_fraction_double_sign = message.slashFractionDoubleSign;
+    obj.slash_fraction_downtime = message.slashFractionDowntime;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Params",
+      value: Params.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };
 exports.Params = Params;

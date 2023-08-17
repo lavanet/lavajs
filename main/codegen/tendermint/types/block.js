@@ -1,26 +1,24 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Block = void 0;
 var _types = require("./types");
 var _evidence = require("./evidence");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../binary");
 function createBaseBlock() {
   return {
-    header: undefined,
-    data: undefined,
-    evidence: undefined,
-    lastCommit: undefined
+    header: _types.Header.fromPartial({}),
+    data: _types.Data.fromPartial({}),
+    evidence: _evidence.EvidenceList.fromPartial({}),
+    lastCommit: _types.Commit.fromPartial({})
   };
 }
 var Block = {
+  typeUrl: "/tendermint.types.Block",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.header !== undefined) {
       _types.Header.encode(message.header, writer.uint32(10).fork()).ldelim();
     }
@@ -36,7 +34,7 @@ var Block = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseBlock();
     while (reader.pos < end) {
@@ -68,6 +66,37 @@ var Block = {
     message.evidence = object.evidence !== undefined && object.evidence !== null ? _evidence.EvidenceList.fromPartial(object.evidence) : undefined;
     message.lastCommit = object.lastCommit !== undefined && object.lastCommit !== null ? _types.Commit.fromPartial(object.lastCommit) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      header: object !== null && object !== void 0 && object.header ? _types.Header.fromAmino(object.header) : undefined,
+      data: object !== null && object !== void 0 && object.data ? _types.Data.fromAmino(object.data) : undefined,
+      evidence: object !== null && object !== void 0 && object.evidence ? _evidence.EvidenceList.fromAmino(object.evidence) : undefined,
+      lastCommit: object !== null && object !== void 0 && object.last_commit ? _types.Commit.fromAmino(object.last_commit) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.header = message.header ? _types.Header.toAmino(message.header) : undefined;
+    obj.data = message.data ? _types.Data.toAmino(message.data) : undefined;
+    obj.evidence = message.evidence ? _evidence.EvidenceList.toAmino(message.evidence) : undefined;
+    obj.last_commit = message.lastCommit ? _types.Commit.toAmino(message.lastCommit) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Block.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Block.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Block.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Block",
+      value: Block.encode(message).finish()
+    };
   }
 };
 exports.Block = Block;

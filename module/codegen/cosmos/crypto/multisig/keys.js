@@ -1,6 +1,5 @@
 import { Any } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /**
  * LegacyAminoPubKey specifies a public key type
  * which nests multiple public keys and a threshold,
@@ -20,7 +19,8 @@ function createBaseLegacyAminoPubKey() {
   };
 }
 export const LegacyAminoPubKey = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.crypto.multisig.LegacyAminoPubKey",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.threshold !== 0) {
       writer.uint32(8).uint32(message.threshold);
     }
@@ -30,7 +30,7 @@ export const LegacyAminoPubKey = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLegacyAminoPubKey();
     while (reader.pos < end) {
@@ -55,5 +55,42 @@ export const LegacyAminoPubKey = {
     message.threshold = (_object$threshold = object.threshold) !== null && _object$threshold !== void 0 ? _object$threshold : 0;
     message.publicKeys = ((_object$publicKeys = object.publicKeys) === null || _object$publicKeys === void 0 ? void 0 : _object$publicKeys.map(e => Any.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      threshold: object.threshold,
+      publicKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.public_keys) ? object.public_keys.map(e => Any.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.threshold = message.threshold;
+    if (message.publicKeys) {
+      obj.public_keys = message.publicKeys.map(e => e ? Any.toAmino(e) : undefined);
+    } else {
+      obj.public_keys = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return LegacyAminoPubKey.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/LegacyAminoPubKey",
+      value: LegacyAminoPubKey.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return LegacyAminoPubKey.decode(message.value);
+  },
+  toProto(message) {
+    return LegacyAminoPubKey.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.crypto.multisig.LegacyAminoPubKey",
+      value: LegacyAminoPubKey.encode(message).finish()
+    };
   }
 };

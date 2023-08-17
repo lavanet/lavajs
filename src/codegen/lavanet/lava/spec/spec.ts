@@ -1,7 +1,7 @@
 import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { ApiCollection, ApiCollectionSDKType } from "./api_collection";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 export enum Spec_ProvidersTypes {
   dynamic = 0,
   static = 1,
@@ -41,11 +41,11 @@ export interface Spec {
   dataReliabilityEnabled: boolean;
   blockDistanceForFinalizedData: number;
   blocksInFinalizationProof: number;
-  averageBlockTime: Long;
-  allowedBlockLagForQosSync: Long;
-  blockLastUpdated: Long;
-  minStakeProvider?: Coin;
-  minStakeClient?: Coin;
+  averageBlockTime: bigint;
+  allowedBlockLagForQosSync: bigint;
+  blockLastUpdated: bigint;
+  minStakeProvider: Coin;
+  minStakeClient: Coin;
   providersTypes: Spec_ProvidersTypes;
   imports: string[];
   apiCollections: ApiCollection[];
@@ -58,11 +58,11 @@ export interface SpecSDKType {
   data_reliability_enabled: boolean;
   block_distance_for_finalized_data: number;
   blocks_in_finalization_proof: number;
-  average_block_time: Long;
-  allowed_block_lag_for_qos_sync: Long;
-  block_last_updated: Long;
-  min_stake_provider?: CoinSDKType;
-  min_stake_client?: CoinSDKType;
+  average_block_time: bigint;
+  allowed_block_lag_for_qos_sync: bigint;
+  block_last_updated: bigint;
+  min_stake_provider: CoinSDKType;
+  min_stake_client: CoinSDKType;
   providers_types: Spec_ProvidersTypes;
   imports: string[];
   api_collections: ApiCollectionSDKType[];
@@ -76,18 +76,19 @@ function createBaseSpec(): Spec {
     dataReliabilityEnabled: false,
     blockDistanceForFinalizedData: 0,
     blocksInFinalizationProof: 0,
-    averageBlockTime: Long.ZERO,
-    allowedBlockLagForQosSync: Long.ZERO,
-    blockLastUpdated: Long.UZERO,
-    minStakeProvider: undefined,
-    minStakeClient: undefined,
+    averageBlockTime: BigInt(0),
+    allowedBlockLagForQosSync: BigInt(0),
+    blockLastUpdated: BigInt(0),
+    minStakeProvider: Coin.fromPartial({}),
+    minStakeClient: Coin.fromPartial({}),
     providersTypes: 0,
     imports: [],
     apiCollections: []
   };
 }
 export const Spec = {
-  encode(message: Spec, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.Spec",
+  encode(message: Spec, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
@@ -109,13 +110,13 @@ export const Spec = {
     if (message.blocksInFinalizationProof !== 0) {
       writer.uint32(64).uint32(message.blocksInFinalizationProof);
     }
-    if (!message.averageBlockTime.isZero()) {
+    if (message.averageBlockTime !== BigInt(0)) {
       writer.uint32(72).int64(message.averageBlockTime);
     }
-    if (!message.allowedBlockLagForQosSync.isZero()) {
+    if (message.allowedBlockLagForQosSync !== BigInt(0)) {
       writer.uint32(80).int64(message.allowedBlockLagForQosSync);
     }
-    if (!message.blockLastUpdated.isZero()) {
+    if (message.blockLastUpdated !== BigInt(0)) {
       writer.uint32(88).uint64(message.blockLastUpdated);
     }
     if (message.minStakeProvider !== undefined) {
@@ -135,8 +136,8 @@ export const Spec = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Spec {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Spec {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSpec();
     while (reader.pos < end) {
@@ -164,13 +165,13 @@ export const Spec = {
           message.blocksInFinalizationProof = reader.uint32();
           break;
         case 9:
-          message.averageBlockTime = (reader.int64() as Long);
+          message.averageBlockTime = reader.int64();
           break;
         case 10:
-          message.allowedBlockLagForQosSync = (reader.int64() as Long);
+          message.allowedBlockLagForQosSync = reader.int64();
           break;
         case 11:
-          message.blockLastUpdated = (reader.uint64() as Long);
+          message.blockLastUpdated = reader.uint64();
           break;
         case 12:
           message.minStakeProvider = Coin.decode(reader, reader.uint32());
@@ -194,7 +195,7 @@ export const Spec = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Spec>): Spec {
+  fromPartial(object: Partial<Spec>): Spec {
     const message = createBaseSpec();
     message.index = object.index ?? "";
     message.name = object.name ?? "";
@@ -203,14 +204,75 @@ export const Spec = {
     message.dataReliabilityEnabled = object.dataReliabilityEnabled ?? false;
     message.blockDistanceForFinalizedData = object.blockDistanceForFinalizedData ?? 0;
     message.blocksInFinalizationProof = object.blocksInFinalizationProof ?? 0;
-    message.averageBlockTime = object.averageBlockTime !== undefined && object.averageBlockTime !== null ? Long.fromValue(object.averageBlockTime) : Long.ZERO;
-    message.allowedBlockLagForQosSync = object.allowedBlockLagForQosSync !== undefined && object.allowedBlockLagForQosSync !== null ? Long.fromValue(object.allowedBlockLagForQosSync) : Long.ZERO;
-    message.blockLastUpdated = object.blockLastUpdated !== undefined && object.blockLastUpdated !== null ? Long.fromValue(object.blockLastUpdated) : Long.UZERO;
+    message.averageBlockTime = object.averageBlockTime !== undefined && object.averageBlockTime !== null ? BigInt(object.averageBlockTime.toString()) : BigInt(0);
+    message.allowedBlockLagForQosSync = object.allowedBlockLagForQosSync !== undefined && object.allowedBlockLagForQosSync !== null ? BigInt(object.allowedBlockLagForQosSync.toString()) : BigInt(0);
+    message.blockLastUpdated = object.blockLastUpdated !== undefined && object.blockLastUpdated !== null ? BigInt(object.blockLastUpdated.toString()) : BigInt(0);
     message.minStakeProvider = object.minStakeProvider !== undefined && object.minStakeProvider !== null ? Coin.fromPartial(object.minStakeProvider) : undefined;
     message.minStakeClient = object.minStakeClient !== undefined && object.minStakeClient !== null ? Coin.fromPartial(object.minStakeClient) : undefined;
     message.providersTypes = object.providersTypes ?? 0;
     message.imports = object.imports?.map(e => e) || [];
     message.apiCollections = object.apiCollections?.map(e => ApiCollection.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: SpecAmino): Spec {
+    return {
+      index: object.index,
+      name: object.name,
+      enabled: object.enabled,
+      reliabilityThreshold: object.reliability_threshold,
+      dataReliabilityEnabled: object.data_reliability_enabled,
+      blockDistanceForFinalizedData: object.block_distance_for_finalized_data,
+      blocksInFinalizationProof: object.blocks_in_finalization_proof,
+      averageBlockTime: BigInt(object.average_block_time),
+      allowedBlockLagForQosSync: BigInt(object.allowed_block_lag_for_qos_sync),
+      blockLastUpdated: BigInt(object.block_last_updated),
+      minStakeProvider: object?.min_stake_provider ? Coin.fromAmino(object.min_stake_provider) : undefined,
+      minStakeClient: object?.min_stake_client ? Coin.fromAmino(object.min_stake_client) : undefined,
+      providersTypes: isSet(object.providers_types) ? spec_ProvidersTypesFromJSON(object.providers_types) : -1,
+      imports: Array.isArray(object?.imports) ? object.imports.map((e: any) => e) : [],
+      apiCollections: Array.isArray(object?.api_collections) ? object.api_collections.map((e: any) => ApiCollection.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: Spec): SpecAmino {
+    const obj: any = {};
+    obj.index = message.index;
+    obj.name = message.name;
+    obj.enabled = message.enabled;
+    obj.reliability_threshold = message.reliabilityThreshold;
+    obj.data_reliability_enabled = message.dataReliabilityEnabled;
+    obj.block_distance_for_finalized_data = message.blockDistanceForFinalizedData;
+    obj.blocks_in_finalization_proof = message.blocksInFinalizationProof;
+    obj.average_block_time = message.averageBlockTime ? message.averageBlockTime.toString() : undefined;
+    obj.allowed_block_lag_for_qos_sync = message.allowedBlockLagForQosSync ? message.allowedBlockLagForQosSync.toString() : undefined;
+    obj.block_last_updated = message.blockLastUpdated ? message.blockLastUpdated.toString() : undefined;
+    obj.min_stake_provider = message.minStakeProvider ? Coin.toAmino(message.minStakeProvider) : undefined;
+    obj.min_stake_client = message.minStakeClient ? Coin.toAmino(message.minStakeClient) : undefined;
+    obj.providers_types = message.providersTypes;
+    if (message.imports) {
+      obj.imports = message.imports.map(e => e);
+    } else {
+      obj.imports = [];
+    }
+    if (message.apiCollections) {
+      obj.api_collections = message.apiCollections.map(e => e ? ApiCollection.toAmino(e) : undefined);
+    } else {
+      obj.api_collections = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: SpecAminoMsg): Spec {
+    return Spec.fromAmino(object.value);
+  },
+  fromProtoMsg(message: SpecProtoMsg): Spec {
+    return Spec.decode(message.value);
+  },
+  toProto(message: Spec): Uint8Array {
+    return Spec.encode(message).finish();
+  },
+  toProtoMsg(message: Spec): SpecProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.Spec",
+      value: Spec.encode(message).finish()
+    };
   }
 };

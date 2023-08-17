@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.AminoConverter = void 0;
 var _amino = require("@cosmjs/amino");
 var _encoding = require("@cosmjs/encoding");
-var _helpers = require("../../../helpers");
 var AminoConverter = {
   "/cosmos.staking.v1beta1.MsgCreateValidator": {
     aminoType: "cosmos-sdk/MsgCreateValidator",
@@ -40,7 +39,7 @@ var AminoConverter = {
         },
         value: {
           denom: value.denom,
-          amount: _helpers.Long.fromValue(value.amount).toString()
+          amount: value.amount
         }
       };
     },
@@ -129,7 +128,7 @@ var AminoConverter = {
         validator_address: validatorAddress,
         amount: {
           denom: amount.denom,
-          amount: _helpers.Long.fromValue(amount.amount).toString()
+          amount: amount.amount
         }
       };
     },
@@ -160,7 +159,7 @@ var AminoConverter = {
         validator_dst_address: validatorDstAddress,
         amount: {
           denom: amount.denom,
-          amount: _helpers.Long.fromValue(amount.amount).toString()
+          amount: amount.amount
         }
       };
     },
@@ -191,7 +190,7 @@ var AminoConverter = {
         validator_address: validatorAddress,
         amount: {
           denom: amount.denom,
-          amount: _helpers.Long.fromValue(amount.amount).toString()
+          amount: amount.amount
         }
       };
     },

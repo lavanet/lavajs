@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-var _helpers = require("../../../helpers");
 var AminoConverter = {
   "/lavanet.lava.conflict.MsgDetection": {
     aminoType: "/lavanet.lava.conflict.MsgDetection",
@@ -198,7 +197,7 @@ var AminoConverter = {
           relayReply0: {
             data: finalizationConflict.relayReply0.data,
             sig: finalizationConflict.relayReply0.sig,
-            latestBlock: _helpers.Long.fromString(finalizationConflict.relayReply0.latest_block),
+            latestBlock: BigInt(finalizationConflict.relayReply0.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply0.finalized_blocks_hashes,
             sigBlocks: finalizationConflict.relayReply0.sig_blocks,
             metadata: finalizationConflict.relayReply0.metadata.map(function (el2) {
@@ -211,7 +210,7 @@ var AminoConverter = {
           relayReply1: {
             data: finalizationConflict.relayReply1.data,
             sig: finalizationConflict.relayReply1.sig,
-            latestBlock: _helpers.Long.fromString(finalizationConflict.relayReply1.latest_block),
+            latestBlock: BigInt(finalizationConflict.relayReply1.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply1.finalized_blocks_hashes,
             sigBlocks: finalizationConflict.relayReply1.sig_blocks,
             metadata: finalizationConflict.relayReply1.metadata.map(function (el2) {
@@ -228,22 +227,22 @@ var AminoConverter = {
               relaySession: {
                 specId: responseConflict.conflictRelayData0.request.relay_session.spec_id,
                 contentHash: responseConflict.conflictRelayData0.request.relay_session.content_hash,
-                sessionId: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_session.session_id),
-                cuSum: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_session.cu_sum),
+                sessionId: BigInt(responseConflict.conflictRelayData0.request.relay_session.session_id),
+                cuSum: BigInt(responseConflict.conflictRelayData0.request.relay_session.cu_sum),
                 provider: responseConflict.conflictRelayData0.request.relay_session.provider,
-                relayNum: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_session.relay_num),
+                relayNum: BigInt(responseConflict.conflictRelayData0.request.relay_session.relay_num),
                 qosReport: {
                   latency: responseConflict.conflictRelayData0.request.relay_session.qos_report.latency,
                   availability: responseConflict.conflictRelayData0.request.relay_session.qos_report.availability,
                   sync: responseConflict.conflictRelayData0.request.relay_session.qos_report.sync
                 },
-                epoch: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_session.epoch),
+                epoch: BigInt(responseConflict.conflictRelayData0.request.relay_session.epoch),
                 unresponsiveProviders: responseConflict.conflictRelayData0.request.relay_session.unresponsive_providers,
                 lavaChainId: responseConflict.conflictRelayData0.request.relay_session.lava_chain_id,
                 sig: responseConflict.conflictRelayData0.request.relay_session.sig,
                 badge: {
-                  cuAllocation: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_session.badge.cu_allocation),
-                  epoch: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_session.badge.epoch),
+                  cuAllocation: BigInt(responseConflict.conflictRelayData0.request.relay_session.badge.cu_allocation),
+                  epoch: BigInt(responseConflict.conflictRelayData0.request.relay_session.badge.epoch),
                   address: responseConflict.conflictRelayData0.request.relay_session.badge.address,
                   lavaChainId: responseConflict.conflictRelayData0.request.relay_session.badge.lava_chain_id,
                   projectSig: responseConflict.conflictRelayData0.request.relay_session.badge.project_sig
@@ -258,7 +257,7 @@ var AminoConverter = {
                 connectionType: responseConflict.conflictRelayData0.request.relay_data.connection_type,
                 apiUrl: responseConflict.conflictRelayData0.request.relay_data.api_url,
                 data: responseConflict.conflictRelayData0.request.relay_data.data,
-                requestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData0.request.relay_data.request_block),
+                requestBlock: BigInt(responseConflict.conflictRelayData0.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData0.request.relay_data.api_interface,
                 salt: responseConflict.conflictRelayData0.request.relay_data.salt,
                 metadata: responseConflict.conflictRelayData0.request.relay_data.metadata.map(function (el4) {
@@ -274,7 +273,7 @@ var AminoConverter = {
             reply: {
               hashAllDataHash: responseConflict.conflictRelayData0.reply.hash_all_data_hash,
               sig: responseConflict.conflictRelayData0.reply.sig,
-              latestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData0.reply.latest_block),
+              latestBlock: BigInt(responseConflict.conflictRelayData0.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData0.reply.finalized_blocks_hashes,
               sigBlocks: responseConflict.conflictRelayData0.reply.sig_blocks
             }
@@ -284,22 +283,22 @@ var AminoConverter = {
               relaySession: {
                 specId: responseConflict.conflictRelayData1.request.relay_session.spec_id,
                 contentHash: responseConflict.conflictRelayData1.request.relay_session.content_hash,
-                sessionId: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_session.session_id),
-                cuSum: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_session.cu_sum),
+                sessionId: BigInt(responseConflict.conflictRelayData1.request.relay_session.session_id),
+                cuSum: BigInt(responseConflict.conflictRelayData1.request.relay_session.cu_sum),
                 provider: responseConflict.conflictRelayData1.request.relay_session.provider,
-                relayNum: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_session.relay_num),
+                relayNum: BigInt(responseConflict.conflictRelayData1.request.relay_session.relay_num),
                 qosReport: {
                   latency: responseConflict.conflictRelayData1.request.relay_session.qos_report.latency,
                   availability: responseConflict.conflictRelayData1.request.relay_session.qos_report.availability,
                   sync: responseConflict.conflictRelayData1.request.relay_session.qos_report.sync
                 },
-                epoch: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_session.epoch),
+                epoch: BigInt(responseConflict.conflictRelayData1.request.relay_session.epoch),
                 unresponsiveProviders: responseConflict.conflictRelayData1.request.relay_session.unresponsive_providers,
                 lavaChainId: responseConflict.conflictRelayData1.request.relay_session.lava_chain_id,
                 sig: responseConflict.conflictRelayData1.request.relay_session.sig,
                 badge: {
-                  cuAllocation: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_session.badge.cu_allocation),
-                  epoch: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_session.badge.epoch),
+                  cuAllocation: BigInt(responseConflict.conflictRelayData1.request.relay_session.badge.cu_allocation),
+                  epoch: BigInt(responseConflict.conflictRelayData1.request.relay_session.badge.epoch),
                   address: responseConflict.conflictRelayData1.request.relay_session.badge.address,
                   lavaChainId: responseConflict.conflictRelayData1.request.relay_session.badge.lava_chain_id,
                   projectSig: responseConflict.conflictRelayData1.request.relay_session.badge.project_sig
@@ -314,7 +313,7 @@ var AminoConverter = {
                 connectionType: responseConflict.conflictRelayData1.request.relay_data.connection_type,
                 apiUrl: responseConflict.conflictRelayData1.request.relay_data.api_url,
                 data: responseConflict.conflictRelayData1.request.relay_data.data,
-                requestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData1.request.relay_data.request_block),
+                requestBlock: BigInt(responseConflict.conflictRelayData1.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData1.request.relay_data.api_interface,
                 salt: responseConflict.conflictRelayData1.request.relay_data.salt,
                 metadata: responseConflict.conflictRelayData1.request.relay_data.metadata.map(function (el4) {
@@ -330,7 +329,7 @@ var AminoConverter = {
             reply: {
               hashAllDataHash: responseConflict.conflictRelayData1.reply.hash_all_data_hash,
               sig: responseConflict.conflictRelayData1.reply.sig,
-              latestBlock: _helpers.Long.fromString(responseConflict.conflictRelayData1.reply.latest_block),
+              latestBlock: BigInt(responseConflict.conflictRelayData1.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData1.reply.finalized_blocks_hashes,
               sigBlocks: responseConflict.conflictRelayData1.reply.sig_blocks
             }
@@ -340,7 +339,7 @@ var AminoConverter = {
           relayReply0: {
             data: sameProviderConflict.relayReply0.data,
             sig: sameProviderConflict.relayReply0.sig,
-            latestBlock: _helpers.Long.fromString(sameProviderConflict.relayReply0.latest_block),
+            latestBlock: BigInt(sameProviderConflict.relayReply0.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply0.finalized_blocks_hashes,
             sigBlocks: sameProviderConflict.relayReply0.sig_blocks,
             metadata: sameProviderConflict.relayReply0.metadata.map(function (el2) {
@@ -353,7 +352,7 @@ var AminoConverter = {
           relayReply1: {
             data: sameProviderConflict.relayReply1.data,
             sig: sameProviderConflict.relayReply1.sig,
-            latestBlock: _helpers.Long.fromString(sameProviderConflict.relayReply1.latest_block),
+            latestBlock: BigInt(sameProviderConflict.relayReply1.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply1.finalized_blocks_hashes,
             sigBlocks: sameProviderConflict.relayReply1.sig_blocks,
             metadata: sameProviderConflict.relayReply1.metadata.map(function (el2) {
@@ -412,7 +411,7 @@ var AminoConverter = {
       return {
         creator: creator,
         voteID: voteID,
-        nonce: _helpers.Long.fromString(nonce),
+        nonce: BigInt(nonce),
         hash: hash
       };
     }

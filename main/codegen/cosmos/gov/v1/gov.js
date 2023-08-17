@@ -1,6 +1,5 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -13,10 +12,8 @@ var _coin = require("../../base/v1beta1/coin");
 var _any = require("../../../google/protobuf/any");
 var _timestamp = require("../../../google/protobuf/timestamp");
 var _duration = require("../../../google/protobuf/duration");
+var _binary = require("../../../binary");
 var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -183,8 +180,9 @@ function createBaseWeightedVoteOption() {
   };
 }
 var WeightedVoteOption = {
+  typeUrl: "/cosmos.gov.v1.WeightedVoteOption",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.option !== 0) {
       writer.uint32(8).int32(message.option);
     }
@@ -194,7 +192,7 @@ var WeightedVoteOption = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseWeightedVoteOption();
     while (reader.pos < end) {
@@ -219,20 +217,54 @@ var WeightedVoteOption = {
     message.option = (_object$option = object.option) !== null && _object$option !== void 0 ? _object$option : 0;
     message.weight = (_object$weight = object.weight) !== null && _object$weight !== void 0 ? _object$weight : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      option: (0, _helpers.isSet)(object.option) ? voteOptionFromJSON(object.option) : -1,
+      weight: object.weight
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.option = message.option;
+    obj.weight = message.weight;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return WeightedVoteOption.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/WeightedVoteOption",
+      value: WeightedVoteOption.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return WeightedVoteOption.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return WeightedVoteOption.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.WeightedVoteOption",
+      value: WeightedVoteOption.encode(message).finish()
+    };
   }
 };
 exports.WeightedVoteOption = WeightedVoteOption;
 function createBaseDeposit() {
   return {
-    proposalId: _helpers.Long.UZERO,
+    proposalId: BigInt(0),
     depositor: "",
     amount: []
   };
 }
 var Deposit = {
+  typeUrl: "/cosmos.gov.v1.Deposit",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.proposalId.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.depositor !== "") {
@@ -253,7 +285,7 @@ var Deposit = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseDeposit();
     while (reader.pos < end) {
@@ -278,33 +310,77 @@ var Deposit = {
   fromPartial: function fromPartial(object) {
     var _object$depositor, _object$amount;
     var message = createBaseDeposit();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? _helpers.Long.fromValue(object.proposalId) : _helpers.Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.depositor = (_object$depositor = object.depositor) !== null && _object$depositor !== void 0 ? _object$depositor : "";
     message.amount = ((_object$amount = object.amount) === null || _object$amount === void 0 ? void 0 : _object$amount.map(function (e) {
       return _coin.Coin.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      depositor: object.depositor,
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.depositor = message.depositor;
+    if (message.amount) {
+      obj.amount = message.amount.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.amount = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Deposit.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/Deposit",
+      value: Deposit.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Deposit.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Deposit.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.Deposit",
+      value: Deposit.encode(message).finish()
+    };
   }
 };
 exports.Deposit = Deposit;
 function createBaseProposal() {
   return {
-    id: _helpers.Long.UZERO,
+    id: BigInt(0),
     messages: [],
     status: 0,
-    finalTallyResult: undefined,
-    submitTime: undefined,
-    depositEndTime: undefined,
+    finalTallyResult: TallyResult.fromPartial({}),
+    submitTime: new Date(),
+    depositEndTime: new Date(),
     totalDeposit: [],
-    votingStartTime: undefined,
-    votingEndTime: undefined,
+    votingStartTime: new Date(),
+    votingEndTime: new Date(),
     metadata: ""
   };
 }
 var Proposal = {
+  typeUrl: "/cosmos.gov.v1.Proposal",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.id.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     var _iterator2 = _createForOfIteratorHelper(message.messages),
@@ -355,7 +431,7 @@ var Proposal = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseProposal();
     while (reader.pos < end) {
@@ -401,7 +477,7 @@ var Proposal = {
   fromPartial: function fromPartial(object) {
     var _object$messages, _object$status, _object$submitTime, _object$depositEndTim, _object$totalDeposit, _object$votingStartTi, _object$votingEndTime, _object$metadata;
     var message = createBaseProposal();
-    message.id = object.id !== undefined && object.id !== null ? _helpers.Long.fromValue(object.id) : _helpers.Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     message.messages = ((_object$messages = object.messages) === null || _object$messages === void 0 ? void 0 : _object$messages.map(function (e) {
       return _any.Any.fromPartial(e);
     })) || [];
@@ -416,6 +492,71 @@ var Proposal = {
     message.votingEndTime = (_object$votingEndTime = object.votingEndTime) !== null && _object$votingEndTime !== void 0 ? _object$votingEndTime : undefined;
     message.metadata = (_object$metadata = object.metadata) !== null && _object$metadata !== void 0 ? _object$metadata : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      id: BigInt(object.id),
+      messages: Array.isArray(object === null || object === void 0 ? void 0 : object.messages) ? object.messages.map(function (e) {
+        return _any.Any.fromAmino(e);
+      }) : [],
+      status: (0, _helpers.isSet)(object.status) ? proposalStatusFromJSON(object.status) : -1,
+      finalTallyResult: object !== null && object !== void 0 && object.final_tally_result ? TallyResult.fromAmino(object.final_tally_result) : undefined,
+      submitTime: object.submit_time,
+      depositEndTime: object.deposit_end_time,
+      totalDeposit: Array.isArray(object === null || object === void 0 ? void 0 : object.total_deposit) ? object.total_deposit.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : [],
+      votingStartTime: object.voting_start_time,
+      votingEndTime: object.voting_end_time,
+      metadata: object.metadata
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.id = message.id ? message.id.toString() : undefined;
+    if (message.messages) {
+      obj.messages = message.messages.map(function (e) {
+        return e ? _any.Any.toAmino(e) : undefined;
+      });
+    } else {
+      obj.messages = [];
+    }
+    obj.status = message.status;
+    obj.final_tally_result = message.finalTallyResult ? TallyResult.toAmino(message.finalTallyResult) : undefined;
+    obj.submit_time = message.submitTime;
+    obj.deposit_end_time = message.depositEndTime;
+    if (message.totalDeposit) {
+      obj.total_deposit = message.totalDeposit.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.total_deposit = [];
+    }
+    obj.voting_start_time = message.votingStartTime;
+    obj.voting_end_time = message.votingEndTime;
+    obj.metadata = message.metadata;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Proposal.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/Proposal",
+      value: Proposal.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Proposal.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Proposal.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.Proposal",
+      value: Proposal.encode(message).finish()
+    };
   }
 };
 exports.Proposal = Proposal;
@@ -428,8 +569,9 @@ function createBaseTallyResult() {
   };
 }
 var TallyResult = {
+  typeUrl: "/cosmos.gov.v1.TallyResult",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.yesCount !== "") {
       writer.uint32(10).string(message.yesCount);
     }
@@ -445,7 +587,7 @@ var TallyResult = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTallyResult();
     while (reader.pos < end) {
@@ -478,21 +620,59 @@ var TallyResult = {
     message.noCount = (_object$noCount = object.noCount) !== null && _object$noCount !== void 0 ? _object$noCount : "";
     message.noWithVetoCount = (_object$noWithVetoCou = object.noWithVetoCount) !== null && _object$noWithVetoCou !== void 0 ? _object$noWithVetoCou : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      yesCount: object.yes_count,
+      abstainCount: object.abstain_count,
+      noCount: object.no_count,
+      noWithVetoCount: object.no_with_veto_count
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.yes_count = message.yesCount;
+    obj.abstain_count = message.abstainCount;
+    obj.no_count = message.noCount;
+    obj.no_with_veto_count = message.noWithVetoCount;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return TallyResult.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/TallyResult",
+      value: TallyResult.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return TallyResult.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return TallyResult.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.TallyResult",
+      value: TallyResult.encode(message).finish()
+    };
   }
 };
 exports.TallyResult = TallyResult;
 function createBaseVote() {
   return {
-    proposalId: _helpers.Long.UZERO,
+    proposalId: BigInt(0),
     voter: "",
     options: [],
     metadata: ""
   };
 }
 var Vote = {
+  typeUrl: "/cosmos.gov.v1.Vote",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.proposalId.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.voter !== "") {
@@ -516,7 +696,7 @@ var Vote = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseVote();
     while (reader.pos < end) {
@@ -544,25 +724,71 @@ var Vote = {
   fromPartial: function fromPartial(object) {
     var _object$voter, _object$options, _object$metadata2;
     var message = createBaseVote();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? _helpers.Long.fromValue(object.proposalId) : _helpers.Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.voter = (_object$voter = object.voter) !== null && _object$voter !== void 0 ? _object$voter : "";
     message.options = ((_object$options = object.options) === null || _object$options === void 0 ? void 0 : _object$options.map(function (e) {
       return WeightedVoteOption.fromPartial(e);
     })) || [];
     message.metadata = (_object$metadata2 = object.metadata) !== null && _object$metadata2 !== void 0 ? _object$metadata2 : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      voter: object.voter,
+      options: Array.isArray(object === null || object === void 0 ? void 0 : object.options) ? object.options.map(function (e) {
+        return WeightedVoteOption.fromAmino(e);
+      }) : [],
+      metadata: object.metadata
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.voter = message.voter;
+    if (message.options) {
+      obj.options = message.options.map(function (e) {
+        return e ? WeightedVoteOption.toAmino(e) : undefined;
+      });
+    } else {
+      obj.options = [];
+    }
+    obj.metadata = message.metadata;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Vote.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/Vote",
+      value: Vote.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Vote.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Vote.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.Vote",
+      value: Vote.encode(message).finish()
+    };
   }
 };
 exports.Vote = Vote;
 function createBaseDepositParams() {
   return {
     minDeposit: [],
-    maxDepositPeriod: undefined
+    maxDepositPeriod: _duration.Duration.fromPartial({})
   };
 }
 var DepositParams = {
+  typeUrl: "/cosmos.gov.v1.DepositParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator5 = _createForOfIteratorHelper(message.minDeposit),
       _step5;
     try {
@@ -581,7 +807,7 @@ var DepositParams = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseDepositParams();
     while (reader.pos < end) {
@@ -608,24 +834,66 @@ var DepositParams = {
     })) || [];
     message.maxDepositPeriod = object.maxDepositPeriod !== undefined && object.maxDepositPeriod !== null ? _duration.Duration.fromPartial(object.maxDepositPeriod) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      minDeposit: Array.isArray(object === null || object === void 0 ? void 0 : object.min_deposit) ? object.min_deposit.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : [],
+      maxDepositPeriod: object !== null && object !== void 0 && object.max_deposit_period ? _duration.Duration.fromAmino(object.max_deposit_period) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.minDeposit) {
+      obj.min_deposit = message.minDeposit.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.min_deposit = [];
+    }
+    obj.max_deposit_period = message.maxDepositPeriod ? _duration.Duration.toAmino(message.maxDepositPeriod) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return DepositParams.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/DepositParams",
+      value: DepositParams.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return DepositParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return DepositParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.DepositParams",
+      value: DepositParams.encode(message).finish()
+    };
   }
 };
 exports.DepositParams = DepositParams;
 function createBaseVotingParams() {
   return {
-    votingPeriod: undefined
+    votingPeriod: _duration.Duration.fromPartial({})
   };
 }
 var VotingParams = {
+  typeUrl: "/cosmos.gov.v1.VotingParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.votingPeriod !== undefined) {
       _duration.Duration.encode(message.votingPeriod, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseVotingParams();
     while (reader.pos < end) {
@@ -645,6 +913,37 @@ var VotingParams = {
     var message = createBaseVotingParams();
     message.votingPeriod = object.votingPeriod !== undefined && object.votingPeriod !== null ? _duration.Duration.fromPartial(object.votingPeriod) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      votingPeriod: object !== null && object !== void 0 && object.voting_period ? _duration.Duration.fromAmino(object.voting_period) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.voting_period = message.votingPeriod ? _duration.Duration.toAmino(message.votingPeriod) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return VotingParams.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/VotingParams",
+      value: VotingParams.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return VotingParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return VotingParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.VotingParams",
+      value: VotingParams.encode(message).finish()
+    };
   }
 };
 exports.VotingParams = VotingParams;
@@ -656,8 +955,9 @@ function createBaseTallyParams() {
   };
 }
 var TallyParams = {
+  typeUrl: "/cosmos.gov.v1.TallyParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.quorum !== "") {
       writer.uint32(10).string(message.quorum);
     }
@@ -670,7 +970,7 @@ var TallyParams = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTallyParams();
     while (reader.pos < end) {
@@ -699,6 +999,41 @@ var TallyParams = {
     message.threshold = (_object$threshold = object.threshold) !== null && _object$threshold !== void 0 ? _object$threshold : "";
     message.vetoThreshold = (_object$vetoThreshold = object.vetoThreshold) !== null && _object$vetoThreshold !== void 0 ? _object$vetoThreshold : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      quorum: object.quorum,
+      threshold: object.threshold,
+      vetoThreshold: object.veto_threshold
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.quorum = message.quorum;
+    obj.threshold = message.threshold;
+    obj.veto_threshold = message.vetoThreshold;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return TallyParams.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/v1/TallyParams",
+      value: TallyParams.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return TallyParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return TallyParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1.TallyParams",
+      value: TallyParams.encode(message).finish()
+    };
   }
 };
 exports.TallyParams = TallyParams;

@@ -1,6 +1,5 @@
 import { Duration } from "../../../../google/protobuf/duration";
-import { Long } from "../../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 /** Params defines the parameters of the downtime module. */
 
 /** Params defines the parameters of the downtime module. */
@@ -21,18 +20,19 @@ import * as _m0 from "protobufjs/minimal";
 
 function createBaseParams() {
   return {
-    downtimeDuration: undefined
+    downtimeDuration: Duration.fromPartial({})
   };
 }
 export const Params = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.downtime.v1.Params",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.downtimeDuration !== undefined) {
       Duration.encode(message.downtimeDuration, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
     while (reader.pos < end) {
@@ -52,17 +52,43 @@ export const Params = {
     const message = createBaseParams();
     message.downtimeDuration = object.downtimeDuration !== undefined && object.downtimeDuration !== null ? Duration.fromPartial(object.downtimeDuration) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      downtimeDuration: object !== null && object !== void 0 && object.downtime_duration ? Duration.fromAmino(object.downtime_duration) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.downtime_duration = message.downtimeDuration ? Duration.toAmino(message.downtimeDuration) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.downtime.v1.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };
 function createBaseDowntime() {
   return {
-    block: Long.UZERO,
-    duration: undefined
+    block: BigInt(0),
+    duration: Duration.fromPartial({})
   };
 }
 export const Downtime = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.block.isZero()) {
+  typeUrl: "/lavanet.lava.downtime.v1.Downtime",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.block !== BigInt(0)) {
       writer.uint32(8).uint64(message.block);
     }
     if (message.duration !== undefined) {
@@ -71,7 +97,7 @@ export const Downtime = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDowntime();
     while (reader.pos < end) {
@@ -92,29 +118,57 @@ export const Downtime = {
   },
   fromPartial(object) {
     const message = createBaseDowntime();
-    message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
     message.duration = object.duration !== undefined && object.duration !== null ? Duration.fromPartial(object.duration) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      block: BigInt(object.block),
+      duration: object !== null && object !== void 0 && object.duration ? Duration.fromAmino(object.duration) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.block = message.block ? message.block.toString() : undefined;
+    obj.duration = message.duration ? Duration.toAmino(message.duration) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Downtime.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Downtime.decode(message.value);
+  },
+  toProto(message) {
+    return Downtime.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.downtime.v1.Downtime",
+      value: Downtime.encode(message).finish()
+    };
   }
 };
 function createBaseDowntimeGarbageCollection() {
   return {
-    block: Long.UZERO,
-    gcBlock: Long.UZERO
+    block: BigInt(0),
+    gcBlock: BigInt(0)
   };
 }
 export const DowntimeGarbageCollection = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.block.isZero()) {
+  typeUrl: "/lavanet.lava.downtime.v1.DowntimeGarbageCollection",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.block !== BigInt(0)) {
       writer.uint32(8).uint64(message.block);
     }
-    if (!message.gcBlock.isZero()) {
+    if (message.gcBlock !== BigInt(0)) {
       writer.uint32(16).uint64(message.gcBlock);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDowntimeGarbageCollection();
     while (reader.pos < end) {
@@ -135,8 +189,35 @@ export const DowntimeGarbageCollection = {
   },
   fromPartial(object) {
     const message = createBaseDowntimeGarbageCollection();
-    message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
-    message.gcBlock = object.gcBlock !== undefined && object.gcBlock !== null ? Long.fromValue(object.gcBlock) : Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
+    message.gcBlock = object.gcBlock !== undefined && object.gcBlock !== null ? BigInt(object.gcBlock.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      block: BigInt(object.block),
+      gcBlock: BigInt(object.gc_block)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.block = message.block ? message.block.toString() : undefined;
+    obj.gc_block = message.gcBlock ? message.gcBlock.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return DowntimeGarbageCollection.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return DowntimeGarbageCollection.decode(message.value);
+  },
+  toProto(message) {
+    return DowntimeGarbageCollection.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.downtime.v1.DowntimeGarbageCollection",
+      value: DowntimeGarbageCollection.encode(message).finish()
+    };
   }
 };

@@ -1,6 +1,5 @@
 import { FinalizationConflict, ResponseConflict } from "./conflict_data";
-import { Long } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** TODO:: change coin type to another proto (define proto in another file int this directory) */
 
 /** TODO:: change coin type to another proto (define proto in another file int this directory) */
@@ -8,13 +7,14 @@ import * as _m0 from "protobufjs/minimal";
 function createBaseMsgDetection() {
   return {
     creator: "",
-    finalizationConflict: undefined,
-    responseConflict: undefined,
-    sameProviderConflict: undefined
+    finalizationConflict: FinalizationConflict.fromPartial({}),
+    responseConflict: ResponseConflict.fromPartial({}),
+    sameProviderConflict: FinalizationConflict.fromPartial({})
   };
 }
 export const MsgDetection = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.MsgDetection",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -30,7 +30,7 @@ export const MsgDetection = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDetection();
     while (reader.pos < end) {
@@ -63,17 +63,49 @@ export const MsgDetection = {
     message.responseConflict = object.responseConflict !== undefined && object.responseConflict !== null ? ResponseConflict.fromPartial(object.responseConflict) : undefined;
     message.sameProviderConflict = object.sameProviderConflict !== undefined && object.sameProviderConflict !== null ? FinalizationConflict.fromPartial(object.sameProviderConflict) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      finalizationConflict: object !== null && object !== void 0 && object.finalizationConflict ? FinalizationConflict.fromAmino(object.finalizationConflict) : undefined,
+      responseConflict: object !== null && object !== void 0 && object.responseConflict ? ResponseConflict.fromAmino(object.responseConflict) : undefined,
+      sameProviderConflict: object !== null && object !== void 0 && object.sameProviderConflict ? FinalizationConflict.fromAmino(object.sameProviderConflict) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.finalizationConflict = message.finalizationConflict ? FinalizationConflict.toAmino(message.finalizationConflict) : undefined;
+    obj.responseConflict = message.responseConflict ? ResponseConflict.toAmino(message.responseConflict) : undefined;
+    obj.sameProviderConflict = message.sameProviderConflict ? FinalizationConflict.toAmino(message.sameProviderConflict) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDetection.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgDetection.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDetection.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.MsgDetection",
+      value: MsgDetection.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDetectionResponse() {
   return {};
 }
 export const MsgDetectionResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.MsgDetectionResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDetectionResponse();
     while (reader.pos < end) {
@@ -89,6 +121,28 @@ export const MsgDetectionResponse = {
   fromPartial(_) {
     const message = createBaseMsgDetectionResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDetectionResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgDetectionResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDetectionResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.MsgDetectionResponse",
+      value: MsgDetectionResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgConflictVoteCommit() {
@@ -99,7 +153,8 @@ function createBaseMsgConflictVoteCommit() {
   };
 }
 export const MsgConflictVoteCommit = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -112,7 +167,7 @@ export const MsgConflictVoteCommit = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConflictVoteCommit();
     while (reader.pos < end) {
@@ -141,17 +196,47 @@ export const MsgConflictVoteCommit = {
     message.voteID = (_object$voteID = object.voteID) !== null && _object$voteID !== void 0 ? _object$voteID : "";
     message.hash = (_object$hash = object.hash) !== null && _object$hash !== void 0 ? _object$hash : new Uint8Array();
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      voteID: object.voteID,
+      hash: object.hash
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.voteID = message.voteID;
+    obj.hash = message.hash;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgConflictVoteCommit.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgConflictVoteCommit.decode(message.value);
+  },
+  toProto(message) {
+    return MsgConflictVoteCommit.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommit",
+      value: MsgConflictVoteCommit.encode(message).finish()
+    };
   }
 };
 function createBaseMsgConflictVoteCommitResponse() {
   return {};
 }
 export const MsgConflictVoteCommitResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommitResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConflictVoteCommitResponse();
     while (reader.pos < end) {
@@ -167,25 +252,48 @@ export const MsgConflictVoteCommitResponse = {
   fromPartial(_) {
     const message = createBaseMsgConflictVoteCommitResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgConflictVoteCommitResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgConflictVoteCommitResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgConflictVoteCommitResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.MsgConflictVoteCommitResponse",
+      value: MsgConflictVoteCommitResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgConflictVoteReveal() {
   return {
     creator: "",
     voteID: "",
-    nonce: Long.ZERO,
+    nonce: BigInt(0),
     hash: new Uint8Array()
   };
 }
 export const MsgConflictVoteReveal = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     if (message.voteID !== "") {
       writer.uint32(18).string(message.voteID);
     }
-    if (!message.nonce.isZero()) {
+    if (message.nonce !== BigInt(0)) {
       writer.uint32(24).int64(message.nonce);
     }
     if (message.hash.length !== 0) {
@@ -194,7 +302,7 @@ export const MsgConflictVoteReveal = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConflictVoteReveal();
     while (reader.pos < end) {
@@ -224,20 +332,52 @@ export const MsgConflictVoteReveal = {
     const message = createBaseMsgConflictVoteReveal();
     message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
     message.voteID = (_object$voteID2 = object.voteID) !== null && _object$voteID2 !== void 0 ? _object$voteID2 : "";
-    message.nonce = object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.ZERO;
+    message.nonce = object.nonce !== undefined && object.nonce !== null ? BigInt(object.nonce.toString()) : BigInt(0);
     message.hash = (_object$hash2 = object.hash) !== null && _object$hash2 !== void 0 ? _object$hash2 : new Uint8Array();
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      voteID: object.voteID,
+      nonce: BigInt(object.nonce),
+      hash: object.hash
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.voteID = message.voteID;
+    obj.nonce = message.nonce ? message.nonce.toString() : undefined;
+    obj.hash = message.hash;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgConflictVoteReveal.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgConflictVoteReveal.decode(message.value);
+  },
+  toProto(message) {
+    return MsgConflictVoteReveal.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.MsgConflictVoteReveal",
+      value: MsgConflictVoteReveal.encode(message).finish()
+    };
   }
 };
 function createBaseMsgConflictVoteRevealResponse() {
   return {};
 }
 export const MsgConflictVoteRevealResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.conflict.MsgConflictVoteRevealResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConflictVoteRevealResponse();
     while (reader.pos < end) {
@@ -253,5 +393,27 @@ export const MsgConflictVoteRevealResponse = {
   fromPartial(_) {
     const message = createBaseMsgConflictVoteRevealResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgConflictVoteRevealResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgConflictVoteRevealResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgConflictVoteRevealResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.conflict.MsgConflictVoteRevealResponse",
+      value: MsgConflictVoteRevealResponse.encode(message).finish()
+    };
   }
 };

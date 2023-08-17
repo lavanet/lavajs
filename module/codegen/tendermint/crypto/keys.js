@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../binary";
 /** PublicKey defines the keys available for use with Tendermint Validators */
 
 /** PublicKey defines the keys available for use with Tendermint Validators */
@@ -11,7 +10,8 @@ function createBasePublicKey() {
   };
 }
 export const PublicKey = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/tendermint.crypto.PublicKey",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.ed25519 !== undefined) {
       writer.uint32(10).bytes(message.ed25519);
     }
@@ -21,7 +21,7 @@ export const PublicKey = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePublicKey();
     while (reader.pos < end) {
@@ -46,5 +46,32 @@ export const PublicKey = {
     message.ed25519 = (_object$ed = object.ed25519) !== null && _object$ed !== void 0 ? _object$ed : undefined;
     message.secp256k1 = (_object$secp256k = object.secp256k1) !== null && _object$secp256k !== void 0 ? _object$secp256k : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      ed25519: object === null || object === void 0 ? void 0 : object.ed25519,
+      secp256k1: object === null || object === void 0 ? void 0 : object.secp256k1
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.ed25519 = message.ed25519;
+    obj.secp256k1 = message.secp256k1;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return PublicKey.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return PublicKey.decode(message.value);
+  },
+  toProto(message) {
+    return PublicKey.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.crypto.PublicKey",
+      value: PublicKey.encode(message).finish()
+    };
   }
 };

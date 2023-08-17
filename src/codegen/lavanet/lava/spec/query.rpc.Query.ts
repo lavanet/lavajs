@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryParamsRequest, QueryParamsResponse, QueryGetSpecRequest, QueryGetSpecResponse, QueryAllSpecRequest, QueryAllSpecResponse, QueryShowAllChainsRequest, QueryShowAllChainsResponse, QueryShowChainInfoRequest, QueryShowChainInfoResponse } from "./query";
 /** Query defines the gRPC querier service. */
@@ -34,41 +34,41 @@ export class QueryClientImpl implements Query {
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.spec.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   spec(request: QueryGetSpecRequest): Promise<QueryGetSpecResponse> {
     const data = QueryGetSpecRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.spec.Query", "Spec", data);
-    return promise.then(data => QueryGetSpecResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetSpecResponse.decode(new BinaryReader(data)));
   }
   specAll(request: QueryAllSpecRequest = {
     pagination: undefined
   }): Promise<QueryAllSpecResponse> {
     const data = QueryAllSpecRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.spec.Query", "SpecAll", data);
-    return promise.then(data => QueryAllSpecResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAllSpecResponse.decode(new BinaryReader(data)));
   }
   specRaw(request: QueryGetSpecRequest): Promise<QueryGetSpecResponse> {
     const data = QueryGetSpecRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.spec.Query", "SpecRaw", data);
-    return promise.then(data => QueryGetSpecResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetSpecResponse.decode(new BinaryReader(data)));
   }
   specAllRaw(request: QueryAllSpecRequest = {
     pagination: undefined
   }): Promise<QueryAllSpecResponse> {
     const data = QueryAllSpecRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.spec.Query", "SpecAllRaw", data);
-    return promise.then(data => QueryAllSpecResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAllSpecResponse.decode(new BinaryReader(data)));
   }
   showAllChains(request: QueryShowAllChainsRequest = {}): Promise<QueryShowAllChainsResponse> {
     const data = QueryShowAllChainsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.spec.Query", "ShowAllChains", data);
-    return promise.then(data => QueryShowAllChainsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryShowAllChainsResponse.decode(new BinaryReader(data)));
   }
   showChainInfo(request: QueryShowChainInfoRequest): Promise<QueryShowChainInfoResponse> {
     const data = QueryShowChainInfoRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.spec.Query", "ShowChainInfo", data);
-    return promise.then(data => QueryShowChainInfoResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryShowChainInfoResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {

@@ -1,7 +1,6 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -9,11 +8,9 @@ exports.createRpcQueryExtension = exports.QueryClientImpl = void 0;
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _binary = require("../../../binary");
 var _stargate = require("@cosmjs/stargate");
 var _query = require("./query");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** Query defines the gRPC querier service. */
 var QueryClientImpl = /*#__PURE__*/function () {
   function QueryClientImpl(rpc) {
@@ -35,7 +32,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryParamsRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.spec.Query", "Params", data);
       return promise.then(function (data) {
-        return _query.QueryParamsResponse.decode(new _m0.Reader(data));
+        return _query.QueryParamsResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -44,7 +41,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryGetSpecRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.spec.Query", "Spec", data);
       return promise.then(function (data) {
-        return _query.QueryGetSpecResponse.decode(new _m0.Reader(data));
+        return _query.QueryGetSpecResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -56,7 +53,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryAllSpecRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.spec.Query", "SpecAll", data);
       return promise.then(function (data) {
-        return _query.QueryAllSpecResponse.decode(new _m0.Reader(data));
+        return _query.QueryAllSpecResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -65,7 +62,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryGetSpecRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.spec.Query", "SpecRaw", data);
       return promise.then(function (data) {
-        return _query.QueryGetSpecResponse.decode(new _m0.Reader(data));
+        return _query.QueryGetSpecResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -77,7 +74,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryAllSpecRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.spec.Query", "SpecAllRaw", data);
       return promise.then(function (data) {
-        return _query.QueryAllSpecResponse.decode(new _m0.Reader(data));
+        return _query.QueryAllSpecResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -87,7 +84,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryShowAllChainsRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.spec.Query", "ShowAllChains", data);
       return promise.then(function (data) {
-        return _query.QueryShowAllChainsResponse.decode(new _m0.Reader(data));
+        return _query.QueryShowAllChainsResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -96,7 +93,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryShowChainInfoRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.spec.Query", "ShowChainInfo", data);
       return promise.then(function (data) {
-        return _query.QueryShowChainInfoResponse.decode(new _m0.Reader(data));
+        return _query.QueryShowChainInfoResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }]);

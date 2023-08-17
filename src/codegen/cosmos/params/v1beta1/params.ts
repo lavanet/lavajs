@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** ParameterChangeProposal defines a proposal to change one or more parameters. */
 export interface ParameterChangeProposal {
   title: string;
@@ -38,7 +37,8 @@ function createBaseParameterChangeProposal(): ParameterChangeProposal {
   };
 }
 export const ParameterChangeProposal = {
-  encode(message: ParameterChangeProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.params.v1beta1.ParameterChangeProposal",
+  encode(message: ParameterChangeProposal, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -50,8 +50,8 @@ export const ParameterChangeProposal = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ParameterChangeProposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ParameterChangeProposal {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParameterChangeProposal();
     while (reader.pos < end) {
@@ -73,12 +73,51 @@ export const ParameterChangeProposal = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ParameterChangeProposal>): ParameterChangeProposal {
+  fromPartial(object: Partial<ParameterChangeProposal>): ParameterChangeProposal {
     const message = createBaseParameterChangeProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
     message.changes = object.changes?.map(e => ParamChange.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: ParameterChangeProposalAmino): ParameterChangeProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      changes: Array.isArray(object?.changes) ? object.changes.map((e: any) => ParamChange.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: ParameterChangeProposal): ParameterChangeProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    if (message.changes) {
+      obj.changes = message.changes.map(e => e ? ParamChange.toAmino(e) : undefined);
+    } else {
+      obj.changes = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: ParameterChangeProposalAminoMsg): ParameterChangeProposal {
+    return ParameterChangeProposal.fromAmino(object.value);
+  },
+  toAminoMsg(message: ParameterChangeProposal): ParameterChangeProposalAminoMsg {
+    return {
+      type: "cosmos-sdk/ParameterChangeProposal",
+      value: ParameterChangeProposal.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: ParameterChangeProposalProtoMsg): ParameterChangeProposal {
+    return ParameterChangeProposal.decode(message.value);
+  },
+  toProto(message: ParameterChangeProposal): Uint8Array {
+    return ParameterChangeProposal.encode(message).finish();
+  },
+  toProtoMsg(message: ParameterChangeProposal): ParameterChangeProposalProtoMsg {
+    return {
+      typeUrl: "/cosmos.params.v1beta1.ParameterChangeProposal",
+      value: ParameterChangeProposal.encode(message).finish()
+    };
   }
 };
 function createBaseParamChange(): ParamChange {
@@ -89,7 +128,8 @@ function createBaseParamChange(): ParamChange {
   };
 }
 export const ParamChange = {
-  encode(message: ParamChange, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.params.v1beta1.ParamChange",
+  encode(message: ParamChange, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.subspace !== "") {
       writer.uint32(10).string(message.subspace);
     }
@@ -101,8 +141,8 @@ export const ParamChange = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ParamChange {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ParamChange {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParamChange();
     while (reader.pos < end) {
@@ -124,11 +164,46 @@ export const ParamChange = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ParamChange>): ParamChange {
+  fromPartial(object: Partial<ParamChange>): ParamChange {
     const message = createBaseParamChange();
     message.subspace = object.subspace ?? "";
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
+  },
+  fromAmino(object: ParamChangeAmino): ParamChange {
+    return {
+      subspace: object.subspace,
+      key: object.key,
+      value: object.value
+    };
+  },
+  toAmino(message: ParamChange): ParamChangeAmino {
+    const obj: any = {};
+    obj.subspace = message.subspace;
+    obj.key = message.key;
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object: ParamChangeAminoMsg): ParamChange {
+    return ParamChange.fromAmino(object.value);
+  },
+  toAminoMsg(message: ParamChange): ParamChangeAminoMsg {
+    return {
+      type: "cosmos-sdk/ParamChange",
+      value: ParamChange.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: ParamChangeProtoMsg): ParamChange {
+    return ParamChange.decode(message.value);
+  },
+  toProto(message: ParamChange): Uint8Array {
+    return ParamChange.encode(message).finish();
+  },
+  toProtoMsg(message: ParamChange): ParamChangeProtoMsg {
+    return {
+      typeUrl: "/cosmos.params.v1beta1.ParamChange",
+      value: ParamChange.encode(message).finish()
+    };
   }
 };

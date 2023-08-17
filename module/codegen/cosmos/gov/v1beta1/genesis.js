@@ -1,24 +1,24 @@
 import { Deposit, Vote, Proposal, DepositParams, VotingParams, TallyParams } from "./gov";
-import { Long } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** GenesisState defines the gov module's genesis state. */
 
 /** GenesisState defines the gov module's genesis state. */
 
 function createBaseGenesisState() {
   return {
-    startingProposalId: Long.UZERO,
+    startingProposalId: BigInt(0),
     deposits: [],
     votes: [],
     proposals: [],
-    depositParams: undefined,
-    votingParams: undefined,
-    tallyParams: undefined
+    depositParams: DepositParams.fromPartial({}),
+    votingParams: VotingParams.fromPartial({}),
+    tallyParams: TallyParams.fromPartial({})
   };
 }
 export const GenesisState = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.startingProposalId.isZero()) {
+  typeUrl: "/cosmos.gov.v1beta1.GenesisState",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.startingProposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.startingProposalId);
     }
     for (const v of message.deposits) {
@@ -42,7 +42,7 @@ export const GenesisState = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -79,7 +79,7 @@ export const GenesisState = {
   fromPartial(object) {
     var _object$deposits, _object$votes, _object$proposals;
     const message = createBaseGenesisState();
-    message.startingProposalId = object.startingProposalId !== undefined && object.startingProposalId !== null ? Long.fromValue(object.startingProposalId) : Long.UZERO;
+    message.startingProposalId = object.startingProposalId !== undefined && object.startingProposalId !== null ? BigInt(object.startingProposalId.toString()) : BigInt(0);
     message.deposits = ((_object$deposits = object.deposits) === null || _object$deposits === void 0 ? void 0 : _object$deposits.map(e => Deposit.fromPartial(e))) || [];
     message.votes = ((_object$votes = object.votes) === null || _object$votes === void 0 ? void 0 : _object$votes.map(e => Vote.fromPartial(e))) || [];
     message.proposals = ((_object$proposals = object.proposals) === null || _object$proposals === void 0 ? void 0 : _object$proposals.map(e => Proposal.fromPartial(e))) || [];
@@ -87,5 +87,60 @@ export const GenesisState = {
     message.votingParams = object.votingParams !== undefined && object.votingParams !== null ? VotingParams.fromPartial(object.votingParams) : undefined;
     message.tallyParams = object.tallyParams !== undefined && object.tallyParams !== null ? TallyParams.fromPartial(object.tallyParams) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      startingProposalId: BigInt(object.starting_proposal_id),
+      deposits: Array.isArray(object === null || object === void 0 ? void 0 : object.deposits) ? object.deposits.map(e => Deposit.fromAmino(e)) : [],
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(e => Vote.fromAmino(e)) : [],
+      proposals: Array.isArray(object === null || object === void 0 ? void 0 : object.proposals) ? object.proposals.map(e => Proposal.fromAmino(e)) : [],
+      depositParams: object !== null && object !== void 0 && object.deposit_params ? DepositParams.fromAmino(object.deposit_params) : undefined,
+      votingParams: object !== null && object !== void 0 && object.voting_params ? VotingParams.fromAmino(object.voting_params) : undefined,
+      tallyParams: object !== null && object !== void 0 && object.tally_params ? TallyParams.fromAmino(object.tally_params) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.starting_proposal_id = message.startingProposalId ? message.startingProposalId.toString() : undefined;
+    if (message.deposits) {
+      obj.deposits = message.deposits.map(e => e ? Deposit.toAmino(e) : undefined);
+    } else {
+      obj.deposits = [];
+    }
+    if (message.votes) {
+      obj.votes = message.votes.map(e => e ? Vote.toAmino(e) : undefined);
+    } else {
+      obj.votes = [];
+    }
+    if (message.proposals) {
+      obj.proposals = message.proposals.map(e => e ? Proposal.toAmino(e) : undefined);
+    } else {
+      obj.proposals = [];
+    }
+    obj.deposit_params = message.depositParams ? DepositParams.toAmino(message.depositParams) : undefined;
+    obj.voting_params = message.votingParams ? VotingParams.toAmino(message.votingParams) : undefined;
+    obj.tally_params = message.tallyParams ? TallyParams.toAmino(message.tallyParams) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GenesisState.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GenesisState",
+      value: GenesisState.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message) {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.gov.v1beta1.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };

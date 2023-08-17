@@ -1,33 +1,30 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Endpoint = void 0;
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function createBaseEndpoint() {
   return {
     iPPORT: "",
-    geolocation: _helpers.Long.UZERO,
+    geolocation: BigInt(0),
     addons: [],
     apiInterfaces: [],
     extensions: []
   };
 }
 var Endpoint = {
+  typeUrl: "/lavanet.lava.epochstorage.Endpoint",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.iPPORT !== "") {
       writer.uint32(10).string(message.iPPORT);
     }
-    if (!message.geolocation.isZero()) {
+    if (message.geolocation !== BigInt(0)) {
       writer.uint32(24).uint64(message.geolocation);
     }
     var _iterator = _createForOfIteratorHelper(message.addons),
@@ -69,7 +66,7 @@ var Endpoint = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEndpoint();
     while (reader.pos < end) {
@@ -101,7 +98,7 @@ var Endpoint = {
     var _object$iPPORT, _object$addons, _object$apiInterfaces, _object$extensions;
     var message = createBaseEndpoint();
     message.iPPORT = (_object$iPPORT = object.iPPORT) !== null && _object$iPPORT !== void 0 ? _object$iPPORT : "";
-    message.geolocation = object.geolocation !== undefined && object.geolocation !== null ? _helpers.Long.fromValue(object.geolocation) : _helpers.Long.UZERO;
+    message.geolocation = object.geolocation !== undefined && object.geolocation !== null ? BigInt(object.geolocation.toString()) : BigInt(0);
     message.addons = ((_object$addons = object.addons) === null || _object$addons === void 0 ? void 0 : _object$addons.map(function (e) {
       return e;
     })) || [];
@@ -112,6 +109,63 @@ var Endpoint = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      iPPORT: object.iPPORT,
+      geolocation: BigInt(object.geolocation),
+      addons: Array.isArray(object === null || object === void 0 ? void 0 : object.addons) ? object.addons.map(function (e) {
+        return e;
+      }) : [],
+      apiInterfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.api_interfaces) ? object.api_interfaces.map(function (e) {
+        return e;
+      }) : [],
+      extensions: Array.isArray(object === null || object === void 0 ? void 0 : object.extensions) ? object.extensions.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.iPPORT = message.iPPORT;
+    obj.geolocation = message.geolocation ? message.geolocation.toString() : undefined;
+    if (message.addons) {
+      obj.addons = message.addons.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.addons = [];
+    }
+    if (message.apiInterfaces) {
+      obj.api_interfaces = message.apiInterfaces.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.api_interfaces = [];
+    }
+    if (message.extensions) {
+      obj.extensions = message.extensions.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.extensions = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Endpoint.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Endpoint.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Endpoint.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.epochstorage.Endpoint",
+      value: Endpoint.encode(message).finish()
+    };
   }
 };
 exports.Endpoint = Endpoint;

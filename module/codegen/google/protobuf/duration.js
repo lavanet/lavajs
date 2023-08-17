@@ -1,5 +1,4 @@
-import { Long } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
 /**
  * A Duration represents a signed, fixed-length span of time represented
  * as a count of seconds and fractions of seconds at nanosecond
@@ -124,13 +123,14 @@ import * as _m0 from "protobufjs/minimal";
 
 function createBaseDuration() {
   return {
-    seconds: Long.ZERO,
+    seconds: BigInt(0),
     nanos: 0
   };
 }
 export const Duration = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.seconds.isZero()) {
+  typeUrl: "/google.protobuf.Duration",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.seconds !== BigInt(0)) {
       writer.uint32(8).int64(message.seconds);
     }
     if (message.nanos !== 0) {
@@ -139,7 +139,7 @@ export const Duration = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDuration();
     while (reader.pos < end) {
@@ -161,8 +161,33 @@ export const Duration = {
   fromPartial(object) {
     var _object$nanos;
     const message = createBaseDuration();
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? Long.fromValue(object.seconds) : Long.ZERO;
+    message.seconds = object.seconds !== undefined && object.seconds !== null ? BigInt(object.seconds.toString()) : BigInt(0);
     message.nanos = (_object$nanos = object.nanos) !== null && _object$nanos !== void 0 ? _object$nanos : 0;
     return message;
+  },
+  fromAmino(object) {
+    const value = BigInt(object);
+    return {
+      seconds: value / BigInt("1000000000"),
+      nanos: Number(value % BigInt("1000000000"))
+    };
+  },
+  toAmino(message) {
+    return (message.seconds * BigInt("1000000000") + BigInt(message.nanos)).toString();
+  },
+  fromAminoMsg(object) {
+    return Duration.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Duration.decode(message.value);
+  },
+  toProto(message) {
+    return Duration.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Duration",
+      value: Duration.encode(message).finish()
+    };
   }
 };

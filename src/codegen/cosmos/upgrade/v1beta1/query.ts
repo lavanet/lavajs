@@ -1,6 +1,5 @@
 import { Plan, PlanSDKType, ModuleVersion, ModuleVersionSDKType } from "./upgrade";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /**
  * QueryCurrentPlanRequest is the request type for the Query/CurrentPlan RPC
  * method.
@@ -17,14 +16,14 @@ export interface QueryCurrentPlanRequestSDKType {}
  */
 export interface QueryCurrentPlanResponse {
   /** plan is the current upgrade plan. */
-  plan?: Plan;
+  plan: Plan;
 }
 /**
  * QueryCurrentPlanResponse is the response type for the Query/CurrentPlan RPC
  * method.
  */
 export interface QueryCurrentPlanResponseSDKType {
-  plan?: PlanSDKType;
+  plan: PlanSDKType;
 }
 /**
  * QueryCurrentPlanRequest is the request type for the Query/AppliedPlan RPC
@@ -47,14 +46,14 @@ export interface QueryAppliedPlanRequestSDKType {
  */
 export interface QueryAppliedPlanResponse {
   /** height is the block height at which the plan was applied. */
-  height: Long;
+  height: bigint;
 }
 /**
  * QueryAppliedPlanResponse is the response type for the Query/AppliedPlan RPC
  * method.
  */
 export interface QueryAppliedPlanResponseSDKType {
-  height: Long;
+  height: bigint;
 }
 /**
  * QueryUpgradedConsensusStateRequest is the request type for the Query/UpgradedConsensusState
@@ -66,7 +65,7 @@ export interface QueryUpgradedConsensusStateRequest {
    * last height of the current chain must be sent in request
    * as this is the height under which next consensus state is stored
    */
-  lastHeight: Long;
+  lastHeight: bigint;
 }
 /**
  * QueryUpgradedConsensusStateRequest is the request type for the Query/UpgradedConsensusState
@@ -74,7 +73,7 @@ export interface QueryUpgradedConsensusStateRequest {
  */
 /** @deprecated */
 export interface QueryUpgradedConsensusStateRequestSDKType {
-  last_height: Long;
+  last_height: bigint;
 }
 /**
  * QueryUpgradedConsensusStateResponse is the response type for the Query/UpgradedConsensusState
@@ -167,11 +166,12 @@ function createBaseQueryCurrentPlanRequest(): QueryCurrentPlanRequest {
   return {};
 }
 export const QueryCurrentPlanRequest = {
-  encode(_: QueryCurrentPlanRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryCurrentPlanRequest",
+  encode(_: QueryCurrentPlanRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryCurrentPlanRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryCurrentPlanRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryCurrentPlanRequest();
     while (reader.pos < end) {
@@ -184,25 +184,54 @@ export const QueryCurrentPlanRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryCurrentPlanRequest>): QueryCurrentPlanRequest {
+  fromPartial(_: Partial<QueryCurrentPlanRequest>): QueryCurrentPlanRequest {
     const message = createBaseQueryCurrentPlanRequest();
     return message;
+  },
+  fromAmino(_: QueryCurrentPlanRequestAmino): QueryCurrentPlanRequest {
+    return {};
+  },
+  toAmino(_: QueryCurrentPlanRequest): QueryCurrentPlanRequestAmino {
+    const obj: any = {};
+    return obj;
+  },
+  fromAminoMsg(object: QueryCurrentPlanRequestAminoMsg): QueryCurrentPlanRequest {
+    return QueryCurrentPlanRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryCurrentPlanRequest): QueryCurrentPlanRequestAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryCurrentPlanRequest",
+      value: QueryCurrentPlanRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryCurrentPlanRequestProtoMsg): QueryCurrentPlanRequest {
+    return QueryCurrentPlanRequest.decode(message.value);
+  },
+  toProto(message: QueryCurrentPlanRequest): Uint8Array {
+    return QueryCurrentPlanRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryCurrentPlanRequest): QueryCurrentPlanRequestProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryCurrentPlanRequest",
+      value: QueryCurrentPlanRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryCurrentPlanResponse(): QueryCurrentPlanResponse {
   return {
-    plan: undefined
+    plan: Plan.fromPartial({})
   };
 }
 export const QueryCurrentPlanResponse = {
-  encode(message: QueryCurrentPlanResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryCurrentPlanResponse",
+  encode(message: QueryCurrentPlanResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.plan !== undefined) {
       Plan.encode(message.plan, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryCurrentPlanResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryCurrentPlanResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryCurrentPlanResponse();
     while (reader.pos < end) {
@@ -218,10 +247,41 @@ export const QueryCurrentPlanResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryCurrentPlanResponse>): QueryCurrentPlanResponse {
+  fromPartial(object: Partial<QueryCurrentPlanResponse>): QueryCurrentPlanResponse {
     const message = createBaseQueryCurrentPlanResponse();
     message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     return message;
+  },
+  fromAmino(object: QueryCurrentPlanResponseAmino): QueryCurrentPlanResponse {
+    return {
+      plan: object?.plan ? Plan.fromAmino(object.plan) : undefined
+    };
+  },
+  toAmino(message: QueryCurrentPlanResponse): QueryCurrentPlanResponseAmino {
+    const obj: any = {};
+    obj.plan = message.plan ? Plan.toAmino(message.plan) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryCurrentPlanResponseAminoMsg): QueryCurrentPlanResponse {
+    return QueryCurrentPlanResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryCurrentPlanResponse): QueryCurrentPlanResponseAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryCurrentPlanResponse",
+      value: QueryCurrentPlanResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryCurrentPlanResponseProtoMsg): QueryCurrentPlanResponse {
+    return QueryCurrentPlanResponse.decode(message.value);
+  },
+  toProto(message: QueryCurrentPlanResponse): Uint8Array {
+    return QueryCurrentPlanResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryCurrentPlanResponse): QueryCurrentPlanResponseProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryCurrentPlanResponse",
+      value: QueryCurrentPlanResponse.encode(message).finish()
+    };
   }
 };
 function createBaseQueryAppliedPlanRequest(): QueryAppliedPlanRequest {
@@ -230,14 +290,15 @@ function createBaseQueryAppliedPlanRequest(): QueryAppliedPlanRequest {
   };
 }
 export const QueryAppliedPlanRequest = {
-  encode(message: QueryAppliedPlanRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryAppliedPlanRequest",
+  encode(message: QueryAppliedPlanRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAppliedPlanRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAppliedPlanRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAppliedPlanRequest();
     while (reader.pos < end) {
@@ -253,33 +314,65 @@ export const QueryAppliedPlanRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAppliedPlanRequest>): QueryAppliedPlanRequest {
+  fromPartial(object: Partial<QueryAppliedPlanRequest>): QueryAppliedPlanRequest {
     const message = createBaseQueryAppliedPlanRequest();
     message.name = object.name ?? "";
     return message;
+  },
+  fromAmino(object: QueryAppliedPlanRequestAmino): QueryAppliedPlanRequest {
+    return {
+      name: object.name
+    };
+  },
+  toAmino(message: QueryAppliedPlanRequest): QueryAppliedPlanRequestAmino {
+    const obj: any = {};
+    obj.name = message.name;
+    return obj;
+  },
+  fromAminoMsg(object: QueryAppliedPlanRequestAminoMsg): QueryAppliedPlanRequest {
+    return QueryAppliedPlanRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryAppliedPlanRequest): QueryAppliedPlanRequestAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryAppliedPlanRequest",
+      value: QueryAppliedPlanRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryAppliedPlanRequestProtoMsg): QueryAppliedPlanRequest {
+    return QueryAppliedPlanRequest.decode(message.value);
+  },
+  toProto(message: QueryAppliedPlanRequest): Uint8Array {
+    return QueryAppliedPlanRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryAppliedPlanRequest): QueryAppliedPlanRequestProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryAppliedPlanRequest",
+      value: QueryAppliedPlanRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryAppliedPlanResponse(): QueryAppliedPlanResponse {
   return {
-    height: Long.ZERO
+    height: BigInt(0)
   };
 }
 export const QueryAppliedPlanResponse = {
-  encode(message: QueryAppliedPlanResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.height.isZero()) {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryAppliedPlanResponse",
+  encode(message: QueryAppliedPlanResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.height !== BigInt(0)) {
       writer.uint32(8).int64(message.height);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAppliedPlanResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAppliedPlanResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAppliedPlanResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.height = (reader.int64() as Long);
+          message.height = reader.int64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -288,33 +381,65 @@ export const QueryAppliedPlanResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAppliedPlanResponse>): QueryAppliedPlanResponse {
+  fromPartial(object: Partial<QueryAppliedPlanResponse>): QueryAppliedPlanResponse {
     const message = createBaseQueryAppliedPlanResponse();
-    message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: QueryAppliedPlanResponseAmino): QueryAppliedPlanResponse {
+    return {
+      height: BigInt(object.height)
+    };
+  },
+  toAmino(message: QueryAppliedPlanResponse): QueryAppliedPlanResponseAmino {
+    const obj: any = {};
+    obj.height = message.height ? message.height.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryAppliedPlanResponseAminoMsg): QueryAppliedPlanResponse {
+    return QueryAppliedPlanResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryAppliedPlanResponse): QueryAppliedPlanResponseAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryAppliedPlanResponse",
+      value: QueryAppliedPlanResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryAppliedPlanResponseProtoMsg): QueryAppliedPlanResponse {
+    return QueryAppliedPlanResponse.decode(message.value);
+  },
+  toProto(message: QueryAppliedPlanResponse): Uint8Array {
+    return QueryAppliedPlanResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryAppliedPlanResponse): QueryAppliedPlanResponseProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryAppliedPlanResponse",
+      value: QueryAppliedPlanResponse.encode(message).finish()
+    };
   }
 };
 function createBaseQueryUpgradedConsensusStateRequest(): QueryUpgradedConsensusStateRequest {
   return {
-    lastHeight: Long.ZERO
+    lastHeight: BigInt(0)
   };
 }
 export const QueryUpgradedConsensusStateRequest = {
-  encode(message: QueryUpgradedConsensusStateRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.lastHeight.isZero()) {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest",
+  encode(message: QueryUpgradedConsensusStateRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.lastHeight !== BigInt(0)) {
       writer.uint32(8).int64(message.lastHeight);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryUpgradedConsensusStateRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryUpgradedConsensusStateRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryUpgradedConsensusStateRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.lastHeight = (reader.int64() as Long);
+          message.lastHeight = reader.int64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -323,10 +448,41 @@ export const QueryUpgradedConsensusStateRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryUpgradedConsensusStateRequest>): QueryUpgradedConsensusStateRequest {
+  fromPartial(object: Partial<QueryUpgradedConsensusStateRequest>): QueryUpgradedConsensusStateRequest {
     const message = createBaseQueryUpgradedConsensusStateRequest();
-    message.lastHeight = object.lastHeight !== undefined && object.lastHeight !== null ? Long.fromValue(object.lastHeight) : Long.ZERO;
+    message.lastHeight = object.lastHeight !== undefined && object.lastHeight !== null ? BigInt(object.lastHeight.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: QueryUpgradedConsensusStateRequestAmino): QueryUpgradedConsensusStateRequest {
+    return {
+      lastHeight: BigInt(object.last_height)
+    };
+  },
+  toAmino(message: QueryUpgradedConsensusStateRequest): QueryUpgradedConsensusStateRequestAmino {
+    const obj: any = {};
+    obj.last_height = message.lastHeight ? message.lastHeight.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryUpgradedConsensusStateRequestAminoMsg): QueryUpgradedConsensusStateRequest {
+    return QueryUpgradedConsensusStateRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryUpgradedConsensusStateRequest): QueryUpgradedConsensusStateRequestAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryUpgradedConsensusStateRequest",
+      value: QueryUpgradedConsensusStateRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryUpgradedConsensusStateRequestProtoMsg): QueryUpgradedConsensusStateRequest {
+    return QueryUpgradedConsensusStateRequest.decode(message.value);
+  },
+  toProto(message: QueryUpgradedConsensusStateRequest): Uint8Array {
+    return QueryUpgradedConsensusStateRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryUpgradedConsensusStateRequest): QueryUpgradedConsensusStateRequestProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest",
+      value: QueryUpgradedConsensusStateRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryUpgradedConsensusStateResponse(): QueryUpgradedConsensusStateResponse {
@@ -335,14 +491,15 @@ function createBaseQueryUpgradedConsensusStateResponse(): QueryUpgradedConsensus
   };
 }
 export const QueryUpgradedConsensusStateResponse = {
-  encode(message: QueryUpgradedConsensusStateResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateResponse",
+  encode(message: QueryUpgradedConsensusStateResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.upgradedConsensusState.length !== 0) {
       writer.uint32(18).bytes(message.upgradedConsensusState);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryUpgradedConsensusStateResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryUpgradedConsensusStateResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryUpgradedConsensusStateResponse();
     while (reader.pos < end) {
@@ -358,10 +515,41 @@ export const QueryUpgradedConsensusStateResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryUpgradedConsensusStateResponse>): QueryUpgradedConsensusStateResponse {
+  fromPartial(object: Partial<QueryUpgradedConsensusStateResponse>): QueryUpgradedConsensusStateResponse {
     const message = createBaseQueryUpgradedConsensusStateResponse();
     message.upgradedConsensusState = object.upgradedConsensusState ?? new Uint8Array();
     return message;
+  },
+  fromAmino(object: QueryUpgradedConsensusStateResponseAmino): QueryUpgradedConsensusStateResponse {
+    return {
+      upgradedConsensusState: object.upgraded_consensus_state
+    };
+  },
+  toAmino(message: QueryUpgradedConsensusStateResponse): QueryUpgradedConsensusStateResponseAmino {
+    const obj: any = {};
+    obj.upgraded_consensus_state = message.upgradedConsensusState;
+    return obj;
+  },
+  fromAminoMsg(object: QueryUpgradedConsensusStateResponseAminoMsg): QueryUpgradedConsensusStateResponse {
+    return QueryUpgradedConsensusStateResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryUpgradedConsensusStateResponse): QueryUpgradedConsensusStateResponseAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryUpgradedConsensusStateResponse",
+      value: QueryUpgradedConsensusStateResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryUpgradedConsensusStateResponseProtoMsg): QueryUpgradedConsensusStateResponse {
+    return QueryUpgradedConsensusStateResponse.decode(message.value);
+  },
+  toProto(message: QueryUpgradedConsensusStateResponse): Uint8Array {
+    return QueryUpgradedConsensusStateResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryUpgradedConsensusStateResponse): QueryUpgradedConsensusStateResponseProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateResponse",
+      value: QueryUpgradedConsensusStateResponse.encode(message).finish()
+    };
   }
 };
 function createBaseQueryModuleVersionsRequest(): QueryModuleVersionsRequest {
@@ -370,14 +558,15 @@ function createBaseQueryModuleVersionsRequest(): QueryModuleVersionsRequest {
   };
 }
 export const QueryModuleVersionsRequest = {
-  encode(message: QueryModuleVersionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryModuleVersionsRequest",
+  encode(message: QueryModuleVersionsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.moduleName !== "") {
       writer.uint32(10).string(message.moduleName);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleVersionsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleVersionsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleVersionsRequest();
     while (reader.pos < end) {
@@ -393,10 +582,41 @@ export const QueryModuleVersionsRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryModuleVersionsRequest>): QueryModuleVersionsRequest {
+  fromPartial(object: Partial<QueryModuleVersionsRequest>): QueryModuleVersionsRequest {
     const message = createBaseQueryModuleVersionsRequest();
     message.moduleName = object.moduleName ?? "";
     return message;
+  },
+  fromAmino(object: QueryModuleVersionsRequestAmino): QueryModuleVersionsRequest {
+    return {
+      moduleName: object.module_name
+    };
+  },
+  toAmino(message: QueryModuleVersionsRequest): QueryModuleVersionsRequestAmino {
+    const obj: any = {};
+    obj.module_name = message.moduleName;
+    return obj;
+  },
+  fromAminoMsg(object: QueryModuleVersionsRequestAminoMsg): QueryModuleVersionsRequest {
+    return QueryModuleVersionsRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryModuleVersionsRequest): QueryModuleVersionsRequestAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryModuleVersionsRequest",
+      value: QueryModuleVersionsRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryModuleVersionsRequestProtoMsg): QueryModuleVersionsRequest {
+    return QueryModuleVersionsRequest.decode(message.value);
+  },
+  toProto(message: QueryModuleVersionsRequest): Uint8Array {
+    return QueryModuleVersionsRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryModuleVersionsRequest): QueryModuleVersionsRequestProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryModuleVersionsRequest",
+      value: QueryModuleVersionsRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryModuleVersionsResponse(): QueryModuleVersionsResponse {
@@ -405,14 +625,15 @@ function createBaseQueryModuleVersionsResponse(): QueryModuleVersionsResponse {
   };
 }
 export const QueryModuleVersionsResponse = {
-  encode(message: QueryModuleVersionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryModuleVersionsResponse",
+  encode(message: QueryModuleVersionsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.moduleVersions) {
       ModuleVersion.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleVersionsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleVersionsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleVersionsResponse();
     while (reader.pos < end) {
@@ -428,21 +649,57 @@ export const QueryModuleVersionsResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryModuleVersionsResponse>): QueryModuleVersionsResponse {
+  fromPartial(object: Partial<QueryModuleVersionsResponse>): QueryModuleVersionsResponse {
     const message = createBaseQueryModuleVersionsResponse();
     message.moduleVersions = object.moduleVersions?.map(e => ModuleVersion.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: QueryModuleVersionsResponseAmino): QueryModuleVersionsResponse {
+    return {
+      moduleVersions: Array.isArray(object?.module_versions) ? object.module_versions.map((e: any) => ModuleVersion.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: QueryModuleVersionsResponse): QueryModuleVersionsResponseAmino {
+    const obj: any = {};
+    if (message.moduleVersions) {
+      obj.module_versions = message.moduleVersions.map(e => e ? ModuleVersion.toAmino(e) : undefined);
+    } else {
+      obj.module_versions = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: QueryModuleVersionsResponseAminoMsg): QueryModuleVersionsResponse {
+    return QueryModuleVersionsResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryModuleVersionsResponse): QueryModuleVersionsResponseAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryModuleVersionsResponse",
+      value: QueryModuleVersionsResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryModuleVersionsResponseProtoMsg): QueryModuleVersionsResponse {
+    return QueryModuleVersionsResponse.decode(message.value);
+  },
+  toProto(message: QueryModuleVersionsResponse): Uint8Array {
+    return QueryModuleVersionsResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryModuleVersionsResponse): QueryModuleVersionsResponseProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryModuleVersionsResponse",
+      value: QueryModuleVersionsResponse.encode(message).finish()
+    };
   }
 };
 function createBaseQueryAuthorityRequest(): QueryAuthorityRequest {
   return {};
 }
 export const QueryAuthorityRequest = {
-  encode(_: QueryAuthorityRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryAuthorityRequest",
+  encode(_: QueryAuthorityRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAuthorityRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAuthorityRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAuthorityRequest();
     while (reader.pos < end) {
@@ -455,9 +712,37 @@ export const QueryAuthorityRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryAuthorityRequest>): QueryAuthorityRequest {
+  fromPartial(_: Partial<QueryAuthorityRequest>): QueryAuthorityRequest {
     const message = createBaseQueryAuthorityRequest();
     return message;
+  },
+  fromAmino(_: QueryAuthorityRequestAmino): QueryAuthorityRequest {
+    return {};
+  },
+  toAmino(_: QueryAuthorityRequest): QueryAuthorityRequestAmino {
+    const obj: any = {};
+    return obj;
+  },
+  fromAminoMsg(object: QueryAuthorityRequestAminoMsg): QueryAuthorityRequest {
+    return QueryAuthorityRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryAuthorityRequest): QueryAuthorityRequestAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryAuthorityRequest",
+      value: QueryAuthorityRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryAuthorityRequestProtoMsg): QueryAuthorityRequest {
+    return QueryAuthorityRequest.decode(message.value);
+  },
+  toProto(message: QueryAuthorityRequest): Uint8Array {
+    return QueryAuthorityRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryAuthorityRequest): QueryAuthorityRequestProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryAuthorityRequest",
+      value: QueryAuthorityRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryAuthorityResponse(): QueryAuthorityResponse {
@@ -466,14 +751,15 @@ function createBaseQueryAuthorityResponse(): QueryAuthorityResponse {
   };
 }
 export const QueryAuthorityResponse = {
-  encode(message: QueryAuthorityResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.upgrade.v1beta1.QueryAuthorityResponse",
+  encode(message: QueryAuthorityResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAuthorityResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAuthorityResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAuthorityResponse();
     while (reader.pos < end) {
@@ -489,9 +775,40 @@ export const QueryAuthorityResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAuthorityResponse>): QueryAuthorityResponse {
+  fromPartial(object: Partial<QueryAuthorityResponse>): QueryAuthorityResponse {
     const message = createBaseQueryAuthorityResponse();
     message.address = object.address ?? "";
     return message;
+  },
+  fromAmino(object: QueryAuthorityResponseAmino): QueryAuthorityResponse {
+    return {
+      address: object.address
+    };
+  },
+  toAmino(message: QueryAuthorityResponse): QueryAuthorityResponseAmino {
+    const obj: any = {};
+    obj.address = message.address;
+    return obj;
+  },
+  fromAminoMsg(object: QueryAuthorityResponseAminoMsg): QueryAuthorityResponse {
+    return QueryAuthorityResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryAuthorityResponse): QueryAuthorityResponseAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryAuthorityResponse",
+      value: QueryAuthorityResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryAuthorityResponseProtoMsg): QueryAuthorityResponse {
+    return QueryAuthorityResponse.decode(message.value);
+  },
+  toProto(message: QueryAuthorityResponse): Uint8Array {
+    return QueryAuthorityResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryAuthorityResponse): QueryAuthorityResponseProtoMsg {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.QueryAuthorityResponse",
+      value: QueryAuthorityResponse.encode(message).finish()
+    };
   }
 };

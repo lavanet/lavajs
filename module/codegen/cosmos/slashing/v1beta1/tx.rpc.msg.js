@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgUnjail, MsgUnjailResponse } from "./tx";
 /** Msg defines the slashing Msg service. */
 
@@ -12,6 +12,6 @@ export class MsgClientImpl {
   unjail(request) {
     const data = MsgUnjail.encode(request).finish();
     const promise = this.rpc.request("cosmos.slashing.v1beta1.Msg", "Unjail", data);
-    return promise.then(data => MsgUnjailResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUnjailResponse.decode(new BinaryReader(data)));
   }
 }

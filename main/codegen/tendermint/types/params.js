@@ -1,15 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.VersionParams = exports.ValidatorParams = exports.HashedParams = exports.EvidenceParams = exports.ConsensusParams = exports.BlockParams = void 0;
 var _duration = require("../../google/protobuf/duration");
-var _helpers = require("../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -59,15 +55,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 function createBaseConsensusParams() {
   return {
-    block: undefined,
-    evidence: undefined,
-    validator: undefined,
-    version: undefined
+    block: BlockParams.fromPartial({}),
+    evidence: EvidenceParams.fromPartial({}),
+    validator: ValidatorParams.fromPartial({}),
+    version: VersionParams.fromPartial({})
   };
 }
 var ConsensusParams = {
+  typeUrl: "/tendermint.types.ConsensusParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.block !== undefined) {
       BlockParams.encode(message.block, writer.uint32(10).fork()).ldelim();
     }
@@ -83,7 +80,7 @@ var ConsensusParams = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseConsensusParams();
     while (reader.pos < end) {
@@ -115,32 +112,64 @@ var ConsensusParams = {
     message.validator = object.validator !== undefined && object.validator !== null ? ValidatorParams.fromPartial(object.validator) : undefined;
     message.version = object.version !== undefined && object.version !== null ? VersionParams.fromPartial(object.version) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      block: object !== null && object !== void 0 && object.block ? BlockParams.fromAmino(object.block) : undefined,
+      evidence: object !== null && object !== void 0 && object.evidence ? EvidenceParams.fromAmino(object.evidence) : undefined,
+      validator: object !== null && object !== void 0 && object.validator ? ValidatorParams.fromAmino(object.validator) : undefined,
+      version: object !== null && object !== void 0 && object.version ? VersionParams.fromAmino(object.version) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.block = message.block ? BlockParams.toAmino(message.block) : undefined;
+    obj.evidence = message.evidence ? EvidenceParams.toAmino(message.evidence) : undefined;
+    obj.validator = message.validator ? ValidatorParams.toAmino(message.validator) : undefined;
+    obj.version = message.version ? VersionParams.toAmino(message.version) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ConsensusParams.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ConsensusParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ConsensusParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.ConsensusParams",
+      value: ConsensusParams.encode(message).finish()
+    };
   }
 };
 exports.ConsensusParams = ConsensusParams;
 function createBaseBlockParams() {
   return {
-    maxBytes: _helpers.Long.ZERO,
-    maxGas: _helpers.Long.ZERO,
-    timeIotaMs: _helpers.Long.ZERO
+    maxBytes: BigInt(0),
+    maxGas: BigInt(0),
+    timeIotaMs: BigInt(0)
   };
 }
 var BlockParams = {
+  typeUrl: "/tendermint.types.BlockParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.maxBytes.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.maxBytes !== BigInt(0)) {
       writer.uint32(8).int64(message.maxBytes);
     }
-    if (!message.maxGas.isZero()) {
+    if (message.maxGas !== BigInt(0)) {
       writer.uint32(16).int64(message.maxGas);
     }
-    if (!message.timeIotaMs.isZero()) {
+    if (message.timeIotaMs !== BigInt(0)) {
       writer.uint32(24).int64(message.timeIotaMs);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseBlockParams();
     while (reader.pos < end) {
@@ -164,36 +193,66 @@ var BlockParams = {
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseBlockParams();
-    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? _helpers.Long.fromValue(object.maxBytes) : _helpers.Long.ZERO;
-    message.maxGas = object.maxGas !== undefined && object.maxGas !== null ? _helpers.Long.fromValue(object.maxGas) : _helpers.Long.ZERO;
-    message.timeIotaMs = object.timeIotaMs !== undefined && object.timeIotaMs !== null ? _helpers.Long.fromValue(object.timeIotaMs) : _helpers.Long.ZERO;
+    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? BigInt(object.maxBytes.toString()) : BigInt(0);
+    message.maxGas = object.maxGas !== undefined && object.maxGas !== null ? BigInt(object.maxGas.toString()) : BigInt(0);
+    message.timeIotaMs = object.timeIotaMs !== undefined && object.timeIotaMs !== null ? BigInt(object.timeIotaMs.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      maxBytes: BigInt(object.max_bytes),
+      maxGas: BigInt(object.max_gas),
+      timeIotaMs: BigInt(object.time_iota_ms)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.max_bytes = message.maxBytes ? message.maxBytes.toString() : undefined;
+    obj.max_gas = message.maxGas ? message.maxGas.toString() : undefined;
+    obj.time_iota_ms = message.timeIotaMs ? message.timeIotaMs.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return BlockParams.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return BlockParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return BlockParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.BlockParams",
+      value: BlockParams.encode(message).finish()
+    };
   }
 };
 exports.BlockParams = BlockParams;
 function createBaseEvidenceParams() {
   return {
-    maxAgeNumBlocks: _helpers.Long.ZERO,
-    maxAgeDuration: undefined,
-    maxBytes: _helpers.Long.ZERO
+    maxAgeNumBlocks: BigInt(0),
+    maxAgeDuration: _duration.Duration.fromPartial({}),
+    maxBytes: BigInt(0)
   };
 }
 var EvidenceParams = {
+  typeUrl: "/tendermint.types.EvidenceParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.maxAgeNumBlocks.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.maxAgeNumBlocks !== BigInt(0)) {
       writer.uint32(8).int64(message.maxAgeNumBlocks);
     }
     if (message.maxAgeDuration !== undefined) {
       _duration.Duration.encode(message.maxAgeDuration, writer.uint32(18).fork()).ldelim();
     }
-    if (!message.maxBytes.isZero()) {
+    if (message.maxBytes !== BigInt(0)) {
       writer.uint32(24).int64(message.maxBytes);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEvidenceParams();
     while (reader.pos < end) {
@@ -217,10 +276,39 @@ var EvidenceParams = {
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseEvidenceParams();
-    message.maxAgeNumBlocks = object.maxAgeNumBlocks !== undefined && object.maxAgeNumBlocks !== null ? _helpers.Long.fromValue(object.maxAgeNumBlocks) : _helpers.Long.ZERO;
+    message.maxAgeNumBlocks = object.maxAgeNumBlocks !== undefined && object.maxAgeNumBlocks !== null ? BigInt(object.maxAgeNumBlocks.toString()) : BigInt(0);
     message.maxAgeDuration = object.maxAgeDuration !== undefined && object.maxAgeDuration !== null ? _duration.Duration.fromPartial(object.maxAgeDuration) : undefined;
-    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? _helpers.Long.fromValue(object.maxBytes) : _helpers.Long.ZERO;
+    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? BigInt(object.maxBytes.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      maxAgeNumBlocks: BigInt(object.max_age_num_blocks),
+      maxAgeDuration: object !== null && object !== void 0 && object.max_age_duration ? _duration.Duration.fromAmino(object.max_age_duration) : undefined,
+      maxBytes: BigInt(object.max_bytes)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.max_age_num_blocks = message.maxAgeNumBlocks ? message.maxAgeNumBlocks.toString() : undefined;
+    obj.max_age_duration = message.maxAgeDuration ? _duration.Duration.toAmino(message.maxAgeDuration) : undefined;
+    obj.max_bytes = message.maxBytes ? message.maxBytes.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return EvidenceParams.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return EvidenceParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return EvidenceParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.EvidenceParams",
+      value: EvidenceParams.encode(message).finish()
+    };
   }
 };
 exports.EvidenceParams = EvidenceParams;
@@ -230,8 +318,9 @@ function createBaseValidatorParams() {
   };
 }
 var ValidatorParams = {
+  typeUrl: "/tendermint.types.ValidatorParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.pubKeyTypes),
       _step;
     try {
@@ -247,7 +336,7 @@ var ValidatorParams = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorParams();
     while (reader.pos < end) {
@@ -270,24 +359,58 @@ var ValidatorParams = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      pubKeyTypes: Array.isArray(object === null || object === void 0 ? void 0 : object.pub_key_types) ? object.pub_key_types.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.pubKeyTypes) {
+      obj.pub_key_types = message.pubKeyTypes.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.pub_key_types = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorParams.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.ValidatorParams",
+      value: ValidatorParams.encode(message).finish()
+    };
   }
 };
 exports.ValidatorParams = ValidatorParams;
 function createBaseVersionParams() {
   return {
-    appVersion: _helpers.Long.UZERO
+    appVersion: BigInt(0)
   };
 }
 var VersionParams = {
+  typeUrl: "/tendermint.types.VersionParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.appVersion.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.appVersion !== BigInt(0)) {
       writer.uint32(8).uint64(message.appVersion);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseVersionParams();
     while (reader.pos < end) {
@@ -305,30 +428,56 @@ var VersionParams = {
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseVersionParams();
-    message.appVersion = object.appVersion !== undefined && object.appVersion !== null ? _helpers.Long.fromValue(object.appVersion) : _helpers.Long.UZERO;
+    message.appVersion = object.appVersion !== undefined && object.appVersion !== null ? BigInt(object.appVersion.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      appVersion: BigInt(object.app_version)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.app_version = message.appVersion ? message.appVersion.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return VersionParams.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return VersionParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return VersionParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.VersionParams",
+      value: VersionParams.encode(message).finish()
+    };
   }
 };
 exports.VersionParams = VersionParams;
 function createBaseHashedParams() {
   return {
-    blockMaxBytes: _helpers.Long.ZERO,
-    blockMaxGas: _helpers.Long.ZERO
+    blockMaxBytes: BigInt(0),
+    blockMaxGas: BigInt(0)
   };
 }
 var HashedParams = {
+  typeUrl: "/tendermint.types.HashedParams",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.blockMaxBytes.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.blockMaxBytes !== BigInt(0)) {
       writer.uint32(8).int64(message.blockMaxBytes);
     }
-    if (!message.blockMaxGas.isZero()) {
+    if (message.blockMaxGas !== BigInt(0)) {
       writer.uint32(16).int64(message.blockMaxGas);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseHashedParams();
     while (reader.pos < end) {
@@ -349,9 +498,36 @@ var HashedParams = {
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseHashedParams();
-    message.blockMaxBytes = object.blockMaxBytes !== undefined && object.blockMaxBytes !== null ? _helpers.Long.fromValue(object.blockMaxBytes) : _helpers.Long.ZERO;
-    message.blockMaxGas = object.blockMaxGas !== undefined && object.blockMaxGas !== null ? _helpers.Long.fromValue(object.blockMaxGas) : _helpers.Long.ZERO;
+    message.blockMaxBytes = object.blockMaxBytes !== undefined && object.blockMaxBytes !== null ? BigInt(object.blockMaxBytes.toString()) : BigInt(0);
+    message.blockMaxGas = object.blockMaxGas !== undefined && object.blockMaxGas !== null ? BigInt(object.blockMaxGas.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      blockMaxBytes: BigInt(object.block_max_bytes),
+      blockMaxGas: BigInt(object.block_max_gas)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.block_max_bytes = message.blockMaxBytes ? message.blockMaxBytes.toString() : undefined;
+    obj.block_max_gas = message.blockMaxGas ? message.blockMaxGas.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return HashedParams.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return HashedParams.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return HashedParams.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.HashedParams",
+      value: HashedParams.encode(message).finish()
+    };
   }
 };
 exports.HashedParams = HashedParams;

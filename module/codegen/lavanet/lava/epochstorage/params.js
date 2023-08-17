@@ -1,39 +1,39 @@
-import { Long } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** Params defines the parameters for the module. */
 
 /** Params defines the parameters for the module. */
 
 function createBaseParams() {
   return {
-    unstakeHoldBlocks: Long.UZERO,
-    epochBlocks: Long.UZERO,
-    epochsToSave: Long.UZERO,
-    latestParamChange: Long.UZERO,
-    unstakeHoldBlocksStatic: Long.UZERO
+    unstakeHoldBlocks: BigInt(0),
+    epochBlocks: BigInt(0),
+    epochsToSave: BigInt(0),
+    latestParamChange: BigInt(0),
+    unstakeHoldBlocksStatic: BigInt(0)
   };
 }
 export const Params = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.unstakeHoldBlocks.isZero()) {
+  typeUrl: "/lavanet.lava.epochstorage.Params",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.unstakeHoldBlocks !== BigInt(0)) {
       writer.uint32(8).uint64(message.unstakeHoldBlocks);
     }
-    if (!message.epochBlocks.isZero()) {
+    if (message.epochBlocks !== BigInt(0)) {
       writer.uint32(16).uint64(message.epochBlocks);
     }
-    if (!message.epochsToSave.isZero()) {
+    if (message.epochsToSave !== BigInt(0)) {
       writer.uint32(24).uint64(message.epochsToSave);
     }
-    if (!message.latestParamChange.isZero()) {
+    if (message.latestParamChange !== BigInt(0)) {
       writer.uint32(32).uint64(message.latestParamChange);
     }
-    if (!message.unstakeHoldBlocksStatic.isZero()) {
+    if (message.unstakeHoldBlocksStatic !== BigInt(0)) {
       writer.uint32(40).uint64(message.unstakeHoldBlocksStatic);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
     while (reader.pos < end) {
@@ -63,11 +63,44 @@ export const Params = {
   },
   fromPartial(object) {
     const message = createBaseParams();
-    message.unstakeHoldBlocks = object.unstakeHoldBlocks !== undefined && object.unstakeHoldBlocks !== null ? Long.fromValue(object.unstakeHoldBlocks) : Long.UZERO;
-    message.epochBlocks = object.epochBlocks !== undefined && object.epochBlocks !== null ? Long.fromValue(object.epochBlocks) : Long.UZERO;
-    message.epochsToSave = object.epochsToSave !== undefined && object.epochsToSave !== null ? Long.fromValue(object.epochsToSave) : Long.UZERO;
-    message.latestParamChange = object.latestParamChange !== undefined && object.latestParamChange !== null ? Long.fromValue(object.latestParamChange) : Long.UZERO;
-    message.unstakeHoldBlocksStatic = object.unstakeHoldBlocksStatic !== undefined && object.unstakeHoldBlocksStatic !== null ? Long.fromValue(object.unstakeHoldBlocksStatic) : Long.UZERO;
+    message.unstakeHoldBlocks = object.unstakeHoldBlocks !== undefined && object.unstakeHoldBlocks !== null ? BigInt(object.unstakeHoldBlocks.toString()) : BigInt(0);
+    message.epochBlocks = object.epochBlocks !== undefined && object.epochBlocks !== null ? BigInt(object.epochBlocks.toString()) : BigInt(0);
+    message.epochsToSave = object.epochsToSave !== undefined && object.epochsToSave !== null ? BigInt(object.epochsToSave.toString()) : BigInt(0);
+    message.latestParamChange = object.latestParamChange !== undefined && object.latestParamChange !== null ? BigInt(object.latestParamChange.toString()) : BigInt(0);
+    message.unstakeHoldBlocksStatic = object.unstakeHoldBlocksStatic !== undefined && object.unstakeHoldBlocksStatic !== null ? BigInt(object.unstakeHoldBlocksStatic.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      unstakeHoldBlocks: BigInt(object.unstakeHoldBlocks),
+      epochBlocks: BigInt(object.epochBlocks),
+      epochsToSave: BigInt(object.epochsToSave),
+      latestParamChange: BigInt(object.latestParamChange),
+      unstakeHoldBlocksStatic: BigInt(object.unstakeHoldBlocksStatic)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.unstakeHoldBlocks = message.unstakeHoldBlocks ? message.unstakeHoldBlocks.toString() : undefined;
+    obj.epochBlocks = message.epochBlocks ? message.epochBlocks.toString() : undefined;
+    obj.epochsToSave = message.epochsToSave ? message.epochsToSave.toString() : undefined;
+    obj.latestParamChange = message.latestParamChange ? message.latestParamChange.toString() : undefined;
+    obj.unstakeHoldBlocksStatic = message.unstakeHoldBlocksStatic ? message.unstakeHoldBlocksStatic.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.epochstorage.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };

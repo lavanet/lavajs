@@ -1,15 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ValidatorMissedBlocks = exports.SigningInfo = exports.MissedBlock = exports.GenesisState = void 0;
 var _slashing = require("./slashing");
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -37,14 +33,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 function createBaseGenesisState() {
   return {
-    params: undefined,
+    params: _slashing.Params.fromPartial({}),
     signingInfos: [],
     missedBlocks: []
   };
 }
 var GenesisState = {
+  typeUrl: "/cosmos.slashing.v1beta1.GenesisState",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.params !== undefined) {
       _slashing.Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -75,7 +72,7 @@ var GenesisState = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -108,18 +105,70 @@ var GenesisState = {
       return ValidatorMissedBlocks.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      params: object !== null && object !== void 0 && object.params ? _slashing.Params.fromAmino(object.params) : undefined,
+      signingInfos: Array.isArray(object === null || object === void 0 ? void 0 : object.signing_infos) ? object.signing_infos.map(function (e) {
+        return SigningInfo.fromAmino(e);
+      }) : [],
+      missedBlocks: Array.isArray(object === null || object === void 0 ? void 0 : object.missed_blocks) ? object.missed_blocks.map(function (e) {
+        return ValidatorMissedBlocks.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.params = message.params ? _slashing.Params.toAmino(message.params) : undefined;
+    if (message.signingInfos) {
+      obj.signing_infos = message.signingInfos.map(function (e) {
+        return e ? SigningInfo.toAmino(e) : undefined;
+      });
+    } else {
+      obj.signing_infos = [];
+    }
+    if (message.missedBlocks) {
+      obj.missed_blocks = message.missedBlocks.map(function (e) {
+        return e ? ValidatorMissedBlocks.toAmino(e) : undefined;
+      });
+    } else {
+      obj.missed_blocks = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return GenesisState.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GenesisState",
+      value: GenesisState.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return GenesisState.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };
 exports.GenesisState = GenesisState;
 function createBaseSigningInfo() {
   return {
     address: "",
-    validatorSigningInfo: undefined
+    validatorSigningInfo: _slashing.ValidatorSigningInfo.fromPartial({})
   };
 }
 var SigningInfo = {
+  typeUrl: "/cosmos.slashing.v1beta1.SigningInfo",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -129,7 +178,7 @@ var SigningInfo = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSigningInfo();
     while (reader.pos < end) {
@@ -154,6 +203,39 @@ var SigningInfo = {
     message.address = (_object$address = object.address) !== null && _object$address !== void 0 ? _object$address : "";
     message.validatorSigningInfo = object.validatorSigningInfo !== undefined && object.validatorSigningInfo !== null ? _slashing.ValidatorSigningInfo.fromPartial(object.validatorSigningInfo) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      address: object.address,
+      validatorSigningInfo: object !== null && object !== void 0 && object.validator_signing_info ? _slashing.ValidatorSigningInfo.fromAmino(object.validator_signing_info) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.address = message.address;
+    obj.validator_signing_info = message.validatorSigningInfo ? _slashing.ValidatorSigningInfo.toAmino(message.validatorSigningInfo) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return SigningInfo.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/SigningInfo",
+      value: SigningInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return SigningInfo.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return SigningInfo.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.SigningInfo",
+      value: SigningInfo.encode(message).finish()
+    };
   }
 };
 exports.SigningInfo = SigningInfo;
@@ -164,8 +246,9 @@ function createBaseValidatorMissedBlocks() {
   };
 }
 var ValidatorMissedBlocks = {
+  typeUrl: "/cosmos.slashing.v1beta1.ValidatorMissedBlocks",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -184,7 +267,7 @@ var ValidatorMissedBlocks = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseValidatorMissedBlocks();
     while (reader.pos < end) {
@@ -211,19 +294,61 @@ var ValidatorMissedBlocks = {
       return MissedBlock.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      address: object.address,
+      missedBlocks: Array.isArray(object === null || object === void 0 ? void 0 : object.missed_blocks) ? object.missed_blocks.map(function (e) {
+        return MissedBlock.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.address = message.address;
+    if (message.missedBlocks) {
+      obj.missed_blocks = message.missedBlocks.map(function (e) {
+        return e ? MissedBlock.toAmino(e) : undefined;
+      });
+    } else {
+      obj.missed_blocks = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ValidatorMissedBlocks.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ValidatorMissedBlocks",
+      value: ValidatorMissedBlocks.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ValidatorMissedBlocks.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ValidatorMissedBlocks.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.ValidatorMissedBlocks",
+      value: ValidatorMissedBlocks.encode(message).finish()
+    };
   }
 };
 exports.ValidatorMissedBlocks = ValidatorMissedBlocks;
 function createBaseMissedBlock() {
   return {
-    index: _helpers.Long.ZERO,
+    index: BigInt(0),
     missed: false
   };
 }
 var MissedBlock = {
+  typeUrl: "/cosmos.slashing.v1beta1.MissedBlock",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.index.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.index !== BigInt(0)) {
       writer.uint32(8).int64(message.index);
     }
     if (message.missed === true) {
@@ -232,7 +357,7 @@ var MissedBlock = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMissedBlock();
     while (reader.pos < end) {
@@ -254,9 +379,42 @@ var MissedBlock = {
   fromPartial: function fromPartial(object) {
     var _object$missed;
     var message = createBaseMissedBlock();
-    message.index = object.index !== undefined && object.index !== null ? _helpers.Long.fromValue(object.index) : _helpers.Long.ZERO;
+    message.index = object.index !== undefined && object.index !== null ? BigInt(object.index.toString()) : BigInt(0);
     message.missed = (_object$missed = object.missed) !== null && _object$missed !== void 0 ? _object$missed : false;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      index: BigInt(object.index),
+      missed: object.missed
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.index = message.index ? message.index.toString() : undefined;
+    obj.missed = message.missed;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MissedBlock.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MissedBlock",
+      value: MissedBlock.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MissedBlock.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MissedBlock.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.MissedBlock",
+      value: MissedBlock.encode(message).finish()
+    };
   }
 };
 exports.MissedBlock = MissedBlock;

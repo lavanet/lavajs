@@ -1,4 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 /** StorageType */
 export let StorageType = /*#__PURE__*/function (StorageType) {
   StorageType[StorageType["STORAGE_TYPE_DEFAULT_UNSPECIFIED"] = 0] = "STORAGE_TYPE_DEFAULT_UNSPECIFIED";
@@ -65,7 +66,8 @@ function createBaseModuleSchemaDescriptor() {
   };
 }
 export const ModuleSchemaDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.orm.v1alpha1.ModuleSchemaDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.schemaFile) {
       ModuleSchemaDescriptor_FileEntry.encode(v, writer.uint32(10).fork()).ldelim();
     }
@@ -75,7 +77,7 @@ export const ModuleSchemaDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModuleSchemaDescriptor();
     while (reader.pos < end) {
@@ -100,6 +102,43 @@ export const ModuleSchemaDescriptor = {
     message.schemaFile = ((_object$schemaFile = object.schemaFile) === null || _object$schemaFile === void 0 ? void 0 : _object$schemaFile.map(e => ModuleSchemaDescriptor_FileEntry.fromPartial(e))) || [];
     message.prefix = (_object$prefix = object.prefix) !== null && _object$prefix !== void 0 ? _object$prefix : new Uint8Array();
     return message;
+  },
+  fromAmino(object) {
+    return {
+      schemaFile: Array.isArray(object === null || object === void 0 ? void 0 : object.schema_file) ? object.schema_file.map(e => ModuleSchemaDescriptor_FileEntry.fromAmino(e)) : [],
+      prefix: object.prefix
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.schemaFile) {
+      obj.schema_file = message.schemaFile.map(e => e ? ModuleSchemaDescriptor_FileEntry.toAmino(e) : undefined);
+    } else {
+      obj.schema_file = [];
+    }
+    obj.prefix = message.prefix;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ModuleSchemaDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ModuleSchemaDescriptor",
+      value: ModuleSchemaDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return ModuleSchemaDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return ModuleSchemaDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.orm.v1alpha1.ModuleSchemaDescriptor",
+      value: ModuleSchemaDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseModuleSchemaDescriptor_FileEntry() {
@@ -110,7 +149,8 @@ function createBaseModuleSchemaDescriptor_FileEntry() {
   };
 }
 export const ModuleSchemaDescriptor_FileEntry = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.orm.v1alpha1.FileEntry",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.id !== 0) {
       writer.uint32(8).uint32(message.id);
     }
@@ -123,7 +163,7 @@ export const ModuleSchemaDescriptor_FileEntry = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModuleSchemaDescriptor_FileEntry();
     while (reader.pos < end) {
@@ -152,5 +192,40 @@ export const ModuleSchemaDescriptor_FileEntry = {
     message.protoFileName = (_object$protoFileName = object.protoFileName) !== null && _object$protoFileName !== void 0 ? _object$protoFileName : "";
     message.storageType = (_object$storageType = object.storageType) !== null && _object$storageType !== void 0 ? _object$storageType : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      id: object.id,
+      protoFileName: object.proto_file_name,
+      storageType: isSet(object.storage_type) ? storageTypeFromJSON(object.storage_type) : -1
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.id = message.id;
+    obj.proto_file_name = message.protoFileName;
+    obj.storage_type = message.storageType;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ModuleSchemaDescriptor_FileEntry.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/FileEntry",
+      value: ModuleSchemaDescriptor_FileEntry.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return ModuleSchemaDescriptor_FileEntry.decode(message.value);
+  },
+  toProto(message) {
+    return ModuleSchemaDescriptor_FileEntry.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.orm.v1alpha1.FileEntry",
+      value: ModuleSchemaDescriptor_FileEntry.encode(message).finish()
+    };
   }
 };

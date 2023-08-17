@@ -1,5 +1,5 @@
-import { Long } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
+import { isSet } from "../../helpers";
 export let FieldDescriptorProto_Type = /*#__PURE__*/function (FieldDescriptorProto_Type) {
   FieldDescriptorProto_Type[FieldDescriptorProto_Type["TYPE_DOUBLE"] = 1] = "TYPE_DOUBLE";
   FieldDescriptorProto_Type[FieldDescriptorProto_Type["TYPE_FLOAT"] = 2] = "TYPE_FLOAT";
@@ -458,14 +458,15 @@ function createBaseFileDescriptorSet() {
   };
 }
 export const FileDescriptorSet = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.FileDescriptorSet",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.file) {
       FileDescriptorProto.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFileDescriptorSet();
     while (reader.pos < end) {
@@ -486,6 +487,35 @@ export const FileDescriptorSet = {
     const message = createBaseFileDescriptorSet();
     message.file = ((_object$file = object.file) === null || _object$file === void 0 ? void 0 : _object$file.map(e => FileDescriptorProto.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      file: Array.isArray(object === null || object === void 0 ? void 0 : object.file) ? object.file.map(e => FileDescriptorProto.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.file) {
+      obj.file = message.file.map(e => e ? FileDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.file = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return FileDescriptorSet.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return FileDescriptorSet.decode(message.value);
+  },
+  toProto(message) {
+    return FileDescriptorSet.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.FileDescriptorSet",
+      value: FileDescriptorSet.encode(message).finish()
+    };
   }
 };
 function createBaseFileDescriptorProto() {
@@ -499,13 +529,14 @@ function createBaseFileDescriptorProto() {
     enumType: [],
     service: [],
     extension: [],
-    options: undefined,
-    sourceCodeInfo: undefined,
+    options: FileOptions.fromPartial({}),
+    sourceCodeInfo: SourceCodeInfo.fromPartial({}),
     syntax: ""
   };
 }
 export const FileDescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.FileDescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -549,7 +580,7 @@ export const FileDescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFileDescriptorProto();
     while (reader.pos < end) {
@@ -628,6 +659,81 @@ export const FileDescriptorProto = {
     message.sourceCodeInfo = object.sourceCodeInfo !== undefined && object.sourceCodeInfo !== null ? SourceCodeInfo.fromPartial(object.sourceCodeInfo) : undefined;
     message.syntax = (_object$syntax = object.syntax) !== null && _object$syntax !== void 0 ? _object$syntax : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      package: object.package,
+      dependency: Array.isArray(object === null || object === void 0 ? void 0 : object.dependency) ? object.dependency.map(e => e) : [],
+      publicDependency: Array.isArray(object === null || object === void 0 ? void 0 : object.public_dependency) ? object.public_dependency.map(e => e) : [],
+      weakDependency: Array.isArray(object === null || object === void 0 ? void 0 : object.weak_dependency) ? object.weak_dependency.map(e => e) : [],
+      messageType: Array.isArray(object === null || object === void 0 ? void 0 : object.message_type) ? object.message_type.map(e => DescriptorProto.fromAmino(e)) : [],
+      enumType: Array.isArray(object === null || object === void 0 ? void 0 : object.enum_type) ? object.enum_type.map(e => EnumDescriptorProto.fromAmino(e)) : [],
+      service: Array.isArray(object === null || object === void 0 ? void 0 : object.service) ? object.service.map(e => ServiceDescriptorProto.fromAmino(e)) : [],
+      extension: Array.isArray(object === null || object === void 0 ? void 0 : object.extension) ? object.extension.map(e => FieldDescriptorProto.fromAmino(e)) : [],
+      options: object !== null && object !== void 0 && object.options ? FileOptions.fromAmino(object.options) : undefined,
+      sourceCodeInfo: object !== null && object !== void 0 && object.source_code_info ? SourceCodeInfo.fromAmino(object.source_code_info) : undefined,
+      syntax: object.syntax
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.package = message.package;
+    if (message.dependency) {
+      obj.dependency = message.dependency.map(e => e);
+    } else {
+      obj.dependency = [];
+    }
+    if (message.publicDependency) {
+      obj.public_dependency = message.publicDependency.map(e => e);
+    } else {
+      obj.public_dependency = [];
+    }
+    if (message.weakDependency) {
+      obj.weak_dependency = message.weakDependency.map(e => e);
+    } else {
+      obj.weak_dependency = [];
+    }
+    if (message.messageType) {
+      obj.message_type = message.messageType.map(e => e ? DescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.message_type = [];
+    }
+    if (message.enumType) {
+      obj.enum_type = message.enumType.map(e => e ? EnumDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.enum_type = [];
+    }
+    if (message.service) {
+      obj.service = message.service.map(e => e ? ServiceDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.service = [];
+    }
+    if (message.extension) {
+      obj.extension = message.extension.map(e => e ? FieldDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.extension = [];
+    }
+    obj.options = message.options ? FileOptions.toAmino(message.options) : undefined;
+    obj.source_code_info = message.sourceCodeInfo ? SourceCodeInfo.toAmino(message.sourceCodeInfo) : undefined;
+    obj.syntax = message.syntax;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return FileDescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return FileDescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return FileDescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.FileDescriptorProto",
+      value: FileDescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseDescriptorProto() {
@@ -639,13 +745,14 @@ function createBaseDescriptorProto() {
     enumType: [],
     extensionRange: [],
     oneofDecl: [],
-    options: undefined,
+    options: MessageOptions.fromPartial({}),
     reservedRange: [],
     reservedName: []
   };
 }
 export const DescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.DescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -679,7 +786,7 @@ export const DescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDescriptorProto();
     while (reader.pos < end) {
@@ -736,17 +843,93 @@ export const DescriptorProto = {
     message.reservedRange = ((_object$reservedRange = object.reservedRange) === null || _object$reservedRange === void 0 ? void 0 : _object$reservedRange.map(e => DescriptorProto_ReservedRange.fromPartial(e))) || [];
     message.reservedName = ((_object$reservedName = object.reservedName) === null || _object$reservedName === void 0 ? void 0 : _object$reservedName.map(e => e)) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      field: Array.isArray(object === null || object === void 0 ? void 0 : object.field) ? object.field.map(e => FieldDescriptorProto.fromAmino(e)) : [],
+      extension: Array.isArray(object === null || object === void 0 ? void 0 : object.extension) ? object.extension.map(e => FieldDescriptorProto.fromAmino(e)) : [],
+      nestedType: Array.isArray(object === null || object === void 0 ? void 0 : object.nested_type) ? object.nested_type.map(e => DescriptorProto.fromAmino(e)) : [],
+      enumType: Array.isArray(object === null || object === void 0 ? void 0 : object.enum_type) ? object.enum_type.map(e => EnumDescriptorProto.fromAmino(e)) : [],
+      extensionRange: Array.isArray(object === null || object === void 0 ? void 0 : object.extension_range) ? object.extension_range.map(e => DescriptorProto_ExtensionRange.fromAmino(e)) : [],
+      oneofDecl: Array.isArray(object === null || object === void 0 ? void 0 : object.oneof_decl) ? object.oneof_decl.map(e => OneofDescriptorProto.fromAmino(e)) : [],
+      options: object !== null && object !== void 0 && object.options ? MessageOptions.fromAmino(object.options) : undefined,
+      reservedRange: Array.isArray(object === null || object === void 0 ? void 0 : object.reserved_range) ? object.reserved_range.map(e => DescriptorProto_ReservedRange.fromAmino(e)) : [],
+      reservedName: Array.isArray(object === null || object === void 0 ? void 0 : object.reserved_name) ? object.reserved_name.map(e => e) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    if (message.field) {
+      obj.field = message.field.map(e => e ? FieldDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.field = [];
+    }
+    if (message.extension) {
+      obj.extension = message.extension.map(e => e ? FieldDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.extension = [];
+    }
+    if (message.nestedType) {
+      obj.nested_type = message.nestedType.map(e => e ? DescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.nested_type = [];
+    }
+    if (message.enumType) {
+      obj.enum_type = message.enumType.map(e => e ? EnumDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.enum_type = [];
+    }
+    if (message.extensionRange) {
+      obj.extension_range = message.extensionRange.map(e => e ? DescriptorProto_ExtensionRange.toAmino(e) : undefined);
+    } else {
+      obj.extension_range = [];
+    }
+    if (message.oneofDecl) {
+      obj.oneof_decl = message.oneofDecl.map(e => e ? OneofDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.oneof_decl = [];
+    }
+    obj.options = message.options ? MessageOptions.toAmino(message.options) : undefined;
+    if (message.reservedRange) {
+      obj.reserved_range = message.reservedRange.map(e => e ? DescriptorProto_ReservedRange.toAmino(e) : undefined);
+    } else {
+      obj.reserved_range = [];
+    }
+    if (message.reservedName) {
+      obj.reserved_name = message.reservedName.map(e => e);
+    } else {
+      obj.reserved_name = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return DescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return DescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return DescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.DescriptorProto",
+      value: DescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseDescriptorProto_ExtensionRange() {
   return {
     start: 0,
     end: 0,
-    options: undefined
+    options: ExtensionRangeOptions.fromPartial({})
   };
 }
 export const DescriptorProto_ExtensionRange = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.ExtensionRange",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.start !== 0) {
       writer.uint32(8).int32(message.start);
     }
@@ -759,7 +942,7 @@ export const DescriptorProto_ExtensionRange = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDescriptorProto_ExtensionRange();
     while (reader.pos < end) {
@@ -788,6 +971,35 @@ export const DescriptorProto_ExtensionRange = {
     message.end = (_object$end = object.end) !== null && _object$end !== void 0 ? _object$end : 0;
     message.options = object.options !== undefined && object.options !== null ? ExtensionRangeOptions.fromPartial(object.options) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      start: object.start,
+      end: object.end,
+      options: object !== null && object !== void 0 && object.options ? ExtensionRangeOptions.fromAmino(object.options) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.start = message.start;
+    obj.end = message.end;
+    obj.options = message.options ? ExtensionRangeOptions.toAmino(message.options) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return DescriptorProto_ExtensionRange.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return DescriptorProto_ExtensionRange.decode(message.value);
+  },
+  toProto(message) {
+    return DescriptorProto_ExtensionRange.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.ExtensionRange",
+      value: DescriptorProto_ExtensionRange.encode(message).finish()
+    };
   }
 };
 function createBaseDescriptorProto_ReservedRange() {
@@ -797,7 +1009,8 @@ function createBaseDescriptorProto_ReservedRange() {
   };
 }
 export const DescriptorProto_ReservedRange = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.ReservedRange",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.start !== 0) {
       writer.uint32(8).int32(message.start);
     }
@@ -807,7 +1020,7 @@ export const DescriptorProto_ReservedRange = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDescriptorProto_ReservedRange();
     while (reader.pos < end) {
@@ -832,6 +1045,33 @@ export const DescriptorProto_ReservedRange = {
     message.start = (_object$start2 = object.start) !== null && _object$start2 !== void 0 ? _object$start2 : 0;
     message.end = (_object$end2 = object.end) !== null && _object$end2 !== void 0 ? _object$end2 : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      start: object.start,
+      end: object.end
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.start = message.start;
+    obj.end = message.end;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return DescriptorProto_ReservedRange.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return DescriptorProto_ReservedRange.decode(message.value);
+  },
+  toProto(message) {
+    return DescriptorProto_ReservedRange.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.ReservedRange",
+      value: DescriptorProto_ReservedRange.encode(message).finish()
+    };
   }
 };
 function createBaseExtensionRangeOptions() {
@@ -840,14 +1080,15 @@ function createBaseExtensionRangeOptions() {
   };
 }
 export const ExtensionRangeOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.ExtensionRangeOptions",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.uninterpretedOption) {
       UninterpretedOption.encode(v, writer.uint32(7994).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseExtensionRangeOptions();
     while (reader.pos < end) {
@@ -868,6 +1109,35 @@ export const ExtensionRangeOptions = {
     const message = createBaseExtensionRangeOptions();
     message.uninterpretedOption = ((_object$uninterpreted = object.uninterpretedOption) === null || _object$uninterpreted === void 0 ? void 0 : _object$uninterpreted.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ExtensionRangeOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return ExtensionRangeOptions.decode(message.value);
+  },
+  toProto(message) {
+    return ExtensionRangeOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.ExtensionRangeOptions",
+      value: ExtensionRangeOptions.encode(message).finish()
+    };
   }
 };
 function createBaseFieldDescriptorProto() {
@@ -881,11 +1151,12 @@ function createBaseFieldDescriptorProto() {
     defaultValue: "",
     oneofIndex: 0,
     jsonName: "",
-    options: undefined
+    options: FieldOptions.fromPartial({})
   };
 }
 export const FieldDescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.FieldDescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -919,7 +1190,7 @@ export const FieldDescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFieldDescriptorProto();
     while (reader.pos < end) {
@@ -976,16 +1247,60 @@ export const FieldDescriptorProto = {
     message.jsonName = (_object$jsonName = object.jsonName) !== null && _object$jsonName !== void 0 ? _object$jsonName : "";
     message.options = object.options !== undefined && object.options !== null ? FieldOptions.fromPartial(object.options) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      number: object.number,
+      label: isSet(object.label) ? fieldDescriptorProto_LabelFromJSON(object.label) : -1,
+      type: isSet(object.type) ? fieldDescriptorProto_TypeFromJSON(object.type) : -1,
+      typeName: object.type_name,
+      extendee: object.extendee,
+      defaultValue: object.default_value,
+      oneofIndex: object.oneof_index,
+      jsonName: object.json_name,
+      options: object !== null && object !== void 0 && object.options ? FieldOptions.fromAmino(object.options) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.number = message.number;
+    obj.label = message.label;
+    obj.type = message.type;
+    obj.type_name = message.typeName;
+    obj.extendee = message.extendee;
+    obj.default_value = message.defaultValue;
+    obj.oneof_index = message.oneofIndex;
+    obj.json_name = message.jsonName;
+    obj.options = message.options ? FieldOptions.toAmino(message.options) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return FieldDescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return FieldDescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return FieldDescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.FieldDescriptorProto",
+      value: FieldDescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseOneofDescriptorProto() {
   return {
     name: "",
-    options: undefined
+    options: OneofOptions.fromPartial({})
   };
 }
 export const OneofDescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.OneofDescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -995,7 +1310,7 @@ export const OneofDescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOneofDescriptorProto();
     while (reader.pos < end) {
@@ -1020,19 +1335,47 @@ export const OneofDescriptorProto = {
     message.name = (_object$name4 = object.name) !== null && _object$name4 !== void 0 ? _object$name4 : "";
     message.options = object.options !== undefined && object.options !== null ? OneofOptions.fromPartial(object.options) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      options: object !== null && object !== void 0 && object.options ? OneofOptions.fromAmino(object.options) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.options = message.options ? OneofOptions.toAmino(message.options) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return OneofDescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return OneofDescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return OneofDescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.OneofDescriptorProto",
+      value: OneofDescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseEnumDescriptorProto() {
   return {
     name: "",
     value: [],
-    options: undefined,
+    options: EnumOptions.fromPartial({}),
     reservedRange: [],
     reservedName: []
   };
 }
 export const EnumDescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.EnumDescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -1051,7 +1394,7 @@ export const EnumDescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEnumDescriptorProto();
     while (reader.pos < end) {
@@ -1088,6 +1431,51 @@ export const EnumDescriptorProto = {
     message.reservedRange = ((_object$reservedRange2 = object.reservedRange) === null || _object$reservedRange2 === void 0 ? void 0 : _object$reservedRange2.map(e => EnumDescriptorProto_EnumReservedRange.fromPartial(e))) || [];
     message.reservedName = ((_object$reservedName2 = object.reservedName) === null || _object$reservedName2 === void 0 ? void 0 : _object$reservedName2.map(e => e)) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      value: Array.isArray(object === null || object === void 0 ? void 0 : object.value) ? object.value.map(e => EnumValueDescriptorProto.fromAmino(e)) : [],
+      options: object !== null && object !== void 0 && object.options ? EnumOptions.fromAmino(object.options) : undefined,
+      reservedRange: Array.isArray(object === null || object === void 0 ? void 0 : object.reserved_range) ? object.reserved_range.map(e => EnumDescriptorProto_EnumReservedRange.fromAmino(e)) : [],
+      reservedName: Array.isArray(object === null || object === void 0 ? void 0 : object.reserved_name) ? object.reserved_name.map(e => e) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    if (message.value) {
+      obj.value = message.value.map(e => e ? EnumValueDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.value = [];
+    }
+    obj.options = message.options ? EnumOptions.toAmino(message.options) : undefined;
+    if (message.reservedRange) {
+      obj.reserved_range = message.reservedRange.map(e => e ? EnumDescriptorProto_EnumReservedRange.toAmino(e) : undefined);
+    } else {
+      obj.reserved_range = [];
+    }
+    if (message.reservedName) {
+      obj.reserved_name = message.reservedName.map(e => e);
+    } else {
+      obj.reserved_name = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EnumDescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return EnumDescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return EnumDescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.EnumDescriptorProto",
+      value: EnumDescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseEnumDescriptorProto_EnumReservedRange() {
@@ -1097,7 +1485,8 @@ function createBaseEnumDescriptorProto_EnumReservedRange() {
   };
 }
 export const EnumDescriptorProto_EnumReservedRange = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.EnumReservedRange",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.start !== 0) {
       writer.uint32(8).int32(message.start);
     }
@@ -1107,7 +1496,7 @@ export const EnumDescriptorProto_EnumReservedRange = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEnumDescriptorProto_EnumReservedRange();
     while (reader.pos < end) {
@@ -1132,17 +1521,45 @@ export const EnumDescriptorProto_EnumReservedRange = {
     message.start = (_object$start3 = object.start) !== null && _object$start3 !== void 0 ? _object$start3 : 0;
     message.end = (_object$end3 = object.end) !== null && _object$end3 !== void 0 ? _object$end3 : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      start: object.start,
+      end: object.end
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.start = message.start;
+    obj.end = message.end;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EnumDescriptorProto_EnumReservedRange.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return EnumDescriptorProto_EnumReservedRange.decode(message.value);
+  },
+  toProto(message) {
+    return EnumDescriptorProto_EnumReservedRange.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.EnumReservedRange",
+      value: EnumDescriptorProto_EnumReservedRange.encode(message).finish()
+    };
   }
 };
 function createBaseEnumValueDescriptorProto() {
   return {
     name: "",
     number: 0,
-    options: undefined
+    options: EnumValueOptions.fromPartial({})
   };
 }
 export const EnumValueDescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.EnumValueDescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -1155,7 +1572,7 @@ export const EnumValueDescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEnumValueDescriptorProto();
     while (reader.pos < end) {
@@ -1184,17 +1601,47 @@ export const EnumValueDescriptorProto = {
     message.number = (_object$number2 = object.number) !== null && _object$number2 !== void 0 ? _object$number2 : 0;
     message.options = object.options !== undefined && object.options !== null ? EnumValueOptions.fromPartial(object.options) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      number: object.number,
+      options: object !== null && object !== void 0 && object.options ? EnumValueOptions.fromAmino(object.options) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.number = message.number;
+    obj.options = message.options ? EnumValueOptions.toAmino(message.options) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EnumValueDescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return EnumValueDescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return EnumValueDescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.EnumValueDescriptorProto",
+      value: EnumValueDescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseServiceDescriptorProto() {
   return {
     name: "",
     method: [],
-    options: undefined
+    options: ServiceOptions.fromPartial({})
   };
 }
 export const ServiceDescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.ServiceDescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -1207,7 +1654,7 @@ export const ServiceDescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseServiceDescriptorProto();
     while (reader.pos < end) {
@@ -1236,6 +1683,39 @@ export const ServiceDescriptorProto = {
     message.method = ((_object$method = object.method) === null || _object$method === void 0 ? void 0 : _object$method.map(e => MethodDescriptorProto.fromPartial(e))) || [];
     message.options = object.options !== undefined && object.options !== null ? ServiceOptions.fromPartial(object.options) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      method: Array.isArray(object === null || object === void 0 ? void 0 : object.method) ? object.method.map(e => MethodDescriptorProto.fromAmino(e)) : [],
+      options: object !== null && object !== void 0 && object.options ? ServiceOptions.fromAmino(object.options) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    if (message.method) {
+      obj.method = message.method.map(e => e ? MethodDescriptorProto.toAmino(e) : undefined);
+    } else {
+      obj.method = [];
+    }
+    obj.options = message.options ? ServiceOptions.toAmino(message.options) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ServiceDescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return ServiceDescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return ServiceDescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.ServiceDescriptorProto",
+      value: ServiceDescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseMethodDescriptorProto() {
@@ -1243,13 +1723,14 @@ function createBaseMethodDescriptorProto() {
     name: "",
     inputType: "",
     outputType: "",
-    options: undefined,
+    options: MethodOptions.fromPartial({}),
     clientStreaming: false,
     serverStreaming: false
   };
 }
 export const MethodDescriptorProto = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.MethodDescriptorProto",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -1271,7 +1752,7 @@ export const MethodDescriptorProto = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMethodDescriptorProto();
     while (reader.pos < end) {
@@ -1312,6 +1793,41 @@ export const MethodDescriptorProto = {
     message.clientStreaming = (_object$clientStreami = object.clientStreaming) !== null && _object$clientStreami !== void 0 ? _object$clientStreami : false;
     message.serverStreaming = (_object$serverStreami = object.serverStreaming) !== null && _object$serverStreami !== void 0 ? _object$serverStreami : false;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      inputType: object.input_type,
+      outputType: object.output_type,
+      options: object !== null && object !== void 0 && object.options ? MethodOptions.fromAmino(object.options) : undefined,
+      clientStreaming: object.client_streaming,
+      serverStreaming: object.server_streaming
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.input_type = message.inputType;
+    obj.output_type = message.outputType;
+    obj.options = message.options ? MethodOptions.toAmino(message.options) : undefined;
+    obj.client_streaming = message.clientStreaming;
+    obj.server_streaming = message.serverStreaming;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MethodDescriptorProto.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MethodDescriptorProto.decode(message.value);
+  },
+  toProto(message) {
+    return MethodDescriptorProto.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.MethodDescriptorProto",
+      value: MethodDescriptorProto.encode(message).finish()
+    };
   }
 };
 function createBaseFileOptions() {
@@ -1340,7 +1856,8 @@ function createBaseFileOptions() {
   };
 }
 export const FileOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.FileOptions",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.javaPackage !== "") {
       writer.uint32(10).string(message.javaPackage);
     }
@@ -1407,7 +1924,7 @@ export const FileOptions = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFileOptions();
     while (reader.pos < end) {
@@ -1508,6 +2025,75 @@ export const FileOptions = {
     message.rubyPackage = (_object$rubyPackage = object.rubyPackage) !== null && _object$rubyPackage !== void 0 ? _object$rubyPackage : "";
     message.uninterpretedOption = ((_object$uninterpreted2 = object.uninterpretedOption) === null || _object$uninterpreted2 === void 0 ? void 0 : _object$uninterpreted2.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      javaPackage: object.java_package,
+      javaOuterClassname: object.java_outer_classname,
+      javaMultipleFiles: object.java_multiple_files,
+      javaGenerateEqualsAndHash: object.java_generate_equals_and_hash,
+      javaStringCheckUtf8: object.java_string_check_utf8,
+      optimizeFor: isSet(object.optimize_for) ? fileOptions_OptimizeModeFromJSON(object.optimize_for) : -1,
+      goPackage: object.go_package,
+      ccGenericServices: object.cc_generic_services,
+      javaGenericServices: object.java_generic_services,
+      pyGenericServices: object.py_generic_services,
+      phpGenericServices: object.php_generic_services,
+      deprecated: object.deprecated,
+      ccEnableArenas: object.cc_enable_arenas,
+      objcClassPrefix: object.objc_class_prefix,
+      csharpNamespace: object.csharp_namespace,
+      swiftPrefix: object.swift_prefix,
+      phpClassPrefix: object.php_class_prefix,
+      phpNamespace: object.php_namespace,
+      phpMetadataNamespace: object.php_metadata_namespace,
+      rubyPackage: object.ruby_package,
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.java_package = message.javaPackage;
+    obj.java_outer_classname = message.javaOuterClassname;
+    obj.java_multiple_files = message.javaMultipleFiles;
+    obj.java_generate_equals_and_hash = message.javaGenerateEqualsAndHash;
+    obj.java_string_check_utf8 = message.javaStringCheckUtf8;
+    obj.optimize_for = message.optimizeFor;
+    obj.go_package = message.goPackage;
+    obj.cc_generic_services = message.ccGenericServices;
+    obj.java_generic_services = message.javaGenericServices;
+    obj.py_generic_services = message.pyGenericServices;
+    obj.php_generic_services = message.phpGenericServices;
+    obj.deprecated = message.deprecated;
+    obj.cc_enable_arenas = message.ccEnableArenas;
+    obj.objc_class_prefix = message.objcClassPrefix;
+    obj.csharp_namespace = message.csharpNamespace;
+    obj.swift_prefix = message.swiftPrefix;
+    obj.php_class_prefix = message.phpClassPrefix;
+    obj.php_namespace = message.phpNamespace;
+    obj.php_metadata_namespace = message.phpMetadataNamespace;
+    obj.ruby_package = message.rubyPackage;
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return FileOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return FileOptions.decode(message.value);
+  },
+  toProto(message) {
+    return FileOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.FileOptions",
+      value: FileOptions.encode(message).finish()
+    };
   }
 };
 function createBaseMessageOptions() {
@@ -1520,7 +2106,8 @@ function createBaseMessageOptions() {
   };
 }
 export const MessageOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.MessageOptions",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.messageSetWireFormat === true) {
       writer.uint32(8).bool(message.messageSetWireFormat);
     }
@@ -1539,7 +2126,7 @@ export const MessageOptions = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMessageOptions();
     while (reader.pos < end) {
@@ -1576,6 +2163,43 @@ export const MessageOptions = {
     message.mapEntry = (_object$mapEntry = object.mapEntry) !== null && _object$mapEntry !== void 0 ? _object$mapEntry : false;
     message.uninterpretedOption = ((_object$uninterpreted3 = object.uninterpretedOption) === null || _object$uninterpreted3 === void 0 ? void 0 : _object$uninterpreted3.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      messageSetWireFormat: object.message_set_wire_format,
+      noStandardDescriptorAccessor: object.no_standard_descriptor_accessor,
+      deprecated: object.deprecated,
+      mapEntry: object.map_entry,
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.message_set_wire_format = message.messageSetWireFormat;
+    obj.no_standard_descriptor_accessor = message.noStandardDescriptorAccessor;
+    obj.deprecated = message.deprecated;
+    obj.map_entry = message.mapEntry;
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MessageOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MessageOptions.decode(message.value);
+  },
+  toProto(message) {
+    return MessageOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.MessageOptions",
+      value: MessageOptions.encode(message).finish()
+    };
   }
 };
 function createBaseFieldOptions() {
@@ -1590,7 +2214,8 @@ function createBaseFieldOptions() {
   };
 }
 export const FieldOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.FieldOptions",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.ctype !== 1) {
       writer.uint32(8).int32(message.ctype);
     }
@@ -1615,7 +2240,7 @@ export const FieldOptions = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFieldOptions();
     while (reader.pos < end) {
@@ -1660,6 +2285,47 @@ export const FieldOptions = {
     message.weak = (_object$weak = object.weak) !== null && _object$weak !== void 0 ? _object$weak : false;
     message.uninterpretedOption = ((_object$uninterpreted4 = object.uninterpretedOption) === null || _object$uninterpreted4 === void 0 ? void 0 : _object$uninterpreted4.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      ctype: isSet(object.ctype) ? fieldOptions_CTypeFromJSON(object.ctype) : -1,
+      packed: object.packed,
+      jstype: isSet(object.jstype) ? fieldOptions_JSTypeFromJSON(object.jstype) : -1,
+      lazy: object.lazy,
+      deprecated: object.deprecated,
+      weak: object.weak,
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.ctype = message.ctype;
+    obj.packed = message.packed;
+    obj.jstype = message.jstype;
+    obj.lazy = message.lazy;
+    obj.deprecated = message.deprecated;
+    obj.weak = message.weak;
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return FieldOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return FieldOptions.decode(message.value);
+  },
+  toProto(message) {
+    return FieldOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.FieldOptions",
+      value: FieldOptions.encode(message).finish()
+    };
   }
 };
 function createBaseOneofOptions() {
@@ -1668,14 +2334,15 @@ function createBaseOneofOptions() {
   };
 }
 export const OneofOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.OneofOptions",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.uninterpretedOption) {
       UninterpretedOption.encode(v, writer.uint32(7994).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOneofOptions();
     while (reader.pos < end) {
@@ -1696,6 +2363,35 @@ export const OneofOptions = {
     const message = createBaseOneofOptions();
     message.uninterpretedOption = ((_object$uninterpreted5 = object.uninterpretedOption) === null || _object$uninterpreted5 === void 0 ? void 0 : _object$uninterpreted5.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return OneofOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return OneofOptions.decode(message.value);
+  },
+  toProto(message) {
+    return OneofOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.OneofOptions",
+      value: OneofOptions.encode(message).finish()
+    };
   }
 };
 function createBaseEnumOptions() {
@@ -1706,7 +2402,8 @@ function createBaseEnumOptions() {
   };
 }
 export const EnumOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.EnumOptions",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.allowAlias === true) {
       writer.uint32(16).bool(message.allowAlias);
     }
@@ -1719,7 +2416,7 @@ export const EnumOptions = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEnumOptions();
     while (reader.pos < end) {
@@ -1748,6 +2445,39 @@ export const EnumOptions = {
     message.deprecated = (_object$deprecated4 = object.deprecated) !== null && _object$deprecated4 !== void 0 ? _object$deprecated4 : false;
     message.uninterpretedOption = ((_object$uninterpreted6 = object.uninterpretedOption) === null || _object$uninterpreted6 === void 0 ? void 0 : _object$uninterpreted6.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      allowAlias: object.allow_alias,
+      deprecated: object.deprecated,
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.allow_alias = message.allowAlias;
+    obj.deprecated = message.deprecated;
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EnumOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return EnumOptions.decode(message.value);
+  },
+  toProto(message) {
+    return EnumOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.EnumOptions",
+      value: EnumOptions.encode(message).finish()
+    };
   }
 };
 function createBaseEnumValueOptions() {
@@ -1757,7 +2487,8 @@ function createBaseEnumValueOptions() {
   };
 }
 export const EnumValueOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.EnumValueOptions",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.deprecated === true) {
       writer.uint32(8).bool(message.deprecated);
     }
@@ -1767,7 +2498,7 @@ export const EnumValueOptions = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEnumValueOptions();
     while (reader.pos < end) {
@@ -1792,6 +2523,37 @@ export const EnumValueOptions = {
     message.deprecated = (_object$deprecated5 = object.deprecated) !== null && _object$deprecated5 !== void 0 ? _object$deprecated5 : false;
     message.uninterpretedOption = ((_object$uninterpreted7 = object.uninterpretedOption) === null || _object$uninterpreted7 === void 0 ? void 0 : _object$uninterpreted7.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      deprecated: object.deprecated,
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.deprecated = message.deprecated;
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EnumValueOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return EnumValueOptions.decode(message.value);
+  },
+  toProto(message) {
+    return EnumValueOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.EnumValueOptions",
+      value: EnumValueOptions.encode(message).finish()
+    };
   }
 };
 function createBaseServiceOptions() {
@@ -1801,7 +2563,8 @@ function createBaseServiceOptions() {
   };
 }
 export const ServiceOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.ServiceOptions",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.deprecated === true) {
       writer.uint32(264).bool(message.deprecated);
     }
@@ -1811,7 +2574,7 @@ export const ServiceOptions = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseServiceOptions();
     while (reader.pos < end) {
@@ -1836,6 +2599,37 @@ export const ServiceOptions = {
     message.deprecated = (_object$deprecated6 = object.deprecated) !== null && _object$deprecated6 !== void 0 ? _object$deprecated6 : false;
     message.uninterpretedOption = ((_object$uninterpreted8 = object.uninterpretedOption) === null || _object$uninterpreted8 === void 0 ? void 0 : _object$uninterpreted8.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      deprecated: object.deprecated,
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.deprecated = message.deprecated;
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ServiceOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return ServiceOptions.decode(message.value);
+  },
+  toProto(message) {
+    return ServiceOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.ServiceOptions",
+      value: ServiceOptions.encode(message).finish()
+    };
   }
 };
 function createBaseMethodOptions() {
@@ -1846,7 +2640,8 @@ function createBaseMethodOptions() {
   };
 }
 export const MethodOptions = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.MethodOptions",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.deprecated === true) {
       writer.uint32(264).bool(message.deprecated);
     }
@@ -1859,7 +2654,7 @@ export const MethodOptions = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMethodOptions();
     while (reader.pos < end) {
@@ -1888,31 +2683,65 @@ export const MethodOptions = {
     message.idempotencyLevel = (_object$idempotencyLe = object.idempotencyLevel) !== null && _object$idempotencyLe !== void 0 ? _object$idempotencyLe : 1;
     message.uninterpretedOption = ((_object$uninterpreted9 = object.uninterpretedOption) === null || _object$uninterpreted9 === void 0 ? void 0 : _object$uninterpreted9.map(e => UninterpretedOption.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      deprecated: object.deprecated,
+      idempotencyLevel: isSet(object.idempotency_level) ? methodOptions_IdempotencyLevelFromJSON(object.idempotency_level) : -1,
+      uninterpretedOption: Array.isArray(object === null || object === void 0 ? void 0 : object.uninterpreted_option) ? object.uninterpreted_option.map(e => UninterpretedOption.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.deprecated = message.deprecated;
+    obj.idempotency_level = message.idempotencyLevel;
+    if (message.uninterpretedOption) {
+      obj.uninterpreted_option = message.uninterpretedOption.map(e => e ? UninterpretedOption.toAmino(e) : undefined);
+    } else {
+      obj.uninterpreted_option = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MethodOptions.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MethodOptions.decode(message.value);
+  },
+  toProto(message) {
+    return MethodOptions.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.MethodOptions",
+      value: MethodOptions.encode(message).finish()
+    };
   }
 };
 function createBaseUninterpretedOption() {
   return {
     name: [],
     identifierValue: "",
-    positiveIntValue: Long.UZERO,
-    negativeIntValue: Long.ZERO,
+    positiveIntValue: BigInt(0),
+    negativeIntValue: BigInt(0),
     doubleValue: 0,
     stringValue: new Uint8Array(),
     aggregateValue: ""
   };
 }
 export const UninterpretedOption = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.UninterpretedOption",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.name) {
       UninterpretedOption_NamePart.encode(v, writer.uint32(18).fork()).ldelim();
     }
     if (message.identifierValue !== "") {
       writer.uint32(26).string(message.identifierValue);
     }
-    if (!message.positiveIntValue.isZero()) {
+    if (message.positiveIntValue !== BigInt(0)) {
       writer.uint32(32).uint64(message.positiveIntValue);
     }
-    if (!message.negativeIntValue.isZero()) {
+    if (message.negativeIntValue !== BigInt(0)) {
       writer.uint32(40).int64(message.negativeIntValue);
     }
     if (message.doubleValue !== 0) {
@@ -1927,7 +2756,7 @@ export const UninterpretedOption = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUninterpretedOption();
     while (reader.pos < end) {
@@ -1966,12 +2795,53 @@ export const UninterpretedOption = {
     const message = createBaseUninterpretedOption();
     message.name = ((_object$name9 = object.name) === null || _object$name9 === void 0 ? void 0 : _object$name9.map(e => UninterpretedOption_NamePart.fromPartial(e))) || [];
     message.identifierValue = (_object$identifierVal = object.identifierValue) !== null && _object$identifierVal !== void 0 ? _object$identifierVal : "";
-    message.positiveIntValue = object.positiveIntValue !== undefined && object.positiveIntValue !== null ? Long.fromValue(object.positiveIntValue) : Long.UZERO;
-    message.negativeIntValue = object.negativeIntValue !== undefined && object.negativeIntValue !== null ? Long.fromValue(object.negativeIntValue) : Long.ZERO;
+    message.positiveIntValue = object.positiveIntValue !== undefined && object.positiveIntValue !== null ? BigInt(object.positiveIntValue.toString()) : BigInt(0);
+    message.negativeIntValue = object.negativeIntValue !== undefined && object.negativeIntValue !== null ? BigInt(object.negativeIntValue.toString()) : BigInt(0);
     message.doubleValue = (_object$doubleValue = object.doubleValue) !== null && _object$doubleValue !== void 0 ? _object$doubleValue : 0;
     message.stringValue = (_object$stringValue = object.stringValue) !== null && _object$stringValue !== void 0 ? _object$stringValue : new Uint8Array();
     message.aggregateValue = (_object$aggregateValu = object.aggregateValue) !== null && _object$aggregateValu !== void 0 ? _object$aggregateValu : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: Array.isArray(object === null || object === void 0 ? void 0 : object.name) ? object.name.map(e => UninterpretedOption_NamePart.fromAmino(e)) : [],
+      identifierValue: object.identifier_value,
+      positiveIntValue: BigInt(object.positive_int_value),
+      negativeIntValue: BigInt(object.negative_int_value),
+      doubleValue: object.double_value,
+      stringValue: object.string_value,
+      aggregateValue: object.aggregate_value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.name) {
+      obj.name = message.name.map(e => e ? UninterpretedOption_NamePart.toAmino(e) : undefined);
+    } else {
+      obj.name = [];
+    }
+    obj.identifier_value = message.identifierValue;
+    obj.positive_int_value = message.positiveIntValue ? message.positiveIntValue.toString() : undefined;
+    obj.negative_int_value = message.negativeIntValue ? message.negativeIntValue.toString() : undefined;
+    obj.double_value = message.doubleValue;
+    obj.string_value = message.stringValue;
+    obj.aggregate_value = message.aggregateValue;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return UninterpretedOption.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return UninterpretedOption.decode(message.value);
+  },
+  toProto(message) {
+    return UninterpretedOption.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.UninterpretedOption",
+      value: UninterpretedOption.encode(message).finish()
+    };
   }
 };
 function createBaseUninterpretedOption_NamePart() {
@@ -1981,7 +2851,8 @@ function createBaseUninterpretedOption_NamePart() {
   };
 }
 export const UninterpretedOption_NamePart = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.NamePart",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.namePart !== "") {
       writer.uint32(10).string(message.namePart);
     }
@@ -1991,7 +2862,7 @@ export const UninterpretedOption_NamePart = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUninterpretedOption_NamePart();
     while (reader.pos < end) {
@@ -2016,6 +2887,33 @@ export const UninterpretedOption_NamePart = {
     message.namePart = (_object$namePart = object.namePart) !== null && _object$namePart !== void 0 ? _object$namePart : "";
     message.isExtension = (_object$isExtension = object.isExtension) !== null && _object$isExtension !== void 0 ? _object$isExtension : false;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      namePart: object.name_part,
+      isExtension: object.is_extension
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name_part = message.namePart;
+    obj.is_extension = message.isExtension;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return UninterpretedOption_NamePart.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return UninterpretedOption_NamePart.decode(message.value);
+  },
+  toProto(message) {
+    return UninterpretedOption_NamePart.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.NamePart",
+      value: UninterpretedOption_NamePart.encode(message).finish()
+    };
   }
 };
 function createBaseSourceCodeInfo() {
@@ -2024,14 +2922,15 @@ function createBaseSourceCodeInfo() {
   };
 }
 export const SourceCodeInfo = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.SourceCodeInfo",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.location) {
       SourceCodeInfo_Location.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSourceCodeInfo();
     while (reader.pos < end) {
@@ -2052,6 +2951,35 @@ export const SourceCodeInfo = {
     const message = createBaseSourceCodeInfo();
     message.location = ((_object$location = object.location) === null || _object$location === void 0 ? void 0 : _object$location.map(e => SourceCodeInfo_Location.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      location: Array.isArray(object === null || object === void 0 ? void 0 : object.location) ? object.location.map(e => SourceCodeInfo_Location.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.location) {
+      obj.location = message.location.map(e => e ? SourceCodeInfo_Location.toAmino(e) : undefined);
+    } else {
+      obj.location = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return SourceCodeInfo.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return SourceCodeInfo.decode(message.value);
+  },
+  toProto(message) {
+    return SourceCodeInfo.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.SourceCodeInfo",
+      value: SourceCodeInfo.encode(message).finish()
+    };
   }
 };
 function createBaseSourceCodeInfo_Location() {
@@ -2064,7 +2992,8 @@ function createBaseSourceCodeInfo_Location() {
   };
 }
 export const SourceCodeInfo_Location = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.Location",
+  encode(message, writer = BinaryWriter.create()) {
     writer.uint32(10).fork();
     for (const v of message.path) {
       writer.int32(v);
@@ -2087,7 +3016,7 @@ export const SourceCodeInfo_Location = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSourceCodeInfo_Location();
     while (reader.pos < end) {
@@ -2138,6 +3067,51 @@ export const SourceCodeInfo_Location = {
     message.trailingComments = (_object$trailingComme = object.trailingComments) !== null && _object$trailingComme !== void 0 ? _object$trailingComme : "";
     message.leadingDetachedComments = ((_object$leadingDetach = object.leadingDetachedComments) === null || _object$leadingDetach === void 0 ? void 0 : _object$leadingDetach.map(e => e)) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      path: Array.isArray(object === null || object === void 0 ? void 0 : object.path) ? object.path.map(e => e) : [],
+      span: Array.isArray(object === null || object === void 0 ? void 0 : object.span) ? object.span.map(e => e) : [],
+      leadingComments: object.leading_comments,
+      trailingComments: object.trailing_comments,
+      leadingDetachedComments: Array.isArray(object === null || object === void 0 ? void 0 : object.leading_detached_comments) ? object.leading_detached_comments.map(e => e) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.path) {
+      obj.path = message.path.map(e => e);
+    } else {
+      obj.path = [];
+    }
+    if (message.span) {
+      obj.span = message.span.map(e => e);
+    } else {
+      obj.span = [];
+    }
+    obj.leading_comments = message.leadingComments;
+    obj.trailing_comments = message.trailingComments;
+    if (message.leadingDetachedComments) {
+      obj.leading_detached_comments = message.leadingDetachedComments.map(e => e);
+    } else {
+      obj.leading_detached_comments = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return SourceCodeInfo_Location.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return SourceCodeInfo_Location.decode(message.value);
+  },
+  toProto(message) {
+    return SourceCodeInfo_Location.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Location",
+      value: SourceCodeInfo_Location.encode(message).finish()
+    };
   }
 };
 function createBaseGeneratedCodeInfo() {
@@ -2146,14 +3120,15 @@ function createBaseGeneratedCodeInfo() {
   };
 }
 export const GeneratedCodeInfo = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.GeneratedCodeInfo",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.annotation) {
       GeneratedCodeInfo_Annotation.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGeneratedCodeInfo();
     while (reader.pos < end) {
@@ -2174,6 +3149,35 @@ export const GeneratedCodeInfo = {
     const message = createBaseGeneratedCodeInfo();
     message.annotation = ((_object$annotation = object.annotation) === null || _object$annotation === void 0 ? void 0 : _object$annotation.map(e => GeneratedCodeInfo_Annotation.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      annotation: Array.isArray(object === null || object === void 0 ? void 0 : object.annotation) ? object.annotation.map(e => GeneratedCodeInfo_Annotation.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.annotation) {
+      obj.annotation = message.annotation.map(e => e ? GeneratedCodeInfo_Annotation.toAmino(e) : undefined);
+    } else {
+      obj.annotation = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GeneratedCodeInfo.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return GeneratedCodeInfo.decode(message.value);
+  },
+  toProto(message) {
+    return GeneratedCodeInfo.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.GeneratedCodeInfo",
+      value: GeneratedCodeInfo.encode(message).finish()
+    };
   }
 };
 function createBaseGeneratedCodeInfo_Annotation() {
@@ -2185,7 +3189,8 @@ function createBaseGeneratedCodeInfo_Annotation() {
   };
 }
 export const GeneratedCodeInfo_Annotation = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.Annotation",
+  encode(message, writer = BinaryWriter.create()) {
     writer.uint32(10).fork();
     for (const v of message.path) {
       writer.int32(v);
@@ -2203,7 +3208,7 @@ export const GeneratedCodeInfo_Annotation = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGeneratedCodeInfo_Annotation();
     while (reader.pos < end) {
@@ -2243,5 +3248,40 @@ export const GeneratedCodeInfo_Annotation = {
     message.begin = (_object$begin = object.begin) !== null && _object$begin !== void 0 ? _object$begin : 0;
     message.end = (_object$end4 = object.end) !== null && _object$end4 !== void 0 ? _object$end4 : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      path: Array.isArray(object === null || object === void 0 ? void 0 : object.path) ? object.path.map(e => e) : [],
+      sourceFile: object.source_file,
+      begin: object.begin,
+      end: object.end
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.path) {
+      obj.path = message.path.map(e => e);
+    } else {
+      obj.path = [];
+    }
+    obj.source_file = message.sourceFile;
+    obj.begin = message.begin;
+    obj.end = message.end;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GeneratedCodeInfo_Annotation.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return GeneratedCodeInfo_Annotation.decode(message.value);
+  },
+  toProto(message) {
+    return GeneratedCodeInfo_Annotation.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Annotation",
+      value: GeneratedCodeInfo_Annotation.encode(message).finish()
+    };
   }
 };

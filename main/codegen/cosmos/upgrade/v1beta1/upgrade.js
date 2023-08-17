@@ -1,16 +1,13 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.SoftwareUpgradeProposal = exports.Plan = exports.ModuleVersion = exports.CancelSoftwareUpgradeProposal = void 0;
 var _timestamp = require("../../../google/protobuf/timestamp");
 var _any = require("../../../google/protobuf/any");
+var _binary = require("../../../binary");
 var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** Plan specifies information about a planned upgrade and when it should occur. */
 
 /** Plan specifies information about a planned upgrade and when it should occur. */
@@ -56,22 +53,23 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function createBasePlan() {
   return {
     name: "",
-    time: undefined,
-    height: _helpers.Long.ZERO,
+    time: new Date(),
+    height: BigInt(0),
     info: "",
-    upgradedClientState: undefined
+    upgradedClientState: _any.Any.fromPartial({})
   };
 }
 var Plan = {
+  typeUrl: "/cosmos.upgrade.v1beta1.Plan",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
     if (message.time !== undefined) {
       _timestamp.Timestamp.encode((0, _helpers.toTimestamp)(message.time), writer.uint32(18).fork()).ldelim();
     }
-    if (!message.height.isZero()) {
+    if (message.height !== BigInt(0)) {
       writer.uint32(24).int64(message.height);
     }
     if (message.info !== "") {
@@ -83,7 +81,7 @@ var Plan = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBasePlan();
     while (reader.pos < end) {
@@ -116,10 +114,49 @@ var Plan = {
     var message = createBasePlan();
     message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
     message.time = (_object$time = object.time) !== null && _object$time !== void 0 ? _object$time : undefined;
-    message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     message.info = (_object$info = object.info) !== null && _object$info !== void 0 ? _object$info : "";
     message.upgradedClientState = object.upgradedClientState !== undefined && object.upgradedClientState !== null ? _any.Any.fromPartial(object.upgradedClientState) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      name: object.name,
+      time: object.time,
+      height: BigInt(object.height),
+      info: object.info,
+      upgradedClientState: object !== null && object !== void 0 && object.upgraded_client_state ? _any.Any.fromAmino(object.upgraded_client_state) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.name = message.name;
+    obj.time = message.time;
+    obj.height = message.height ? message.height.toString() : undefined;
+    obj.info = message.info;
+    obj.upgraded_client_state = message.upgradedClientState ? _any.Any.toAmino(message.upgradedClientState) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Plan.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Plan",
+      value: Plan.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Plan.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Plan.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.Plan",
+      value: Plan.encode(message).finish()
+    };
   }
 };
 exports.Plan = Plan;
@@ -127,12 +164,13 @@ function createBaseSoftwareUpgradeProposal() {
   return {
     title: "",
     description: "",
-    plan: undefined
+    plan: Plan.fromPartial({})
   };
 }
 var SoftwareUpgradeProposal = {
+  typeUrl: "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -145,7 +183,7 @@ var SoftwareUpgradeProposal = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSoftwareUpgradeProposal();
     while (reader.pos < end) {
@@ -174,6 +212,41 @@ var SoftwareUpgradeProposal = {
     message.description = (_object$description = object.description) !== null && _object$description !== void 0 ? _object$description : "";
     message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      title: object.title,
+      description: object.description,
+      plan: object !== null && object !== void 0 && object.plan ? Plan.fromAmino(object.plan) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    obj.plan = message.plan ? Plan.toAmino(message.plan) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return SoftwareUpgradeProposal.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/SoftwareUpgradeProposal",
+      value: SoftwareUpgradeProposal.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return SoftwareUpgradeProposal.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return SoftwareUpgradeProposal.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+      value: SoftwareUpgradeProposal.encode(message).finish()
+    };
   }
 };
 exports.SoftwareUpgradeProposal = SoftwareUpgradeProposal;
@@ -184,8 +257,9 @@ function createBaseCancelSoftwareUpgradeProposal() {
   };
 }
 var CancelSoftwareUpgradeProposal = {
+  typeUrl: "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -195,7 +269,7 @@ var CancelSoftwareUpgradeProposal = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseCancelSoftwareUpgradeProposal();
     while (reader.pos < end) {
@@ -220,28 +294,62 @@ var CancelSoftwareUpgradeProposal = {
     message.title = (_object$title2 = object.title) !== null && _object$title2 !== void 0 ? _object$title2 : "";
     message.description = (_object$description2 = object.description) !== null && _object$description2 !== void 0 ? _object$description2 : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      title: object.title,
+      description: object.description
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return CancelSoftwareUpgradeProposal.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/CancelSoftwareUpgradeProposal",
+      value: CancelSoftwareUpgradeProposal.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return CancelSoftwareUpgradeProposal.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return CancelSoftwareUpgradeProposal.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal",
+      value: CancelSoftwareUpgradeProposal.encode(message).finish()
+    };
   }
 };
 exports.CancelSoftwareUpgradeProposal = CancelSoftwareUpgradeProposal;
 function createBaseModuleVersion() {
   return {
     name: "",
-    version: _helpers.Long.UZERO
+    version: BigInt(0)
   };
 }
 var ModuleVersion = {
+  typeUrl: "/cosmos.upgrade.v1beta1.ModuleVersion",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (!message.version.isZero()) {
+    if (message.version !== BigInt(0)) {
       writer.uint32(16).uint64(message.version);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseModuleVersion();
     while (reader.pos < end) {
@@ -264,8 +372,41 @@ var ModuleVersion = {
     var _object$name2;
     var message = createBaseModuleVersion();
     message.name = (_object$name2 = object.name) !== null && _object$name2 !== void 0 ? _object$name2 : "";
-    message.version = object.version !== undefined && object.version !== null ? _helpers.Long.fromValue(object.version) : _helpers.Long.UZERO;
+    message.version = object.version !== undefined && object.version !== null ? BigInt(object.version.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      name: object.name,
+      version: BigInt(object.version)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.name = message.name;
+    obj.version = message.version ? message.version.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ModuleVersion.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ModuleVersion",
+      value: ModuleVersion.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ModuleVersion.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ModuleVersion.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.ModuleVersion",
+      value: ModuleVersion.encode(message).finish()
+    };
   }
 };
 exports.ModuleVersion = ModuleVersion;

@@ -1,5 +1,5 @@
 import { Spec } from "./spec";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 function createBaseSpecAddProposal() {
   return {
     title: "",
@@ -8,7 +8,8 @@ function createBaseSpecAddProposal() {
   };
 }
 export const SpecAddProposal = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.spec.SpecAddProposal",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
@@ -21,7 +22,7 @@ export const SpecAddProposal = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSpecAddProposal();
     while (reader.pos < end) {
@@ -50,5 +51,38 @@ export const SpecAddProposal = {
     message.description = (_object$description = object.description) !== null && _object$description !== void 0 ? _object$description : "";
     message.specs = ((_object$specs = object.specs) === null || _object$specs === void 0 ? void 0 : _object$specs.map(e => Spec.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      title: object.title,
+      description: object.description,
+      specs: Array.isArray(object === null || object === void 0 ? void 0 : object.specs) ? object.specs.map(e => Spec.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    if (message.specs) {
+      obj.specs = message.specs.map(e => e ? Spec.toAmino(e) : undefined);
+    } else {
+      obj.specs = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return SpecAddProposal.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return SpecAddProposal.decode(message.value);
+  },
+  toProto(message) {
+    return SpecAddProposal.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.SpecAddProposal",
+      value: SpecAddProposal.encode(message).finish()
+    };
   }
 };

@@ -1,5 +1,4 @@
 import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "../../../helpers";
 import { MsgDetection, MsgConflictVoteCommit, MsgConflictVoteReveal } from "./tx";
 export interface MsgDetectionAminoType extends AminoMsg {
   type: "/lavanet.lava.conflict.MsgDetection";
@@ -365,7 +364,7 @@ export const AminoConverter = {
           relayReply0: {
             data: finalizationConflict.relayReply0.data,
             sig: finalizationConflict.relayReply0.sig,
-            latestBlock: Long.fromString(finalizationConflict.relayReply0.latest_block),
+            latestBlock: BigInt(finalizationConflict.relayReply0.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply0.finalized_blocks_hashes,
             sigBlocks: finalizationConflict.relayReply0.sig_blocks,
             metadata: finalizationConflict.relayReply0.metadata.map(el2 => ({
@@ -376,7 +375,7 @@ export const AminoConverter = {
           relayReply1: {
             data: finalizationConflict.relayReply1.data,
             sig: finalizationConflict.relayReply1.sig,
-            latestBlock: Long.fromString(finalizationConflict.relayReply1.latest_block),
+            latestBlock: BigInt(finalizationConflict.relayReply1.latest_block),
             finalizedBlocksHashes: finalizationConflict.relayReply1.finalized_blocks_hashes,
             sigBlocks: finalizationConflict.relayReply1.sig_blocks,
             metadata: finalizationConflict.relayReply1.metadata.map(el2 => ({
@@ -391,22 +390,22 @@ export const AminoConverter = {
               relaySession: {
                 specId: responseConflict.conflictRelayData0.request.relay_session.spec_id,
                 contentHash: responseConflict.conflictRelayData0.request.relay_session.content_hash,
-                sessionId: Long.fromString(responseConflict.conflictRelayData0.request.relay_session.session_id),
-                cuSum: Long.fromString(responseConflict.conflictRelayData0.request.relay_session.cu_sum),
+                sessionId: BigInt(responseConflict.conflictRelayData0.request.relay_session.session_id),
+                cuSum: BigInt(responseConflict.conflictRelayData0.request.relay_session.cu_sum),
                 provider: responseConflict.conflictRelayData0.request.relay_session.provider,
-                relayNum: Long.fromString(responseConflict.conflictRelayData0.request.relay_session.relay_num),
+                relayNum: BigInt(responseConflict.conflictRelayData0.request.relay_session.relay_num),
                 qosReport: {
                   latency: responseConflict.conflictRelayData0.request.relay_session.qos_report.latency,
                   availability: responseConflict.conflictRelayData0.request.relay_session.qos_report.availability,
                   sync: responseConflict.conflictRelayData0.request.relay_session.qos_report.sync
                 },
-                epoch: Long.fromString(responseConflict.conflictRelayData0.request.relay_session.epoch),
+                epoch: BigInt(responseConflict.conflictRelayData0.request.relay_session.epoch),
                 unresponsiveProviders: responseConflict.conflictRelayData0.request.relay_session.unresponsive_providers,
                 lavaChainId: responseConflict.conflictRelayData0.request.relay_session.lava_chain_id,
                 sig: responseConflict.conflictRelayData0.request.relay_session.sig,
                 badge: {
-                  cuAllocation: Long.fromString(responseConflict.conflictRelayData0.request.relay_session.badge.cu_allocation),
-                  epoch: Long.fromString(responseConflict.conflictRelayData0.request.relay_session.badge.epoch),
+                  cuAllocation: BigInt(responseConflict.conflictRelayData0.request.relay_session.badge.cu_allocation),
+                  epoch: BigInt(responseConflict.conflictRelayData0.request.relay_session.badge.epoch),
                   address: responseConflict.conflictRelayData0.request.relay_session.badge.address,
                   lavaChainId: responseConflict.conflictRelayData0.request.relay_session.badge.lava_chain_id,
                   projectSig: responseConflict.conflictRelayData0.request.relay_session.badge.project_sig
@@ -421,7 +420,7 @@ export const AminoConverter = {
                 connectionType: responseConflict.conflictRelayData0.request.relay_data.connection_type,
                 apiUrl: responseConflict.conflictRelayData0.request.relay_data.api_url,
                 data: responseConflict.conflictRelayData0.request.relay_data.data,
-                requestBlock: Long.fromString(responseConflict.conflictRelayData0.request.relay_data.request_block),
+                requestBlock: BigInt(responseConflict.conflictRelayData0.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData0.request.relay_data.api_interface,
                 salt: responseConflict.conflictRelayData0.request.relay_data.salt,
                 metadata: responseConflict.conflictRelayData0.request.relay_data.metadata.map(el4 => ({
@@ -435,7 +434,7 @@ export const AminoConverter = {
             reply: {
               hashAllDataHash: responseConflict.conflictRelayData0.reply.hash_all_data_hash,
               sig: responseConflict.conflictRelayData0.reply.sig,
-              latestBlock: Long.fromString(responseConflict.conflictRelayData0.reply.latest_block),
+              latestBlock: BigInt(responseConflict.conflictRelayData0.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData0.reply.finalized_blocks_hashes,
               sigBlocks: responseConflict.conflictRelayData0.reply.sig_blocks
             }
@@ -445,22 +444,22 @@ export const AminoConverter = {
               relaySession: {
                 specId: responseConflict.conflictRelayData1.request.relay_session.spec_id,
                 contentHash: responseConflict.conflictRelayData1.request.relay_session.content_hash,
-                sessionId: Long.fromString(responseConflict.conflictRelayData1.request.relay_session.session_id),
-                cuSum: Long.fromString(responseConflict.conflictRelayData1.request.relay_session.cu_sum),
+                sessionId: BigInt(responseConflict.conflictRelayData1.request.relay_session.session_id),
+                cuSum: BigInt(responseConflict.conflictRelayData1.request.relay_session.cu_sum),
                 provider: responseConflict.conflictRelayData1.request.relay_session.provider,
-                relayNum: Long.fromString(responseConflict.conflictRelayData1.request.relay_session.relay_num),
+                relayNum: BigInt(responseConflict.conflictRelayData1.request.relay_session.relay_num),
                 qosReport: {
                   latency: responseConflict.conflictRelayData1.request.relay_session.qos_report.latency,
                   availability: responseConflict.conflictRelayData1.request.relay_session.qos_report.availability,
                   sync: responseConflict.conflictRelayData1.request.relay_session.qos_report.sync
                 },
-                epoch: Long.fromString(responseConflict.conflictRelayData1.request.relay_session.epoch),
+                epoch: BigInt(responseConflict.conflictRelayData1.request.relay_session.epoch),
                 unresponsiveProviders: responseConflict.conflictRelayData1.request.relay_session.unresponsive_providers,
                 lavaChainId: responseConflict.conflictRelayData1.request.relay_session.lava_chain_id,
                 sig: responseConflict.conflictRelayData1.request.relay_session.sig,
                 badge: {
-                  cuAllocation: Long.fromString(responseConflict.conflictRelayData1.request.relay_session.badge.cu_allocation),
-                  epoch: Long.fromString(responseConflict.conflictRelayData1.request.relay_session.badge.epoch),
+                  cuAllocation: BigInt(responseConflict.conflictRelayData1.request.relay_session.badge.cu_allocation),
+                  epoch: BigInt(responseConflict.conflictRelayData1.request.relay_session.badge.epoch),
                   address: responseConflict.conflictRelayData1.request.relay_session.badge.address,
                   lavaChainId: responseConflict.conflictRelayData1.request.relay_session.badge.lava_chain_id,
                   projectSig: responseConflict.conflictRelayData1.request.relay_session.badge.project_sig
@@ -475,7 +474,7 @@ export const AminoConverter = {
                 connectionType: responseConflict.conflictRelayData1.request.relay_data.connection_type,
                 apiUrl: responseConflict.conflictRelayData1.request.relay_data.api_url,
                 data: responseConflict.conflictRelayData1.request.relay_data.data,
-                requestBlock: Long.fromString(responseConflict.conflictRelayData1.request.relay_data.request_block),
+                requestBlock: BigInt(responseConflict.conflictRelayData1.request.relay_data.request_block),
                 apiInterface: responseConflict.conflictRelayData1.request.relay_data.api_interface,
                 salt: responseConflict.conflictRelayData1.request.relay_data.salt,
                 metadata: responseConflict.conflictRelayData1.request.relay_data.metadata.map(el4 => ({
@@ -489,7 +488,7 @@ export const AminoConverter = {
             reply: {
               hashAllDataHash: responseConflict.conflictRelayData1.reply.hash_all_data_hash,
               sig: responseConflict.conflictRelayData1.reply.sig,
-              latestBlock: Long.fromString(responseConflict.conflictRelayData1.reply.latest_block),
+              latestBlock: BigInt(responseConflict.conflictRelayData1.reply.latest_block),
               finalizedBlocksHashes: responseConflict.conflictRelayData1.reply.finalized_blocks_hashes,
               sigBlocks: responseConflict.conflictRelayData1.reply.sig_blocks
             }
@@ -499,7 +498,7 @@ export const AminoConverter = {
           relayReply0: {
             data: sameProviderConflict.relayReply0.data,
             sig: sameProviderConflict.relayReply0.sig,
-            latestBlock: Long.fromString(sameProviderConflict.relayReply0.latest_block),
+            latestBlock: BigInt(sameProviderConflict.relayReply0.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply0.finalized_blocks_hashes,
             sigBlocks: sameProviderConflict.relayReply0.sig_blocks,
             metadata: sameProviderConflict.relayReply0.metadata.map(el2 => ({
@@ -510,7 +509,7 @@ export const AminoConverter = {
           relayReply1: {
             data: sameProviderConflict.relayReply1.data,
             sig: sameProviderConflict.relayReply1.sig,
-            latestBlock: Long.fromString(sameProviderConflict.relayReply1.latest_block),
+            latestBlock: BigInt(sameProviderConflict.relayReply1.latest_block),
             finalizedBlocksHashes: sameProviderConflict.relayReply1.finalized_blocks_hashes,
             sigBlocks: sameProviderConflict.relayReply1.sig_blocks,
             metadata: sameProviderConflict.relayReply1.metadata.map(el2 => ({
@@ -571,7 +570,7 @@ export const AminoConverter = {
       return {
         creator,
         voteID,
-        nonce: Long.fromString(nonce),
+        nonce: BigInt(nonce),
         hash
       };
     }

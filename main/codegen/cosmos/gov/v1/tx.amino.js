@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AminoConverter = void 0;
 var _gov = require("./gov");
-var _helpers = require("../../../helpers");
 var AminoConverter = {
   "/cosmos.gov.v1.MsgSubmitProposal": {
     aminoType: "cosmos-sdk/v1/MsgSubmitProposal",
@@ -99,7 +98,7 @@ var AminoConverter = {
         option = _ref6.option,
         metadata = _ref6.metadata;
       return {
-        proposalId: _helpers.Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         voter: voter,
         option: (0, _gov.voteOptionFromJSON)(option),
         metadata: metadata
@@ -131,7 +130,7 @@ var AminoConverter = {
         options = _ref8.options,
         metadata = _ref8.metadata;
       return {
-        proposalId: _helpers.Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         voter: voter,
         options: options.map(function (el0) {
           return {
@@ -165,7 +164,7 @@ var AminoConverter = {
         depositor = _ref10.depositor,
         amount = _ref10.amount;
       return {
-        proposalId: _helpers.Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         depositor: depositor,
         amount: amount.map(function (el0) {
           return {

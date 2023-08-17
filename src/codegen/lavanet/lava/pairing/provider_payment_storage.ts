@@ -1,44 +1,44 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface ProviderPaymentStorage {
   index: string;
-  epoch: Long;
+  epoch: bigint;
   uniquePaymentStorageClientProviderKeys: string[];
   /** total CU that were supposed to be served by the provider but didn't because he was unavailable (so consumers complained about him) */
-  complainersTotalCu: Long;
+  complainersTotalCu: bigint;
 }
 export interface ProviderPaymentStorageSDKType {
   index: string;
-  epoch: Long;
+  epoch: bigint;
   uniquePaymentStorageClientProviderKeys: string[];
-  complainersTotalCu: Long;
+  complainersTotalCu: bigint;
 }
 function createBaseProviderPaymentStorage(): ProviderPaymentStorage {
   return {
     index: "",
-    epoch: Long.UZERO,
+    epoch: BigInt(0),
     uniquePaymentStorageClientProviderKeys: [],
-    complainersTotalCu: Long.UZERO
+    complainersTotalCu: BigInt(0)
   };
 }
 export const ProviderPaymentStorage = {
-  encode(message: ProviderPaymentStorage, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.pairing.ProviderPaymentStorage",
+  encode(message: ProviderPaymentStorage, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
-    if (!message.epoch.isZero()) {
+    if (message.epoch !== BigInt(0)) {
       writer.uint32(24).uint64(message.epoch);
     }
     for (const v of message.uniquePaymentStorageClientProviderKeys) {
       writer.uint32(42).string(v!);
     }
-    if (!message.complainersTotalCu.isZero()) {
+    if (message.complainersTotalCu !== BigInt(0)) {
       writer.uint32(48).uint64(message.complainersTotalCu);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProviderPaymentStorage {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProviderPaymentStorage {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProviderPaymentStorage();
     while (reader.pos < end) {
@@ -48,13 +48,13 @@ export const ProviderPaymentStorage = {
           message.index = reader.string();
           break;
         case 3:
-          message.epoch = (reader.uint64() as Long);
+          message.epoch = reader.uint64();
           break;
         case 5:
           message.uniquePaymentStorageClientProviderKeys.push(reader.string());
           break;
         case 6:
-          message.complainersTotalCu = (reader.uint64() as Long);
+          message.complainersTotalCu = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -63,12 +63,47 @@ export const ProviderPaymentStorage = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProviderPaymentStorage>): ProviderPaymentStorage {
+  fromPartial(object: Partial<ProviderPaymentStorage>): ProviderPaymentStorage {
     const message = createBaseProviderPaymentStorage();
     message.index = object.index ?? "";
-    message.epoch = object.epoch !== undefined && object.epoch !== null ? Long.fromValue(object.epoch) : Long.UZERO;
+    message.epoch = object.epoch !== undefined && object.epoch !== null ? BigInt(object.epoch.toString()) : BigInt(0);
     message.uniquePaymentStorageClientProviderKeys = object.uniquePaymentStorageClientProviderKeys?.map(e => e) || [];
-    message.complainersTotalCu = object.complainersTotalCu !== undefined && object.complainersTotalCu !== null ? Long.fromValue(object.complainersTotalCu) : Long.UZERO;
+    message.complainersTotalCu = object.complainersTotalCu !== undefined && object.complainersTotalCu !== null ? BigInt(object.complainersTotalCu.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: ProviderPaymentStorageAmino): ProviderPaymentStorage {
+    return {
+      index: object.index,
+      epoch: BigInt(object.epoch),
+      uniquePaymentStorageClientProviderKeys: Array.isArray(object?.uniquePaymentStorageClientProviderKeys) ? object.uniquePaymentStorageClientProviderKeys.map((e: any) => e) : [],
+      complainersTotalCu: BigInt(object.complainersTotalCu)
+    };
+  },
+  toAmino(message: ProviderPaymentStorage): ProviderPaymentStorageAmino {
+    const obj: any = {};
+    obj.index = message.index;
+    obj.epoch = message.epoch ? message.epoch.toString() : undefined;
+    if (message.uniquePaymentStorageClientProviderKeys) {
+      obj.uniquePaymentStorageClientProviderKeys = message.uniquePaymentStorageClientProviderKeys.map(e => e);
+    } else {
+      obj.uniquePaymentStorageClientProviderKeys = [];
+    }
+    obj.complainersTotalCu = message.complainersTotalCu ? message.complainersTotalCu.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ProviderPaymentStorageAminoMsg): ProviderPaymentStorage {
+    return ProviderPaymentStorage.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ProviderPaymentStorageProtoMsg): ProviderPaymentStorage {
+    return ProviderPaymentStorage.decode(message.value);
+  },
+  toProto(message: ProviderPaymentStorage): Uint8Array {
+    return ProviderPaymentStorage.encode(message).finish();
+  },
+  toProtoMsg(message: ProviderPaymentStorage): ProviderPaymentStorageProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.pairing.ProviderPaymentStorage",
+      value: ProviderPaymentStorage.encode(message).finish()
+    };
   }
 };

@@ -1,6 +1,5 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -8,10 +7,7 @@ exports.ShowAllChainsInfoStruct = exports.QueryShowChainInfoResponse = exports.Q
 var _pagination = require("../../../cosmos/base/query/v1beta1/pagination");
 var _params = require("./params");
 var _spec = require("./spec");
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -27,12 +23,13 @@ function createBaseQueryParamsRequest() {
   return {};
 }
 var QueryParamsRequest = {
+  typeUrl: "/lavanet.lava.spec.QueryParamsRequest",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -48,24 +45,47 @@ var QueryParamsRequest = {
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryParamsRequest();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryParamsRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryParamsRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryParamsRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryParamsRequest",
+      value: QueryParamsRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryParamsRequest = QueryParamsRequest;
 function createBaseQueryParamsResponse() {
   return {
-    params: undefined
+    params: _params.Params.fromPartial({})
   };
 }
 var QueryParamsResponse = {
+  typeUrl: "/lavanet.lava.spec.QueryParamsResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.params !== undefined) {
       _params.Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -85,6 +105,31 @@ var QueryParamsResponse = {
     var message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? _params.Params.fromPartial(object.params) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      params: object !== null && object !== void 0 && object.params ? _params.Params.fromAmino(object.params) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.params = message.params ? _params.Params.toAmino(message.params) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryParamsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryParamsResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryParamsResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryParamsResponse",
+      value: QueryParamsResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryParamsResponse = QueryParamsResponse;
@@ -94,15 +139,16 @@ function createBaseQueryGetSpecRequest() {
   };
 }
 var QueryGetSpecRequest = {
+  typeUrl: "/lavanet.lava.spec.QueryGetSpecRequest",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.ChainID !== "") {
       writer.uint32(10).string(message.ChainID);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGetSpecRequest();
     while (reader.pos < end) {
@@ -123,24 +169,50 @@ var QueryGetSpecRequest = {
     var message = createBaseQueryGetSpecRequest();
     message.ChainID = (_object$ChainID = object.ChainID) !== null && _object$ChainID !== void 0 ? _object$ChainID : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      ChainID: object.ChainID
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.ChainID = message.ChainID;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGetSpecRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGetSpecRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGetSpecRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryGetSpecRequest",
+      value: QueryGetSpecRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryGetSpecRequest = QueryGetSpecRequest;
 function createBaseQueryGetSpecResponse() {
   return {
-    Spec: undefined
+    Spec: _spec.Spec.fromPartial({})
   };
 }
 var QueryGetSpecResponse = {
+  typeUrl: "/lavanet.lava.spec.QueryGetSpecResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.Spec !== undefined) {
       _spec.Spec.encode(message.Spec, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGetSpecResponse();
     while (reader.pos < end) {
@@ -160,24 +232,50 @@ var QueryGetSpecResponse = {
     var message = createBaseQueryGetSpecResponse();
     message.Spec = object.Spec !== undefined && object.Spec !== null ? _spec.Spec.fromPartial(object.Spec) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      Spec: object !== null && object !== void 0 && object.Spec ? _spec.Spec.fromAmino(object.Spec) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.Spec = message.Spec ? _spec.Spec.toAmino(message.Spec) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGetSpecResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGetSpecResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGetSpecResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryGetSpecResponse",
+      value: QueryGetSpecResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryGetSpecResponse = QueryGetSpecResponse;
 function createBaseQueryAllSpecRequest() {
   return {
-    pagination: undefined
+    pagination: _pagination.PageRequest.fromPartial({})
   };
 }
 var QueryAllSpecRequest = {
+  typeUrl: "/lavanet.lava.spec.QueryAllSpecRequest",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.pagination !== undefined) {
       _pagination.PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryAllSpecRequest();
     while (reader.pos < end) {
@@ -197,18 +295,44 @@ var QueryAllSpecRequest = {
     var message = createBaseQueryAllSpecRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.pagination = message.pagination ? _pagination.PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryAllSpecRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryAllSpecRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryAllSpecRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryAllSpecRequest",
+      value: QueryAllSpecRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryAllSpecRequest = QueryAllSpecRequest;
 function createBaseQueryAllSpecResponse() {
   return {
     Spec: [],
-    pagination: undefined
+    pagination: _pagination.PageResponse.fromPartial({})
   };
 }
 var QueryAllSpecResponse = {
+  typeUrl: "/lavanet.lava.spec.QueryAllSpecResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.Spec),
       _step;
     try {
@@ -227,7 +351,7 @@ var QueryAllSpecResponse = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryAllSpecResponse();
     while (reader.pos < end) {
@@ -254,6 +378,41 @@ var QueryAllSpecResponse = {
     })) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageResponse.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      Spec: Array.isArray(object === null || object === void 0 ? void 0 : object.Spec) ? object.Spec.map(function (e) {
+        return _spec.Spec.fromAmino(e);
+      }) : [],
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageResponse.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.Spec) {
+      obj.Spec = message.Spec.map(function (e) {
+        return e ? _spec.Spec.toAmino(e) : undefined;
+      });
+    } else {
+      obj.Spec = [];
+    }
+    obj.pagination = message.pagination ? _pagination.PageResponse.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryAllSpecResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryAllSpecResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryAllSpecResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryAllSpecResponse",
+      value: QueryAllSpecResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryAllSpecResponse = QueryAllSpecResponse;
@@ -261,12 +420,13 @@ function createBaseQueryShowAllChainsRequest() {
   return {};
 }
 var QueryShowAllChainsRequest = {
+  typeUrl: "/lavanet.lava.spec.QueryShowAllChainsRequest",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryShowAllChainsRequest();
     while (reader.pos < end) {
@@ -282,6 +442,28 @@ var QueryShowAllChainsRequest = {
   fromPartial: function fromPartial(_) {
     var message = createBaseQueryShowAllChainsRequest();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryShowAllChainsRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryShowAllChainsRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryShowAllChainsRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryShowAllChainsRequest",
+      value: QueryShowAllChainsRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryShowAllChainsRequest = QueryShowAllChainsRequest;
@@ -291,8 +473,9 @@ function createBaseQueryShowAllChainsResponse() {
   };
 }
 var QueryShowAllChainsResponse = {
+  typeUrl: "/lavanet.lava.spec.QueryShowAllChainsResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator2 = _createForOfIteratorHelper(message.chainInfoList),
       _step2;
     try {
@@ -308,7 +491,7 @@ var QueryShowAllChainsResponse = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryShowAllChainsResponse();
     while (reader.pos < end) {
@@ -331,6 +514,39 @@ var QueryShowAllChainsResponse = {
       return ShowAllChainsInfoStruct.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      chainInfoList: Array.isArray(object === null || object === void 0 ? void 0 : object.chainInfoList) ? object.chainInfoList.map(function (e) {
+        return ShowAllChainsInfoStruct.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.chainInfoList) {
+      obj.chainInfoList = message.chainInfoList.map(function (e) {
+        return e ? ShowAllChainsInfoStruct.toAmino(e) : undefined;
+      });
+    } else {
+      obj.chainInfoList = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryShowAllChainsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryShowAllChainsResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryShowAllChainsResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryShowAllChainsResponse",
+      value: QueryShowAllChainsResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryShowAllChainsResponse = QueryShowAllChainsResponse;
@@ -339,12 +555,13 @@ function createBaseShowAllChainsInfoStruct() {
     chainName: "",
     chainID: "",
     enabledApiInterfaces: [],
-    apiCount: _helpers.Long.UZERO
+    apiCount: BigInt(0)
   };
 }
 var ShowAllChainsInfoStruct = {
+  typeUrl: "/lavanet.lava.spec.ShowAllChainsInfoStruct",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
@@ -363,13 +580,13 @@ var ShowAllChainsInfoStruct = {
     } finally {
       _iterator3.f();
     }
-    if (!message.apiCount.isZero()) {
+    if (message.apiCount !== BigInt(0)) {
       writer.uint32(32).uint64(message.apiCount);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseShowAllChainsInfoStruct();
     while (reader.pos < end) {
@@ -402,8 +619,47 @@ var ShowAllChainsInfoStruct = {
     message.enabledApiInterfaces = ((_object$enabledApiInt = object.enabledApiInterfaces) === null || _object$enabledApiInt === void 0 ? void 0 : _object$enabledApiInt.map(function (e) {
       return e;
     })) || [];
-    message.apiCount = object.apiCount !== undefined && object.apiCount !== null ? _helpers.Long.fromValue(object.apiCount) : _helpers.Long.UZERO;
+    message.apiCount = object.apiCount !== undefined && object.apiCount !== null ? BigInt(object.apiCount.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      chainName: object.chainName,
+      chainID: object.chainID,
+      enabledApiInterfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.enabledApiInterfaces) ? object.enabledApiInterfaces.map(function (e) {
+        return e;
+      }) : [],
+      apiCount: BigInt(object.api_count)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.chainName = message.chainName;
+    obj.chainID = message.chainID;
+    if (message.enabledApiInterfaces) {
+      obj.enabledApiInterfaces = message.enabledApiInterfaces.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.enabledApiInterfaces = [];
+    }
+    obj.api_count = message.apiCount ? message.apiCount.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ShowAllChainsInfoStruct.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ShowAllChainsInfoStruct.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ShowAllChainsInfoStruct.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.ShowAllChainsInfoStruct",
+      value: ShowAllChainsInfoStruct.encode(message).finish()
+    };
   }
 };
 exports.ShowAllChainsInfoStruct = ShowAllChainsInfoStruct;
@@ -413,15 +669,16 @@ function createBaseQueryShowChainInfoRequest() {
   };
 }
 var QueryShowChainInfoRequest = {
+  typeUrl: "/lavanet.lava.spec.QueryShowChainInfoRequest",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryShowChainInfoRequest();
     while (reader.pos < end) {
@@ -442,6 +699,31 @@ var QueryShowChainInfoRequest = {
     var message = createBaseQueryShowChainInfoRequest();
     message.chainName = (_object$chainName2 = object.chainName) !== null && _object$chainName2 !== void 0 ? _object$chainName2 : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      chainName: object.chainName
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.chainName = message.chainName;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryShowChainInfoRequest.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryShowChainInfoRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryShowChainInfoRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryShowChainInfoRequest",
+      value: QueryShowChainInfoRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryShowChainInfoRequest = QueryShowChainInfoRequest;
@@ -453,8 +735,9 @@ function createBaseApiList() {
   };
 }
 var ApiList = {
+  typeUrl: "/lavanet.lava.spec.ApiList",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message["interface"] !== "") {
       writer.uint32(34).string(message["interface"]);
     }
@@ -476,7 +759,7 @@ var ApiList = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseApiList();
     while (reader.pos < end) {
@@ -507,6 +790,43 @@ var ApiList = {
     })) || [];
     message.addon = (_object$addon = object.addon) !== null && _object$addon !== void 0 ? _object$addon : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      "interface": object["interface"],
+      supportedApis: Array.isArray(object === null || object === void 0 ? void 0 : object.supportedApis) ? object.supportedApis.map(function (e) {
+        return e;
+      }) : [],
+      addon: object.addon
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj["interface"] = message["interface"];
+    if (message.supportedApis) {
+      obj.supportedApis = message.supportedApis.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.supportedApis = [];
+    }
+    obj.addon = message.addon;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ApiList.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ApiList.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ApiList.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.ApiList",
+      value: ApiList.encode(message).finish()
+    };
   }
 };
 exports.ApiList = ApiList;
@@ -519,8 +839,9 @@ function createBaseQueryShowChainInfoResponse() {
   };
 }
 var QueryShowChainInfoResponse = {
+  typeUrl: "/lavanet.lava.spec.QueryShowChainInfoResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.chainID !== "") {
       writer.uint32(10).string(message.chainID);
     }
@@ -563,7 +884,7 @@ var QueryShowChainInfoResponse = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryShowChainInfoResponse();
     while (reader.pos < end) {
@@ -602,6 +923,61 @@ var QueryShowChainInfoResponse = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      chainID: object.chainID,
+      interfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.interfaces) ? object.interfaces.map(function (e) {
+        return e;
+      }) : [],
+      supportedApisInterfaceList: Array.isArray(object === null || object === void 0 ? void 0 : object.supportedApisInterfaceList) ? object.supportedApisInterfaceList.map(function (e) {
+        return ApiList.fromAmino(e);
+      }) : [],
+      optionalInterfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.optional_interfaces) ? object.optional_interfaces.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.chainID = message.chainID;
+    if (message.interfaces) {
+      obj.interfaces = message.interfaces.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.interfaces = [];
+    }
+    if (message.supportedApisInterfaceList) {
+      obj.supportedApisInterfaceList = message.supportedApisInterfaceList.map(function (e) {
+        return e ? ApiList.toAmino(e) : undefined;
+      });
+    } else {
+      obj.supportedApisInterfaceList = [];
+    }
+    if (message.optionalInterfaces) {
+      obj.optional_interfaces = message.optionalInterfaces.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.optional_interfaces = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryShowChainInfoResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryShowChainInfoResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryShowChainInfoResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.spec.QueryShowChainInfoResponse",
+      value: QueryShowChainInfoResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryShowChainInfoResponse = QueryShowChainInfoResponse;

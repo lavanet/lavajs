@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryParamsRequest, QueryParamsResponse, QueryCurrentRequest, QueryCurrentResponse, QueryListProjectsRequest, QueryListProjectsResponse, QueryListRequest, QueryListResponse } from "./query";
 /** Query defines the gRPC querier service. */
@@ -16,22 +16,22 @@ export class QueryClientImpl {
   params(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.subscription.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   current(request) {
     const data = QueryCurrentRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.subscription.Query", "Current", data);
-    return promise.then(data => QueryCurrentResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryCurrentResponse.decode(new BinaryReader(data)));
   }
   listProjects(request) {
     const data = QueryListProjectsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.subscription.Query", "ListProjects", data);
-    return promise.then(data => QueryListProjectsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryListProjectsResponse.decode(new BinaryReader(data)));
   }
   list(request = {}) {
     const data = QueryListRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.subscription.Query", "List", data);
-    return promise.then(data => QueryListResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryListResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

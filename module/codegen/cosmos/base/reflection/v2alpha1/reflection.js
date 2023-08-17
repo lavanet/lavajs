@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 /** AppDescriptor describes a cosmos-sdk based application */
 
 /** AppDescriptor describes a cosmos-sdk based application */
@@ -136,16 +135,17 @@ import * as _m0 from "protobufjs/minimal";
 
 function createBaseAppDescriptor() {
   return {
-    authn: undefined,
-    chain: undefined,
-    codec: undefined,
-    configuration: undefined,
-    queryServices: undefined,
-    tx: undefined
+    authn: AuthnDescriptor.fromPartial({}),
+    chain: ChainDescriptor.fromPartial({}),
+    codec: CodecDescriptor.fromPartial({}),
+    configuration: ConfigurationDescriptor.fromPartial({}),
+    queryServices: QueryServicesDescriptor.fromPartial({}),
+    tx: TxDescriptor.fromPartial({})
   };
 }
 export const AppDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.AppDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.authn !== undefined) {
       AuthnDescriptor.encode(message.authn, writer.uint32(10).fork()).ldelim();
     }
@@ -167,7 +167,7 @@ export const AppDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAppDescriptor();
     while (reader.pos < end) {
@@ -207,6 +207,47 @@ export const AppDescriptor = {
     message.queryServices = object.queryServices !== undefined && object.queryServices !== null ? QueryServicesDescriptor.fromPartial(object.queryServices) : undefined;
     message.tx = object.tx !== undefined && object.tx !== null ? TxDescriptor.fromPartial(object.tx) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      authn: object !== null && object !== void 0 && object.authn ? AuthnDescriptor.fromAmino(object.authn) : undefined,
+      chain: object !== null && object !== void 0 && object.chain ? ChainDescriptor.fromAmino(object.chain) : undefined,
+      codec: object !== null && object !== void 0 && object.codec ? CodecDescriptor.fromAmino(object.codec) : undefined,
+      configuration: object !== null && object !== void 0 && object.configuration ? ConfigurationDescriptor.fromAmino(object.configuration) : undefined,
+      queryServices: object !== null && object !== void 0 && object.query_services ? QueryServicesDescriptor.fromAmino(object.query_services) : undefined,
+      tx: object !== null && object !== void 0 && object.tx ? TxDescriptor.fromAmino(object.tx) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.authn = message.authn ? AuthnDescriptor.toAmino(message.authn) : undefined;
+    obj.chain = message.chain ? ChainDescriptor.toAmino(message.chain) : undefined;
+    obj.codec = message.codec ? CodecDescriptor.toAmino(message.codec) : undefined;
+    obj.configuration = message.configuration ? ConfigurationDescriptor.toAmino(message.configuration) : undefined;
+    obj.query_services = message.queryServices ? QueryServicesDescriptor.toAmino(message.queryServices) : undefined;
+    obj.tx = message.tx ? TxDescriptor.toAmino(message.tx) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return AppDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/AppDescriptor",
+      value: AppDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return AppDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return AppDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.AppDescriptor",
+      value: AppDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseTxDescriptor() {
@@ -216,7 +257,8 @@ function createBaseTxDescriptor() {
   };
 }
 export const TxDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.TxDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.fullname !== "") {
       writer.uint32(10).string(message.fullname);
     }
@@ -226,7 +268,7 @@ export const TxDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTxDescriptor();
     while (reader.pos < end) {
@@ -251,6 +293,43 @@ export const TxDescriptor = {
     message.fullname = (_object$fullname = object.fullname) !== null && _object$fullname !== void 0 ? _object$fullname : "";
     message.msgs = ((_object$msgs = object.msgs) === null || _object$msgs === void 0 ? void 0 : _object$msgs.map(e => MsgDescriptor.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      fullname: object.fullname,
+      msgs: Array.isArray(object === null || object === void 0 ? void 0 : object.msgs) ? object.msgs.map(e => MsgDescriptor.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.fullname = message.fullname;
+    if (message.msgs) {
+      obj.msgs = message.msgs.map(e => e ? MsgDescriptor.toAmino(e) : undefined);
+    } else {
+      obj.msgs = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return TxDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/TxDescriptor",
+      value: TxDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return TxDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return TxDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.TxDescriptor",
+      value: TxDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseAuthnDescriptor() {
@@ -259,14 +338,15 @@ function createBaseAuthnDescriptor() {
   };
 }
 export const AuthnDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.AuthnDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.signModes) {
       SigningModeDescriptor.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAuthnDescriptor();
     while (reader.pos < end) {
@@ -287,6 +367,41 @@ export const AuthnDescriptor = {
     const message = createBaseAuthnDescriptor();
     message.signModes = ((_object$signModes = object.signModes) === null || _object$signModes === void 0 ? void 0 : _object$signModes.map(e => SigningModeDescriptor.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      signModes: Array.isArray(object === null || object === void 0 ? void 0 : object.sign_modes) ? object.sign_modes.map(e => SigningModeDescriptor.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.signModes) {
+      obj.sign_modes = message.signModes.map(e => e ? SigningModeDescriptor.toAmino(e) : undefined);
+    } else {
+      obj.sign_modes = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return AuthnDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/AuthnDescriptor",
+      value: AuthnDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return AuthnDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return AuthnDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.AuthnDescriptor",
+      value: AuthnDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseSigningModeDescriptor() {
@@ -297,7 +412,8 @@ function createBaseSigningModeDescriptor() {
   };
 }
 export const SigningModeDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.SigningModeDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -310,7 +426,7 @@ export const SigningModeDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSigningModeDescriptor();
     while (reader.pos < end) {
@@ -339,6 +455,41 @@ export const SigningModeDescriptor = {
     message.number = (_object$number = object.number) !== null && _object$number !== void 0 ? _object$number : 0;
     message.authnInfoProviderMethodFullname = (_object$authnInfoProv = object.authnInfoProviderMethodFullname) !== null && _object$authnInfoProv !== void 0 ? _object$authnInfoProv : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      number: object.number,
+      authnInfoProviderMethodFullname: object.authn_info_provider_method_fullname
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.number = message.number;
+    obj.authn_info_provider_method_fullname = message.authnInfoProviderMethodFullname;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return SigningModeDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/SigningModeDescriptor",
+      value: SigningModeDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return SigningModeDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return SigningModeDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.SigningModeDescriptor",
+      value: SigningModeDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseChainDescriptor() {
@@ -347,14 +498,15 @@ function createBaseChainDescriptor() {
   };
 }
 export const ChainDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.ChainDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChainDescriptor();
     while (reader.pos < end) {
@@ -375,6 +527,37 @@ export const ChainDescriptor = {
     const message = createBaseChainDescriptor();
     message.id = (_object$id = object.id) !== null && _object$id !== void 0 ? _object$id : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      id: object.id
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.id = message.id;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ChainDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ChainDescriptor",
+      value: ChainDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return ChainDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return ChainDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.ChainDescriptor",
+      value: ChainDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseCodecDescriptor() {
@@ -383,14 +566,15 @@ function createBaseCodecDescriptor() {
   };
 }
 export const CodecDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.CodecDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.interfaces) {
       InterfaceDescriptor.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCodecDescriptor();
     while (reader.pos < end) {
@@ -411,6 +595,41 @@ export const CodecDescriptor = {
     const message = createBaseCodecDescriptor();
     message.interfaces = ((_object$interfaces = object.interfaces) === null || _object$interfaces === void 0 ? void 0 : _object$interfaces.map(e => InterfaceDescriptor.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      interfaces: Array.isArray(object === null || object === void 0 ? void 0 : object.interfaces) ? object.interfaces.map(e => InterfaceDescriptor.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.interfaces) {
+      obj.interfaces = message.interfaces.map(e => e ? InterfaceDescriptor.toAmino(e) : undefined);
+    } else {
+      obj.interfaces = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return CodecDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/CodecDescriptor",
+      value: CodecDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return CodecDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return CodecDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.CodecDescriptor",
+      value: CodecDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseInterfaceDescriptor() {
@@ -421,7 +640,8 @@ function createBaseInterfaceDescriptor() {
   };
 }
 export const InterfaceDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.InterfaceDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.fullname !== "") {
       writer.uint32(10).string(message.fullname);
     }
@@ -434,7 +654,7 @@ export const InterfaceDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceDescriptor();
     while (reader.pos < end) {
@@ -463,6 +683,49 @@ export const InterfaceDescriptor = {
     message.interfaceAcceptingMessages = ((_object$interfaceAcce = object.interfaceAcceptingMessages) === null || _object$interfaceAcce === void 0 ? void 0 : _object$interfaceAcce.map(e => InterfaceAcceptingMessageDescriptor.fromPartial(e))) || [];
     message.interfaceImplementers = ((_object$interfaceImpl = object.interfaceImplementers) === null || _object$interfaceImpl === void 0 ? void 0 : _object$interfaceImpl.map(e => InterfaceImplementerDescriptor.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      fullname: object.fullname,
+      interfaceAcceptingMessages: Array.isArray(object === null || object === void 0 ? void 0 : object.interface_accepting_messages) ? object.interface_accepting_messages.map(e => InterfaceAcceptingMessageDescriptor.fromAmino(e)) : [],
+      interfaceImplementers: Array.isArray(object === null || object === void 0 ? void 0 : object.interface_implementers) ? object.interface_implementers.map(e => InterfaceImplementerDescriptor.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.fullname = message.fullname;
+    if (message.interfaceAcceptingMessages) {
+      obj.interface_accepting_messages = message.interfaceAcceptingMessages.map(e => e ? InterfaceAcceptingMessageDescriptor.toAmino(e) : undefined);
+    } else {
+      obj.interface_accepting_messages = [];
+    }
+    if (message.interfaceImplementers) {
+      obj.interface_implementers = message.interfaceImplementers.map(e => e ? InterfaceImplementerDescriptor.toAmino(e) : undefined);
+    } else {
+      obj.interface_implementers = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return InterfaceDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/InterfaceDescriptor",
+      value: InterfaceDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return InterfaceDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return InterfaceDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.InterfaceDescriptor",
+      value: InterfaceDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseInterfaceImplementerDescriptor() {
@@ -472,7 +735,8 @@ function createBaseInterfaceImplementerDescriptor() {
   };
 }
 export const InterfaceImplementerDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.InterfaceImplementerDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.fullname !== "") {
       writer.uint32(10).string(message.fullname);
     }
@@ -482,7 +746,7 @@ export const InterfaceImplementerDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceImplementerDescriptor();
     while (reader.pos < end) {
@@ -507,6 +771,39 @@ export const InterfaceImplementerDescriptor = {
     message.fullname = (_object$fullname3 = object.fullname) !== null && _object$fullname3 !== void 0 ? _object$fullname3 : "";
     message.typeUrl = (_object$typeUrl = object.typeUrl) !== null && _object$typeUrl !== void 0 ? _object$typeUrl : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      fullname: object.fullname,
+      typeUrl: object.type_url
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.fullname = message.fullname;
+    obj.type_url = message.typeUrl;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return InterfaceImplementerDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/InterfaceImplementerDescriptor",
+      value: InterfaceImplementerDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return InterfaceImplementerDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return InterfaceImplementerDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.InterfaceImplementerDescriptor",
+      value: InterfaceImplementerDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseInterfaceAcceptingMessageDescriptor() {
@@ -516,7 +813,8 @@ function createBaseInterfaceAcceptingMessageDescriptor() {
   };
 }
 export const InterfaceAcceptingMessageDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.InterfaceAcceptingMessageDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.fullname !== "") {
       writer.uint32(10).string(message.fullname);
     }
@@ -526,7 +824,7 @@ export const InterfaceAcceptingMessageDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceAcceptingMessageDescriptor();
     while (reader.pos < end) {
@@ -551,6 +849,43 @@ export const InterfaceAcceptingMessageDescriptor = {
     message.fullname = (_object$fullname4 = object.fullname) !== null && _object$fullname4 !== void 0 ? _object$fullname4 : "";
     message.fieldDescriptorNames = ((_object$fieldDescript = object.fieldDescriptorNames) === null || _object$fieldDescript === void 0 ? void 0 : _object$fieldDescript.map(e => e)) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      fullname: object.fullname,
+      fieldDescriptorNames: Array.isArray(object === null || object === void 0 ? void 0 : object.field_descriptor_names) ? object.field_descriptor_names.map(e => e) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.fullname = message.fullname;
+    if (message.fieldDescriptorNames) {
+      obj.field_descriptor_names = message.fieldDescriptorNames.map(e => e);
+    } else {
+      obj.field_descriptor_names = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return InterfaceAcceptingMessageDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/InterfaceAcceptingMessageDescriptor",
+      value: InterfaceAcceptingMessageDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return InterfaceAcceptingMessageDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return InterfaceAcceptingMessageDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.InterfaceAcceptingMessageDescriptor",
+      value: InterfaceAcceptingMessageDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseConfigurationDescriptor() {
@@ -559,14 +894,15 @@ function createBaseConfigurationDescriptor() {
   };
 }
 export const ConfigurationDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.ConfigurationDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.bech32AccountAddressPrefix !== "") {
       writer.uint32(10).string(message.bech32AccountAddressPrefix);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConfigurationDescriptor();
     while (reader.pos < end) {
@@ -587,6 +923,37 @@ export const ConfigurationDescriptor = {
     const message = createBaseConfigurationDescriptor();
     message.bech32AccountAddressPrefix = (_object$bech32Account = object.bech32AccountAddressPrefix) !== null && _object$bech32Account !== void 0 ? _object$bech32Account : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      bech32AccountAddressPrefix: object.bech32_account_address_prefix
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.bech32_account_address_prefix = message.bech32AccountAddressPrefix;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ConfigurationDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ConfigurationDescriptor",
+      value: ConfigurationDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return ConfigurationDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return ConfigurationDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.ConfigurationDescriptor",
+      value: ConfigurationDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDescriptor() {
@@ -595,14 +962,15 @@ function createBaseMsgDescriptor() {
   };
 }
 export const MsgDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.MsgDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.msgTypeUrl !== "") {
       writer.uint32(10).string(message.msgTypeUrl);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDescriptor();
     while (reader.pos < end) {
@@ -623,17 +991,49 @@ export const MsgDescriptor = {
     const message = createBaseMsgDescriptor();
     message.msgTypeUrl = (_object$msgTypeUrl = object.msgTypeUrl) !== null && _object$msgTypeUrl !== void 0 ? _object$msgTypeUrl : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      msgTypeUrl: object.msg_type_url
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.msg_type_url = message.msgTypeUrl;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgDescriptor",
+      value: MsgDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return MsgDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.MsgDescriptor",
+      value: MsgDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseGetAuthnDescriptorRequest() {
   return {};
 }
 export const GetAuthnDescriptorRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetAuthnDescriptorRequest();
     while (reader.pos < end) {
@@ -649,22 +1049,51 @@ export const GetAuthnDescriptorRequest = {
   fromPartial(_) {
     const message = createBaseGetAuthnDescriptorRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetAuthnDescriptorRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetAuthnDescriptorRequest",
+      value: GetAuthnDescriptorRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetAuthnDescriptorRequest.decode(message.value);
+  },
+  toProto(message) {
+    return GetAuthnDescriptorRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorRequest",
+      value: GetAuthnDescriptorRequest.encode(message).finish()
+    };
   }
 };
 function createBaseGetAuthnDescriptorResponse() {
   return {
-    authn: undefined
+    authn: AuthnDescriptor.fromPartial({})
   };
 }
 export const GetAuthnDescriptorResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.authn !== undefined) {
       AuthnDescriptor.encode(message.authn, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetAuthnDescriptorResponse();
     while (reader.pos < end) {
@@ -684,17 +1113,49 @@ export const GetAuthnDescriptorResponse = {
     const message = createBaseGetAuthnDescriptorResponse();
     message.authn = object.authn !== undefined && object.authn !== null ? AuthnDescriptor.fromPartial(object.authn) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      authn: object !== null && object !== void 0 && object.authn ? AuthnDescriptor.fromAmino(object.authn) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.authn = message.authn ? AuthnDescriptor.toAmino(message.authn) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetAuthnDescriptorResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetAuthnDescriptorResponse",
+      value: GetAuthnDescriptorResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetAuthnDescriptorResponse.decode(message.value);
+  },
+  toProto(message) {
+    return GetAuthnDescriptorResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorResponse",
+      value: GetAuthnDescriptorResponse.encode(message).finish()
+    };
   }
 };
 function createBaseGetChainDescriptorRequest() {
   return {};
 }
 export const GetChainDescriptorRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetChainDescriptorRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetChainDescriptorRequest();
     while (reader.pos < end) {
@@ -710,22 +1171,51 @@ export const GetChainDescriptorRequest = {
   fromPartial(_) {
     const message = createBaseGetChainDescriptorRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetChainDescriptorRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetChainDescriptorRequest",
+      value: GetChainDescriptorRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetChainDescriptorRequest.decode(message.value);
+  },
+  toProto(message) {
+    return GetChainDescriptorRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetChainDescriptorRequest",
+      value: GetChainDescriptorRequest.encode(message).finish()
+    };
   }
 };
 function createBaseGetChainDescriptorResponse() {
   return {
-    chain: undefined
+    chain: ChainDescriptor.fromPartial({})
   };
 }
 export const GetChainDescriptorResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetChainDescriptorResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.chain !== undefined) {
       ChainDescriptor.encode(message.chain, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetChainDescriptorResponse();
     while (reader.pos < end) {
@@ -745,17 +1235,49 @@ export const GetChainDescriptorResponse = {
     const message = createBaseGetChainDescriptorResponse();
     message.chain = object.chain !== undefined && object.chain !== null ? ChainDescriptor.fromPartial(object.chain) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      chain: object !== null && object !== void 0 && object.chain ? ChainDescriptor.fromAmino(object.chain) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.chain = message.chain ? ChainDescriptor.toAmino(message.chain) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetChainDescriptorResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetChainDescriptorResponse",
+      value: GetChainDescriptorResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetChainDescriptorResponse.decode(message.value);
+  },
+  toProto(message) {
+    return GetChainDescriptorResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetChainDescriptorResponse",
+      value: GetChainDescriptorResponse.encode(message).finish()
+    };
   }
 };
 function createBaseGetCodecDescriptorRequest() {
   return {};
 }
 export const GetCodecDescriptorRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetCodecDescriptorRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetCodecDescriptorRequest();
     while (reader.pos < end) {
@@ -771,22 +1293,51 @@ export const GetCodecDescriptorRequest = {
   fromPartial(_) {
     const message = createBaseGetCodecDescriptorRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetCodecDescriptorRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetCodecDescriptorRequest",
+      value: GetCodecDescriptorRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetCodecDescriptorRequest.decode(message.value);
+  },
+  toProto(message) {
+    return GetCodecDescriptorRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetCodecDescriptorRequest",
+      value: GetCodecDescriptorRequest.encode(message).finish()
+    };
   }
 };
 function createBaseGetCodecDescriptorResponse() {
   return {
-    codec: undefined
+    codec: CodecDescriptor.fromPartial({})
   };
 }
 export const GetCodecDescriptorResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetCodecDescriptorResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.codec !== undefined) {
       CodecDescriptor.encode(message.codec, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetCodecDescriptorResponse();
     while (reader.pos < end) {
@@ -806,17 +1357,49 @@ export const GetCodecDescriptorResponse = {
     const message = createBaseGetCodecDescriptorResponse();
     message.codec = object.codec !== undefined && object.codec !== null ? CodecDescriptor.fromPartial(object.codec) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      codec: object !== null && object !== void 0 && object.codec ? CodecDescriptor.fromAmino(object.codec) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.codec = message.codec ? CodecDescriptor.toAmino(message.codec) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetCodecDescriptorResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetCodecDescriptorResponse",
+      value: GetCodecDescriptorResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetCodecDescriptorResponse.decode(message.value);
+  },
+  toProto(message) {
+    return GetCodecDescriptorResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetCodecDescriptorResponse",
+      value: GetCodecDescriptorResponse.encode(message).finish()
+    };
   }
 };
 function createBaseGetConfigurationDescriptorRequest() {
   return {};
 }
 export const GetConfigurationDescriptorRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetConfigurationDescriptorRequest();
     while (reader.pos < end) {
@@ -832,22 +1415,51 @@ export const GetConfigurationDescriptorRequest = {
   fromPartial(_) {
     const message = createBaseGetConfigurationDescriptorRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetConfigurationDescriptorRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetConfigurationDescriptorRequest",
+      value: GetConfigurationDescriptorRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetConfigurationDescriptorRequest.decode(message.value);
+  },
+  toProto(message) {
+    return GetConfigurationDescriptorRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorRequest",
+      value: GetConfigurationDescriptorRequest.encode(message).finish()
+    };
   }
 };
 function createBaseGetConfigurationDescriptorResponse() {
   return {
-    config: undefined
+    config: ConfigurationDescriptor.fromPartial({})
   };
 }
 export const GetConfigurationDescriptorResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.config !== undefined) {
       ConfigurationDescriptor.encode(message.config, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetConfigurationDescriptorResponse();
     while (reader.pos < end) {
@@ -867,17 +1479,49 @@ export const GetConfigurationDescriptorResponse = {
     const message = createBaseGetConfigurationDescriptorResponse();
     message.config = object.config !== undefined && object.config !== null ? ConfigurationDescriptor.fromPartial(object.config) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      config: object !== null && object !== void 0 && object.config ? ConfigurationDescriptor.fromAmino(object.config) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.config = message.config ? ConfigurationDescriptor.toAmino(message.config) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetConfigurationDescriptorResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetConfigurationDescriptorResponse",
+      value: GetConfigurationDescriptorResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetConfigurationDescriptorResponse.decode(message.value);
+  },
+  toProto(message) {
+    return GetConfigurationDescriptorResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorResponse",
+      value: GetConfigurationDescriptorResponse.encode(message).finish()
+    };
   }
 };
 function createBaseGetQueryServicesDescriptorRequest() {
   return {};
 }
 export const GetQueryServicesDescriptorRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetQueryServicesDescriptorRequest();
     while (reader.pos < end) {
@@ -893,22 +1537,51 @@ export const GetQueryServicesDescriptorRequest = {
   fromPartial(_) {
     const message = createBaseGetQueryServicesDescriptorRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetQueryServicesDescriptorRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetQueryServicesDescriptorRequest",
+      value: GetQueryServicesDescriptorRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetQueryServicesDescriptorRequest.decode(message.value);
+  },
+  toProto(message) {
+    return GetQueryServicesDescriptorRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorRequest",
+      value: GetQueryServicesDescriptorRequest.encode(message).finish()
+    };
   }
 };
 function createBaseGetQueryServicesDescriptorResponse() {
   return {
-    queries: undefined
+    queries: QueryServicesDescriptor.fromPartial({})
   };
 }
 export const GetQueryServicesDescriptorResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.queries !== undefined) {
       QueryServicesDescriptor.encode(message.queries, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetQueryServicesDescriptorResponse();
     while (reader.pos < end) {
@@ -928,17 +1601,49 @@ export const GetQueryServicesDescriptorResponse = {
     const message = createBaseGetQueryServicesDescriptorResponse();
     message.queries = object.queries !== undefined && object.queries !== null ? QueryServicesDescriptor.fromPartial(object.queries) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      queries: object !== null && object !== void 0 && object.queries ? QueryServicesDescriptor.fromAmino(object.queries) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.queries = message.queries ? QueryServicesDescriptor.toAmino(message.queries) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetQueryServicesDescriptorResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetQueryServicesDescriptorResponse",
+      value: GetQueryServicesDescriptorResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetQueryServicesDescriptorResponse.decode(message.value);
+  },
+  toProto(message) {
+    return GetQueryServicesDescriptorResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorResponse",
+      value: GetQueryServicesDescriptorResponse.encode(message).finish()
+    };
   }
 };
 function createBaseGetTxDescriptorRequest() {
   return {};
 }
 export const GetTxDescriptorRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetTxDescriptorRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxDescriptorRequest();
     while (reader.pos < end) {
@@ -954,22 +1659,51 @@ export const GetTxDescriptorRequest = {
   fromPartial(_) {
     const message = createBaseGetTxDescriptorRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetTxDescriptorRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetTxDescriptorRequest",
+      value: GetTxDescriptorRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetTxDescriptorRequest.decode(message.value);
+  },
+  toProto(message) {
+    return GetTxDescriptorRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetTxDescriptorRequest",
+      value: GetTxDescriptorRequest.encode(message).finish()
+    };
   }
 };
 function createBaseGetTxDescriptorResponse() {
   return {
-    tx: undefined
+    tx: TxDescriptor.fromPartial({})
   };
 }
 export const GetTxDescriptorResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.GetTxDescriptorResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.tx !== undefined) {
       TxDescriptor.encode(message.tx, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxDescriptorResponse();
     while (reader.pos < end) {
@@ -989,6 +1723,37 @@ export const GetTxDescriptorResponse = {
     const message = createBaseGetTxDescriptorResponse();
     message.tx = object.tx !== undefined && object.tx !== null ? TxDescriptor.fromPartial(object.tx) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      tx: object !== null && object !== void 0 && object.tx ? TxDescriptor.fromAmino(object.tx) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.tx = message.tx ? TxDescriptor.toAmino(message.tx) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GetTxDescriptorResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GetTxDescriptorResponse",
+      value: GetTxDescriptorResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GetTxDescriptorResponse.decode(message.value);
+  },
+  toProto(message) {
+    return GetTxDescriptorResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.GetTxDescriptorResponse",
+      value: GetTxDescriptorResponse.encode(message).finish()
+    };
   }
 };
 function createBaseQueryServicesDescriptor() {
@@ -997,14 +1762,15 @@ function createBaseQueryServicesDescriptor() {
   };
 }
 export const QueryServicesDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.QueryServicesDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.queryServices) {
       QueryServiceDescriptor.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryServicesDescriptor();
     while (reader.pos < end) {
@@ -1025,6 +1791,41 @@ export const QueryServicesDescriptor = {
     const message = createBaseQueryServicesDescriptor();
     message.queryServices = ((_object$queryServices = object.queryServices) === null || _object$queryServices === void 0 ? void 0 : _object$queryServices.map(e => QueryServiceDescriptor.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      queryServices: Array.isArray(object === null || object === void 0 ? void 0 : object.query_services) ? object.query_services.map(e => QueryServiceDescriptor.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.queryServices) {
+      obj.query_services = message.queryServices.map(e => e ? QueryServiceDescriptor.toAmino(e) : undefined);
+    } else {
+      obj.query_services = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryServicesDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryServicesDescriptor",
+      value: QueryServicesDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return QueryServicesDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return QueryServicesDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.QueryServicesDescriptor",
+      value: QueryServicesDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseQueryServiceDescriptor() {
@@ -1035,7 +1836,8 @@ function createBaseQueryServiceDescriptor() {
   };
 }
 export const QueryServiceDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.QueryServiceDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.fullname !== "") {
       writer.uint32(10).string(message.fullname);
     }
@@ -1048,7 +1850,7 @@ export const QueryServiceDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryServiceDescriptor();
     while (reader.pos < end) {
@@ -1077,6 +1879,45 @@ export const QueryServiceDescriptor = {
     message.isModule = (_object$isModule = object.isModule) !== null && _object$isModule !== void 0 ? _object$isModule : false;
     message.methods = ((_object$methods = object.methods) === null || _object$methods === void 0 ? void 0 : _object$methods.map(e => QueryMethodDescriptor.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      fullname: object.fullname,
+      isModule: object.is_module,
+      methods: Array.isArray(object === null || object === void 0 ? void 0 : object.methods) ? object.methods.map(e => QueryMethodDescriptor.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.fullname = message.fullname;
+    obj.is_module = message.isModule;
+    if (message.methods) {
+      obj.methods = message.methods.map(e => e ? QueryMethodDescriptor.toAmino(e) : undefined);
+    } else {
+      obj.methods = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryServiceDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryServiceDescriptor",
+      value: QueryServiceDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return QueryServiceDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return QueryServiceDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.QueryServiceDescriptor",
+      value: QueryServiceDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseQueryMethodDescriptor() {
@@ -1086,7 +1927,8 @@ function createBaseQueryMethodDescriptor() {
   };
 }
 export const QueryMethodDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.reflection.v2alpha1.QueryMethodDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -1096,7 +1938,7 @@ export const QueryMethodDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryMethodDescriptor();
     while (reader.pos < end) {
@@ -1121,5 +1963,38 @@ export const QueryMethodDescriptor = {
     message.name = (_object$name2 = object.name) !== null && _object$name2 !== void 0 ? _object$name2 : "";
     message.fullQueryPath = (_object$fullQueryPath = object.fullQueryPath) !== null && _object$fullQueryPath !== void 0 ? _object$fullQueryPath : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      fullQueryPath: object.full_query_path
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.full_query_path = message.fullQueryPath;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryMethodDescriptor.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryMethodDescriptor",
+      value: QueryMethodDescriptor.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return QueryMethodDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return QueryMethodDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.reflection.v2alpha1.QueryMethodDescriptor",
+      value: QueryMethodDescriptor.encode(message).finish()
+    };
   }
 };

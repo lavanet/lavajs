@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgDetection, MsgDetectionResponse, MsgConflictVoteCommit, MsgConflictVoteCommitResponse, MsgConflictVoteReveal, MsgConflictVoteRevealResponse } from "./tx";
 /** Msg defines the Msg service. */
 
@@ -14,16 +14,16 @@ export class MsgClientImpl {
   detection(request) {
     const data = MsgDetection.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Msg", "Detection", data);
-    return promise.then(data => MsgDetectionResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDetectionResponse.decode(new BinaryReader(data)));
   }
   conflictVoteCommit(request) {
     const data = MsgConflictVoteCommit.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Msg", "ConflictVoteCommit", data);
-    return promise.then(data => MsgConflictVoteCommitResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgConflictVoteCommitResponse.decode(new BinaryReader(data)));
   }
   conflictVoteReveal(request) {
     const data = MsgConflictVoteReveal.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Msg", "ConflictVoteReveal", data);
-    return promise.then(data => MsgConflictVoteRevealResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgConflictVoteRevealResponse.decode(new BinaryReader(data)));
   }
 }

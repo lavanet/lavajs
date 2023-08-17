@@ -1,6 +1,6 @@
 import { ProjectKey } from "./project";
 import { Policy } from "../plans/policy";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 function createBaseMsgAddKeys() {
   return {
     creator: "",
@@ -9,7 +9,8 @@ function createBaseMsgAddKeys() {
   };
 }
 export const MsgAddKeys = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -22,7 +23,7 @@ export const MsgAddKeys = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAddKeys();
     while (reader.pos < end) {
@@ -51,17 +52,51 @@ export const MsgAddKeys = {
     message.project = (_object$project = object.project) !== null && _object$project !== void 0 ? _object$project : "";
     message.projectKeys = ((_object$projectKeys = object.projectKeys) === null || _object$projectKeys === void 0 ? void 0 : _object$projectKeys.map(e => ProjectKey.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      project: object.project,
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.project_keys) ? object.project_keys.map(e => ProjectKey.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.project = message.project;
+    if (message.projectKeys) {
+      obj.project_keys = message.projectKeys.map(e => e ? ProjectKey.toAmino(e) : undefined);
+    } else {
+      obj.project_keys = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgAddKeys.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgAddKeys.decode(message.value);
+  },
+  toProto(message) {
+    return MsgAddKeys.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+      value: MsgAddKeys.encode(message).finish()
+    };
   }
 };
 function createBaseMsgAddKeysResponse() {
   return {};
 }
 export const MsgAddKeysResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgAddKeysResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAddKeysResponse();
     while (reader.pos < end) {
@@ -77,6 +112,28 @@ export const MsgAddKeysResponse = {
   fromPartial(_) {
     const message = createBaseMsgAddKeysResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgAddKeysResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgAddKeysResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgAddKeysResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgAddKeysResponse",
+      value: MsgAddKeysResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDelKeys() {
@@ -87,7 +144,8 @@ function createBaseMsgDelKeys() {
   };
 }
 export const MsgDelKeys = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -100,7 +158,7 @@ export const MsgDelKeys = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDelKeys();
     while (reader.pos < end) {
@@ -129,17 +187,51 @@ export const MsgDelKeys = {
     message.project = (_object$project2 = object.project) !== null && _object$project2 !== void 0 ? _object$project2 : "";
     message.projectKeys = ((_object$projectKeys2 = object.projectKeys) === null || _object$projectKeys2 === void 0 ? void 0 : _object$projectKeys2.map(e => ProjectKey.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      project: object.project,
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.project_keys) ? object.project_keys.map(e => ProjectKey.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.project = message.project;
+    if (message.projectKeys) {
+      obj.project_keys = message.projectKeys.map(e => e ? ProjectKey.toAmino(e) : undefined);
+    } else {
+      obj.project_keys = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDelKeys.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgDelKeys.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDelKeys.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+      value: MsgDelKeys.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDelKeysResponse() {
   return {};
 }
 export const MsgDelKeysResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgDelKeysResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDelKeysResponse();
     while (reader.pos < end) {
@@ -155,17 +247,40 @@ export const MsgDelKeysResponse = {
   fromPartial(_) {
     const message = createBaseMsgDelKeysResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDelKeysResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgDelKeysResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDelKeysResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgDelKeysResponse",
+      value: MsgDelKeysResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgSetPolicy() {
   return {
     creator: "",
     project: "",
-    policy: undefined
+    policy: Policy.fromPartial({})
   };
 }
 export const MsgSetPolicy = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -178,7 +293,7 @@ export const MsgSetPolicy = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetPolicy();
     while (reader.pos < end) {
@@ -207,17 +322,47 @@ export const MsgSetPolicy = {
     message.project = (_object$project3 = object.project) !== null && _object$project3 !== void 0 ? _object$project3 : "";
     message.policy = object.policy !== undefined && object.policy !== null ? Policy.fromPartial(object.policy) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      project: object.project,
+      policy: object !== null && object !== void 0 && object.policy ? Policy.fromAmino(object.policy) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.project = message.project;
+    obj.policy = message.policy ? Policy.toAmino(message.policy) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSetPolicy.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgSetPolicy.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSetPolicy.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
+      value: MsgSetPolicy.encode(message).finish()
+    };
   }
 };
 function createBaseMsgSetPolicyResponse() {
   return {};
 }
 export const MsgSetPolicyResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgSetPolicyResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetPolicyResponse();
     while (reader.pos < end) {
@@ -233,17 +378,40 @@ export const MsgSetPolicyResponse = {
   fromPartial(_) {
     const message = createBaseMsgSetPolicyResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSetPolicyResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgSetPolicyResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSetPolicyResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetPolicyResponse",
+      value: MsgSetPolicyResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgSetSubscriptionPolicy() {
   return {
     creator: "",
     projects: [],
-    policy: undefined
+    policy: Policy.fromPartial({})
   };
 }
 export const MsgSetSubscriptionPolicy = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -256,7 +424,7 @@ export const MsgSetSubscriptionPolicy = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetSubscriptionPolicy();
     while (reader.pos < end) {
@@ -285,17 +453,51 @@ export const MsgSetSubscriptionPolicy = {
     message.projects = ((_object$projects = object.projects) === null || _object$projects === void 0 ? void 0 : _object$projects.map(e => e)) || [];
     message.policy = object.policy !== undefined && object.policy !== null ? Policy.fromPartial(object.policy) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      projects: Array.isArray(object === null || object === void 0 ? void 0 : object.projects) ? object.projects.map(e => e) : [],
+      policy: object !== null && object !== void 0 && object.policy ? Policy.fromAmino(object.policy) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    if (message.projects) {
+      obj.projects = message.projects.map(e => e);
+    } else {
+      obj.projects = [];
+    }
+    obj.policy = message.policy ? Policy.toAmino(message.policy) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSetSubscriptionPolicy.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgSetSubscriptionPolicy.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSetSubscriptionPolicy.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
+      value: MsgSetSubscriptionPolicy.encode(message).finish()
+    };
   }
 };
 function createBaseMsgSetSubscriptionPolicyResponse() {
   return {};
 }
 export const MsgSetSubscriptionPolicyResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicyResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetSubscriptionPolicyResponse();
     while (reader.pos < end) {
@@ -311,5 +513,27 @@ export const MsgSetSubscriptionPolicyResponse = {
   fromPartial(_) {
     const message = createBaseMsgSetSubscriptionPolicyResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgSetSubscriptionPolicyResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgSetSubscriptionPolicyResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgSetSubscriptionPolicyResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicyResponse",
+      value: MsgSetSubscriptionPolicyResponse.encode(message).finish()
+    };
   }
 };

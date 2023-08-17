@@ -1,6 +1,5 @@
 import { Params } from "./params";
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -13,11 +12,12 @@ function createBaseQueryParamsRequest() {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.protocol.QueryParamsRequest",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -33,22 +33,45 @@ export const QueryParamsRequest = {
   fromPartial(_) {
     const message = createBaseQueryParamsRequest();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryParamsRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryParamsRequest.decode(message.value);
+  },
+  toProto(message) {
+    return QueryParamsRequest.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.protocol.QueryParamsRequest",
+      value: QueryParamsRequest.encode(message).finish()
+    };
   }
 };
 function createBaseQueryParamsResponse() {
   return {
-    params: undefined
+    params: Params.fromPartial({})
   };
 }
 export const QueryParamsResponse = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.protocol.QueryParamsResponse",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -68,5 +91,30 @@ export const QueryParamsResponse = {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      params: object !== null && object !== void 0 && object.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return QueryParamsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return QueryParamsResponse.decode(message.value);
+  },
+  toProto(message) {
+    return QueryParamsResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.protocol.QueryParamsResponse",
+      value: QueryParamsResponse.encode(message).finish()
+    };
   }
 };

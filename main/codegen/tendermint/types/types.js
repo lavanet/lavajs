@@ -1,6 +1,5 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -13,10 +12,8 @@ var _proof = require("../crypto/proof");
 var _types = require("../version/types");
 var _timestamp = require("../../google/protobuf/timestamp");
 var _validator = require("./validator");
+var _binary = require("../../binary");
 var _helpers = require("../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -159,8 +156,9 @@ function createBasePartSetHeader() {
   };
 }
 var PartSetHeader = {
+  typeUrl: "/tendermint.types.PartSetHeader",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.total !== 0) {
       writer.uint32(8).uint32(message.total);
     }
@@ -170,7 +168,7 @@ var PartSetHeader = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBasePartSetHeader();
     while (reader.pos < end) {
@@ -195,6 +193,33 @@ var PartSetHeader = {
     message.total = (_object$total = object.total) !== null && _object$total !== void 0 ? _object$total : 0;
     message.hash = (_object$hash = object.hash) !== null && _object$hash !== void 0 ? _object$hash : new Uint8Array();
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      total: object.total,
+      hash: object.hash
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.total = message.total;
+    obj.hash = message.hash;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return PartSetHeader.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return PartSetHeader.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return PartSetHeader.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.PartSetHeader",
+      value: PartSetHeader.encode(message).finish()
+    };
   }
 };
 exports.PartSetHeader = PartSetHeader;
@@ -202,12 +227,13 @@ function createBasePart() {
   return {
     index: 0,
     bytes: new Uint8Array(),
-    proof: undefined
+    proof: _proof.Proof.fromPartial({})
   };
 }
 var Part = {
+  typeUrl: "/tendermint.types.Part",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.index !== 0) {
       writer.uint32(8).uint32(message.index);
     }
@@ -220,7 +246,7 @@ var Part = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBasePart();
     while (reader.pos < end) {
@@ -249,18 +275,48 @@ var Part = {
     message.bytes = (_object$bytes = object.bytes) !== null && _object$bytes !== void 0 ? _object$bytes : new Uint8Array();
     message.proof = object.proof !== undefined && object.proof !== null ? _proof.Proof.fromPartial(object.proof) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      index: object.index,
+      bytes: object.bytes,
+      proof: object !== null && object !== void 0 && object.proof ? _proof.Proof.fromAmino(object.proof) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.index = message.index;
+    obj.bytes = message.bytes;
+    obj.proof = message.proof ? _proof.Proof.toAmino(message.proof) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Part.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Part.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Part.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Part",
+      value: Part.encode(message).finish()
+    };
   }
 };
 exports.Part = Part;
 function createBaseBlockID() {
   return {
     hash: new Uint8Array(),
-    partSetHeader: undefined
+    partSetHeader: PartSetHeader.fromPartial({})
   };
 }
 var BlockID = {
+  typeUrl: "/tendermint.types.BlockID",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.hash.length !== 0) {
       writer.uint32(10).bytes(message.hash);
     }
@@ -270,7 +326,7 @@ var BlockID = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseBlockID();
     while (reader.pos < end) {
@@ -295,16 +351,43 @@ var BlockID = {
     message.hash = (_object$hash2 = object.hash) !== null && _object$hash2 !== void 0 ? _object$hash2 : new Uint8Array();
     message.partSetHeader = object.partSetHeader !== undefined && object.partSetHeader !== null ? PartSetHeader.fromPartial(object.partSetHeader) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      hash: object.hash,
+      partSetHeader: object !== null && object !== void 0 && object.part_set_header ? PartSetHeader.fromAmino(object.part_set_header) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.hash = message.hash;
+    obj.part_set_header = message.partSetHeader ? PartSetHeader.toAmino(message.partSetHeader) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return BlockID.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return BlockID.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return BlockID.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.BlockID",
+      value: BlockID.encode(message).finish()
+    };
   }
 };
 exports.BlockID = BlockID;
 function createBaseHeader() {
   return {
-    version: undefined,
+    version: _types.Consensus.fromPartial({}),
     chainId: "",
-    height: _helpers.Long.ZERO,
-    time: undefined,
-    lastBlockId: undefined,
+    height: BigInt(0),
+    time: new Date(),
+    lastBlockId: BlockID.fromPartial({}),
     lastCommitHash: new Uint8Array(),
     dataHash: new Uint8Array(),
     validatorsHash: new Uint8Array(),
@@ -317,15 +400,16 @@ function createBaseHeader() {
   };
 }
 var Header = {
+  typeUrl: "/tendermint.types.Header",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.version !== undefined) {
       _types.Consensus.encode(message.version, writer.uint32(10).fork()).ldelim();
     }
     if (message.chainId !== "") {
       writer.uint32(18).string(message.chainId);
     }
-    if (!message.height.isZero()) {
+    if (message.height !== BigInt(0)) {
       writer.uint32(24).int64(message.height);
     }
     if (message.time !== undefined) {
@@ -364,7 +448,7 @@ var Header = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseHeader();
     while (reader.pos < end) {
@@ -424,7 +508,7 @@ var Header = {
     var message = createBaseHeader();
     message.version = object.version !== undefined && object.version !== null ? _types.Consensus.fromPartial(object.version) : undefined;
     message.chainId = (_object$chainId = object.chainId) !== null && _object$chainId !== void 0 ? _object$chainId : "";
-    message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     message.time = (_object$time = object.time) !== null && _object$time !== void 0 ? _object$time : undefined;
     message.lastBlockId = object.lastBlockId !== undefined && object.lastBlockId !== null ? BlockID.fromPartial(object.lastBlockId) : undefined;
     message.lastCommitHash = (_object$lastCommitHas = object.lastCommitHash) !== null && _object$lastCommitHas !== void 0 ? _object$lastCommitHas : new Uint8Array();
@@ -437,6 +521,57 @@ var Header = {
     message.evidenceHash = (_object$evidenceHash = object.evidenceHash) !== null && _object$evidenceHash !== void 0 ? _object$evidenceHash : new Uint8Array();
     message.proposerAddress = (_object$proposerAddre = object.proposerAddress) !== null && _object$proposerAddre !== void 0 ? _object$proposerAddre : new Uint8Array();
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      version: object !== null && object !== void 0 && object.version ? _types.Consensus.fromAmino(object.version) : undefined,
+      chainId: object.chain_id,
+      height: BigInt(object.height),
+      time: object.time,
+      lastBlockId: object !== null && object !== void 0 && object.last_block_id ? BlockID.fromAmino(object.last_block_id) : undefined,
+      lastCommitHash: object.last_commit_hash,
+      dataHash: object.data_hash,
+      validatorsHash: object.validators_hash,
+      nextValidatorsHash: object.next_validators_hash,
+      consensusHash: object.consensus_hash,
+      appHash: object.app_hash,
+      lastResultsHash: object.last_results_hash,
+      evidenceHash: object.evidence_hash,
+      proposerAddress: object.proposer_address
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.version = message.version ? _types.Consensus.toAmino(message.version) : undefined;
+    obj.chain_id = message.chainId;
+    obj.height = message.height ? message.height.toString() : undefined;
+    obj.time = message.time;
+    obj.last_block_id = message.lastBlockId ? BlockID.toAmino(message.lastBlockId) : undefined;
+    obj.last_commit_hash = message.lastCommitHash;
+    obj.data_hash = message.dataHash;
+    obj.validators_hash = message.validatorsHash;
+    obj.next_validators_hash = message.nextValidatorsHash;
+    obj.consensus_hash = message.consensusHash;
+    obj.app_hash = message.appHash;
+    obj.last_results_hash = message.lastResultsHash;
+    obj.evidence_hash = message.evidenceHash;
+    obj.proposer_address = message.proposerAddress;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Header.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Header.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Header.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Header",
+      value: Header.encode(message).finish()
+    };
   }
 };
 exports.Header = Header;
@@ -446,8 +581,9 @@ function createBaseData() {
   };
 }
 var Data = {
+  typeUrl: "/tendermint.types.Data",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.txs),
       _step;
     try {
@@ -463,7 +599,7 @@ var Data = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseData();
     while (reader.pos < end) {
@@ -486,28 +622,62 @@ var Data = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      txs: Array.isArray(object === null || object === void 0 ? void 0 : object.txs) ? object.txs.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.txs) {
+      obj.txs = message.txs.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.txs = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Data.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Data.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Data.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Data",
+      value: Data.encode(message).finish()
+    };
   }
 };
 exports.Data = Data;
 function createBaseVote() {
   return {
     type: 0,
-    height: _helpers.Long.ZERO,
+    height: BigInt(0),
     round: 0,
-    blockId: undefined,
-    timestamp: undefined,
+    blockId: BlockID.fromPartial({}),
+    timestamp: new Date(),
     validatorAddress: new Uint8Array(),
     validatorIndex: 0,
     signature: new Uint8Array()
   };
 }
 var Vote = {
+  typeUrl: "/tendermint.types.Vote",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
-    if (!message.height.isZero()) {
+    if (message.height !== BigInt(0)) {
       writer.uint32(16).int64(message.height);
     }
     if (message.round !== 0) {
@@ -531,7 +701,7 @@ var Vote = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseVote();
     while (reader.pos < end) {
@@ -572,7 +742,7 @@ var Vote = {
     var _object$type, _object$round, _object$timestamp, _object$validatorAddr, _object$validatorInde, _object$signature;
     var message = createBaseVote();
     message.type = (_object$type = object.type) !== null && _object$type !== void 0 ? _object$type : 0;
-    message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     message.round = (_object$round = object.round) !== null && _object$round !== void 0 ? _object$round : 0;
     message.blockId = object.blockId !== undefined && object.blockId !== null ? BlockID.fromPartial(object.blockId) : undefined;
     message.timestamp = (_object$timestamp = object.timestamp) !== null && _object$timestamp !== void 0 ? _object$timestamp : undefined;
@@ -580,21 +750,61 @@ var Vote = {
     message.validatorIndex = (_object$validatorInde = object.validatorIndex) !== null && _object$validatorInde !== void 0 ? _object$validatorInde : 0;
     message.signature = (_object$signature = object.signature) !== null && _object$signature !== void 0 ? _object$signature : new Uint8Array();
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      type: (0, _helpers.isSet)(object.type) ? signedMsgTypeFromJSON(object.type) : -1,
+      height: BigInt(object.height),
+      round: object.round,
+      blockId: object !== null && object !== void 0 && object.block_id ? BlockID.fromAmino(object.block_id) : undefined,
+      timestamp: object.timestamp,
+      validatorAddress: object.validator_address,
+      validatorIndex: object.validator_index,
+      signature: object.signature
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.type = message.type;
+    obj.height = message.height ? message.height.toString() : undefined;
+    obj.round = message.round;
+    obj.block_id = message.blockId ? BlockID.toAmino(message.blockId) : undefined;
+    obj.timestamp = message.timestamp;
+    obj.validator_address = message.validatorAddress;
+    obj.validator_index = message.validatorIndex;
+    obj.signature = message.signature;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Vote.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Vote.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Vote.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Vote",
+      value: Vote.encode(message).finish()
+    };
   }
 };
 exports.Vote = Vote;
 function createBaseCommit() {
   return {
-    height: _helpers.Long.ZERO,
+    height: BigInt(0),
     round: 0,
-    blockId: undefined,
+    blockId: BlockID.fromPartial({}),
     signatures: []
   };
 }
 var Commit = {
+  typeUrl: "/tendermint.types.Commit",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.height.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.height !== BigInt(0)) {
       writer.uint32(8).int64(message.height);
     }
     if (message.round !== 0) {
@@ -618,7 +828,7 @@ var Commit = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseCommit();
     while (reader.pos < end) {
@@ -646,13 +856,52 @@ var Commit = {
   fromPartial: function fromPartial(object) {
     var _object$round2, _object$signatures;
     var message = createBaseCommit();
-    message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     message.round = (_object$round2 = object.round) !== null && _object$round2 !== void 0 ? _object$round2 : 0;
     message.blockId = object.blockId !== undefined && object.blockId !== null ? BlockID.fromPartial(object.blockId) : undefined;
     message.signatures = ((_object$signatures = object.signatures) === null || _object$signatures === void 0 ? void 0 : _object$signatures.map(function (e) {
       return CommitSig.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      height: BigInt(object.height),
+      round: object.round,
+      blockId: object !== null && object !== void 0 && object.block_id ? BlockID.fromAmino(object.block_id) : undefined,
+      signatures: Array.isArray(object === null || object === void 0 ? void 0 : object.signatures) ? object.signatures.map(function (e) {
+        return CommitSig.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.height = message.height ? message.height.toString() : undefined;
+    obj.round = message.round;
+    obj.block_id = message.blockId ? BlockID.toAmino(message.blockId) : undefined;
+    if (message.signatures) {
+      obj.signatures = message.signatures.map(function (e) {
+        return e ? CommitSig.toAmino(e) : undefined;
+      });
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Commit.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Commit.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Commit.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Commit",
+      value: Commit.encode(message).finish()
+    };
   }
 };
 exports.Commit = Commit;
@@ -660,13 +909,14 @@ function createBaseCommitSig() {
   return {
     blockIdFlag: 0,
     validatorAddress: new Uint8Array(),
-    timestamp: undefined,
+    timestamp: new Date(),
     signature: new Uint8Array()
   };
 }
 var CommitSig = {
+  typeUrl: "/tendermint.types.CommitSig",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.blockIdFlag !== 0) {
       writer.uint32(8).int32(message.blockIdFlag);
     }
@@ -682,7 +932,7 @@ var CommitSig = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseCommitSig();
     while (reader.pos < end) {
@@ -715,27 +965,59 @@ var CommitSig = {
     message.timestamp = (_object$timestamp2 = object.timestamp) !== null && _object$timestamp2 !== void 0 ? _object$timestamp2 : undefined;
     message.signature = (_object$signature2 = object.signature) !== null && _object$signature2 !== void 0 ? _object$signature2 : new Uint8Array();
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      blockIdFlag: (0, _helpers.isSet)(object.block_id_flag) ? blockIDFlagFromJSON(object.block_id_flag) : -1,
+      validatorAddress: object.validator_address,
+      timestamp: object.timestamp,
+      signature: object.signature
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.block_id_flag = message.blockIdFlag;
+    obj.validator_address = message.validatorAddress;
+    obj.timestamp = message.timestamp;
+    obj.signature = message.signature;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return CommitSig.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return CommitSig.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return CommitSig.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.CommitSig",
+      value: CommitSig.encode(message).finish()
+    };
   }
 };
 exports.CommitSig = CommitSig;
 function createBaseProposal() {
   return {
     type: 0,
-    height: _helpers.Long.ZERO,
+    height: BigInt(0),
     round: 0,
     polRound: 0,
-    blockId: undefined,
-    timestamp: undefined,
+    blockId: BlockID.fromPartial({}),
+    timestamp: new Date(),
     signature: new Uint8Array()
   };
 }
 var Proposal = {
+  typeUrl: "/tendermint.types.Proposal",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
-    if (!message.height.isZero()) {
+    if (message.height !== BigInt(0)) {
       writer.uint32(16).int64(message.height);
     }
     if (message.round !== 0) {
@@ -756,7 +1038,7 @@ var Proposal = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseProposal();
     while (reader.pos < end) {
@@ -794,25 +1076,63 @@ var Proposal = {
     var _object$type2, _object$round3, _object$polRound, _object$timestamp3, _object$signature3;
     var message = createBaseProposal();
     message.type = (_object$type2 = object.type) !== null && _object$type2 !== void 0 ? _object$type2 : 0;
-    message.height = object.height !== undefined && object.height !== null ? _helpers.Long.fromValue(object.height) : _helpers.Long.ZERO;
+    message.height = object.height !== undefined && object.height !== null ? BigInt(object.height.toString()) : BigInt(0);
     message.round = (_object$round3 = object.round) !== null && _object$round3 !== void 0 ? _object$round3 : 0;
     message.polRound = (_object$polRound = object.polRound) !== null && _object$polRound !== void 0 ? _object$polRound : 0;
     message.blockId = object.blockId !== undefined && object.blockId !== null ? BlockID.fromPartial(object.blockId) : undefined;
     message.timestamp = (_object$timestamp3 = object.timestamp) !== null && _object$timestamp3 !== void 0 ? _object$timestamp3 : undefined;
     message.signature = (_object$signature3 = object.signature) !== null && _object$signature3 !== void 0 ? _object$signature3 : new Uint8Array();
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      type: (0, _helpers.isSet)(object.type) ? signedMsgTypeFromJSON(object.type) : -1,
+      height: BigInt(object.height),
+      round: object.round,
+      polRound: object.pol_round,
+      blockId: object !== null && object !== void 0 && object.block_id ? BlockID.fromAmino(object.block_id) : undefined,
+      timestamp: object.timestamp,
+      signature: object.signature
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.type = message.type;
+    obj.height = message.height ? message.height.toString() : undefined;
+    obj.round = message.round;
+    obj.pol_round = message.polRound;
+    obj.block_id = message.blockId ? BlockID.toAmino(message.blockId) : undefined;
+    obj.timestamp = message.timestamp;
+    obj.signature = message.signature;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Proposal.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Proposal.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Proposal.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Proposal",
+      value: Proposal.encode(message).finish()
+    };
   }
 };
 exports.Proposal = Proposal;
 function createBaseSignedHeader() {
   return {
-    header: undefined,
-    commit: undefined
+    header: Header.fromPartial({}),
+    commit: Commit.fromPartial({})
   };
 }
 var SignedHeader = {
+  typeUrl: "/tendermint.types.SignedHeader",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.header !== undefined) {
       Header.encode(message.header, writer.uint32(10).fork()).ldelim();
     }
@@ -822,7 +1142,7 @@ var SignedHeader = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSignedHeader();
     while (reader.pos < end) {
@@ -846,18 +1166,46 @@ var SignedHeader = {
     message.header = object.header !== undefined && object.header !== null ? Header.fromPartial(object.header) : undefined;
     message.commit = object.commit !== undefined && object.commit !== null ? Commit.fromPartial(object.commit) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      header: object !== null && object !== void 0 && object.header ? Header.fromAmino(object.header) : undefined,
+      commit: object !== null && object !== void 0 && object.commit ? Commit.fromAmino(object.commit) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.header = message.header ? Header.toAmino(message.header) : undefined;
+    obj.commit = message.commit ? Commit.toAmino(message.commit) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return SignedHeader.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return SignedHeader.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return SignedHeader.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.SignedHeader",
+      value: SignedHeader.encode(message).finish()
+    };
   }
 };
 exports.SignedHeader = SignedHeader;
 function createBaseLightBlock() {
   return {
-    signedHeader: undefined,
-    validatorSet: undefined
+    signedHeader: SignedHeader.fromPartial({}),
+    validatorSet: _validator.ValidatorSet.fromPartial({})
   };
 }
 var LightBlock = {
+  typeUrl: "/tendermint.types.LightBlock",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.signedHeader !== undefined) {
       SignedHeader.encode(message.signedHeader, writer.uint32(10).fork()).ldelim();
     }
@@ -867,7 +1215,7 @@ var LightBlock = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseLightBlock();
     while (reader.pos < end) {
@@ -891,36 +1239,64 @@ var LightBlock = {
     message.signedHeader = object.signedHeader !== undefined && object.signedHeader !== null ? SignedHeader.fromPartial(object.signedHeader) : undefined;
     message.validatorSet = object.validatorSet !== undefined && object.validatorSet !== null ? _validator.ValidatorSet.fromPartial(object.validatorSet) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      signedHeader: object !== null && object !== void 0 && object.signed_header ? SignedHeader.fromAmino(object.signed_header) : undefined,
+      validatorSet: object !== null && object !== void 0 && object.validator_set ? _validator.ValidatorSet.fromAmino(object.validator_set) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.signed_header = message.signedHeader ? SignedHeader.toAmino(message.signedHeader) : undefined;
+    obj.validator_set = message.validatorSet ? _validator.ValidatorSet.toAmino(message.validatorSet) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return LightBlock.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return LightBlock.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return LightBlock.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.LightBlock",
+      value: LightBlock.encode(message).finish()
+    };
   }
 };
 exports.LightBlock = LightBlock;
 function createBaseBlockMeta() {
   return {
-    blockId: undefined,
-    blockSize: _helpers.Long.ZERO,
-    header: undefined,
-    numTxs: _helpers.Long.ZERO
+    blockId: BlockID.fromPartial({}),
+    blockSize: BigInt(0),
+    header: Header.fromPartial({}),
+    numTxs: BigInt(0)
   };
 }
 var BlockMeta = {
+  typeUrl: "/tendermint.types.BlockMeta",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.blockId !== undefined) {
       BlockID.encode(message.blockId, writer.uint32(10).fork()).ldelim();
     }
-    if (!message.blockSize.isZero()) {
+    if (message.blockSize !== BigInt(0)) {
       writer.uint32(16).int64(message.blockSize);
     }
     if (message.header !== undefined) {
       Header.encode(message.header, writer.uint32(26).fork()).ldelim();
     }
-    if (!message.numTxs.isZero()) {
+    if (message.numTxs !== BigInt(0)) {
       writer.uint32(32).int64(message.numTxs);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseBlockMeta();
     while (reader.pos < end) {
@@ -948,10 +1324,41 @@ var BlockMeta = {
   fromPartial: function fromPartial(object) {
     var message = createBaseBlockMeta();
     message.blockId = object.blockId !== undefined && object.blockId !== null ? BlockID.fromPartial(object.blockId) : undefined;
-    message.blockSize = object.blockSize !== undefined && object.blockSize !== null ? _helpers.Long.fromValue(object.blockSize) : _helpers.Long.ZERO;
+    message.blockSize = object.blockSize !== undefined && object.blockSize !== null ? BigInt(object.blockSize.toString()) : BigInt(0);
     message.header = object.header !== undefined && object.header !== null ? Header.fromPartial(object.header) : undefined;
-    message.numTxs = object.numTxs !== undefined && object.numTxs !== null ? _helpers.Long.fromValue(object.numTxs) : _helpers.Long.ZERO;
+    message.numTxs = object.numTxs !== undefined && object.numTxs !== null ? BigInt(object.numTxs.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      blockId: object !== null && object !== void 0 && object.block_id ? BlockID.fromAmino(object.block_id) : undefined,
+      blockSize: BigInt(object.block_size),
+      header: object !== null && object !== void 0 && object.header ? Header.fromAmino(object.header) : undefined,
+      numTxs: BigInt(object.num_txs)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.block_id = message.blockId ? BlockID.toAmino(message.blockId) : undefined;
+    obj.block_size = message.blockSize ? message.blockSize.toString() : undefined;
+    obj.header = message.header ? Header.toAmino(message.header) : undefined;
+    obj.num_txs = message.numTxs ? message.numTxs.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return BlockMeta.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return BlockMeta.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return BlockMeta.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.BlockMeta",
+      value: BlockMeta.encode(message).finish()
+    };
   }
 };
 exports.BlockMeta = BlockMeta;
@@ -959,12 +1366,13 @@ function createBaseTxProof() {
   return {
     rootHash: new Uint8Array(),
     data: new Uint8Array(),
-    proof: undefined
+    proof: _proof.Proof.fromPartial({})
   };
 }
 var TxProof = {
+  typeUrl: "/tendermint.types.TxProof",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.rootHash.length !== 0) {
       writer.uint32(10).bytes(message.rootHash);
     }
@@ -977,7 +1385,7 @@ var TxProof = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTxProof();
     while (reader.pos < end) {
@@ -1006,6 +1414,35 @@ var TxProof = {
     message.data = (_object$data = object.data) !== null && _object$data !== void 0 ? _object$data : new Uint8Array();
     message.proof = object.proof !== undefined && object.proof !== null ? _proof.Proof.fromPartial(object.proof) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      rootHash: object.root_hash,
+      data: object.data,
+      proof: object !== null && object !== void 0 && object.proof ? _proof.Proof.fromAmino(object.proof) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.root_hash = message.rootHash;
+    obj.data = message.data;
+    obj.proof = message.proof ? _proof.Proof.toAmino(message.proof) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return TxProof.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return TxProof.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return TxProof.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.TxProof",
+      value: TxProof.encode(message).finish()
+    };
   }
 };
 exports.TxProof = TxProof;

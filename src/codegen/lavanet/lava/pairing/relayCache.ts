@@ -1,16 +1,15 @@
 import { RelayRequest, RelayRequestSDKType, RelayReply, RelayReplySDKType } from "./relay";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface CacheUsage {
-  CacheHits: Long;
-  CacheMisses: Long;
+  CacheHits: bigint;
+  CacheMisses: bigint;
 }
 export interface CacheUsageSDKType {
-  CacheHits: Long;
-  CacheMisses: Long;
+  CacheHits: bigint;
+  CacheMisses: bigint;
 }
 export interface RelayCacheGet {
-  request?: RelayRequest;
+  request: RelayRequest;
   apiInterface: string;
   blockHash: Uint8Array;
   /** Used to differentiate between different chains so each has its own bucket */
@@ -18,60 +17,61 @@ export interface RelayCacheGet {
   finalized: boolean;
 }
 export interface RelayCacheGetSDKType {
-  request?: RelayRequestSDKType;
+  request: RelayRequestSDKType;
   apiInterface: string;
   blockHash: Uint8Array;
   chainID: string;
   finalized: boolean;
 }
 export interface RelayCacheSet {
-  request?: RelayRequest;
+  request: RelayRequest;
   apiInterface: string;
   blockHash: Uint8Array;
   /** Used to differentiate between different chains so each has its own bucket */
   chainID: string;
   /** bucketID is used to make sure a big user doesnt flood the cache, on providers this will be consumer address, on portal it will be dappID */
   bucketID: string;
-  response?: RelayReply;
+  response: RelayReply;
   finalized: boolean;
 }
 export interface RelayCacheSetSDKType {
-  request?: RelayRequestSDKType;
+  request: RelayRequestSDKType;
   apiInterface: string;
   blockHash: Uint8Array;
   chainID: string;
   bucketID: string;
-  response?: RelayReplySDKType;
+  response: RelayReplySDKType;
   finalized: boolean;
 }
 function createBaseCacheUsage(): CacheUsage {
   return {
-    CacheHits: Long.UZERO,
-    CacheMisses: Long.UZERO
+    CacheHits: BigInt(0),
+    CacheMisses: BigInt(0)
   };
 }
 export const CacheUsage = {
-  encode(message: CacheUsage, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.CacheHits.isZero()) {
+  typeUrl: "/lavanet.lava.pairing.CacheUsage",
+  encode(message: CacheUsage, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.CacheHits !== BigInt(0)) {
       writer.uint32(8).uint64(message.CacheHits);
     }
-    if (!message.CacheMisses.isZero()) {
+    if (message.CacheMisses !== BigInt(0)) {
       writer.uint32(16).uint64(message.CacheMisses);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): CacheUsage {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): CacheUsage {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCacheUsage();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.CacheHits = (reader.uint64() as Long);
+          message.CacheHits = reader.uint64();
           break;
         case 2:
-          message.CacheMisses = (reader.uint64() as Long);
+          message.CacheMisses = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -80,16 +80,43 @@ export const CacheUsage = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<CacheUsage>): CacheUsage {
+  fromPartial(object: Partial<CacheUsage>): CacheUsage {
     const message = createBaseCacheUsage();
-    message.CacheHits = object.CacheHits !== undefined && object.CacheHits !== null ? Long.fromValue(object.CacheHits) : Long.UZERO;
-    message.CacheMisses = object.CacheMisses !== undefined && object.CacheMisses !== null ? Long.fromValue(object.CacheMisses) : Long.UZERO;
+    message.CacheHits = object.CacheHits !== undefined && object.CacheHits !== null ? BigInt(object.CacheHits.toString()) : BigInt(0);
+    message.CacheMisses = object.CacheMisses !== undefined && object.CacheMisses !== null ? BigInt(object.CacheMisses.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: CacheUsageAmino): CacheUsage {
+    return {
+      CacheHits: BigInt(object.CacheHits),
+      CacheMisses: BigInt(object.CacheMisses)
+    };
+  },
+  toAmino(message: CacheUsage): CacheUsageAmino {
+    const obj: any = {};
+    obj.CacheHits = message.CacheHits ? message.CacheHits.toString() : undefined;
+    obj.CacheMisses = message.CacheMisses ? message.CacheMisses.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: CacheUsageAminoMsg): CacheUsage {
+    return CacheUsage.fromAmino(object.value);
+  },
+  fromProtoMsg(message: CacheUsageProtoMsg): CacheUsage {
+    return CacheUsage.decode(message.value);
+  },
+  toProto(message: CacheUsage): Uint8Array {
+    return CacheUsage.encode(message).finish();
+  },
+  toProtoMsg(message: CacheUsage): CacheUsageProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.pairing.CacheUsage",
+      value: CacheUsage.encode(message).finish()
+    };
   }
 };
 function createBaseRelayCacheGet(): RelayCacheGet {
   return {
-    request: undefined,
+    request: RelayRequest.fromPartial({}),
     apiInterface: "",
     blockHash: new Uint8Array(),
     chainID: "",
@@ -97,7 +124,8 @@ function createBaseRelayCacheGet(): RelayCacheGet {
   };
 }
 export const RelayCacheGet = {
-  encode(message: RelayCacheGet, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.pairing.RelayCacheGet",
+  encode(message: RelayCacheGet, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.request !== undefined) {
       RelayRequest.encode(message.request, writer.uint32(10).fork()).ldelim();
     }
@@ -115,8 +143,8 @@ export const RelayCacheGet = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): RelayCacheGet {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): RelayCacheGet {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRelayCacheGet();
     while (reader.pos < end) {
@@ -144,7 +172,7 @@ export const RelayCacheGet = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<RelayCacheGet>): RelayCacheGet {
+  fromPartial(object: Partial<RelayCacheGet>): RelayCacheGet {
     const message = createBaseRelayCacheGet();
     message.request = object.request !== undefined && object.request !== null ? RelayRequest.fromPartial(object.request) : undefined;
     message.apiInterface = object.apiInterface ?? "";
@@ -152,21 +180,55 @@ export const RelayCacheGet = {
     message.chainID = object.chainID ?? "";
     message.finalized = object.finalized ?? false;
     return message;
+  },
+  fromAmino(object: RelayCacheGetAmino): RelayCacheGet {
+    return {
+      request: object?.request ? RelayRequest.fromAmino(object.request) : undefined,
+      apiInterface: object.apiInterface,
+      blockHash: object.blockHash,
+      chainID: object.chainID,
+      finalized: object.finalized
+    };
+  },
+  toAmino(message: RelayCacheGet): RelayCacheGetAmino {
+    const obj: any = {};
+    obj.request = message.request ? RelayRequest.toAmino(message.request) : undefined;
+    obj.apiInterface = message.apiInterface;
+    obj.blockHash = message.blockHash;
+    obj.chainID = message.chainID;
+    obj.finalized = message.finalized;
+    return obj;
+  },
+  fromAminoMsg(object: RelayCacheGetAminoMsg): RelayCacheGet {
+    return RelayCacheGet.fromAmino(object.value);
+  },
+  fromProtoMsg(message: RelayCacheGetProtoMsg): RelayCacheGet {
+    return RelayCacheGet.decode(message.value);
+  },
+  toProto(message: RelayCacheGet): Uint8Array {
+    return RelayCacheGet.encode(message).finish();
+  },
+  toProtoMsg(message: RelayCacheGet): RelayCacheGetProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.pairing.RelayCacheGet",
+      value: RelayCacheGet.encode(message).finish()
+    };
   }
 };
 function createBaseRelayCacheSet(): RelayCacheSet {
   return {
-    request: undefined,
+    request: RelayRequest.fromPartial({}),
     apiInterface: "",
     blockHash: new Uint8Array(),
     chainID: "",
     bucketID: "",
-    response: undefined,
+    response: RelayReply.fromPartial({}),
     finalized: false
   };
 }
 export const RelayCacheSet = {
-  encode(message: RelayCacheSet, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.pairing.RelayCacheSet",
+  encode(message: RelayCacheSet, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.request !== undefined) {
       RelayRequest.encode(message.request, writer.uint32(10).fork()).ldelim();
     }
@@ -190,8 +252,8 @@ export const RelayCacheSet = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): RelayCacheSet {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): RelayCacheSet {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRelayCacheSet();
     while (reader.pos < end) {
@@ -225,7 +287,7 @@ export const RelayCacheSet = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<RelayCacheSet>): RelayCacheSet {
+  fromPartial(object: Partial<RelayCacheSet>): RelayCacheSet {
     const message = createBaseRelayCacheSet();
     message.request = object.request !== undefined && object.request !== null ? RelayRequest.fromPartial(object.request) : undefined;
     message.apiInterface = object.apiInterface ?? "";
@@ -235,5 +297,42 @@ export const RelayCacheSet = {
     message.response = object.response !== undefined && object.response !== null ? RelayReply.fromPartial(object.response) : undefined;
     message.finalized = object.finalized ?? false;
     return message;
+  },
+  fromAmino(object: RelayCacheSetAmino): RelayCacheSet {
+    return {
+      request: object?.request ? RelayRequest.fromAmino(object.request) : undefined,
+      apiInterface: object.apiInterface,
+      blockHash: object.blockHash,
+      chainID: object.chainID,
+      bucketID: object.bucketID,
+      response: object?.response ? RelayReply.fromAmino(object.response) : undefined,
+      finalized: object.finalized
+    };
+  },
+  toAmino(message: RelayCacheSet): RelayCacheSetAmino {
+    const obj: any = {};
+    obj.request = message.request ? RelayRequest.toAmino(message.request) : undefined;
+    obj.apiInterface = message.apiInterface;
+    obj.blockHash = message.blockHash;
+    obj.chainID = message.chainID;
+    obj.bucketID = message.bucketID;
+    obj.response = message.response ? RelayReply.toAmino(message.response) : undefined;
+    obj.finalized = message.finalized;
+    return obj;
+  },
+  fromAminoMsg(object: RelayCacheSetAminoMsg): RelayCacheSet {
+    return RelayCacheSet.fromAmino(object.value);
+  },
+  fromProtoMsg(message: RelayCacheSetProtoMsg): RelayCacheSet {
+    return RelayCacheSet.decode(message.value);
+  },
+  toProto(message: RelayCacheSet): Uint8Array {
+    return RelayCacheSet.encode(message).finish();
+  },
+  toProtoMsg(message: RelayCacheSet): RelayCacheSetProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.pairing.RelayCacheSet",
+      value: RelayCacheSet.encode(message).finish()
+    };
   }
 };

@@ -1,7 +1,6 @@
 import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Policy, PolicySDKType } from "./policy";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /**
  * The geolocation values are encoded as bits in a bitmask, with two special values:
  * GLS is set to 0 so it will be restrictive with the AND operator.
@@ -89,51 +88,52 @@ export function geolocationToJSON(object: Geolocation): string {
 export interface Plan {
   index: string;
   /** the epoch that this plan was created */
-  block: Long;
+  block: bigint;
   /** plan price (in ulava) */
-  price?: Coin;
+  price: Coin;
   /** allow CU overuse flag */
   allowOveruse: boolean;
   /** price of CU overuse */
-  overuseRate: Long;
+  overuseRate: bigint;
   /** plan description (for humans) */
   description: string;
   /** plan type */
   type: string;
   /** discount for buying the plan for a year */
-  annualDiscountPercentage: Long;
-  planPolicy?: Policy;
+  annualDiscountPercentage: bigint;
+  planPolicy: Policy;
 }
 export interface PlanSDKType {
   index: string;
-  block: Long;
-  price?: CoinSDKType;
+  block: bigint;
+  price: CoinSDKType;
   allow_overuse: boolean;
-  overuse_rate: Long;
+  overuse_rate: bigint;
   description: string;
   type: string;
-  annual_discount_percentage: Long;
-  plan_policy?: PolicySDKType;
+  annual_discount_percentage: bigint;
+  plan_policy: PolicySDKType;
 }
 function createBasePlan(): Plan {
   return {
     index: "",
-    block: Long.UZERO,
-    price: undefined,
+    block: BigInt(0),
+    price: Coin.fromPartial({}),
     allowOveruse: false,
-    overuseRate: Long.UZERO,
+    overuseRate: BigInt(0),
     description: "",
     type: "",
-    annualDiscountPercentage: Long.UZERO,
-    planPolicy: undefined
+    annualDiscountPercentage: BigInt(0),
+    planPolicy: Policy.fromPartial({})
   };
 }
 export const Plan = {
-  encode(message: Plan, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.plans.Plan",
+  encode(message: Plan, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
-    if (!message.block.isZero()) {
+    if (message.block !== BigInt(0)) {
       writer.uint32(24).uint64(message.block);
     }
     if (message.price !== undefined) {
@@ -142,7 +142,7 @@ export const Plan = {
     if (message.allowOveruse === true) {
       writer.uint32(64).bool(message.allowOveruse);
     }
-    if (!message.overuseRate.isZero()) {
+    if (message.overuseRate !== BigInt(0)) {
       writer.uint32(72).uint64(message.overuseRate);
     }
     if (message.description !== "") {
@@ -151,7 +151,7 @@ export const Plan = {
     if (message.type !== "") {
       writer.uint32(98).string(message.type);
     }
-    if (!message.annualDiscountPercentage.isZero()) {
+    if (message.annualDiscountPercentage !== BigInt(0)) {
       writer.uint32(104).uint64(message.annualDiscountPercentage);
     }
     if (message.planPolicy !== undefined) {
@@ -159,8 +159,8 @@ export const Plan = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Plan {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Plan {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePlan();
     while (reader.pos < end) {
@@ -170,7 +170,7 @@ export const Plan = {
           message.index = reader.string();
           break;
         case 3:
-          message.block = (reader.uint64() as Long);
+          message.block = reader.uint64();
           break;
         case 4:
           message.price = Coin.decode(reader, reader.uint32());
@@ -179,7 +179,7 @@ export const Plan = {
           message.allowOveruse = reader.bool();
           break;
         case 9:
-          message.overuseRate = (reader.uint64() as Long);
+          message.overuseRate = reader.uint64();
           break;
         case 11:
           message.description = reader.string();
@@ -188,7 +188,7 @@ export const Plan = {
           message.type = reader.string();
           break;
         case 13:
-          message.annualDiscountPercentage = (reader.uint64() as Long);
+          message.annualDiscountPercentage = reader.uint64();
           break;
         case 14:
           message.planPolicy = Policy.decode(reader, reader.uint32());
@@ -200,17 +200,58 @@ export const Plan = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Plan>): Plan {
+  fromPartial(object: Partial<Plan>): Plan {
     const message = createBasePlan();
     message.index = object.index ?? "";
-    message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
     message.price = object.price !== undefined && object.price !== null ? Coin.fromPartial(object.price) : undefined;
     message.allowOveruse = object.allowOveruse ?? false;
-    message.overuseRate = object.overuseRate !== undefined && object.overuseRate !== null ? Long.fromValue(object.overuseRate) : Long.UZERO;
+    message.overuseRate = object.overuseRate !== undefined && object.overuseRate !== null ? BigInt(object.overuseRate.toString()) : BigInt(0);
     message.description = object.description ?? "";
     message.type = object.type ?? "";
-    message.annualDiscountPercentage = object.annualDiscountPercentage !== undefined && object.annualDiscountPercentage !== null ? Long.fromValue(object.annualDiscountPercentage) : Long.UZERO;
+    message.annualDiscountPercentage = object.annualDiscountPercentage !== undefined && object.annualDiscountPercentage !== null ? BigInt(object.annualDiscountPercentage.toString()) : BigInt(0);
     message.planPolicy = object.planPolicy !== undefined && object.planPolicy !== null ? Policy.fromPartial(object.planPolicy) : undefined;
     return message;
+  },
+  fromAmino(object: PlanAmino): Plan {
+    return {
+      index: object.index,
+      block: BigInt(object.block),
+      price: object?.price ? Coin.fromAmino(object.price) : undefined,
+      allowOveruse: object.allow_overuse,
+      overuseRate: BigInt(object.overuse_rate),
+      description: object.description,
+      type: object.type,
+      annualDiscountPercentage: BigInt(object.annual_discount_percentage),
+      planPolicy: object?.plan_policy ? Policy.fromAmino(object.plan_policy) : undefined
+    };
+  },
+  toAmino(message: Plan): PlanAmino {
+    const obj: any = {};
+    obj.index = message.index;
+    obj.block = message.block ? message.block.toString() : undefined;
+    obj.price = message.price ? Coin.toAmino(message.price) : undefined;
+    obj.allow_overuse = message.allowOveruse;
+    obj.overuse_rate = message.overuseRate ? message.overuseRate.toString() : undefined;
+    obj.description = message.description;
+    obj.type = message.type;
+    obj.annual_discount_percentage = message.annualDiscountPercentage ? message.annualDiscountPercentage.toString() : undefined;
+    obj.plan_policy = message.planPolicy ? Policy.toAmino(message.planPolicy) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: PlanAminoMsg): Plan {
+    return Plan.fromAmino(object.value);
+  },
+  fromProtoMsg(message: PlanProtoMsg): Plan {
+    return Plan.decode(message.value);
+  },
+  toProto(message: Plan): Uint8Array {
+    return Plan.encode(message).finish();
+  },
+  toProtoMsg(message: Plan): PlanProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.plans.Plan",
+      value: Plan.encode(message).finish()
+    };
   }
 };

@@ -1,14 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.NFT = exports.Class = void 0;
 var _any = require("../../../google/protobuf/any");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /** Class defines the class of the nft type. */
 
 /** Class defines the class of the nft type. */
@@ -25,12 +22,13 @@ function createBaseClass() {
     description: "",
     uri: "",
     uriHash: "",
-    data: undefined
+    data: _any.Any.fromPartial({})
   };
 }
 var Class = {
+  typeUrl: "/cosmos.nft.v1beta1.Class",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -55,7 +53,7 @@ var Class = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseClass();
     while (reader.pos < end) {
@@ -100,6 +98,49 @@ var Class = {
     message.uriHash = (_object$uriHash = object.uriHash) !== null && _object$uriHash !== void 0 ? _object$uriHash : "";
     message.data = object.data !== undefined && object.data !== null ? _any.Any.fromPartial(object.data) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      id: object.id,
+      name: object.name,
+      symbol: object.symbol,
+      description: object.description,
+      uri: object.uri,
+      uriHash: object.uri_hash,
+      data: object !== null && object !== void 0 && object.data ? _any.Any.fromAmino(object.data) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.id = message.id;
+    obj.name = message.name;
+    obj.symbol = message.symbol;
+    obj.description = message.description;
+    obj.uri = message.uri;
+    obj.uri_hash = message.uriHash;
+    obj.data = message.data ? _any.Any.toAmino(message.data) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Class.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Class",
+      value: Class.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Class.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Class.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.nft.v1beta1.Class",
+      value: Class.encode(message).finish()
+    };
   }
 };
 exports.Class = Class;
@@ -109,12 +150,13 @@ function createBaseNFT() {
     id: "",
     uri: "",
     uriHash: "",
-    data: undefined
+    data: _any.Any.fromPartial({})
   };
 }
 var NFT = {
+  typeUrl: "/cosmos.nft.v1beta1.NFT",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.classId !== "") {
       writer.uint32(10).string(message.classId);
     }
@@ -133,7 +175,7 @@ var NFT = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseNFT();
     while (reader.pos < end) {
@@ -170,6 +212,45 @@ var NFT = {
     message.uriHash = (_object$uriHash2 = object.uriHash) !== null && _object$uriHash2 !== void 0 ? _object$uriHash2 : "";
     message.data = object.data !== undefined && object.data !== null ? _any.Any.fromPartial(object.data) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      classId: object.class_id,
+      id: object.id,
+      uri: object.uri,
+      uriHash: object.uri_hash,
+      data: object !== null && object !== void 0 && object.data ? _any.Any.fromAmino(object.data) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.class_id = message.classId;
+    obj.id = message.id;
+    obj.uri = message.uri;
+    obj.uri_hash = message.uriHash;
+    obj.data = message.data ? _any.Any.toAmino(message.data) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return NFT.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/NFT",
+      value: NFT.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return NFT.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return NFT.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.nft.v1beta1.NFT",
+      value: NFT.encode(message).finish()
+    };
   }
 };
 exports.NFT = NFT;

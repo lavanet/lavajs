@@ -1,5 +1,4 @@
 import { voteOptionFromJSON } from "./types";
-import { Long } from "../../../helpers";
 import { execFromJSON } from "./tx";
 export const AminoConverter = {
   "/cosmos.group.v1.MsgCreateGroup": {
@@ -62,7 +61,7 @@ export const AminoConverter = {
     }) => {
       return {
         admin,
-        groupId: Long.fromString(group_id),
+        groupId: BigInt(group_id),
         memberUpdates: member_updates.map(el0 => ({
           address: el0.address,
           weight: el0.weight,
@@ -92,7 +91,7 @@ export const AminoConverter = {
     }) => {
       return {
         admin,
-        groupId: Long.fromString(group_id),
+        groupId: BigInt(group_id),
         newAdmin: new_admin
       };
     }
@@ -117,7 +116,7 @@ export const AminoConverter = {
     }) => {
       return {
         admin,
-        groupId: Long.fromString(group_id),
+        groupId: BigInt(group_id),
         metadata
       };
     }
@@ -148,7 +147,7 @@ export const AminoConverter = {
     }) => {
       return {
         admin,
-        groupId: Long.fromString(group_id),
+        groupId: BigInt(group_id),
         metadata,
         decisionPolicy: {
           typeUrl: decision_policy.type_url,
@@ -346,7 +345,7 @@ export const AminoConverter = {
       address
     }) => {
       return {
-        proposalId: Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         address
       };
     }
@@ -376,7 +375,7 @@ export const AminoConverter = {
       exec
     }) => {
       return {
-        proposalId: Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         voter,
         option: voteOptionFromJSON(option),
         metadata,
@@ -400,7 +399,7 @@ export const AminoConverter = {
       signer
     }) => {
       return {
-        proposalId: Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         signer
       };
     }
@@ -422,7 +421,7 @@ export const AminoConverter = {
     }) => {
       return {
         address,
-        groupId: Long.fromString(group_id)
+        groupId: BigInt(group_id)
       };
     }
   }

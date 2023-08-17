@@ -1,34 +1,31 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.RelayCacheSet = exports.RelayCacheGet = exports.CacheUsage = void 0;
 var _relay = require("./relay");
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function createBaseCacheUsage() {
   return {
-    CacheHits: _helpers.Long.UZERO,
-    CacheMisses: _helpers.Long.UZERO
+    CacheHits: BigInt(0),
+    CacheMisses: BigInt(0)
   };
 }
 var CacheUsage = {
+  typeUrl: "/lavanet.lava.pairing.CacheUsage",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.CacheHits.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.CacheHits !== BigInt(0)) {
       writer.uint32(8).uint64(message.CacheHits);
     }
-    if (!message.CacheMisses.isZero()) {
+    if (message.CacheMisses !== BigInt(0)) {
       writer.uint32(16).uint64(message.CacheMisses);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseCacheUsage();
     while (reader.pos < end) {
@@ -49,15 +46,42 @@ var CacheUsage = {
   },
   fromPartial: function fromPartial(object) {
     var message = createBaseCacheUsage();
-    message.CacheHits = object.CacheHits !== undefined && object.CacheHits !== null ? _helpers.Long.fromValue(object.CacheHits) : _helpers.Long.UZERO;
-    message.CacheMisses = object.CacheMisses !== undefined && object.CacheMisses !== null ? _helpers.Long.fromValue(object.CacheMisses) : _helpers.Long.UZERO;
+    message.CacheHits = object.CacheHits !== undefined && object.CacheHits !== null ? BigInt(object.CacheHits.toString()) : BigInt(0);
+    message.CacheMisses = object.CacheMisses !== undefined && object.CacheMisses !== null ? BigInt(object.CacheMisses.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      CacheHits: BigInt(object.CacheHits),
+      CacheMisses: BigInt(object.CacheMisses)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.CacheHits = message.CacheHits ? message.CacheHits.toString() : undefined;
+    obj.CacheMisses = message.CacheMisses ? message.CacheMisses.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return CacheUsage.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return CacheUsage.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return CacheUsage.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.pairing.CacheUsage",
+      value: CacheUsage.encode(message).finish()
+    };
   }
 };
 exports.CacheUsage = CacheUsage;
 function createBaseRelayCacheGet() {
   return {
-    request: undefined,
+    request: _relay.RelayRequest.fromPartial({}),
     apiInterface: "",
     blockHash: new Uint8Array(),
     chainID: "",
@@ -65,8 +89,9 @@ function createBaseRelayCacheGet() {
   };
 }
 var RelayCacheGet = {
+  typeUrl: "/lavanet.lava.pairing.RelayCacheGet",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.request !== undefined) {
       _relay.RelayRequest.encode(message.request, writer.uint32(10).fork()).ldelim();
     }
@@ -85,7 +110,7 @@ var RelayCacheGet = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseRelayCacheGet();
     while (reader.pos < end) {
@@ -122,23 +147,57 @@ var RelayCacheGet = {
     message.chainID = (_object$chainID = object.chainID) !== null && _object$chainID !== void 0 ? _object$chainID : "";
     message.finalized = (_object$finalized = object.finalized) !== null && _object$finalized !== void 0 ? _object$finalized : false;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      request: object !== null && object !== void 0 && object.request ? _relay.RelayRequest.fromAmino(object.request) : undefined,
+      apiInterface: object.apiInterface,
+      blockHash: object.blockHash,
+      chainID: object.chainID,
+      finalized: object.finalized
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.request = message.request ? _relay.RelayRequest.toAmino(message.request) : undefined;
+    obj.apiInterface = message.apiInterface;
+    obj.blockHash = message.blockHash;
+    obj.chainID = message.chainID;
+    obj.finalized = message.finalized;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return RelayCacheGet.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return RelayCacheGet.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return RelayCacheGet.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.pairing.RelayCacheGet",
+      value: RelayCacheGet.encode(message).finish()
+    };
   }
 };
 exports.RelayCacheGet = RelayCacheGet;
 function createBaseRelayCacheSet() {
   return {
-    request: undefined,
+    request: _relay.RelayRequest.fromPartial({}),
     apiInterface: "",
     blockHash: new Uint8Array(),
     chainID: "",
     bucketID: "",
-    response: undefined,
+    response: _relay.RelayReply.fromPartial({}),
     finalized: false
   };
 }
 var RelayCacheSet = {
+  typeUrl: "/lavanet.lava.pairing.RelayCacheSet",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.request !== undefined) {
       _relay.RelayRequest.encode(message.request, writer.uint32(10).fork()).ldelim();
     }
@@ -163,7 +222,7 @@ var RelayCacheSet = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseRelayCacheSet();
     while (reader.pos < end) {
@@ -208,6 +267,43 @@ var RelayCacheSet = {
     message.response = object.response !== undefined && object.response !== null ? _relay.RelayReply.fromPartial(object.response) : undefined;
     message.finalized = (_object$finalized2 = object.finalized) !== null && _object$finalized2 !== void 0 ? _object$finalized2 : false;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      request: object !== null && object !== void 0 && object.request ? _relay.RelayRequest.fromAmino(object.request) : undefined,
+      apiInterface: object.apiInterface,
+      blockHash: object.blockHash,
+      chainID: object.chainID,
+      bucketID: object.bucketID,
+      response: object !== null && object !== void 0 && object.response ? _relay.RelayReply.fromAmino(object.response) : undefined,
+      finalized: object.finalized
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.request = message.request ? _relay.RelayRequest.toAmino(message.request) : undefined;
+    obj.apiInterface = message.apiInterface;
+    obj.blockHash = message.blockHash;
+    obj.chainID = message.chainID;
+    obj.bucketID = message.bucketID;
+    obj.response = message.response ? _relay.RelayReply.toAmino(message.response) : undefined;
+    obj.finalized = message.finalized;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return RelayCacheSet.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return RelayCacheSet.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return RelayCacheSet.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.pairing.RelayCacheSet",
+      value: RelayCacheSet.encode(message).finish()
+    };
   }
 };
 exports.RelayCacheSet = RelayCacheSet;

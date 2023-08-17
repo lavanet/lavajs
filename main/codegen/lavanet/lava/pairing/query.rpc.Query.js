@@ -1,7 +1,6 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -9,11 +8,9 @@ exports.createRpcQueryExtension = exports.QueryClientImpl = void 0;
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
+var _binary = require("../../../binary");
 var _stargate = require("@cosmjs/stargate");
 var _query = require("./query");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 /** Query defines the gRPC querier service. */
 var QueryClientImpl = /*#__PURE__*/function () {
   function QueryClientImpl(rpc) {
@@ -41,7 +38,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryParamsRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "Params", data);
       return promise.then(function (data) {
-        return _query.QueryParamsResponse.decode(new _m0.Reader(data));
+        return _query.QueryParamsResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -50,7 +47,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryProvidersRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "Providers", data);
       return promise.then(function (data) {
-        return _query.QueryProvidersResponse.decode(new _m0.Reader(data));
+        return _query.QueryProvidersResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -59,7 +56,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryGetPairingRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "GetPairing", data);
       return promise.then(function (data) {
-        return _query.QueryGetPairingResponse.decode(new _m0.Reader(data));
+        return _query.QueryGetPairingResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -68,7 +65,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryVerifyPairingRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "VerifyPairing", data);
       return promise.then(function (data) {
-        return _query.QueryVerifyPairingResponse.decode(new _m0.Reader(data));
+        return _query.QueryVerifyPairingResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -77,7 +74,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryGetUniquePaymentStorageClientProviderRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "UniquePaymentStorageClientProvider", data);
       return promise.then(function (data) {
-        return _query.QueryGetUniquePaymentStorageClientProviderResponse.decode(new _m0.Reader(data));
+        return _query.QueryGetUniquePaymentStorageClientProviderResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -89,7 +86,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryAllUniquePaymentStorageClientProviderRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "UniquePaymentStorageClientProviderAll", data);
       return promise.then(function (data) {
-        return _query.QueryAllUniquePaymentStorageClientProviderResponse.decode(new _m0.Reader(data));
+        return _query.QueryAllUniquePaymentStorageClientProviderResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -98,7 +95,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryGetProviderPaymentStorageRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "ProviderPaymentStorage", data);
       return promise.then(function (data) {
-        return _query.QueryGetProviderPaymentStorageResponse.decode(new _m0.Reader(data));
+        return _query.QueryGetProviderPaymentStorageResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -110,7 +107,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryAllProviderPaymentStorageRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "ProviderPaymentStorageAll", data);
       return promise.then(function (data) {
-        return _query.QueryAllProviderPaymentStorageResponse.decode(new _m0.Reader(data));
+        return _query.QueryAllProviderPaymentStorageResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -119,7 +116,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryGetEpochPaymentsRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "EpochPayments", data);
       return promise.then(function (data) {
-        return _query.QueryGetEpochPaymentsResponse.decode(new _m0.Reader(data));
+        return _query.QueryGetEpochPaymentsResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -131,7 +128,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryAllEpochPaymentsRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "EpochPaymentsAll", data);
       return promise.then(function (data) {
-        return _query.QueryAllEpochPaymentsResponse.decode(new _m0.Reader(data));
+        return _query.QueryAllEpochPaymentsResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -140,7 +137,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryUserEntryRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "UserEntry", data);
       return promise.then(function (data) {
-        return _query.QueryUserEntryResponse.decode(new _m0.Reader(data));
+        return _query.QueryUserEntryResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -149,7 +146,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryStaticProvidersListRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "StaticProvidersList", data);
       return promise.then(function (data) {
-        return _query.QueryStaticProvidersListResponse.decode(new _m0.Reader(data));
+        return _query.QueryStaticProvidersListResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }, {
@@ -158,7 +155,7 @@ var QueryClientImpl = /*#__PURE__*/function () {
       var data = _query.QueryEffectivePolicyRequest.encode(request).finish();
       var promise = this.rpc.request("lavanet.lava.pairing.Query", "EffectivePolicy", data);
       return promise.then(function (data) {
-        return _query.QueryEffectivePolicyResponse.decode(new _m0.Reader(data));
+        return _query.QueryEffectivePolicyResponse.decode(new _binary.BinaryReader(data));
       });
     }
   }]);

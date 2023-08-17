@@ -1,5 +1,4 @@
-import { Long } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
 /**
  * App includes the protocol and software version for the application.
  * This information is included in ResponseInfo. The App.Protocol can be
@@ -26,13 +25,14 @@ import * as _m0 from "protobufjs/minimal";
 
 function createBaseApp() {
   return {
-    protocol: Long.UZERO,
+    protocol: BigInt(0),
     software: ""
   };
 }
 export const App = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.protocol.isZero()) {
+  typeUrl: "/tendermint.version.App",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.protocol !== BigInt(0)) {
       writer.uint32(8).uint64(message.protocol);
     }
     if (message.software !== "") {
@@ -41,7 +41,7 @@ export const App = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseApp();
     while (reader.pos < end) {
@@ -63,29 +63,57 @@ export const App = {
   fromPartial(object) {
     var _object$software;
     const message = createBaseApp();
-    message.protocol = object.protocol !== undefined && object.protocol !== null ? Long.fromValue(object.protocol) : Long.UZERO;
+    message.protocol = object.protocol !== undefined && object.protocol !== null ? BigInt(object.protocol.toString()) : BigInt(0);
     message.software = (_object$software = object.software) !== null && _object$software !== void 0 ? _object$software : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      protocol: BigInt(object.protocol),
+      software: object.software
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.protocol = message.protocol ? message.protocol.toString() : undefined;
+    obj.software = message.software;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return App.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return App.decode(message.value);
+  },
+  toProto(message) {
+    return App.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.version.App",
+      value: App.encode(message).finish()
+    };
   }
 };
 function createBaseConsensus() {
   return {
-    block: Long.UZERO,
-    app: Long.UZERO
+    block: BigInt(0),
+    app: BigInt(0)
   };
 }
 export const Consensus = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.block.isZero()) {
+  typeUrl: "/tendermint.version.Consensus",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.block !== BigInt(0)) {
       writer.uint32(8).uint64(message.block);
     }
-    if (!message.app.isZero()) {
+    if (message.app !== BigInt(0)) {
       writer.uint32(16).uint64(message.app);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensus();
     while (reader.pos < end) {
@@ -106,8 +134,35 @@ export const Consensus = {
   },
   fromPartial(object) {
     const message = createBaseConsensus();
-    message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
-    message.app = object.app !== undefined && object.app !== null ? Long.fromValue(object.app) : Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
+    message.app = object.app !== undefined && object.app !== null ? BigInt(object.app.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      block: BigInt(object.block),
+      app: BigInt(object.app)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.block = message.block ? message.block.toString() : undefined;
+    obj.app = message.app ? message.app.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Consensus.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Consensus.decode(message.value);
+  },
+  toProto(message) {
+    return Consensus.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.version.Consensus",
+      value: Consensus.encode(message).finish()
+    };
   }
 };

@@ -1,10 +1,10 @@
 import { Params, ParamsSDKType, Downtime, DowntimeSDKType, DowntimeGarbageCollection, DowntimeGarbageCollectionSDKType } from "./downtime";
 import { Timestamp } from "../../../../google/protobuf/timestamp";
-import * as _m0 from "protobufjs/minimal";
-import { toTimestamp, fromTimestamp, DeepPartial } from "../../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
+import { toTimestamp, fromTimestamp } from "../../../../helpers";
 /** GenesisState is the genesis state of the downtime module. */
 export interface GenesisState {
-  params?: Params;
+  params: Params;
   downtimes: Downtime[];
   downtimesGarbageCollection: DowntimeGarbageCollection[];
   /**
@@ -16,21 +16,22 @@ export interface GenesisState {
 }
 /** GenesisState is the genesis state of the downtime module. */
 export interface GenesisStateSDKType {
-  params?: ParamsSDKType;
+  params: ParamsSDKType;
   downtimes: DowntimeSDKType[];
   downtimes_garbage_collection: DowntimeGarbageCollectionSDKType[];
   last_block_time?: Date;
 }
 function createBaseGenesisState(): GenesisState {
   return {
-    params: undefined,
+    params: Params.fromPartial({}),
     downtimes: [],
     downtimesGarbageCollection: [],
     lastBlockTime: undefined
   };
 }
 export const GenesisState = {
-  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.downtime.v1.GenesisState",
+  encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -45,8 +46,8 @@ export const GenesisState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -71,12 +72,51 @@ export const GenesisState = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenesisState>): GenesisState {
+  fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.downtimes = object.downtimes?.map(e => Downtime.fromPartial(e)) || [];
     message.downtimesGarbageCollection = object.downtimesGarbageCollection?.map(e => DowntimeGarbageCollection.fromPartial(e)) || [];
     message.lastBlockTime = object.lastBlockTime ?? undefined;
     return message;
+  },
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      params: object?.params ? Params.fromAmino(object.params) : undefined,
+      downtimes: Array.isArray(object?.downtimes) ? object.downtimes.map((e: any) => Downtime.fromAmino(e)) : [],
+      downtimesGarbageCollection: Array.isArray(object?.downtimes_garbage_collection) ? object.downtimes_garbage_collection.map((e: any) => DowntimeGarbageCollection.fromAmino(e)) : [],
+      lastBlockTime: object?.last_block_time
+    };
+  },
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    if (message.downtimes) {
+      obj.downtimes = message.downtimes.map(e => e ? Downtime.toAmino(e) : undefined);
+    } else {
+      obj.downtimes = [];
+    }
+    if (message.downtimesGarbageCollection) {
+      obj.downtimes_garbage_collection = message.downtimesGarbageCollection.map(e => e ? DowntimeGarbageCollection.toAmino(e) : undefined);
+    } else {
+      obj.downtimes_garbage_collection = [];
+    }
+    obj.last_block_time = message.lastBlockTime;
+    return obj;
+  },
+  fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {
+    return GenesisState.fromAmino(object.value);
+  },
+  fromProtoMsg(message: GenesisStateProtoMsg): GenesisState {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message: GenesisState): Uint8Array {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message: GenesisState): GenesisStateProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.downtime.v1.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };

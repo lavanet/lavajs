@@ -2,8 +2,8 @@ import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
-import { Long, DeepPartial, toTimestamp, fromTimestamp } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet, toTimestamp, fromTimestamp } from "../../../helpers";
 /** VoteOption enumerates the valid vote options for a given governance proposal. */
 export enum VoteOption {
   /** VOTE_OPTION_UNSPECIFIED - VOTE_OPTION_UNSPECIFIED defines a no-op vote option. */
@@ -151,7 +151,7 @@ export interface WeightedVoteOptionSDKType {
  * proposal.
  */
 export interface Deposit {
-  proposalId: Long;
+  proposalId: bigint;
   depositor: string;
   amount: Coin[];
 }
@@ -160,13 +160,13 @@ export interface Deposit {
  * proposal.
  */
 export interface DepositSDKType {
-  proposal_id: Long;
+  proposal_id: bigint;
   depositor: string;
   amount: CoinSDKType[];
 }
 /** Proposal defines the core field members of a governance proposal. */
 export interface Proposal {
-  id: Long;
+  id: bigint;
   messages: Any[];
   status: ProposalStatus;
   /**
@@ -174,26 +174,26 @@ export interface Proposal {
    * querying a proposal via gRPC, this field is not populated until the
    * proposal's voting period has ended.
    */
-  finalTallyResult?: TallyResult;
-  submitTime?: Date;
-  depositEndTime?: Date;
+  finalTallyResult: TallyResult;
+  submitTime: Date;
+  depositEndTime: Date;
   totalDeposit: Coin[];
-  votingStartTime?: Date;
-  votingEndTime?: Date;
+  votingStartTime: Date;
+  votingEndTime: Date;
   /** metadata is any arbitrary metadata attached to the proposal. */
   metadata: string;
 }
 /** Proposal defines the core field members of a governance proposal. */
 export interface ProposalSDKType {
-  id: Long;
+  id: bigint;
   messages: AnySDKType[];
   status: ProposalStatus;
-  final_tally_result?: TallyResultSDKType;
-  submit_time?: Date;
-  deposit_end_time?: Date;
+  final_tally_result: TallyResultSDKType;
+  submit_time: Date;
+  deposit_end_time: Date;
   total_deposit: CoinSDKType[];
-  voting_start_time?: Date;
-  voting_end_time?: Date;
+  voting_start_time: Date;
+  voting_end_time: Date;
   metadata: string;
 }
 /** TallyResult defines a standard tally for a governance proposal. */
@@ -215,7 +215,7 @@ export interface TallyResultSDKType {
  * A Vote consists of a proposal ID, the voter, and the vote option.
  */
 export interface Vote {
-  proposalId: Long;
+  proposalId: bigint;
   voter: string;
   options: WeightedVoteOption[];
   /** metadata is any  arbitrary metadata to attached to the vote. */
@@ -226,7 +226,7 @@ export interface Vote {
  * A Vote consists of a proposal ID, the voter, and the vote option.
  */
 export interface VoteSDKType {
-  proposal_id: Long;
+  proposal_id: bigint;
   voter: string;
   options: WeightedVoteOptionSDKType[];
   metadata: string;
@@ -239,21 +239,21 @@ export interface DepositParams {
    * Maximum period for Atom holders to deposit on a proposal. Initial value: 2
    *  months.
    */
-  maxDepositPeriod?: Duration;
+  maxDepositPeriod: Duration;
 }
 /** DepositParams defines the params for deposits on governance proposals. */
 export interface DepositParamsSDKType {
   min_deposit: CoinSDKType[];
-  max_deposit_period?: DurationSDKType;
+  max_deposit_period: DurationSDKType;
 }
 /** VotingParams defines the params for voting on governance proposals. */
 export interface VotingParams {
   /** Length of the voting period. */
-  votingPeriod?: Duration;
+  votingPeriod: Duration;
 }
 /** VotingParams defines the params for voting on governance proposals. */
 export interface VotingParamsSDKType {
-  voting_period?: DurationSDKType;
+  voting_period: DurationSDKType;
 }
 /** TallyParams defines the params for tallying votes on governance proposals. */
 export interface TallyParams {
@@ -283,7 +283,8 @@ function createBaseWeightedVoteOption(): WeightedVoteOption {
   };
 }
 export const WeightedVoteOption = {
-  encode(message: WeightedVoteOption, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.gov.v1.WeightedVoteOption",
+  encode(message: WeightedVoteOption, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.option !== 0) {
       writer.uint32(8).int32(message.option);
     }
@@ -292,8 +293,8 @@ export const WeightedVoteOption = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): WeightedVoteOption {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): WeightedVoteOption {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWeightedVoteOption();
     while (reader.pos < end) {
@@ -312,23 +313,57 @@ export const WeightedVoteOption = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<WeightedVoteOption>): WeightedVoteOption {
+  fromPartial(object: Partial<WeightedVoteOption>): WeightedVoteOption {
     const message = createBaseWeightedVoteOption();
     message.option = object.option ?? 0;
     message.weight = object.weight ?? "";
     return message;
+  },
+  fromAmino(object: WeightedVoteOptionAmino): WeightedVoteOption {
+    return {
+      option: isSet(object.option) ? voteOptionFromJSON(object.option) : -1,
+      weight: object.weight
+    };
+  },
+  toAmino(message: WeightedVoteOption): WeightedVoteOptionAmino {
+    const obj: any = {};
+    obj.option = message.option;
+    obj.weight = message.weight;
+    return obj;
+  },
+  fromAminoMsg(object: WeightedVoteOptionAminoMsg): WeightedVoteOption {
+    return WeightedVoteOption.fromAmino(object.value);
+  },
+  toAminoMsg(message: WeightedVoteOption): WeightedVoteOptionAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/WeightedVoteOption",
+      value: WeightedVoteOption.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: WeightedVoteOptionProtoMsg): WeightedVoteOption {
+    return WeightedVoteOption.decode(message.value);
+  },
+  toProto(message: WeightedVoteOption): Uint8Array {
+    return WeightedVoteOption.encode(message).finish();
+  },
+  toProtoMsg(message: WeightedVoteOption): WeightedVoteOptionProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.WeightedVoteOption",
+      value: WeightedVoteOption.encode(message).finish()
+    };
   }
 };
 function createBaseDeposit(): Deposit {
   return {
-    proposalId: Long.UZERO,
+    proposalId: BigInt(0),
     depositor: "",
     amount: []
   };
 }
 export const Deposit = {
-  encode(message: Deposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.proposalId.isZero()) {
+  typeUrl: "/cosmos.gov.v1.Deposit",
+  encode(message: Deposit, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.depositor !== "") {
@@ -339,15 +374,15 @@ export const Deposit = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Deposit {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Deposit {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeposit();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proposalId = (reader.uint64() as Long);
+          message.proposalId = reader.uint64();
           break;
         case 2:
           message.depositor = reader.string();
@@ -362,31 +397,71 @@ export const Deposit = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Deposit>): Deposit {
+  fromPartial(object: Partial<Deposit>): Deposit {
     const message = createBaseDeposit();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.depositor = object.depositor ?? "";
     message.amount = object.amount?.map(e => Coin.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: DepositAmino): Deposit {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      depositor: object.depositor,
+      amount: Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: Deposit): DepositAmino {
+    const obj: any = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.depositor = message.depositor;
+    if (message.amount) {
+      obj.amount = message.amount.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.amount = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: DepositAminoMsg): Deposit {
+    return Deposit.fromAmino(object.value);
+  },
+  toAminoMsg(message: Deposit): DepositAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/Deposit",
+      value: Deposit.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: DepositProtoMsg): Deposit {
+    return Deposit.decode(message.value);
+  },
+  toProto(message: Deposit): Uint8Array {
+    return Deposit.encode(message).finish();
+  },
+  toProtoMsg(message: Deposit): DepositProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.Deposit",
+      value: Deposit.encode(message).finish()
+    };
   }
 };
 function createBaseProposal(): Proposal {
   return {
-    id: Long.UZERO,
+    id: BigInt(0),
     messages: [],
     status: 0,
-    finalTallyResult: undefined,
-    submitTime: undefined,
-    depositEndTime: undefined,
+    finalTallyResult: TallyResult.fromPartial({}),
+    submitTime: new Date(),
+    depositEndTime: new Date(),
     totalDeposit: [],
-    votingStartTime: undefined,
-    votingEndTime: undefined,
+    votingStartTime: new Date(),
+    votingEndTime: new Date(),
     metadata: ""
   };
 }
 export const Proposal = {
-  encode(message: Proposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.id.isZero()) {
+  typeUrl: "/cosmos.gov.v1.Proposal",
+  encode(message: Proposal, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     for (const v of message.messages) {
@@ -418,15 +493,15 @@ export const Proposal = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Proposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Proposal {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id = (reader.uint64() as Long);
+          message.id = reader.uint64();
           break;
         case 2:
           message.messages.push(Any.decode(reader, reader.uint32()));
@@ -462,9 +537,9 @@ export const Proposal = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Proposal>): Proposal {
+  fromPartial(object: Partial<Proposal>): Proposal {
     const message = createBaseProposal();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     message.messages = object.messages?.map(e => Any.fromPartial(e)) || [];
     message.status = object.status ?? 0;
     message.finalTallyResult = object.finalTallyResult !== undefined && object.finalTallyResult !== null ? TallyResult.fromPartial(object.finalTallyResult) : undefined;
@@ -475,6 +550,63 @@ export const Proposal = {
     message.votingEndTime = object.votingEndTime ?? undefined;
     message.metadata = object.metadata ?? "";
     return message;
+  },
+  fromAmino(object: ProposalAmino): Proposal {
+    return {
+      id: BigInt(object.id),
+      messages: Array.isArray(object?.messages) ? object.messages.map((e: any) => Any.fromAmino(e)) : [],
+      status: isSet(object.status) ? proposalStatusFromJSON(object.status) : -1,
+      finalTallyResult: object?.final_tally_result ? TallyResult.fromAmino(object.final_tally_result) : undefined,
+      submitTime: object.submit_time,
+      depositEndTime: object.deposit_end_time,
+      totalDeposit: Array.isArray(object?.total_deposit) ? object.total_deposit.map((e: any) => Coin.fromAmino(e)) : [],
+      votingStartTime: object.voting_start_time,
+      votingEndTime: object.voting_end_time,
+      metadata: object.metadata
+    };
+  },
+  toAmino(message: Proposal): ProposalAmino {
+    const obj: any = {};
+    obj.id = message.id ? message.id.toString() : undefined;
+    if (message.messages) {
+      obj.messages = message.messages.map(e => e ? Any.toAmino(e) : undefined);
+    } else {
+      obj.messages = [];
+    }
+    obj.status = message.status;
+    obj.final_tally_result = message.finalTallyResult ? TallyResult.toAmino(message.finalTallyResult) : undefined;
+    obj.submit_time = message.submitTime;
+    obj.deposit_end_time = message.depositEndTime;
+    if (message.totalDeposit) {
+      obj.total_deposit = message.totalDeposit.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.total_deposit = [];
+    }
+    obj.voting_start_time = message.votingStartTime;
+    obj.voting_end_time = message.votingEndTime;
+    obj.metadata = message.metadata;
+    return obj;
+  },
+  fromAminoMsg(object: ProposalAminoMsg): Proposal {
+    return Proposal.fromAmino(object.value);
+  },
+  toAminoMsg(message: Proposal): ProposalAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/Proposal",
+      value: Proposal.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: ProposalProtoMsg): Proposal {
+    return Proposal.decode(message.value);
+  },
+  toProto(message: Proposal): Uint8Array {
+    return Proposal.encode(message).finish();
+  },
+  toProtoMsg(message: Proposal): ProposalProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.Proposal",
+      value: Proposal.encode(message).finish()
+    };
   }
 };
 function createBaseTallyResult(): TallyResult {
@@ -486,7 +618,8 @@ function createBaseTallyResult(): TallyResult {
   };
 }
 export const TallyResult = {
-  encode(message: TallyResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.gov.v1.TallyResult",
+  encode(message: TallyResult, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.yesCount !== "") {
       writer.uint32(10).string(message.yesCount);
     }
@@ -501,8 +634,8 @@ export const TallyResult = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): TallyResult {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): TallyResult {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTallyResult();
     while (reader.pos < end) {
@@ -527,26 +660,64 @@ export const TallyResult = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<TallyResult>): TallyResult {
+  fromPartial(object: Partial<TallyResult>): TallyResult {
     const message = createBaseTallyResult();
     message.yesCount = object.yesCount ?? "";
     message.abstainCount = object.abstainCount ?? "";
     message.noCount = object.noCount ?? "";
     message.noWithVetoCount = object.noWithVetoCount ?? "";
     return message;
+  },
+  fromAmino(object: TallyResultAmino): TallyResult {
+    return {
+      yesCount: object.yes_count,
+      abstainCount: object.abstain_count,
+      noCount: object.no_count,
+      noWithVetoCount: object.no_with_veto_count
+    };
+  },
+  toAmino(message: TallyResult): TallyResultAmino {
+    const obj: any = {};
+    obj.yes_count = message.yesCount;
+    obj.abstain_count = message.abstainCount;
+    obj.no_count = message.noCount;
+    obj.no_with_veto_count = message.noWithVetoCount;
+    return obj;
+  },
+  fromAminoMsg(object: TallyResultAminoMsg): TallyResult {
+    return TallyResult.fromAmino(object.value);
+  },
+  toAminoMsg(message: TallyResult): TallyResultAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/TallyResult",
+      value: TallyResult.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: TallyResultProtoMsg): TallyResult {
+    return TallyResult.decode(message.value);
+  },
+  toProto(message: TallyResult): Uint8Array {
+    return TallyResult.encode(message).finish();
+  },
+  toProtoMsg(message: TallyResult): TallyResultProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.TallyResult",
+      value: TallyResult.encode(message).finish()
+    };
   }
 };
 function createBaseVote(): Vote {
   return {
-    proposalId: Long.UZERO,
+    proposalId: BigInt(0),
     voter: "",
     options: [],
     metadata: ""
   };
 }
 export const Vote = {
-  encode(message: Vote, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.proposalId.isZero()) {
+  typeUrl: "/cosmos.gov.v1.Vote",
+  encode(message: Vote, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.voter !== "") {
@@ -560,15 +731,15 @@ export const Vote = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Vote {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Vote {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proposalId = (reader.uint64() as Long);
+          message.proposalId = reader.uint64();
           break;
         case 2:
           message.voter = reader.string();
@@ -586,23 +757,65 @@ export const Vote = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Vote>): Vote {
+  fromPartial(object: Partial<Vote>): Vote {
     const message = createBaseVote();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.voter = object.voter ?? "";
     message.options = object.options?.map(e => WeightedVoteOption.fromPartial(e)) || [];
     message.metadata = object.metadata ?? "";
     return message;
+  },
+  fromAmino(object: VoteAmino): Vote {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      voter: object.voter,
+      options: Array.isArray(object?.options) ? object.options.map((e: any) => WeightedVoteOption.fromAmino(e)) : [],
+      metadata: object.metadata
+    };
+  },
+  toAmino(message: Vote): VoteAmino {
+    const obj: any = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.voter = message.voter;
+    if (message.options) {
+      obj.options = message.options.map(e => e ? WeightedVoteOption.toAmino(e) : undefined);
+    } else {
+      obj.options = [];
+    }
+    obj.metadata = message.metadata;
+    return obj;
+  },
+  fromAminoMsg(object: VoteAminoMsg): Vote {
+    return Vote.fromAmino(object.value);
+  },
+  toAminoMsg(message: Vote): VoteAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/Vote",
+      value: Vote.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: VoteProtoMsg): Vote {
+    return Vote.decode(message.value);
+  },
+  toProto(message: Vote): Uint8Array {
+    return Vote.encode(message).finish();
+  },
+  toProtoMsg(message: Vote): VoteProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.Vote",
+      value: Vote.encode(message).finish()
+    };
   }
 };
 function createBaseDepositParams(): DepositParams {
   return {
     minDeposit: [],
-    maxDepositPeriod: undefined
+    maxDepositPeriod: Duration.fromPartial({})
   };
 }
 export const DepositParams = {
-  encode(message: DepositParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.gov.v1.DepositParams",
+  encode(message: DepositParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.minDeposit) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -611,8 +824,8 @@ export const DepositParams = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): DepositParams {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): DepositParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDepositParams();
     while (reader.pos < end) {
@@ -631,27 +844,65 @@ export const DepositParams = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<DepositParams>): DepositParams {
+  fromPartial(object: Partial<DepositParams>): DepositParams {
     const message = createBaseDepositParams();
     message.minDeposit = object.minDeposit?.map(e => Coin.fromPartial(e)) || [];
     message.maxDepositPeriod = object.maxDepositPeriod !== undefined && object.maxDepositPeriod !== null ? Duration.fromPartial(object.maxDepositPeriod) : undefined;
     return message;
+  },
+  fromAmino(object: DepositParamsAmino): DepositParams {
+    return {
+      minDeposit: Array.isArray(object?.min_deposit) ? object.min_deposit.map((e: any) => Coin.fromAmino(e)) : [],
+      maxDepositPeriod: object?.max_deposit_period ? Duration.fromAmino(object.max_deposit_period) : undefined
+    };
+  },
+  toAmino(message: DepositParams): DepositParamsAmino {
+    const obj: any = {};
+    if (message.minDeposit) {
+      obj.min_deposit = message.minDeposit.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.min_deposit = [];
+    }
+    obj.max_deposit_period = message.maxDepositPeriod ? Duration.toAmino(message.maxDepositPeriod) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: DepositParamsAminoMsg): DepositParams {
+    return DepositParams.fromAmino(object.value);
+  },
+  toAminoMsg(message: DepositParams): DepositParamsAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/DepositParams",
+      value: DepositParams.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: DepositParamsProtoMsg): DepositParams {
+    return DepositParams.decode(message.value);
+  },
+  toProto(message: DepositParams): Uint8Array {
+    return DepositParams.encode(message).finish();
+  },
+  toProtoMsg(message: DepositParams): DepositParamsProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.DepositParams",
+      value: DepositParams.encode(message).finish()
+    };
   }
 };
 function createBaseVotingParams(): VotingParams {
   return {
-    votingPeriod: undefined
+    votingPeriod: Duration.fromPartial({})
   };
 }
 export const VotingParams = {
-  encode(message: VotingParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.gov.v1.VotingParams",
+  encode(message: VotingParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.votingPeriod !== undefined) {
       Duration.encode(message.votingPeriod, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): VotingParams {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): VotingParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVotingParams();
     while (reader.pos < end) {
@@ -667,10 +918,41 @@ export const VotingParams = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<VotingParams>): VotingParams {
+  fromPartial(object: Partial<VotingParams>): VotingParams {
     const message = createBaseVotingParams();
     message.votingPeriod = object.votingPeriod !== undefined && object.votingPeriod !== null ? Duration.fromPartial(object.votingPeriod) : undefined;
     return message;
+  },
+  fromAmino(object: VotingParamsAmino): VotingParams {
+    return {
+      votingPeriod: object?.voting_period ? Duration.fromAmino(object.voting_period) : undefined
+    };
+  },
+  toAmino(message: VotingParams): VotingParamsAmino {
+    const obj: any = {};
+    obj.voting_period = message.votingPeriod ? Duration.toAmino(message.votingPeriod) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: VotingParamsAminoMsg): VotingParams {
+    return VotingParams.fromAmino(object.value);
+  },
+  toAminoMsg(message: VotingParams): VotingParamsAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/VotingParams",
+      value: VotingParams.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: VotingParamsProtoMsg): VotingParams {
+    return VotingParams.decode(message.value);
+  },
+  toProto(message: VotingParams): Uint8Array {
+    return VotingParams.encode(message).finish();
+  },
+  toProtoMsg(message: VotingParams): VotingParamsProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.VotingParams",
+      value: VotingParams.encode(message).finish()
+    };
   }
 };
 function createBaseTallyParams(): TallyParams {
@@ -681,7 +963,8 @@ function createBaseTallyParams(): TallyParams {
   };
 }
 export const TallyParams = {
-  encode(message: TallyParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.gov.v1.TallyParams",
+  encode(message: TallyParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.quorum !== "") {
       writer.uint32(10).string(message.quorum);
     }
@@ -693,8 +976,8 @@ export const TallyParams = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): TallyParams {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): TallyParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTallyParams();
     while (reader.pos < end) {
@@ -716,11 +999,46 @@ export const TallyParams = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<TallyParams>): TallyParams {
+  fromPartial(object: Partial<TallyParams>): TallyParams {
     const message = createBaseTallyParams();
     message.quorum = object.quorum ?? "";
     message.threshold = object.threshold ?? "";
     message.vetoThreshold = object.vetoThreshold ?? "";
     return message;
+  },
+  fromAmino(object: TallyParamsAmino): TallyParams {
+    return {
+      quorum: object.quorum,
+      threshold: object.threshold,
+      vetoThreshold: object.veto_threshold
+    };
+  },
+  toAmino(message: TallyParams): TallyParamsAmino {
+    const obj: any = {};
+    obj.quorum = message.quorum;
+    obj.threshold = message.threshold;
+    obj.veto_threshold = message.vetoThreshold;
+    return obj;
+  },
+  fromAminoMsg(object: TallyParamsAminoMsg): TallyParams {
+    return TallyParams.fromAmino(object.value);
+  },
+  toAminoMsg(message: TallyParams): TallyParamsAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/TallyParams",
+      value: TallyParams.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: TallyParamsProtoMsg): TallyParams {
+    return TallyParams.decode(message.value);
+  },
+  toProto(message: TallyParams): Uint8Array {
+    return TallyParams.encode(message).finish();
+  },
+  toProtoMsg(message: TallyParams): TallyParamsProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.TallyParams",
+      value: TallyParams.encode(message).finish()
+    };
   }
 };

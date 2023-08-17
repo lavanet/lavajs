@@ -1,15 +1,14 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface Endpoint {
   iPPORT: string;
-  geolocation: Long;
+  geolocation: bigint;
   addons: string[];
   apiInterfaces: string[];
   extensions: string[];
 }
 export interface EndpointSDKType {
   iPPORT: string;
-  geolocation: Long;
+  geolocation: bigint;
   addons: string[];
   api_interfaces: string[];
   extensions: string[];
@@ -17,18 +16,19 @@ export interface EndpointSDKType {
 function createBaseEndpoint(): Endpoint {
   return {
     iPPORT: "",
-    geolocation: Long.UZERO,
+    geolocation: BigInt(0),
     addons: [],
     apiInterfaces: [],
     extensions: []
   };
 }
 export const Endpoint = {
-  encode(message: Endpoint, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.epochstorage.Endpoint",
+  encode(message: Endpoint, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.iPPORT !== "") {
       writer.uint32(10).string(message.iPPORT);
     }
-    if (!message.geolocation.isZero()) {
+    if (message.geolocation !== BigInt(0)) {
       writer.uint32(24).uint64(message.geolocation);
     }
     for (const v of message.addons) {
@@ -42,8 +42,8 @@ export const Endpoint = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Endpoint {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Endpoint {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEndpoint();
     while (reader.pos < end) {
@@ -53,7 +53,7 @@ export const Endpoint = {
           message.iPPORT = reader.string();
           break;
         case 3:
-          message.geolocation = (reader.uint64() as Long);
+          message.geolocation = reader.uint64();
           break;
         case 4:
           message.addons.push(reader.string());
@@ -71,13 +71,58 @@ export const Endpoint = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Endpoint>): Endpoint {
+  fromPartial(object: Partial<Endpoint>): Endpoint {
     const message = createBaseEndpoint();
     message.iPPORT = object.iPPORT ?? "";
-    message.geolocation = object.geolocation !== undefined && object.geolocation !== null ? Long.fromValue(object.geolocation) : Long.UZERO;
+    message.geolocation = object.geolocation !== undefined && object.geolocation !== null ? BigInt(object.geolocation.toString()) : BigInt(0);
     message.addons = object.addons?.map(e => e) || [];
     message.apiInterfaces = object.apiInterfaces?.map(e => e) || [];
     message.extensions = object.extensions?.map(e => e) || [];
     return message;
+  },
+  fromAmino(object: EndpointAmino): Endpoint {
+    return {
+      iPPORT: object.iPPORT,
+      geolocation: BigInt(object.geolocation),
+      addons: Array.isArray(object?.addons) ? object.addons.map((e: any) => e) : [],
+      apiInterfaces: Array.isArray(object?.api_interfaces) ? object.api_interfaces.map((e: any) => e) : [],
+      extensions: Array.isArray(object?.extensions) ? object.extensions.map((e: any) => e) : []
+    };
+  },
+  toAmino(message: Endpoint): EndpointAmino {
+    const obj: any = {};
+    obj.iPPORT = message.iPPORT;
+    obj.geolocation = message.geolocation ? message.geolocation.toString() : undefined;
+    if (message.addons) {
+      obj.addons = message.addons.map(e => e);
+    } else {
+      obj.addons = [];
+    }
+    if (message.apiInterfaces) {
+      obj.api_interfaces = message.apiInterfaces.map(e => e);
+    } else {
+      obj.api_interfaces = [];
+    }
+    if (message.extensions) {
+      obj.extensions = message.extensions.map(e => e);
+    } else {
+      obj.extensions = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: EndpointAminoMsg): Endpoint {
+    return Endpoint.fromAmino(object.value);
+  },
+  fromProtoMsg(message: EndpointProtoMsg): Endpoint {
+    return Endpoint.decode(message.value);
+  },
+  toProto(message: Endpoint): Uint8Array {
+    return Endpoint.encode(message).finish();
+  },
+  toProtoMsg(message: Endpoint): EndpointProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.epochstorage.Endpoint",
+      value: Endpoint.encode(message).finish()
+    };
   }
 };

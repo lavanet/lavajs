@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryAccountsRequest, QueryAccountsResponse, QueryAccountRequest, QueryAccountResponse, QueryParamsRequest, QueryParamsResponse, QueryModuleAccountsRequest, QueryModuleAccountsResponse, Bech32PrefixRequest, Bech32PrefixResponse, AddressBytesToStringRequest, AddressBytesToStringResponse, AddressStringToBytesRequest, AddressStringToBytesResponse } from "./query";
 /** Query defines the gRPC querier service. */
@@ -21,37 +21,37 @@ export class QueryClientImpl {
   }) {
     const data = QueryAccountsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "Accounts", data);
-    return promise.then(data => QueryAccountsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAccountsResponse.decode(new BinaryReader(data)));
   }
   account(request) {
     const data = QueryAccountRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "Account", data);
-    return promise.then(data => QueryAccountResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAccountResponse.decode(new BinaryReader(data)));
   }
   params(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   moduleAccounts(request = {}) {
     const data = QueryModuleAccountsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "ModuleAccounts", data);
-    return promise.then(data => QueryModuleAccountsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryModuleAccountsResponse.decode(new BinaryReader(data)));
   }
   bech32Prefix(request = {}) {
     const data = Bech32PrefixRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "Bech32Prefix", data);
-    return promise.then(data => Bech32PrefixResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => Bech32PrefixResponse.decode(new BinaryReader(data)));
   }
   addressBytesToString(request) {
     const data = AddressBytesToStringRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "AddressBytesToString", data);
-    return promise.then(data => AddressBytesToStringResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => AddressBytesToStringResponse.decode(new BinaryReader(data)));
   }
   addressStringToBytes(request) {
     const data = AddressStringToBytesRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "AddressStringToBytes", data);
-    return promise.then(data => AddressStringToBytesResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => AddressStringToBytesResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

@@ -1,14 +1,10 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Duration = void 0;
-var _helpers = require("../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../binary");
 /**
  * A Duration represents a signed, fixed-length span of time represented
  * as a count of seconds and fractions of seconds at nanosecond
@@ -133,14 +129,15 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function createBaseDuration() {
   return {
-    seconds: _helpers.Long.ZERO,
+    seconds: BigInt(0),
     nanos: 0
   };
 }
 var Duration = {
+  typeUrl: "/google.protobuf.Duration",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.seconds.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.seconds !== BigInt(0)) {
       writer.uint32(8).int64(message.seconds);
     }
     if (message.nanos !== 0) {
@@ -149,7 +146,7 @@ var Duration = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseDuration();
     while (reader.pos < end) {
@@ -171,9 +168,34 @@ var Duration = {
   fromPartial: function fromPartial(object) {
     var _object$nanos;
     var message = createBaseDuration();
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? _helpers.Long.fromValue(object.seconds) : _helpers.Long.ZERO;
+    message.seconds = object.seconds !== undefined && object.seconds !== null ? BigInt(object.seconds.toString()) : BigInt(0);
     message.nanos = (_object$nanos = object.nanos) !== null && _object$nanos !== void 0 ? _object$nanos : 0;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    var value = BigInt(object);
+    return {
+      seconds: value / BigInt("1000000000"),
+      nanos: Number(value % BigInt("1000000000"))
+    };
+  },
+  toAmino: function toAmino(message) {
+    return (message.seconds * BigInt("1000000000") + BigInt(message.nanos)).toString();
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Duration.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Duration.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Duration.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Duration",
+      value: Duration.encode(message).finish()
+    };
   }
 };
 exports.Duration = Duration;

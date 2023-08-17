@@ -1,5 +1,6 @@
 import { Coin } from "../../base/v1beta1/coin";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 /**
  * AuthorizationType defines the type of staking module authorization type
  * 
@@ -67,14 +68,15 @@ export function authorizationTypeToJSON(object) {
 
 function createBaseStakeAuthorization() {
   return {
-    maxTokens: undefined,
+    maxTokens: Coin.fromPartial({}),
     allowList: undefined,
     denyList: undefined,
     authorizationType: 0
   };
 }
 export const StakeAuthorization = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.staking.v1beta1.StakeAuthorization",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.maxTokens !== undefined) {
       Coin.encode(message.maxTokens, writer.uint32(10).fork()).ldelim();
     }
@@ -90,7 +92,7 @@ export const StakeAuthorization = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStakeAuthorization();
     while (reader.pos < end) {
@@ -123,6 +125,43 @@ export const StakeAuthorization = {
     message.denyList = object.denyList !== undefined && object.denyList !== null ? StakeAuthorization_Validators.fromPartial(object.denyList) : undefined;
     message.authorizationType = (_object$authorization = object.authorizationType) !== null && _object$authorization !== void 0 ? _object$authorization : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      maxTokens: object !== null && object !== void 0 && object.max_tokens ? Coin.fromAmino(object.max_tokens) : undefined,
+      allowList: object !== null && object !== void 0 && object.allow_list ? StakeAuthorization_Validators.fromAmino(object.allow_list) : undefined,
+      denyList: object !== null && object !== void 0 && object.deny_list ? StakeAuthorization_Validators.fromAmino(object.deny_list) : undefined,
+      authorizationType: isSet(object.authorization_type) ? authorizationTypeFromJSON(object.authorization_type) : -1
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.max_tokens = message.maxTokens ? Coin.toAmino(message.maxTokens) : undefined;
+    obj.allow_list = message.allowList ? StakeAuthorization_Validators.toAmino(message.allowList) : undefined;
+    obj.deny_list = message.denyList ? StakeAuthorization_Validators.toAmino(message.denyList) : undefined;
+    obj.authorization_type = message.authorizationType;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return StakeAuthorization.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/StakeAuthorization",
+      value: StakeAuthorization.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return StakeAuthorization.decode(message.value);
+  },
+  toProto(message) {
+    return StakeAuthorization.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.staking.v1beta1.StakeAuthorization",
+      value: StakeAuthorization.encode(message).finish()
+    };
   }
 };
 function createBaseStakeAuthorization_Validators() {
@@ -131,14 +170,15 @@ function createBaseStakeAuthorization_Validators() {
   };
 }
 export const StakeAuthorization_Validators = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.staking.v1beta1.Validators",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.address) {
       writer.uint32(10).string(v);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStakeAuthorization_Validators();
     while (reader.pos < end) {
@@ -159,5 +199,40 @@ export const StakeAuthorization_Validators = {
     const message = createBaseStakeAuthorization_Validators();
     message.address = ((_object$address = object.address) === null || _object$address === void 0 ? void 0 : _object$address.map(e => e)) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      address: Array.isArray(object === null || object === void 0 ? void 0 : object.address) ? object.address.map(e => e) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.address) {
+      obj.address = message.address.map(e => e);
+    } else {
+      obj.address = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return StakeAuthorization_Validators.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Validators",
+      value: StakeAuthorization_Validators.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return StakeAuthorization_Validators.decode(message.value);
+  },
+  toProto(message) {
+    return StakeAuthorization_Validators.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.staking.v1beta1.Validators",
+      value: StakeAuthorization_Validators.encode(message).finish()
+    };
   }
 };

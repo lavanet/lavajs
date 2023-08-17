@@ -1,6 +1,6 @@
 import { CollectionData, CollectionDataSDKType } from "../spec/api_collection";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 /** the enum below determines the pairing algorithm's behaviour with the selected providers feature */
 export enum SELECTED_PROVIDERS_MODE {
   /** ALLOWED - no providers restrictions */
@@ -52,20 +52,20 @@ export function sELECTED_PROVIDERS_MODEToJSON(object: SELECTED_PROVIDERS_MODE): 
 /** protobuf expected in YAML format: used "moretags" to simplify parsing */
 export interface Policy {
   chainPolicies: ChainPolicy[];
-  geolocationProfile: Long;
-  totalCuLimit: Long;
-  epochCuLimit: Long;
-  maxProvidersToPair: Long;
+  geolocationProfile: bigint;
+  totalCuLimit: bigint;
+  epochCuLimit: bigint;
+  maxProvidersToPair: bigint;
   selectedProvidersMode: SELECTED_PROVIDERS_MODE;
   selectedProviders: string[];
 }
 /** protobuf expected in YAML format: used "moretags" to simplify parsing */
 export interface PolicySDKType {
   chain_policies: ChainPolicySDKType[];
-  geolocation_profile: Long;
-  total_cu_limit: Long;
-  epoch_cu_limit: Long;
-  max_providers_to_pair: Long;
+  geolocation_profile: bigint;
+  total_cu_limit: bigint;
+  epoch_cu_limit: bigint;
+  max_providers_to_pair: bigint;
   selected_providers_mode: SELECTED_PROVIDERS_MODE;
   selected_providers: string[];
 }
@@ -80,39 +80,40 @@ export interface ChainPolicySDKType {
   requirements: ChainRequirementSDKType[];
 }
 export interface ChainRequirement {
-  collection?: CollectionData;
+  collection: CollectionData;
   extensions: string[];
 }
 export interface ChainRequirementSDKType {
-  collection?: CollectionDataSDKType;
+  collection: CollectionDataSDKType;
   extensions: string[];
 }
 function createBasePolicy(): Policy {
   return {
     chainPolicies: [],
-    geolocationProfile: Long.UZERO,
-    totalCuLimit: Long.UZERO,
-    epochCuLimit: Long.UZERO,
-    maxProvidersToPair: Long.UZERO,
+    geolocationProfile: BigInt(0),
+    totalCuLimit: BigInt(0),
+    epochCuLimit: BigInt(0),
+    maxProvidersToPair: BigInt(0),
     selectedProvidersMode: 0,
     selectedProviders: []
   };
 }
 export const Policy = {
-  encode(message: Policy, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.plans.Policy",
+  encode(message: Policy, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.chainPolicies) {
       ChainPolicy.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (!message.geolocationProfile.isZero()) {
+    if (message.geolocationProfile !== BigInt(0)) {
       writer.uint32(16).uint64(message.geolocationProfile);
     }
-    if (!message.totalCuLimit.isZero()) {
+    if (message.totalCuLimit !== BigInt(0)) {
       writer.uint32(24).uint64(message.totalCuLimit);
     }
-    if (!message.epochCuLimit.isZero()) {
+    if (message.epochCuLimit !== BigInt(0)) {
       writer.uint32(32).uint64(message.epochCuLimit);
     }
-    if (!message.maxProvidersToPair.isZero()) {
+    if (message.maxProvidersToPair !== BigInt(0)) {
       writer.uint32(40).uint64(message.maxProvidersToPair);
     }
     if (message.selectedProvidersMode !== 0) {
@@ -123,8 +124,8 @@ export const Policy = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Policy {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Policy {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePolicy();
     while (reader.pos < end) {
@@ -134,16 +135,16 @@ export const Policy = {
           message.chainPolicies.push(ChainPolicy.decode(reader, reader.uint32()));
           break;
         case 2:
-          message.geolocationProfile = (reader.uint64() as Long);
+          message.geolocationProfile = reader.uint64();
           break;
         case 3:
-          message.totalCuLimit = (reader.uint64() as Long);
+          message.totalCuLimit = reader.uint64();
           break;
         case 4:
-          message.epochCuLimit = (reader.uint64() as Long);
+          message.epochCuLimit = reader.uint64();
           break;
         case 5:
-          message.maxProvidersToPair = (reader.uint64() as Long);
+          message.maxProvidersToPair = reader.uint64();
           break;
         case 6:
           message.selectedProvidersMode = (reader.int32() as any);
@@ -158,16 +159,61 @@ export const Policy = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Policy>): Policy {
+  fromPartial(object: Partial<Policy>): Policy {
     const message = createBasePolicy();
     message.chainPolicies = object.chainPolicies?.map(e => ChainPolicy.fromPartial(e)) || [];
-    message.geolocationProfile = object.geolocationProfile !== undefined && object.geolocationProfile !== null ? Long.fromValue(object.geolocationProfile) : Long.UZERO;
-    message.totalCuLimit = object.totalCuLimit !== undefined && object.totalCuLimit !== null ? Long.fromValue(object.totalCuLimit) : Long.UZERO;
-    message.epochCuLimit = object.epochCuLimit !== undefined && object.epochCuLimit !== null ? Long.fromValue(object.epochCuLimit) : Long.UZERO;
-    message.maxProvidersToPair = object.maxProvidersToPair !== undefined && object.maxProvidersToPair !== null ? Long.fromValue(object.maxProvidersToPair) : Long.UZERO;
+    message.geolocationProfile = object.geolocationProfile !== undefined && object.geolocationProfile !== null ? BigInt(object.geolocationProfile.toString()) : BigInt(0);
+    message.totalCuLimit = object.totalCuLimit !== undefined && object.totalCuLimit !== null ? BigInt(object.totalCuLimit.toString()) : BigInt(0);
+    message.epochCuLimit = object.epochCuLimit !== undefined && object.epochCuLimit !== null ? BigInt(object.epochCuLimit.toString()) : BigInt(0);
+    message.maxProvidersToPair = object.maxProvidersToPair !== undefined && object.maxProvidersToPair !== null ? BigInt(object.maxProvidersToPair.toString()) : BigInt(0);
     message.selectedProvidersMode = object.selectedProvidersMode ?? 0;
     message.selectedProviders = object.selectedProviders?.map(e => e) || [];
     return message;
+  },
+  fromAmino(object: PolicyAmino): Policy {
+    return {
+      chainPolicies: Array.isArray(object?.chain_policies) ? object.chain_policies.map((e: any) => ChainPolicy.fromAmino(e)) : [],
+      geolocationProfile: BigInt(object.geolocation_profile),
+      totalCuLimit: BigInt(object.total_cu_limit),
+      epochCuLimit: BigInt(object.epoch_cu_limit),
+      maxProvidersToPair: BigInt(object.max_providers_to_pair),
+      selectedProvidersMode: isSet(object.selected_providers_mode) ? sELECTED_PROVIDERS_MODEFromJSON(object.selected_providers_mode) : -1,
+      selectedProviders: Array.isArray(object?.selected_providers) ? object.selected_providers.map((e: any) => e) : []
+    };
+  },
+  toAmino(message: Policy): PolicyAmino {
+    const obj: any = {};
+    if (message.chainPolicies) {
+      obj.chain_policies = message.chainPolicies.map(e => e ? ChainPolicy.toAmino(e) : undefined);
+    } else {
+      obj.chain_policies = [];
+    }
+    obj.geolocation_profile = message.geolocationProfile ? message.geolocationProfile.toString() : undefined;
+    obj.total_cu_limit = message.totalCuLimit ? message.totalCuLimit.toString() : undefined;
+    obj.epoch_cu_limit = message.epochCuLimit ? message.epochCuLimit.toString() : undefined;
+    obj.max_providers_to_pair = message.maxProvidersToPair ? message.maxProvidersToPair.toString() : undefined;
+    obj.selected_providers_mode = message.selectedProvidersMode;
+    if (message.selectedProviders) {
+      obj.selected_providers = message.selectedProviders.map(e => e);
+    } else {
+      obj.selected_providers = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: PolicyAminoMsg): Policy {
+    return Policy.fromAmino(object.value);
+  },
+  fromProtoMsg(message: PolicyProtoMsg): Policy {
+    return Policy.decode(message.value);
+  },
+  toProto(message: Policy): Uint8Array {
+    return Policy.encode(message).finish();
+  },
+  toProtoMsg(message: Policy): PolicyProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.plans.Policy",
+      value: Policy.encode(message).finish()
+    };
   }
 };
 function createBaseChainPolicy(): ChainPolicy {
@@ -178,7 +224,8 @@ function createBaseChainPolicy(): ChainPolicy {
   };
 }
 export const ChainPolicy = {
-  encode(message: ChainPolicy, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.plans.ChainPolicy",
+  encode(message: ChainPolicy, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
     }
@@ -190,8 +237,8 @@ export const ChainPolicy = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ChainPolicy {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ChainPolicy {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChainPolicy();
     while (reader.pos < end) {
@@ -213,22 +260,60 @@ export const ChainPolicy = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ChainPolicy>): ChainPolicy {
+  fromPartial(object: Partial<ChainPolicy>): ChainPolicy {
     const message = createBaseChainPolicy();
     message.chainId = object.chainId ?? "";
     message.apis = object.apis?.map(e => e) || [];
     message.requirements = object.requirements?.map(e => ChainRequirement.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: ChainPolicyAmino): ChainPolicy {
+    return {
+      chainId: object.chain_id,
+      apis: Array.isArray(object?.apis) ? object.apis.map((e: any) => e) : [],
+      requirements: Array.isArray(object?.requirements) ? object.requirements.map((e: any) => ChainRequirement.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: ChainPolicy): ChainPolicyAmino {
+    const obj: any = {};
+    obj.chain_id = message.chainId;
+    if (message.apis) {
+      obj.apis = message.apis.map(e => e);
+    } else {
+      obj.apis = [];
+    }
+    if (message.requirements) {
+      obj.requirements = message.requirements.map(e => e ? ChainRequirement.toAmino(e) : undefined);
+    } else {
+      obj.requirements = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: ChainPolicyAminoMsg): ChainPolicy {
+    return ChainPolicy.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ChainPolicyProtoMsg): ChainPolicy {
+    return ChainPolicy.decode(message.value);
+  },
+  toProto(message: ChainPolicy): Uint8Array {
+    return ChainPolicy.encode(message).finish();
+  },
+  toProtoMsg(message: ChainPolicy): ChainPolicyProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.plans.ChainPolicy",
+      value: ChainPolicy.encode(message).finish()
+    };
   }
 };
 function createBaseChainRequirement(): ChainRequirement {
   return {
-    collection: undefined,
+    collection: CollectionData.fromPartial({}),
     extensions: []
   };
 }
 export const ChainRequirement = {
-  encode(message: ChainRequirement, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.plans.ChainRequirement",
+  encode(message: ChainRequirement, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.collection !== undefined) {
       CollectionData.encode(message.collection, writer.uint32(10).fork()).ldelim();
     }
@@ -237,8 +322,8 @@ export const ChainRequirement = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ChainRequirement {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ChainRequirement {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChainRequirement();
     while (reader.pos < end) {
@@ -257,10 +342,41 @@ export const ChainRequirement = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ChainRequirement>): ChainRequirement {
+  fromPartial(object: Partial<ChainRequirement>): ChainRequirement {
     const message = createBaseChainRequirement();
     message.collection = object.collection !== undefined && object.collection !== null ? CollectionData.fromPartial(object.collection) : undefined;
     message.extensions = object.extensions?.map(e => e) || [];
     return message;
+  },
+  fromAmino(object: ChainRequirementAmino): ChainRequirement {
+    return {
+      collection: object?.collection ? CollectionData.fromAmino(object.collection) : undefined,
+      extensions: Array.isArray(object?.extensions) ? object.extensions.map((e: any) => e) : []
+    };
+  },
+  toAmino(message: ChainRequirement): ChainRequirementAmino {
+    const obj: any = {};
+    obj.collection = message.collection ? CollectionData.toAmino(message.collection) : undefined;
+    if (message.extensions) {
+      obj.extensions = message.extensions.map(e => e);
+    } else {
+      obj.extensions = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: ChainRequirementAminoMsg): ChainRequirement {
+    return ChainRequirement.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ChainRequirementProtoMsg): ChainRequirement {
+    return ChainRequirement.decode(message.value);
+  },
+  toProto(message: ChainRequirement): Uint8Array {
+    return ChainRequirement.encode(message).finish();
+  },
+  toProtoMsg(message: ChainRequirement): ChainRequirementProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.plans.ChainRequirement",
+      value: ChainRequirement.encode(message).finish()
+    };
   }
 };

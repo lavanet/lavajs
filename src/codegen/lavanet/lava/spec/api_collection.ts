@@ -1,5 +1,5 @@
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 export enum Header_HeaderType {
   pass_send = 0,
   pass_reply = 1,
@@ -195,7 +195,7 @@ export function pARSER_FUNCToJSON(object: PARSER_FUNC): string {
 }
 export interface ApiCollection {
   enabled: boolean;
-  collectionData?: CollectionData;
+  collectionData: CollectionData;
   apis: Api[];
   headers: Header[];
   /** by collectionKey */
@@ -206,7 +206,7 @@ export interface ApiCollection {
 }
 export interface ApiCollectionSDKType {
   enabled: boolean;
-  collection_data?: CollectionDataSDKType;
+  collection_data: CollectionDataSDKType;
   apis: ApiSDKType[];
   headers: HeaderSDKType[];
   inheritance_apis: CollectionDataSDKType[];
@@ -217,38 +217,38 @@ export interface ApiCollectionSDKType {
 export interface Extension {
   name: string;
   cuMultiplier: number;
-  rule?: Rule;
+  rule: Rule;
 }
 export interface ExtensionSDKType {
   name: string;
   cu_multiplier: number;
-  rule?: RuleSDKType;
+  rule: RuleSDKType;
 }
 export interface Rule {
-  block: Long;
+  block: bigint;
 }
 export interface RuleSDKType {
-  block: Long;
+  block: bigint;
 }
 export interface Verification {
   name: string;
-  parseDirective?: ParseDirective;
+  parseDirective: ParseDirective;
   values: ParseValue[];
 }
 export interface VerificationSDKType {
   name: string;
-  parse_directive?: ParseDirectiveSDKType;
+  parse_directive: ParseDirectiveSDKType;
   values: ParseValueSDKType[];
 }
 export interface ParseValue {
   extension: string;
   expectedValue: string;
-  latestDistance: Long;
+  latestDistance: bigint;
 }
 export interface ParseValueSDKType {
   extension: string;
   expected_value: string;
-  latest_distance: Long;
+  latest_distance: bigint;
 }
 export interface CollectionData {
   apiInterface: string;
@@ -275,29 +275,29 @@ export interface HeaderSDKType {
 export interface Api {
   enabled: boolean;
   name: string;
-  computeUnits: Long;
-  extraComputeUnits: Long;
-  category?: SpecCategory;
-  blockParsing?: BlockParser;
+  computeUnits: bigint;
+  extraComputeUnits: bigint;
+  category: SpecCategory;
+  blockParsing: BlockParser;
 }
 export interface ApiSDKType {
   enabled: boolean;
   name: string;
-  compute_units: Long;
-  extra_compute_units: Long;
-  category?: SpecCategorySDKType;
-  block_parsing?: BlockParserSDKType;
+  compute_units: bigint;
+  extra_compute_units: bigint;
+  category: SpecCategorySDKType;
+  block_parsing: BlockParserSDKType;
 }
 export interface ParseDirective {
   functionTag: FUNCTION_TAG;
   functionTemplate: string;
-  resultParsing?: BlockParser;
+  resultParsing: BlockParser;
   apiName: string;
 }
 export interface ParseDirectiveSDKType {
   function_tag: FUNCTION_TAG;
   function_template: string;
-  result_parsing?: BlockParserSDKType;
+  result_parsing: BlockParserSDKType;
   api_name: string;
 }
 export interface BlockParser {
@@ -331,7 +331,7 @@ export interface SpecCategorySDKType {
 function createBaseApiCollection(): ApiCollection {
   return {
     enabled: false,
-    collectionData: undefined,
+    collectionData: CollectionData.fromPartial({}),
     apis: [],
     headers: [],
     inheritanceApis: [],
@@ -341,7 +341,8 @@ function createBaseApiCollection(): ApiCollection {
   };
 }
 export const ApiCollection = {
-  encode(message: ApiCollection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.ApiCollection",
+  encode(message: ApiCollection, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.enabled === true) {
       writer.uint32(8).bool(message.enabled);
     }
@@ -368,8 +369,8 @@ export const ApiCollection = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ApiCollection {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ApiCollection {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseApiCollection();
     while (reader.pos < end) {
@@ -406,7 +407,7 @@ export const ApiCollection = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ApiCollection>): ApiCollection {
+  fromPartial(object: Partial<ApiCollection>): ApiCollection {
     const message = createBaseApiCollection();
     message.enabled = object.enabled ?? false;
     message.collectionData = object.collectionData !== undefined && object.collectionData !== null ? CollectionData.fromPartial(object.collectionData) : undefined;
@@ -417,17 +418,81 @@ export const ApiCollection = {
     message.extensions = object.extensions?.map(e => Extension.fromPartial(e)) || [];
     message.verifications = object.verifications?.map(e => Verification.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: ApiCollectionAmino): ApiCollection {
+    return {
+      enabled: object.enabled,
+      collectionData: object?.collection_data ? CollectionData.fromAmino(object.collection_data) : undefined,
+      apis: Array.isArray(object?.apis) ? object.apis.map((e: any) => Api.fromAmino(e)) : [],
+      headers: Array.isArray(object?.headers) ? object.headers.map((e: any) => Header.fromAmino(e)) : [],
+      inheritanceApis: Array.isArray(object?.inheritance_apis) ? object.inheritance_apis.map((e: any) => CollectionData.fromAmino(e)) : [],
+      parseDirectives: Array.isArray(object?.parse_directives) ? object.parse_directives.map((e: any) => ParseDirective.fromAmino(e)) : [],
+      extensions: Array.isArray(object?.extensions) ? object.extensions.map((e: any) => Extension.fromAmino(e)) : [],
+      verifications: Array.isArray(object?.verifications) ? object.verifications.map((e: any) => Verification.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: ApiCollection): ApiCollectionAmino {
+    const obj: any = {};
+    obj.enabled = message.enabled;
+    obj.collection_data = message.collectionData ? CollectionData.toAmino(message.collectionData) : undefined;
+    if (message.apis) {
+      obj.apis = message.apis.map(e => e ? Api.toAmino(e) : undefined);
+    } else {
+      obj.apis = [];
+    }
+    if (message.headers) {
+      obj.headers = message.headers.map(e => e ? Header.toAmino(e) : undefined);
+    } else {
+      obj.headers = [];
+    }
+    if (message.inheritanceApis) {
+      obj.inheritance_apis = message.inheritanceApis.map(e => e ? CollectionData.toAmino(e) : undefined);
+    } else {
+      obj.inheritance_apis = [];
+    }
+    if (message.parseDirectives) {
+      obj.parse_directives = message.parseDirectives.map(e => e ? ParseDirective.toAmino(e) : undefined);
+    } else {
+      obj.parse_directives = [];
+    }
+    if (message.extensions) {
+      obj.extensions = message.extensions.map(e => e ? Extension.toAmino(e) : undefined);
+    } else {
+      obj.extensions = [];
+    }
+    if (message.verifications) {
+      obj.verifications = message.verifications.map(e => e ? Verification.toAmino(e) : undefined);
+    } else {
+      obj.verifications = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: ApiCollectionAminoMsg): ApiCollection {
+    return ApiCollection.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ApiCollectionProtoMsg): ApiCollection {
+    return ApiCollection.decode(message.value);
+  },
+  toProto(message: ApiCollection): Uint8Array {
+    return ApiCollection.encode(message).finish();
+  },
+  toProtoMsg(message: ApiCollection): ApiCollectionProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.ApiCollection",
+      value: ApiCollection.encode(message).finish()
+    };
   }
 };
 function createBaseExtension(): Extension {
   return {
     name: "",
     cuMultiplier: 0,
-    rule: undefined
+    rule: Rule.fromPartial({})
   };
 }
 export const Extension = {
-  encode(message: Extension, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.Extension",
+  encode(message: Extension, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -439,8 +504,8 @@ export const Extension = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Extension {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Extension {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseExtension();
     while (reader.pos < end) {
@@ -462,35 +527,65 @@ export const Extension = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Extension>): Extension {
+  fromPartial(object: Partial<Extension>): Extension {
     const message = createBaseExtension();
     message.name = object.name ?? "";
     message.cuMultiplier = object.cuMultiplier ?? 0;
     message.rule = object.rule !== undefined && object.rule !== null ? Rule.fromPartial(object.rule) : undefined;
     return message;
+  },
+  fromAmino(object: ExtensionAmino): Extension {
+    return {
+      name: object.name,
+      cuMultiplier: object.cu_multiplier,
+      rule: object?.rule ? Rule.fromAmino(object.rule) : undefined
+    };
+  },
+  toAmino(message: Extension): ExtensionAmino {
+    const obj: any = {};
+    obj.name = message.name;
+    obj.cu_multiplier = message.cuMultiplier;
+    obj.rule = message.rule ? Rule.toAmino(message.rule) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ExtensionAminoMsg): Extension {
+    return Extension.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ExtensionProtoMsg): Extension {
+    return Extension.decode(message.value);
+  },
+  toProto(message: Extension): Uint8Array {
+    return Extension.encode(message).finish();
+  },
+  toProtoMsg(message: Extension): ExtensionProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.Extension",
+      value: Extension.encode(message).finish()
+    };
   }
 };
 function createBaseRule(): Rule {
   return {
-    block: Long.UZERO
+    block: BigInt(0)
   };
 }
 export const Rule = {
-  encode(message: Rule, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.block.isZero()) {
+  typeUrl: "/lavanet.lava.spec.Rule",
+  encode(message: Rule, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.block !== BigInt(0)) {
       writer.uint32(8).uint64(message.block);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Rule {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Rule {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRule();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.block = (reader.uint64() as Long);
+          message.block = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -499,21 +594,47 @@ export const Rule = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Rule>): Rule {
+  fromPartial(object: Partial<Rule>): Rule {
     const message = createBaseRule();
-    message.block = object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: RuleAmino): Rule {
+    return {
+      block: BigInt(object.block)
+    };
+  },
+  toAmino(message: Rule): RuleAmino {
+    const obj: any = {};
+    obj.block = message.block ? message.block.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: RuleAminoMsg): Rule {
+    return Rule.fromAmino(object.value);
+  },
+  fromProtoMsg(message: RuleProtoMsg): Rule {
+    return Rule.decode(message.value);
+  },
+  toProto(message: Rule): Uint8Array {
+    return Rule.encode(message).finish();
+  },
+  toProtoMsg(message: Rule): RuleProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.Rule",
+      value: Rule.encode(message).finish()
+    };
   }
 };
 function createBaseVerification(): Verification {
   return {
     name: "",
-    parseDirective: undefined,
+    parseDirective: ParseDirective.fromPartial({}),
     values: []
   };
 }
 export const Verification = {
-  encode(message: Verification, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.Verification",
+  encode(message: Verification, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -525,8 +646,8 @@ export const Verification = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Verification {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Verification {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVerification();
     while (reader.pos < end) {
@@ -548,36 +669,70 @@ export const Verification = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Verification>): Verification {
+  fromPartial(object: Partial<Verification>): Verification {
     const message = createBaseVerification();
     message.name = object.name ?? "";
     message.parseDirective = object.parseDirective !== undefined && object.parseDirective !== null ? ParseDirective.fromPartial(object.parseDirective) : undefined;
     message.values = object.values?.map(e => ParseValue.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: VerificationAmino): Verification {
+    return {
+      name: object.name,
+      parseDirective: object?.parse_directive ? ParseDirective.fromAmino(object.parse_directive) : undefined,
+      values: Array.isArray(object?.values) ? object.values.map((e: any) => ParseValue.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: Verification): VerificationAmino {
+    const obj: any = {};
+    obj.name = message.name;
+    obj.parse_directive = message.parseDirective ? ParseDirective.toAmino(message.parseDirective) : undefined;
+    if (message.values) {
+      obj.values = message.values.map(e => e ? ParseValue.toAmino(e) : undefined);
+    } else {
+      obj.values = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: VerificationAminoMsg): Verification {
+    return Verification.fromAmino(object.value);
+  },
+  fromProtoMsg(message: VerificationProtoMsg): Verification {
+    return Verification.decode(message.value);
+  },
+  toProto(message: Verification): Uint8Array {
+    return Verification.encode(message).finish();
+  },
+  toProtoMsg(message: Verification): VerificationProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.Verification",
+      value: Verification.encode(message).finish()
+    };
   }
 };
 function createBaseParseValue(): ParseValue {
   return {
     extension: "",
     expectedValue: "",
-    latestDistance: Long.UZERO
+    latestDistance: BigInt(0)
   };
 }
 export const ParseValue = {
-  encode(message: ParseValue, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.ParseValue",
+  encode(message: ParseValue, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.extension !== "") {
       writer.uint32(10).string(message.extension);
     }
     if (message.expectedValue !== "") {
       writer.uint32(18).string(message.expectedValue);
     }
-    if (!message.latestDistance.isZero()) {
+    if (message.latestDistance !== BigInt(0)) {
       writer.uint32(24).uint64(message.latestDistance);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ParseValue {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ParseValue {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParseValue();
     while (reader.pos < end) {
@@ -590,7 +745,7 @@ export const ParseValue = {
           message.expectedValue = reader.string();
           break;
         case 3:
-          message.latestDistance = (reader.uint64() as Long);
+          message.latestDistance = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -599,12 +754,41 @@ export const ParseValue = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ParseValue>): ParseValue {
+  fromPartial(object: Partial<ParseValue>): ParseValue {
     const message = createBaseParseValue();
     message.extension = object.extension ?? "";
     message.expectedValue = object.expectedValue ?? "";
-    message.latestDistance = object.latestDistance !== undefined && object.latestDistance !== null ? Long.fromValue(object.latestDistance) : Long.UZERO;
+    message.latestDistance = object.latestDistance !== undefined && object.latestDistance !== null ? BigInt(object.latestDistance.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: ParseValueAmino): ParseValue {
+    return {
+      extension: object.extension,
+      expectedValue: object.expected_value,
+      latestDistance: BigInt(object.latest_distance)
+    };
+  },
+  toAmino(message: ParseValue): ParseValueAmino {
+    const obj: any = {};
+    obj.extension = message.extension;
+    obj.expected_value = message.expectedValue;
+    obj.latest_distance = message.latestDistance ? message.latestDistance.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ParseValueAminoMsg): ParseValue {
+    return ParseValue.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ParseValueProtoMsg): ParseValue {
+    return ParseValue.decode(message.value);
+  },
+  toProto(message: ParseValue): Uint8Array {
+    return ParseValue.encode(message).finish();
+  },
+  toProtoMsg(message: ParseValue): ParseValueProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.ParseValue",
+      value: ParseValue.encode(message).finish()
+    };
   }
 };
 function createBaseCollectionData(): CollectionData {
@@ -616,7 +800,8 @@ function createBaseCollectionData(): CollectionData {
   };
 }
 export const CollectionData = {
-  encode(message: CollectionData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.CollectionData",
+  encode(message: CollectionData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.apiInterface !== "") {
       writer.uint32(10).string(message.apiInterface);
     }
@@ -631,8 +816,8 @@ export const CollectionData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): CollectionData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): CollectionData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCollectionData();
     while (reader.pos < end) {
@@ -657,13 +842,44 @@ export const CollectionData = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<CollectionData>): CollectionData {
+  fromPartial(object: Partial<CollectionData>): CollectionData {
     const message = createBaseCollectionData();
     message.apiInterface = object.apiInterface ?? "";
     message.internalPath = object.internalPath ?? "";
     message.type = object.type ?? "";
     message.addOn = object.addOn ?? "";
     return message;
+  },
+  fromAmino(object: CollectionDataAmino): CollectionData {
+    return {
+      apiInterface: object.api_interface,
+      internalPath: object.internal_path,
+      type: object.type,
+      addOn: object.add_on
+    };
+  },
+  toAmino(message: CollectionData): CollectionDataAmino {
+    const obj: any = {};
+    obj.api_interface = message.apiInterface;
+    obj.internal_path = message.internalPath;
+    obj.type = message.type;
+    obj.add_on = message.addOn;
+    return obj;
+  },
+  fromAminoMsg(object: CollectionDataAminoMsg): CollectionData {
+    return CollectionData.fromAmino(object.value);
+  },
+  fromProtoMsg(message: CollectionDataProtoMsg): CollectionData {
+    return CollectionData.decode(message.value);
+  },
+  toProto(message: CollectionData): Uint8Array {
+    return CollectionData.encode(message).finish();
+  },
+  toProtoMsg(message: CollectionData): CollectionDataProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.CollectionData",
+      value: CollectionData.encode(message).finish()
+    };
   }
 };
 function createBaseHeader(): Header {
@@ -674,7 +890,8 @@ function createBaseHeader(): Header {
   };
 }
 export const Header = {
-  encode(message: Header, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.Header",
+  encode(message: Header, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -686,8 +903,8 @@ export const Header = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Header {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Header {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeader();
     while (reader.pos < end) {
@@ -709,36 +926,66 @@ export const Header = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Header>): Header {
+  fromPartial(object: Partial<Header>): Header {
     const message = createBaseHeader();
     message.name = object.name ?? "";
     message.kind = object.kind ?? 0;
     message.functionTag = object.functionTag ?? 0;
     return message;
+  },
+  fromAmino(object: HeaderAmino): Header {
+    return {
+      name: object.name,
+      kind: isSet(object.kind) ? header_HeaderTypeFromJSON(object.kind) : -1,
+      functionTag: isSet(object.function_tag) ? fUNCTION_TAGFromJSON(object.function_tag) : -1
+    };
+  },
+  toAmino(message: Header): HeaderAmino {
+    const obj: any = {};
+    obj.name = message.name;
+    obj.kind = message.kind;
+    obj.function_tag = message.functionTag;
+    return obj;
+  },
+  fromAminoMsg(object: HeaderAminoMsg): Header {
+    return Header.fromAmino(object.value);
+  },
+  fromProtoMsg(message: HeaderProtoMsg): Header {
+    return Header.decode(message.value);
+  },
+  toProto(message: Header): Uint8Array {
+    return Header.encode(message).finish();
+  },
+  toProtoMsg(message: Header): HeaderProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.Header",
+      value: Header.encode(message).finish()
+    };
   }
 };
 function createBaseApi(): Api {
   return {
     enabled: false,
     name: "",
-    computeUnits: Long.UZERO,
-    extraComputeUnits: Long.UZERO,
-    category: undefined,
-    blockParsing: undefined
+    computeUnits: BigInt(0),
+    extraComputeUnits: BigInt(0),
+    category: SpecCategory.fromPartial({}),
+    blockParsing: BlockParser.fromPartial({})
   };
 }
 export const Api = {
-  encode(message: Api, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.Api",
+  encode(message: Api, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.enabled === true) {
       writer.uint32(8).bool(message.enabled);
     }
     if (message.name !== "") {
       writer.uint32(18).string(message.name);
     }
-    if (!message.computeUnits.isZero()) {
+    if (message.computeUnits !== BigInt(0)) {
       writer.uint32(24).uint64(message.computeUnits);
     }
-    if (!message.extraComputeUnits.isZero()) {
+    if (message.extraComputeUnits !== BigInt(0)) {
       writer.uint32(32).uint64(message.extraComputeUnits);
     }
     if (message.category !== undefined) {
@@ -749,8 +996,8 @@ export const Api = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Api {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Api {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseApi();
     while (reader.pos < end) {
@@ -763,10 +1010,10 @@ export const Api = {
           message.name = reader.string();
           break;
         case 3:
-          message.computeUnits = (reader.uint64() as Long);
+          message.computeUnits = reader.uint64();
           break;
         case 4:
-          message.extraComputeUnits = (reader.uint64() as Long);
+          message.extraComputeUnits = reader.uint64();
           break;
         case 6:
           message.category = SpecCategory.decode(reader, reader.uint32());
@@ -781,27 +1028,63 @@ export const Api = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Api>): Api {
+  fromPartial(object: Partial<Api>): Api {
     const message = createBaseApi();
     message.enabled = object.enabled ?? false;
     message.name = object.name ?? "";
-    message.computeUnits = object.computeUnits !== undefined && object.computeUnits !== null ? Long.fromValue(object.computeUnits) : Long.UZERO;
-    message.extraComputeUnits = object.extraComputeUnits !== undefined && object.extraComputeUnits !== null ? Long.fromValue(object.extraComputeUnits) : Long.UZERO;
+    message.computeUnits = object.computeUnits !== undefined && object.computeUnits !== null ? BigInt(object.computeUnits.toString()) : BigInt(0);
+    message.extraComputeUnits = object.extraComputeUnits !== undefined && object.extraComputeUnits !== null ? BigInt(object.extraComputeUnits.toString()) : BigInt(0);
     message.category = object.category !== undefined && object.category !== null ? SpecCategory.fromPartial(object.category) : undefined;
     message.blockParsing = object.blockParsing !== undefined && object.blockParsing !== null ? BlockParser.fromPartial(object.blockParsing) : undefined;
     return message;
+  },
+  fromAmino(object: ApiAmino): Api {
+    return {
+      enabled: object.enabled,
+      name: object.name,
+      computeUnits: BigInt(object.compute_units),
+      extraComputeUnits: BigInt(object.extra_compute_units),
+      category: object?.category ? SpecCategory.fromAmino(object.category) : undefined,
+      blockParsing: object?.block_parsing ? BlockParser.fromAmino(object.block_parsing) : undefined
+    };
+  },
+  toAmino(message: Api): ApiAmino {
+    const obj: any = {};
+    obj.enabled = message.enabled;
+    obj.name = message.name;
+    obj.compute_units = message.computeUnits ? message.computeUnits.toString() : undefined;
+    obj.extra_compute_units = message.extraComputeUnits ? message.extraComputeUnits.toString() : undefined;
+    obj.category = message.category ? SpecCategory.toAmino(message.category) : undefined;
+    obj.block_parsing = message.blockParsing ? BlockParser.toAmino(message.blockParsing) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ApiAminoMsg): Api {
+    return Api.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ApiProtoMsg): Api {
+    return Api.decode(message.value);
+  },
+  toProto(message: Api): Uint8Array {
+    return Api.encode(message).finish();
+  },
+  toProtoMsg(message: Api): ApiProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.Api",
+      value: Api.encode(message).finish()
+    };
   }
 };
 function createBaseParseDirective(): ParseDirective {
   return {
     functionTag: 0,
     functionTemplate: "",
-    resultParsing: undefined,
+    resultParsing: BlockParser.fromPartial({}),
     apiName: ""
   };
 }
 export const ParseDirective = {
-  encode(message: ParseDirective, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.ParseDirective",
+  encode(message: ParseDirective, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.functionTag !== 0) {
       writer.uint32(8).int32(message.functionTag);
     }
@@ -816,8 +1099,8 @@ export const ParseDirective = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ParseDirective {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ParseDirective {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParseDirective();
     while (reader.pos < end) {
@@ -842,13 +1125,44 @@ export const ParseDirective = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ParseDirective>): ParseDirective {
+  fromPartial(object: Partial<ParseDirective>): ParseDirective {
     const message = createBaseParseDirective();
     message.functionTag = object.functionTag ?? 0;
     message.functionTemplate = object.functionTemplate ?? "";
     message.resultParsing = object.resultParsing !== undefined && object.resultParsing !== null ? BlockParser.fromPartial(object.resultParsing) : undefined;
     message.apiName = object.apiName ?? "";
     return message;
+  },
+  fromAmino(object: ParseDirectiveAmino): ParseDirective {
+    return {
+      functionTag: isSet(object.function_tag) ? fUNCTION_TAGFromJSON(object.function_tag) : -1,
+      functionTemplate: object.function_template,
+      resultParsing: object?.result_parsing ? BlockParser.fromAmino(object.result_parsing) : undefined,
+      apiName: object.api_name
+    };
+  },
+  toAmino(message: ParseDirective): ParseDirectiveAmino {
+    const obj: any = {};
+    obj.function_tag = message.functionTag;
+    obj.function_template = message.functionTemplate;
+    obj.result_parsing = message.resultParsing ? BlockParser.toAmino(message.resultParsing) : undefined;
+    obj.api_name = message.apiName;
+    return obj;
+  },
+  fromAminoMsg(object: ParseDirectiveAminoMsg): ParseDirective {
+    return ParseDirective.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ParseDirectiveProtoMsg): ParseDirective {
+    return ParseDirective.decode(message.value);
+  },
+  toProto(message: ParseDirective): Uint8Array {
+    return ParseDirective.encode(message).finish();
+  },
+  toProtoMsg(message: ParseDirective): ParseDirectiveProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.ParseDirective",
+      value: ParseDirective.encode(message).finish()
+    };
   }
 };
 function createBaseBlockParser(): BlockParser {
@@ -860,7 +1174,8 @@ function createBaseBlockParser(): BlockParser {
   };
 }
 export const BlockParser = {
-  encode(message: BlockParser, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.BlockParser",
+  encode(message: BlockParser, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.parserArg) {
       writer.uint32(10).string(v!);
     }
@@ -875,8 +1190,8 @@ export const BlockParser = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BlockParser {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BlockParser {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlockParser();
     while (reader.pos < end) {
@@ -901,13 +1216,48 @@ export const BlockParser = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<BlockParser>): BlockParser {
+  fromPartial(object: Partial<BlockParser>): BlockParser {
     const message = createBaseBlockParser();
     message.parserArg = object.parserArg?.map(e => e) || [];
     message.parserFunc = object.parserFunc ?? 0;
     message.defaultValue = object.defaultValue ?? "";
     message.encoding = object.encoding ?? "";
     return message;
+  },
+  fromAmino(object: BlockParserAmino): BlockParser {
+    return {
+      parserArg: Array.isArray(object?.parser_arg) ? object.parser_arg.map((e: any) => e) : [],
+      parserFunc: isSet(object.parser_func) ? pARSER_FUNCFromJSON(object.parser_func) : -1,
+      defaultValue: object.default_value,
+      encoding: object.encoding
+    };
+  },
+  toAmino(message: BlockParser): BlockParserAmino {
+    const obj: any = {};
+    if (message.parserArg) {
+      obj.parser_arg = message.parserArg.map(e => e);
+    } else {
+      obj.parser_arg = [];
+    }
+    obj.parser_func = message.parserFunc;
+    obj.default_value = message.defaultValue;
+    obj.encoding = message.encoding;
+    return obj;
+  },
+  fromAminoMsg(object: BlockParserAminoMsg): BlockParser {
+    return BlockParser.fromAmino(object.value);
+  },
+  fromProtoMsg(message: BlockParserProtoMsg): BlockParser {
+    return BlockParser.decode(message.value);
+  },
+  toProto(message: BlockParser): Uint8Array {
+    return BlockParser.encode(message).finish();
+  },
+  toProtoMsg(message: BlockParser): BlockParserProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.BlockParser",
+      value: BlockParser.encode(message).finish()
+    };
   }
 };
 function createBaseSpecCategory(): SpecCategory {
@@ -920,7 +1270,8 @@ function createBaseSpecCategory(): SpecCategory {
   };
 }
 export const SpecCategory = {
-  encode(message: SpecCategory, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.spec.SpecCategory",
+  encode(message: SpecCategory, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.deterministic === true) {
       writer.uint32(8).bool(message.deterministic);
     }
@@ -938,8 +1289,8 @@ export const SpecCategory = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SpecCategory {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SpecCategory {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSpecCategory();
     while (reader.pos < end) {
@@ -967,7 +1318,7 @@ export const SpecCategory = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<SpecCategory>): SpecCategory {
+  fromPartial(object: Partial<SpecCategory>): SpecCategory {
     const message = createBaseSpecCategory();
     message.deterministic = object.deterministic ?? false;
     message.local = object.local ?? false;
@@ -975,5 +1326,38 @@ export const SpecCategory = {
     message.stateful = object.stateful ?? 0;
     message.hangingApi = object.hangingApi ?? false;
     return message;
+  },
+  fromAmino(object: SpecCategoryAmino): SpecCategory {
+    return {
+      deterministic: object.deterministic,
+      local: object.local,
+      subscription: object.subscription,
+      stateful: object.stateful,
+      hangingApi: object.hanging_api
+    };
+  },
+  toAmino(message: SpecCategory): SpecCategoryAmino {
+    const obj: any = {};
+    obj.deterministic = message.deterministic;
+    obj.local = message.local;
+    obj.subscription = message.subscription;
+    obj.stateful = message.stateful;
+    obj.hanging_api = message.hangingApi;
+    return obj;
+  },
+  fromAminoMsg(object: SpecCategoryAminoMsg): SpecCategory {
+    return SpecCategory.fromAmino(object.value);
+  },
+  fromProtoMsg(message: SpecCategoryProtoMsg): SpecCategory {
+    return SpecCategory.decode(message.value);
+  },
+  toProto(message: SpecCategory): Uint8Array {
+    return SpecCategory.encode(message).finish();
+  },
+  toProtoMsg(message: SpecCategory): SpecCategoryProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.spec.SpecCategory",
+      value: SpecCategory.encode(message).finish()
+    };
   }
 };

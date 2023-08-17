@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** Params defines the parameters for the module. */
 
 /** Params defines the parameters for the module. */
@@ -13,7 +12,8 @@ function createBaseVersion() {
   };
 }
 export const Version = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.protocol.Version",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.providerTarget !== "") {
       writer.uint32(10).string(message.providerTarget);
     }
@@ -29,7 +29,7 @@ export const Version = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVersion();
     while (reader.pos < end) {
@@ -62,22 +62,54 @@ export const Version = {
     message.consumerTarget = (_object$consumerTarge = object.consumerTarget) !== null && _object$consumerTarge !== void 0 ? _object$consumerTarge : "";
     message.consumerMin = (_object$consumerMin = object.consumerMin) !== null && _object$consumerMin !== void 0 ? _object$consumerMin : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      providerTarget: object.provider_target,
+      providerMin: object.provider_min,
+      consumerTarget: object.consumer_target,
+      consumerMin: object.consumer_min
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.provider_target = message.providerTarget;
+    obj.provider_min = message.providerMin;
+    obj.consumer_target = message.consumerTarget;
+    obj.consumer_min = message.consumerMin;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Version.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Version.decode(message.value);
+  },
+  toProto(message) {
+    return Version.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.protocol.Version",
+      value: Version.encode(message).finish()
+    };
   }
 };
 function createBaseParams() {
   return {
-    version: undefined
+    version: Version.fromPartial({})
   };
 }
 export const Params = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.protocol.Params",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.version !== undefined) {
       Version.encode(message.version, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
     while (reader.pos < end) {
@@ -97,5 +129,30 @@ export const Params = {
     const message = createBaseParams();
     message.version = object.version !== undefined && object.version !== null ? Version.fromPartial(object.version) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      version: object !== null && object !== void 0 && object.version ? Version.fromAmino(object.version) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.version = message.version ? Version.toAmino(message.version) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.protocol.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };

@@ -1,13 +1,10 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MsgVerifyInvariantResponse = exports.MsgVerifyInvariant = void 0;
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /** MsgVerifyInvariant represents a message to verify a particular invariance. */
 
 /** MsgVerifyInvariant represents a message to verify a particular invariance. */
@@ -24,8 +21,9 @@ function createBaseMsgVerifyInvariant() {
   };
 }
 var MsgVerifyInvariant = {
+  typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.sender !== "") {
       writer.uint32(10).string(message.sender);
     }
@@ -38,7 +36,7 @@ var MsgVerifyInvariant = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgVerifyInvariant();
     while (reader.pos < end) {
@@ -67,6 +65,41 @@ var MsgVerifyInvariant = {
     message.invariantModuleName = (_object$invariantModu = object.invariantModuleName) !== null && _object$invariantModu !== void 0 ? _object$invariantModu : "";
     message.invariantRoute = (_object$invariantRout = object.invariantRoute) !== null && _object$invariantRout !== void 0 ? _object$invariantRout : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      sender: object.sender,
+      invariantModuleName: object.invariant_module_name,
+      invariantRoute: object.invariant_route
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.sender = message.sender;
+    obj.invariant_module_name = message.invariantModuleName;
+    obj.invariant_route = message.invariantRoute;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgVerifyInvariant.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgVerifyInvariant",
+      value: MsgVerifyInvariant.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgVerifyInvariant.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgVerifyInvariant.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
+      value: MsgVerifyInvariant.encode(message).finish()
+    };
   }
 };
 exports.MsgVerifyInvariant = MsgVerifyInvariant;
@@ -74,12 +107,13 @@ function createBaseMsgVerifyInvariantResponse() {
   return {};
 }
 var MsgVerifyInvariantResponse = {
+  typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariantResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgVerifyInvariantResponse();
     while (reader.pos < end) {
@@ -95,6 +129,34 @@ var MsgVerifyInvariantResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgVerifyInvariantResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgVerifyInvariantResponse.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgVerifyInvariantResponse",
+      value: MsgVerifyInvariantResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgVerifyInvariantResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgVerifyInvariantResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.crisis.v1beta1.MsgVerifyInvariantResponse",
+      value: MsgVerifyInvariantResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgVerifyInvariantResponse = MsgVerifyInvariantResponse;

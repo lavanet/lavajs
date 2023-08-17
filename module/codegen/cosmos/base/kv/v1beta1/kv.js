@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 /** Pairs defines a repeated slice of Pair objects. */
 
 /** Pairs defines a repeated slice of Pair objects. */
@@ -14,14 +13,15 @@ function createBasePairs() {
   };
 }
 export const Pairs = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.kv.v1beta1.Pairs",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.pairs) {
       Pair.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePairs();
     while (reader.pos < end) {
@@ -42,6 +42,41 @@ export const Pairs = {
     const message = createBasePairs();
     message.pairs = ((_object$pairs = object.pairs) === null || _object$pairs === void 0 ? void 0 : _object$pairs.map(e => Pair.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      pairs: Array.isArray(object === null || object === void 0 ? void 0 : object.pairs) ? object.pairs.map(e => Pair.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.pairs) {
+      obj.pairs = message.pairs.map(e => e ? Pair.toAmino(e) : undefined);
+    } else {
+      obj.pairs = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Pairs.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Pairs",
+      value: Pairs.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return Pairs.decode(message.value);
+  },
+  toProto(message) {
+    return Pairs.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.kv.v1beta1.Pairs",
+      value: Pairs.encode(message).finish()
+    };
   }
 };
 function createBasePair() {
@@ -51,7 +86,8 @@ function createBasePair() {
   };
 }
 export const Pair = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.kv.v1beta1.Pair",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.key.length !== 0) {
       writer.uint32(10).bytes(message.key);
     }
@@ -61,7 +97,7 @@ export const Pair = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePair();
     while (reader.pos < end) {
@@ -86,5 +122,38 @@ export const Pair = {
     message.key = (_object$key = object.key) !== null && _object$key !== void 0 ? _object$key : new Uint8Array();
     message.value = (_object$value = object.value) !== null && _object$value !== void 0 ? _object$value : new Uint8Array();
     return message;
+  },
+  fromAmino(object) {
+    return {
+      key: object.key,
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.key = message.key;
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Pair.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Pair",
+      value: Pair.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return Pair.decode(message.value);
+  },
+  toProto(message) {
+    return Pair.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.kv.v1beta1.Pair",
+      value: Pair.encode(message).finish()
+    };
   }
 };

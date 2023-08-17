@@ -1,14 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Params = void 0;
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
+var _math = require("@cosmjs/math");
 /** Params defines the parameters for the module. */
 
 /** Params defines the parameters for the module. */
@@ -17,59 +14,60 @@ function createBaseParams() {
   return {
     mintCoinsPerCU: "",
     fraudStakeSlashingFactor: "",
-    fraudSlashingAmount: _helpers.Long.UZERO,
-    epochBlocksOverlap: _helpers.Long.UZERO,
+    fraudSlashingAmount: BigInt(0),
+    epochBlocksOverlap: BigInt(0),
     unpayLimit: "",
     slashLimit: "",
     dataReliabilityReward: "",
     QoSWeight: "",
-    recommendedEpochNumToCollectPayment: _helpers.Long.UZERO
+    recommendedEpochNumToCollectPayment: BigInt(0)
   };
 }
 var Params = {
+  typeUrl: "/lavanet.lava.pairing.Params",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.mintCoinsPerCU !== "") {
-      writer.uint32(26).string(message.mintCoinsPerCU);
+      writer.uint32(26).string(_math.Decimal.fromUserInput(message.mintCoinsPerCU, 18).atomics);
     }
     if (message.fraudStakeSlashingFactor !== "") {
-      writer.uint32(42).string(message.fraudStakeSlashingFactor);
+      writer.uint32(42).string(_math.Decimal.fromUserInput(message.fraudStakeSlashingFactor, 18).atomics);
     }
-    if (!message.fraudSlashingAmount.isZero()) {
+    if (message.fraudSlashingAmount !== BigInt(0)) {
       writer.uint32(48).uint64(message.fraudSlashingAmount);
     }
-    if (!message.epochBlocksOverlap.isZero()) {
+    if (message.epochBlocksOverlap !== BigInt(0)) {
       writer.uint32(64).uint64(message.epochBlocksOverlap);
     }
     if (message.unpayLimit !== "") {
-      writer.uint32(82).string(message.unpayLimit);
+      writer.uint32(82).string(_math.Decimal.fromUserInput(message.unpayLimit, 18).atomics);
     }
     if (message.slashLimit !== "") {
-      writer.uint32(90).string(message.slashLimit);
+      writer.uint32(90).string(_math.Decimal.fromUserInput(message.slashLimit, 18).atomics);
     }
     if (message.dataReliabilityReward !== "") {
-      writer.uint32(98).string(message.dataReliabilityReward);
+      writer.uint32(98).string(_math.Decimal.fromUserInput(message.dataReliabilityReward, 18).atomics);
     }
     if (message.QoSWeight !== "") {
-      writer.uint32(106).string(message.QoSWeight);
+      writer.uint32(106).string(_math.Decimal.fromUserInput(message.QoSWeight, 18).atomics);
     }
-    if (!message.recommendedEpochNumToCollectPayment.isZero()) {
+    if (message.recommendedEpochNumToCollectPayment !== BigInt(0)) {
       writer.uint32(112).uint64(message.recommendedEpochNumToCollectPayment);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseParams();
     while (reader.pos < end) {
       var tag = reader.uint32();
       switch (tag >>> 3) {
         case 3:
-          message.mintCoinsPerCU = reader.string();
+          message.mintCoinsPerCU = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 5:
-          message.fraudStakeSlashingFactor = reader.string();
+          message.fraudStakeSlashingFactor = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 6:
           message.fraudSlashingAmount = reader.uint64();
@@ -78,16 +76,16 @@ var Params = {
           message.epochBlocksOverlap = reader.uint64();
           break;
         case 10:
-          message.unpayLimit = reader.string();
+          message.unpayLimit = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 11:
-          message.slashLimit = reader.string();
+          message.slashLimit = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 12:
-          message.dataReliabilityReward = reader.string();
+          message.dataReliabilityReward = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 13:
-          message.QoSWeight = reader.string();
+          message.QoSWeight = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 14:
           message.recommendedEpochNumToCollectPayment = reader.uint64();
@@ -104,14 +102,55 @@ var Params = {
     var message = createBaseParams();
     message.mintCoinsPerCU = (_object$mintCoinsPerC = object.mintCoinsPerCU) !== null && _object$mintCoinsPerC !== void 0 ? _object$mintCoinsPerC : "";
     message.fraudStakeSlashingFactor = (_object$fraudStakeSla = object.fraudStakeSlashingFactor) !== null && _object$fraudStakeSla !== void 0 ? _object$fraudStakeSla : "";
-    message.fraudSlashingAmount = object.fraudSlashingAmount !== undefined && object.fraudSlashingAmount !== null ? _helpers.Long.fromValue(object.fraudSlashingAmount) : _helpers.Long.UZERO;
-    message.epochBlocksOverlap = object.epochBlocksOverlap !== undefined && object.epochBlocksOverlap !== null ? _helpers.Long.fromValue(object.epochBlocksOverlap) : _helpers.Long.UZERO;
+    message.fraudSlashingAmount = object.fraudSlashingAmount !== undefined && object.fraudSlashingAmount !== null ? BigInt(object.fraudSlashingAmount.toString()) : BigInt(0);
+    message.epochBlocksOverlap = object.epochBlocksOverlap !== undefined && object.epochBlocksOverlap !== null ? BigInt(object.epochBlocksOverlap.toString()) : BigInt(0);
     message.unpayLimit = (_object$unpayLimit = object.unpayLimit) !== null && _object$unpayLimit !== void 0 ? _object$unpayLimit : "";
     message.slashLimit = (_object$slashLimit = object.slashLimit) !== null && _object$slashLimit !== void 0 ? _object$slashLimit : "";
     message.dataReliabilityReward = (_object$dataReliabili = object.dataReliabilityReward) !== null && _object$dataReliabili !== void 0 ? _object$dataReliabili : "";
     message.QoSWeight = (_object$QoSWeight = object.QoSWeight) !== null && _object$QoSWeight !== void 0 ? _object$QoSWeight : "";
-    message.recommendedEpochNumToCollectPayment = object.recommendedEpochNumToCollectPayment !== undefined && object.recommendedEpochNumToCollectPayment !== null ? _helpers.Long.fromValue(object.recommendedEpochNumToCollectPayment) : _helpers.Long.UZERO;
+    message.recommendedEpochNumToCollectPayment = object.recommendedEpochNumToCollectPayment !== undefined && object.recommendedEpochNumToCollectPayment !== null ? BigInt(object.recommendedEpochNumToCollectPayment.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      mintCoinsPerCU: object.mintCoinsPerCU,
+      fraudStakeSlashingFactor: object.fraudStakeSlashingFactor,
+      fraudSlashingAmount: BigInt(object.fraudSlashingAmount),
+      epochBlocksOverlap: BigInt(object.epochBlocksOverlap),
+      unpayLimit: object.unpayLimit,
+      slashLimit: object.slashLimit,
+      dataReliabilityReward: object.dataReliabilityReward,
+      QoSWeight: object.QoSWeight,
+      recommendedEpochNumToCollectPayment: BigInt(object.recommendedEpochNumToCollectPayment)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.mintCoinsPerCU = message.mintCoinsPerCU;
+    obj.fraudStakeSlashingFactor = message.fraudStakeSlashingFactor;
+    obj.fraudSlashingAmount = message.fraudSlashingAmount ? message.fraudSlashingAmount.toString() : undefined;
+    obj.epochBlocksOverlap = message.epochBlocksOverlap ? message.epochBlocksOverlap.toString() : undefined;
+    obj.unpayLimit = message.unpayLimit;
+    obj.slashLimit = message.slashLimit;
+    obj.dataReliabilityReward = message.dataReliabilityReward;
+    obj.QoSWeight = message.QoSWeight;
+    obj.recommendedEpochNumToCollectPayment = message.recommendedEpochNumToCollectPayment ? message.recommendedEpochNumToCollectPayment.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.pairing.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };
 exports.Params = Params;

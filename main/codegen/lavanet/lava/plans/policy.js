@@ -1,6 +1,5 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -8,10 +7,8 @@ exports.SELECTED_PROVIDERS_MODESDKType = exports.SELECTED_PROVIDERS_MODE = expor
 exports.sELECTED_PROVIDERS_MODEFromJSON = sELECTED_PROVIDERS_MODEFromJSON;
 exports.sELECTED_PROVIDERS_MODEToJSON = sELECTED_PROVIDERS_MODEToJSON;
 var _api_collection = require("../spec/api_collection");
+var _binary = require("../../../binary");
 var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -69,17 +66,18 @@ function sELECTED_PROVIDERS_MODEToJSON(object) {
 function createBasePolicy() {
   return {
     chainPolicies: [],
-    geolocationProfile: _helpers.Long.UZERO,
-    totalCuLimit: _helpers.Long.UZERO,
-    epochCuLimit: _helpers.Long.UZERO,
-    maxProvidersToPair: _helpers.Long.UZERO,
+    geolocationProfile: BigInt(0),
+    totalCuLimit: BigInt(0),
+    epochCuLimit: BigInt(0),
+    maxProvidersToPair: BigInt(0),
     selectedProvidersMode: 0,
     selectedProviders: []
   };
 }
 var Policy = {
+  typeUrl: "/lavanet.lava.plans.Policy",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.chainPolicies),
       _step;
     try {
@@ -92,16 +90,16 @@ var Policy = {
     } finally {
       _iterator.f();
     }
-    if (!message.geolocationProfile.isZero()) {
+    if (message.geolocationProfile !== BigInt(0)) {
       writer.uint32(16).uint64(message.geolocationProfile);
     }
-    if (!message.totalCuLimit.isZero()) {
+    if (message.totalCuLimit !== BigInt(0)) {
       writer.uint32(24).uint64(message.totalCuLimit);
     }
-    if (!message.epochCuLimit.isZero()) {
+    if (message.epochCuLimit !== BigInt(0)) {
       writer.uint32(32).uint64(message.epochCuLimit);
     }
-    if (!message.maxProvidersToPair.isZero()) {
+    if (message.maxProvidersToPair !== BigInt(0)) {
       writer.uint32(40).uint64(message.maxProvidersToPair);
     }
     if (message.selectedProvidersMode !== 0) {
@@ -122,7 +120,7 @@ var Policy = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBasePolicy();
     while (reader.pos < end) {
@@ -162,15 +160,68 @@ var Policy = {
     message.chainPolicies = ((_object$chainPolicies = object.chainPolicies) === null || _object$chainPolicies === void 0 ? void 0 : _object$chainPolicies.map(function (e) {
       return ChainPolicy.fromPartial(e);
     })) || [];
-    message.geolocationProfile = object.geolocationProfile !== undefined && object.geolocationProfile !== null ? _helpers.Long.fromValue(object.geolocationProfile) : _helpers.Long.UZERO;
-    message.totalCuLimit = object.totalCuLimit !== undefined && object.totalCuLimit !== null ? _helpers.Long.fromValue(object.totalCuLimit) : _helpers.Long.UZERO;
-    message.epochCuLimit = object.epochCuLimit !== undefined && object.epochCuLimit !== null ? _helpers.Long.fromValue(object.epochCuLimit) : _helpers.Long.UZERO;
-    message.maxProvidersToPair = object.maxProvidersToPair !== undefined && object.maxProvidersToPair !== null ? _helpers.Long.fromValue(object.maxProvidersToPair) : _helpers.Long.UZERO;
+    message.geolocationProfile = object.geolocationProfile !== undefined && object.geolocationProfile !== null ? BigInt(object.geolocationProfile.toString()) : BigInt(0);
+    message.totalCuLimit = object.totalCuLimit !== undefined && object.totalCuLimit !== null ? BigInt(object.totalCuLimit.toString()) : BigInt(0);
+    message.epochCuLimit = object.epochCuLimit !== undefined && object.epochCuLimit !== null ? BigInt(object.epochCuLimit.toString()) : BigInt(0);
+    message.maxProvidersToPair = object.maxProvidersToPair !== undefined && object.maxProvidersToPair !== null ? BigInt(object.maxProvidersToPair.toString()) : BigInt(0);
     message.selectedProvidersMode = (_object$selectedProvi = object.selectedProvidersMode) !== null && _object$selectedProvi !== void 0 ? _object$selectedProvi : 0;
     message.selectedProviders = ((_object$selectedProvi2 = object.selectedProviders) === null || _object$selectedProvi2 === void 0 ? void 0 : _object$selectedProvi2.map(function (e) {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      chainPolicies: Array.isArray(object === null || object === void 0 ? void 0 : object.chain_policies) ? object.chain_policies.map(function (e) {
+        return ChainPolicy.fromAmino(e);
+      }) : [],
+      geolocationProfile: BigInt(object.geolocation_profile),
+      totalCuLimit: BigInt(object.total_cu_limit),
+      epochCuLimit: BigInt(object.epoch_cu_limit),
+      maxProvidersToPair: BigInt(object.max_providers_to_pair),
+      selectedProvidersMode: (0, _helpers.isSet)(object.selected_providers_mode) ? sELECTED_PROVIDERS_MODEFromJSON(object.selected_providers_mode) : -1,
+      selectedProviders: Array.isArray(object === null || object === void 0 ? void 0 : object.selected_providers) ? object.selected_providers.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.chainPolicies) {
+      obj.chain_policies = message.chainPolicies.map(function (e) {
+        return e ? ChainPolicy.toAmino(e) : undefined;
+      });
+    } else {
+      obj.chain_policies = [];
+    }
+    obj.geolocation_profile = message.geolocationProfile ? message.geolocationProfile.toString() : undefined;
+    obj.total_cu_limit = message.totalCuLimit ? message.totalCuLimit.toString() : undefined;
+    obj.epoch_cu_limit = message.epochCuLimit ? message.epochCuLimit.toString() : undefined;
+    obj.max_providers_to_pair = message.maxProvidersToPair ? message.maxProvidersToPair.toString() : undefined;
+    obj.selected_providers_mode = message.selectedProvidersMode;
+    if (message.selectedProviders) {
+      obj.selected_providers = message.selectedProviders.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.selected_providers = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Policy.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Policy.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Policy.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.Policy",
+      value: Policy.encode(message).finish()
+    };
   }
 };
 exports.Policy = Policy;
@@ -182,8 +233,9 @@ function createBaseChainPolicy() {
   };
 }
 var ChainPolicy = {
+  typeUrl: "/lavanet.lava.plans.ChainPolicy",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
     }
@@ -214,7 +266,7 @@ var ChainPolicy = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseChainPolicy();
     while (reader.pos < end) {
@@ -247,18 +299,64 @@ var ChainPolicy = {
       return ChainRequirement.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      chainId: object.chain_id,
+      apis: Array.isArray(object === null || object === void 0 ? void 0 : object.apis) ? object.apis.map(function (e) {
+        return e;
+      }) : [],
+      requirements: Array.isArray(object === null || object === void 0 ? void 0 : object.requirements) ? object.requirements.map(function (e) {
+        return ChainRequirement.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.chain_id = message.chainId;
+    if (message.apis) {
+      obj.apis = message.apis.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.apis = [];
+    }
+    if (message.requirements) {
+      obj.requirements = message.requirements.map(function (e) {
+        return e ? ChainRequirement.toAmino(e) : undefined;
+      });
+    } else {
+      obj.requirements = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ChainPolicy.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ChainPolicy.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ChainPolicy.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.ChainPolicy",
+      value: ChainPolicy.encode(message).finish()
+    };
   }
 };
 exports.ChainPolicy = ChainPolicy;
 function createBaseChainRequirement() {
   return {
-    collection: undefined,
+    collection: _api_collection.CollectionData.fromPartial({}),
     extensions: []
   };
 }
 var ChainRequirement = {
+  typeUrl: "/lavanet.lava.plans.ChainRequirement",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.collection !== undefined) {
       _api_collection.CollectionData.encode(message.collection, writer.uint32(10).fork()).ldelim();
     }
@@ -277,7 +375,7 @@ var ChainRequirement = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseChainRequirement();
     while (reader.pos < end) {
@@ -304,6 +402,41 @@ var ChainRequirement = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      collection: object !== null && object !== void 0 && object.collection ? _api_collection.CollectionData.fromAmino(object.collection) : undefined,
+      extensions: Array.isArray(object === null || object === void 0 ? void 0 : object.extensions) ? object.extensions.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.collection = message.collection ? _api_collection.CollectionData.toAmino(message.collection) : undefined;
+    if (message.extensions) {
+      obj.extensions = message.extensions.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.extensions = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ChainRequirement.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ChainRequirement.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ChainRequirement.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.plans.ChainRequirement",
+      value: ChainRequirement.encode(message).finish()
+    };
   }
 };
 exports.ChainRequirement = ChainRequirement;

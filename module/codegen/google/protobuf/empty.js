@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../binary";
 /**
  * A generic empty message that you can re-use to avoid defining duplicated
  * empty messages in your APIs. A typical example is to use it as the request
@@ -28,11 +27,12 @@ function createBaseEmpty() {
   return {};
 }
 export const Empty = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.Empty",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEmpty();
     while (reader.pos < end) {
@@ -48,5 +48,27 @@ export const Empty = {
   fromPartial(_) {
     const message = createBaseEmpty();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Empty.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Empty.decode(message.value);
+  },
+  toProto(message) {
+    return Empty.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Empty",
+      value: Empty.encode(message).finish()
+    };
   }
 };

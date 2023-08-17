@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgSubmitEvidence, MsgSubmitEvidenceResponse } from "./tx";
 /** Msg defines the evidence Msg service. */
 
@@ -12,6 +12,6 @@ export class MsgClientImpl {
   submitEvidence(request) {
     const data = MsgSubmitEvidence.encode(request).finish();
     const promise = this.rpc.request("cosmos.evidence.v1beta1.Msg", "SubmitEvidence", data);
-    return promise.then(data => MsgSubmitEvidenceResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSubmitEvidenceResponse.decode(new BinaryReader(data)));
   }
 }

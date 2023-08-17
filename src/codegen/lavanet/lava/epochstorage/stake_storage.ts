@@ -1,6 +1,5 @@
 import { StakeEntry, StakeEntrySDKType } from "./stake_entry";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface StakeStorage {
   index: string;
   stakeEntries: StakeEntry[];
@@ -19,7 +18,8 @@ function createBaseStakeStorage(): StakeStorage {
   };
 }
 export const StakeStorage = {
-  encode(message: StakeStorage, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.epochstorage.StakeStorage",
+  encode(message: StakeStorage, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
@@ -31,8 +31,8 @@ export const StakeStorage = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): StakeStorage {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): StakeStorage {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStakeStorage();
     while (reader.pos < end) {
@@ -54,11 +54,44 @@ export const StakeStorage = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<StakeStorage>): StakeStorage {
+  fromPartial(object: Partial<StakeStorage>): StakeStorage {
     const message = createBaseStakeStorage();
     message.index = object.index ?? "";
     message.stakeEntries = object.stakeEntries?.map(e => StakeEntry.fromPartial(e)) || [];
     message.epochBlockHash = object.epochBlockHash ?? new Uint8Array();
     return message;
+  },
+  fromAmino(object: StakeStorageAmino): StakeStorage {
+    return {
+      index: object.index,
+      stakeEntries: Array.isArray(object?.stakeEntries) ? object.stakeEntries.map((e: any) => StakeEntry.fromAmino(e)) : [],
+      epochBlockHash: object.epochBlockHash
+    };
+  },
+  toAmino(message: StakeStorage): StakeStorageAmino {
+    const obj: any = {};
+    obj.index = message.index;
+    if (message.stakeEntries) {
+      obj.stakeEntries = message.stakeEntries.map(e => e ? StakeEntry.toAmino(e) : undefined);
+    } else {
+      obj.stakeEntries = [];
+    }
+    obj.epochBlockHash = message.epochBlockHash;
+    return obj;
+  },
+  fromAminoMsg(object: StakeStorageAminoMsg): StakeStorage {
+    return StakeStorage.fromAmino(object.value);
+  },
+  fromProtoMsg(message: StakeStorageProtoMsg): StakeStorage {
+    return StakeStorage.decode(message.value);
+  },
+  toProto(message: StakeStorage): Uint8Array {
+    return StakeStorage.encode(message).finish();
+  },
+  toProtoMsg(message: StakeStorage): StakeStorageProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.epochstorage.StakeStorage",
+      value: StakeStorage.encode(message).finish()
+    };
   }
 };

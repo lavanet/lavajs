@@ -1,14 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MsgRevokeAllowanceResponse = exports.MsgRevokeAllowance = exports.MsgGrantAllowanceResponse = exports.MsgGrantAllowance = void 0;
 var _any = require("../../../google/protobuf/any");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /**
  * MsgGrantAllowance adds permission for Grantee to spend up to Allowance
  * of fees from the account of Granter.
@@ -35,12 +32,13 @@ function createBaseMsgGrantAllowance() {
   return {
     granter: "",
     grantee: "",
-    allowance: undefined
+    allowance: _any.Any.fromPartial({})
   };
 }
 var MsgGrantAllowance = {
+  typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -53,7 +51,7 @@ var MsgGrantAllowance = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgGrantAllowance();
     while (reader.pos < end) {
@@ -82,6 +80,41 @@ var MsgGrantAllowance = {
     message.grantee = (_object$grantee = object.grantee) !== null && _object$grantee !== void 0 ? _object$grantee : "";
     message.allowance = object.allowance !== undefined && object.allowance !== null ? _any.Any.fromPartial(object.allowance) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      granter: object.granter,
+      grantee: object.grantee,
+      allowance: object !== null && object !== void 0 && object.allowance ? _any.Any.fromAmino(object.allowance) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    obj.allowance = message.allowance ? _any.Any.toAmino(message.allowance) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgGrantAllowance.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgGrantAllowance",
+      value: MsgGrantAllowance.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgGrantAllowance.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgGrantAllowance.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
+      value: MsgGrantAllowance.encode(message).finish()
+    };
   }
 };
 exports.MsgGrantAllowance = MsgGrantAllowance;
@@ -89,12 +122,13 @@ function createBaseMsgGrantAllowanceResponse() {
   return {};
 }
 var MsgGrantAllowanceResponse = {
+  typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgGrantAllowanceResponse();
     while (reader.pos < end) {
@@ -110,6 +144,34 @@ var MsgGrantAllowanceResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgGrantAllowanceResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgGrantAllowanceResponse.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgGrantAllowanceResponse",
+      value: MsgGrantAllowanceResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgGrantAllowanceResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgGrantAllowanceResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse",
+      value: MsgGrantAllowanceResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgGrantAllowanceResponse = MsgGrantAllowanceResponse;
@@ -120,8 +182,9 @@ function createBaseMsgRevokeAllowance() {
   };
 }
 var MsgRevokeAllowance = {
+  typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -131,7 +194,7 @@ var MsgRevokeAllowance = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgRevokeAllowance();
     while (reader.pos < end) {
@@ -156,6 +219,39 @@ var MsgRevokeAllowance = {
     message.granter = (_object$granter2 = object.granter) !== null && _object$granter2 !== void 0 ? _object$granter2 : "";
     message.grantee = (_object$grantee2 = object.grantee) !== null && _object$grantee2 !== void 0 ? _object$grantee2 : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      granter: object.granter,
+      grantee: object.grantee
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgRevokeAllowance.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgRevokeAllowance",
+      value: MsgRevokeAllowance.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgRevokeAllowance.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgRevokeAllowance.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
+      value: MsgRevokeAllowance.encode(message).finish()
+    };
   }
 };
 exports.MsgRevokeAllowance = MsgRevokeAllowance;
@@ -163,12 +259,13 @@ function createBaseMsgRevokeAllowanceResponse() {
   return {};
 }
 var MsgRevokeAllowanceResponse = {
+  typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgRevokeAllowanceResponse();
     while (reader.pos < end) {
@@ -184,6 +281,34 @@ var MsgRevokeAllowanceResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgRevokeAllowanceResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgRevokeAllowanceResponse.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgRevokeAllowanceResponse",
+      value: MsgRevokeAllowanceResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgRevokeAllowanceResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgRevokeAllowanceResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse",
+      value: MsgRevokeAllowanceResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgRevokeAllowanceResponse = MsgRevokeAllowanceResponse;

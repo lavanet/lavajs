@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AminoConverter = void 0;
-var _helpers = require("../../../helpers");
 var AminoConverter = {
   "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade": {
     aminoType: "cosmos-sdk/MsgSoftwareUpgrade",
@@ -33,7 +32,7 @@ var AminoConverter = {
         plan: {
           name: plan.name,
           time: plan.time,
-          height: _helpers.Long.fromString(plan.height),
+          height: BigInt(plan.height),
           info: plan.info,
           upgradedClientState: {
             typeUrl: plan.upgraded_client_state.type_url,

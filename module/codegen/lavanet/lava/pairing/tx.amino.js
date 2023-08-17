@@ -1,4 +1,3 @@
-import { Long } from "../../../helpers";
 export const AminoConverter = {
   "/lavanet.lava.pairing.MsgStakeProvider": {
     aminoType: "/lavanet.lava.pairing.MsgStakeProvider",
@@ -15,7 +14,7 @@ export const AminoConverter = {
         chainID,
         amount: {
           denom: amount.denom,
-          amount: Long.fromValue(amount.amount).toString()
+          amount: amount.amount
         },
         endpoints: endpoints.map(el0 => ({
           iPPORT: el0.iPPORT,
@@ -45,12 +44,12 @@ export const AminoConverter = {
         },
         endpoints: endpoints.map(el0 => ({
           iPPORT: el0.iPPORT,
-          geolocation: Long.fromString(el0.geolocation),
+          geolocation: BigInt(el0.geolocation),
           addons: el0.addons,
           apiInterfaces: el0.api_interfaces,
           extensions: el0.extensions
         })),
-        geolocation: Long.fromString(geolocation),
+        geolocation: BigInt(geolocation),
         moniker
       };
     }
@@ -127,22 +126,22 @@ export const AminoConverter = {
         relays: relays.map(el0 => ({
           specId: el0.spec_id,
           contentHash: el0.content_hash,
-          sessionId: Long.fromString(el0.session_id),
-          cuSum: Long.fromString(el0.cu_sum),
+          sessionId: BigInt(el0.session_id),
+          cuSum: BigInt(el0.cu_sum),
           provider: el0.provider,
-          relayNum: Long.fromString(el0.relay_num),
+          relayNum: BigInt(el0.relay_num),
           qosReport: {
             latency: el0.qos_report.latency,
             availability: el0.qos_report.availability,
             sync: el0.qos_report.sync
           },
-          epoch: Long.fromString(el0.epoch),
+          epoch: BigInt(el0.epoch),
           unresponsiveProviders: el0.unresponsive_providers,
           lavaChainId: el0.lava_chain_id,
           sig: el0.sig,
           badge: {
-            cuAllocation: Long.fromString(el0.badge.cu_allocation),
-            epoch: Long.fromString(el0.badge.epoch),
+            cuAllocation: BigInt(el0.badge.cu_allocation),
+            epoch: BigInt(el0.badge.epoch),
             address: el0.badge.address,
             lavaChainId: el0.badge.lava_chain_id,
             projectSig: el0.badge.project_sig

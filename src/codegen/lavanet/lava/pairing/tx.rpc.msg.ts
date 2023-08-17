@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgStakeProvider, MsgStakeProviderResponse, MsgUnstakeProvider, MsgUnstakeProviderResponse, MsgRelayPayment, MsgRelayPaymentResponse, MsgFreezeProvider, MsgFreezeProviderResponse, MsgUnfreezeProvider, MsgUnfreezeProviderResponse } from "./tx";
 /** Msg defines the Msg service. */
 export interface Msg {
@@ -22,26 +22,26 @@ export class MsgClientImpl implements Msg {
   stakeProvider(request: MsgStakeProvider): Promise<MsgStakeProviderResponse> {
     const data = MsgStakeProvider.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Msg", "StakeProvider", data);
-    return promise.then(data => MsgStakeProviderResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgStakeProviderResponse.decode(new BinaryReader(data)));
   }
   unstakeProvider(request: MsgUnstakeProvider): Promise<MsgUnstakeProviderResponse> {
     const data = MsgUnstakeProvider.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Msg", "UnstakeProvider", data);
-    return promise.then(data => MsgUnstakeProviderResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUnstakeProviderResponse.decode(new BinaryReader(data)));
   }
   relayPayment(request: MsgRelayPayment): Promise<MsgRelayPaymentResponse> {
     const data = MsgRelayPayment.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Msg", "RelayPayment", data);
-    return promise.then(data => MsgRelayPaymentResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRelayPaymentResponse.decode(new BinaryReader(data)));
   }
   freezeProvider(request: MsgFreezeProvider): Promise<MsgFreezeProviderResponse> {
     const data = MsgFreezeProvider.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Msg", "FreezeProvider", data);
-    return promise.then(data => MsgFreezeProviderResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgFreezeProviderResponse.decode(new BinaryReader(data)));
   }
   unfreezeProvider(request: MsgUnfreezeProvider): Promise<MsgUnfreezeProviderResponse> {
     const data = MsgUnfreezeProvider.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Msg", "UnfreezeProvider", data);
-    return promise.then(data => MsgUnfreezeProviderResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUnfreezeProviderResponse.decode(new BinaryReader(data)));
   }
 }

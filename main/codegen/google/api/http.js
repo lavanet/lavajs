@@ -1,13 +1,10 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.HttpRule = exports.Http = exports.CustomHttpPattern = void 0;
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -578,8 +575,9 @@ function createBaseHttp() {
   };
 }
 var Http = {
+  typeUrl: "/google.api.Http",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.rules),
       _step;
     try {
@@ -598,7 +596,7 @@ var Http = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseHttp();
     while (reader.pos < end) {
@@ -625,6 +623,41 @@ var Http = {
     })) || [];
     message.fullyDecodeReservedExpansion = (_object$fullyDecodeRe = object.fullyDecodeReservedExpansion) !== null && _object$fullyDecodeRe !== void 0 ? _object$fullyDecodeRe : false;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      rules: Array.isArray(object === null || object === void 0 ? void 0 : object.rules) ? object.rules.map(function (e) {
+        return HttpRule.fromAmino(e);
+      }) : [],
+      fullyDecodeReservedExpansion: object.fully_decode_reserved_expansion
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.rules) {
+      obj.rules = message.rules.map(function (e) {
+        return e ? HttpRule.toAmino(e) : undefined;
+      });
+    } else {
+      obj.rules = [];
+    }
+    obj.fully_decode_reserved_expansion = message.fullyDecodeReservedExpansion;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Http.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Http.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Http.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/google.api.Http",
+      value: Http.encode(message).finish()
+    };
   }
 };
 exports.Http = Http;
@@ -643,8 +676,9 @@ function createBaseHttpRule() {
   };
 }
 var HttpRule = {
+  typeUrl: "/google.api.HttpRule",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.selector !== "") {
       writer.uint32(10).string(message.selector);
     }
@@ -687,7 +721,7 @@ var HttpRule = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseHttpRule();
     while (reader.pos < end) {
@@ -746,6 +780,57 @@ var HttpRule = {
       return HttpRule.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      selector: object.selector,
+      get: object === null || object === void 0 ? void 0 : object.get,
+      put: object === null || object === void 0 ? void 0 : object.put,
+      post: object === null || object === void 0 ? void 0 : object.post,
+      "delete": object === null || object === void 0 ? void 0 : object["delete"],
+      patch: object === null || object === void 0 ? void 0 : object.patch,
+      custom: object !== null && object !== void 0 && object.custom ? CustomHttpPattern.fromAmino(object.custom) : undefined,
+      body: object.body,
+      responseBody: object.response_body,
+      additionalBindings: Array.isArray(object === null || object === void 0 ? void 0 : object.additional_bindings) ? object.additional_bindings.map(function (e) {
+        return HttpRule.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.selector = message.selector;
+    obj.get = message.get;
+    obj.put = message.put;
+    obj.post = message.post;
+    obj["delete"] = message["delete"];
+    obj.patch = message.patch;
+    obj.custom = message.custom ? CustomHttpPattern.toAmino(message.custom) : undefined;
+    obj.body = message.body;
+    obj.response_body = message.responseBody;
+    if (message.additionalBindings) {
+      obj.additional_bindings = message.additionalBindings.map(function (e) {
+        return e ? HttpRule.toAmino(e) : undefined;
+      });
+    } else {
+      obj.additional_bindings = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return HttpRule.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return HttpRule.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return HttpRule.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/google.api.HttpRule",
+      value: HttpRule.encode(message).finish()
+    };
   }
 };
 exports.HttpRule = HttpRule;
@@ -756,8 +841,9 @@ function createBaseCustomHttpPattern() {
   };
 }
 var CustomHttpPattern = {
+  typeUrl: "/google.api.CustomHttpPattern",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.kind !== "") {
       writer.uint32(10).string(message.kind);
     }
@@ -767,7 +853,7 @@ var CustomHttpPattern = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseCustomHttpPattern();
     while (reader.pos < end) {
@@ -792,6 +878,33 @@ var CustomHttpPattern = {
     message.kind = (_object$kind = object.kind) !== null && _object$kind !== void 0 ? _object$kind : "";
     message.path = (_object$path = object.path) !== null && _object$path !== void 0 ? _object$path : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      kind: object.kind,
+      path: object.path
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.kind = message.kind;
+    obj.path = message.path;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return CustomHttpPattern.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return CustomHttpPattern.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return CustomHttpPattern.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/google.api.CustomHttpPattern",
+      value: CustomHttpPattern.encode(message).finish()
+    };
   }
 };
 exports.CustomHttpPattern = CustomHttpPattern;

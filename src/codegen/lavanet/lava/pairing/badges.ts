@@ -1,25 +1,24 @@
 import { Badge, BadgeSDKType } from "./relay";
 import { StakeEntry, StakeEntrySDKType } from "../epochstorage/stake_entry";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface GenerateBadgeRequest {
   badgeAddress: string;
   projectId: string;
-  specId: string;
+  specId?: string;
 }
 export interface GenerateBadgeRequestSDKType {
   badge_address: string;
   project_id: string;
-  spec_id: string;
+  spec_id?: string;
 }
 export interface GenerateBadgeResponse {
-  badge?: Badge;
-  pairingList: StakeEntry[];
+  badge: Badge;
+  pairingList?: StakeEntry[];
   badgeSignerAddress: string;
 }
 export interface GenerateBadgeResponseSDKType {
-  badge?: BadgeSDKType;
-  pairing_list: StakeEntrySDKType[];
+  badge: BadgeSDKType;
+  pairing_list?: StakeEntrySDKType[];
   badge_signer_address: string;
 }
 function createBaseGenerateBadgeRequest(): GenerateBadgeRequest {
@@ -30,7 +29,8 @@ function createBaseGenerateBadgeRequest(): GenerateBadgeRequest {
   };
 }
 export const GenerateBadgeRequest = {
-  encode(message: GenerateBadgeRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.pairing.GenerateBadgeRequest",
+  encode(message: GenerateBadgeRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.badgeAddress !== "") {
       writer.uint32(10).string(message.badgeAddress);
     }
@@ -42,8 +42,8 @@ export const GenerateBadgeRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenerateBadgeRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenerateBadgeRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenerateBadgeRequest();
     while (reader.pos < end) {
@@ -65,23 +65,53 @@ export const GenerateBadgeRequest = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenerateBadgeRequest>): GenerateBadgeRequest {
+  fromPartial(object: Partial<GenerateBadgeRequest>): GenerateBadgeRequest {
     const message = createBaseGenerateBadgeRequest();
     message.badgeAddress = object.badgeAddress ?? "";
     message.projectId = object.projectId ?? "";
     message.specId = object.specId ?? undefined;
     return message;
+  },
+  fromAmino(object: GenerateBadgeRequestAmino): GenerateBadgeRequest {
+    return {
+      badgeAddress: object.badge_address,
+      projectId: object.project_id,
+      specId: object?.spec_id
+    };
+  },
+  toAmino(message: GenerateBadgeRequest): GenerateBadgeRequestAmino {
+    const obj: any = {};
+    obj.badge_address = message.badgeAddress;
+    obj.project_id = message.projectId;
+    obj.spec_id = message.specId;
+    return obj;
+  },
+  fromAminoMsg(object: GenerateBadgeRequestAminoMsg): GenerateBadgeRequest {
+    return GenerateBadgeRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: GenerateBadgeRequestProtoMsg): GenerateBadgeRequest {
+    return GenerateBadgeRequest.decode(message.value);
+  },
+  toProto(message: GenerateBadgeRequest): Uint8Array {
+    return GenerateBadgeRequest.encode(message).finish();
+  },
+  toProtoMsg(message: GenerateBadgeRequest): GenerateBadgeRequestProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.pairing.GenerateBadgeRequest",
+      value: GenerateBadgeRequest.encode(message).finish()
+    };
   }
 };
 function createBaseGenerateBadgeResponse(): GenerateBadgeResponse {
   return {
-    badge: undefined,
+    badge: Badge.fromPartial({}),
     pairingList: undefined,
     badgeSignerAddress: ""
   };
 }
 export const GenerateBadgeResponse = {
-  encode(message: GenerateBadgeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.pairing.GenerateBadgeResponse",
+  encode(message: GenerateBadgeResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.badge !== undefined) {
       Badge.encode(message.badge, writer.uint32(10).fork()).ldelim();
     }
@@ -93,8 +123,8 @@ export const GenerateBadgeResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenerateBadgeResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenerateBadgeResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenerateBadgeResponse();
     while (reader.pos < end) {
@@ -116,11 +146,44 @@ export const GenerateBadgeResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenerateBadgeResponse>): GenerateBadgeResponse {
+  fromPartial(object: Partial<GenerateBadgeResponse>): GenerateBadgeResponse {
     const message = createBaseGenerateBadgeResponse();
     message.badge = object.badge !== undefined && object.badge !== null ? Badge.fromPartial(object.badge) : undefined;
     message.pairingList = object.pairingList?.map(e => StakeEntry.fromPartial(e)) || [];
     message.badgeSignerAddress = object.badgeSignerAddress ?? "";
     return message;
+  },
+  fromAmino(object: GenerateBadgeResponseAmino): GenerateBadgeResponse {
+    return {
+      badge: object?.badge ? Badge.fromAmino(object.badge) : undefined,
+      pairingList: Array.isArray(object?.pairing_list) ? object.pairing_list.map((e: any) => StakeEntry.fromAmino(e)) : [],
+      badgeSignerAddress: object.badge_signer_address
+    };
+  },
+  toAmino(message: GenerateBadgeResponse): GenerateBadgeResponseAmino {
+    const obj: any = {};
+    obj.badge = message.badge ? Badge.toAmino(message.badge) : undefined;
+    if (message.pairingList) {
+      obj.pairing_list = message.pairingList.map(e => e ? StakeEntry.toAmino(e) : undefined);
+    } else {
+      obj.pairing_list = [];
+    }
+    obj.badge_signer_address = message.badgeSignerAddress;
+    return obj;
+  },
+  fromAminoMsg(object: GenerateBadgeResponseAminoMsg): GenerateBadgeResponse {
+    return GenerateBadgeResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: GenerateBadgeResponseProtoMsg): GenerateBadgeResponse {
+    return GenerateBadgeResponse.decode(message.value);
+  },
+  toProto(message: GenerateBadgeResponse): Uint8Array {
+    return GenerateBadgeResponse.encode(message).finish();
+  },
+  toProtoMsg(message: GenerateBadgeResponse): GenerateBadgeResponseProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.pairing.GenerateBadgeResponse",
+      value: GenerateBadgeResponse.encode(message).finish()
+    };
   }
 };

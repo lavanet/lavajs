@@ -1,5 +1,4 @@
-import { Long } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
 /**
  * Wrapper message for `double`.
  * 
@@ -114,14 +113,15 @@ function createBaseDoubleValue() {
   };
 }
 export const DoubleValue = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.DoubleValue",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.value !== 0) {
       writer.uint32(9).double(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDoubleValue();
     while (reader.pos < end) {
@@ -142,6 +142,31 @@ export const DoubleValue = {
     const message = createBaseDoubleValue();
     message.value = (_object$value = object.value) !== null && _object$value !== void 0 ? _object$value : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return DoubleValue.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return DoubleValue.decode(message.value);
+  },
+  toProto(message) {
+    return DoubleValue.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.DoubleValue",
+      value: DoubleValue.encode(message).finish()
+    };
   }
 };
 function createBaseFloatValue() {
@@ -150,14 +175,15 @@ function createBaseFloatValue() {
   };
 }
 export const FloatValue = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.FloatValue",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.value !== 0) {
       writer.uint32(13).float(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFloatValue();
     while (reader.pos < end) {
@@ -178,22 +204,48 @@ export const FloatValue = {
     const message = createBaseFloatValue();
     message.value = (_object$value2 = object.value) !== null && _object$value2 !== void 0 ? _object$value2 : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return FloatValue.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return FloatValue.decode(message.value);
+  },
+  toProto(message) {
+    return FloatValue.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.FloatValue",
+      value: FloatValue.encode(message).finish()
+    };
   }
 };
 function createBaseInt64Value() {
   return {
-    value: Long.ZERO
+    value: BigInt(0)
   };
 }
 export const Int64Value = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.value.isZero()) {
+  typeUrl: "/google.protobuf.Int64Value",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.value !== BigInt(0)) {
       writer.uint32(8).int64(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInt64Value();
     while (reader.pos < end) {
@@ -211,24 +263,50 @@ export const Int64Value = {
   },
   fromPartial(object) {
     const message = createBaseInt64Value();
-    message.value = object.value !== undefined && object.value !== null ? Long.fromValue(object.value) : Long.ZERO;
+    message.value = object.value !== undefined && object.value !== null ? BigInt(object.value.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: BigInt(object.value)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value ? message.value.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Int64Value.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Int64Value.decode(message.value);
+  },
+  toProto(message) {
+    return Int64Value.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Int64Value",
+      value: Int64Value.encode(message).finish()
+    };
   }
 };
 function createBaseUInt64Value() {
   return {
-    value: Long.UZERO
+    value: BigInt(0)
   };
 }
 export const UInt64Value = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.value.isZero()) {
+  typeUrl: "/google.protobuf.UInt64Value",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.value !== BigInt(0)) {
       writer.uint32(8).uint64(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUInt64Value();
     while (reader.pos < end) {
@@ -246,8 +324,33 @@ export const UInt64Value = {
   },
   fromPartial(object) {
     const message = createBaseUInt64Value();
-    message.value = object.value !== undefined && object.value !== null ? Long.fromValue(object.value) : Long.UZERO;
+    message.value = object.value !== undefined && object.value !== null ? BigInt(object.value.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: BigInt(object.value)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value ? message.value.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return UInt64Value.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return UInt64Value.decode(message.value);
+  },
+  toProto(message) {
+    return UInt64Value.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.UInt64Value",
+      value: UInt64Value.encode(message).finish()
+    };
   }
 };
 function createBaseInt32Value() {
@@ -256,14 +359,15 @@ function createBaseInt32Value() {
   };
 }
 export const Int32Value = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.Int32Value",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.value !== 0) {
       writer.uint32(8).int32(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInt32Value();
     while (reader.pos < end) {
@@ -284,6 +388,31 @@ export const Int32Value = {
     const message = createBaseInt32Value();
     message.value = (_object$value3 = object.value) !== null && _object$value3 !== void 0 ? _object$value3 : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Int32Value.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Int32Value.decode(message.value);
+  },
+  toProto(message) {
+    return Int32Value.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.Int32Value",
+      value: Int32Value.encode(message).finish()
+    };
   }
 };
 function createBaseUInt32Value() {
@@ -292,14 +421,15 @@ function createBaseUInt32Value() {
   };
 }
 export const UInt32Value = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.UInt32Value",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.value !== 0) {
       writer.uint32(8).uint32(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUInt32Value();
     while (reader.pos < end) {
@@ -320,6 +450,31 @@ export const UInt32Value = {
     const message = createBaseUInt32Value();
     message.value = (_object$value4 = object.value) !== null && _object$value4 !== void 0 ? _object$value4 : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return UInt32Value.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return UInt32Value.decode(message.value);
+  },
+  toProto(message) {
+    return UInt32Value.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.UInt32Value",
+      value: UInt32Value.encode(message).finish()
+    };
   }
 };
 function createBaseBoolValue() {
@@ -328,14 +483,15 @@ function createBaseBoolValue() {
   };
 }
 export const BoolValue = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.BoolValue",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.value === true) {
       writer.uint32(8).bool(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBoolValue();
     while (reader.pos < end) {
@@ -356,6 +512,31 @@ export const BoolValue = {
     const message = createBaseBoolValue();
     message.value = (_object$value5 = object.value) !== null && _object$value5 !== void 0 ? _object$value5 : false;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return BoolValue.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return BoolValue.decode(message.value);
+  },
+  toProto(message) {
+    return BoolValue.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.BoolValue",
+      value: BoolValue.encode(message).finish()
+    };
   }
 };
 function createBaseStringValue() {
@@ -364,14 +545,15 @@ function createBaseStringValue() {
   };
 }
 export const StringValue = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.StringValue",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.value !== "") {
       writer.uint32(10).string(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStringValue();
     while (reader.pos < end) {
@@ -392,6 +574,31 @@ export const StringValue = {
     const message = createBaseStringValue();
     message.value = (_object$value6 = object.value) !== null && _object$value6 !== void 0 ? _object$value6 : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return StringValue.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return StringValue.decode(message.value);
+  },
+  toProto(message) {
+    return StringValue.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.StringValue",
+      value: StringValue.encode(message).finish()
+    };
   }
 };
 function createBaseBytesValue() {
@@ -400,14 +607,15 @@ function createBaseBytesValue() {
   };
 }
 export const BytesValue = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/google.protobuf.BytesValue",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.value.length !== 0) {
       writer.uint32(10).bytes(message.value);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBytesValue();
     while (reader.pos < end) {
@@ -428,5 +636,30 @@ export const BytesValue = {
     const message = createBaseBytesValue();
     message.value = (_object$value7 = object.value) !== null && _object$value7 !== void 0 ? _object$value7 : new Uint8Array();
     return message;
+  },
+  fromAmino(object) {
+    return {
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return BytesValue.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return BytesValue.decode(message.value);
+  },
+  toProto(message) {
+    return BytesValue.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/google.protobuf.BytesValue",
+      value: BytesValue.encode(message).finish()
+    };
   }
 };

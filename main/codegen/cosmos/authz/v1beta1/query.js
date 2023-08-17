@@ -1,15 +1,12 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.QueryGrantsResponse = exports.QueryGrantsRequest = exports.QueryGranterGrantsResponse = exports.QueryGranterGrantsRequest = exports.QueryGranteeGrantsResponse = exports.QueryGranteeGrantsRequest = void 0;
 var _pagination = require("../../base/query/v1beta1/pagination");
 var _authz = require("./authz");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -42,12 +39,13 @@ function createBaseQueryGrantsRequest() {
     granter: "",
     grantee: "",
     msgTypeUrl: "",
-    pagination: undefined
+    pagination: _pagination.PageRequest.fromPartial({})
   };
 }
 var QueryGrantsRequest = {
+  typeUrl: "/cosmos.authz.v1beta1.QueryGrantsRequest",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -63,7 +61,7 @@ var QueryGrantsRequest = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGrantsRequest();
     while (reader.pos < end) {
@@ -96,18 +94,56 @@ var QueryGrantsRequest = {
     message.msgTypeUrl = (_object$msgTypeUrl = object.msgTypeUrl) !== null && _object$msgTypeUrl !== void 0 ? _object$msgTypeUrl : "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      granter: object.granter,
+      grantee: object.grantee,
+      msgTypeUrl: object.msg_type_url,
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    obj.msg_type_url = message.msgTypeUrl;
+    obj.pagination = message.pagination ? _pagination.PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGrantsRequest.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryGrantsRequest",
+      value: QueryGrantsRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGrantsRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGrantsRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.QueryGrantsRequest",
+      value: QueryGrantsRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryGrantsRequest = QueryGrantsRequest;
 function createBaseQueryGrantsResponse() {
   return {
     grants: [],
-    pagination: undefined
+    pagination: _pagination.PageResponse.fromPartial({})
   };
 }
 var QueryGrantsResponse = {
+  typeUrl: "/cosmos.authz.v1beta1.QueryGrantsResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator = _createForOfIteratorHelper(message.grants),
       _step;
     try {
@@ -126,7 +162,7 @@ var QueryGrantsResponse = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGrantsResponse();
     while (reader.pos < end) {
@@ -153,18 +189,60 @@ var QueryGrantsResponse = {
     })) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageResponse.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      grants: Array.isArray(object === null || object === void 0 ? void 0 : object.grants) ? object.grants.map(function (e) {
+        return _authz.Grant.fromAmino(e);
+      }) : [],
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageResponse.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.grants) {
+      obj.grants = message.grants.map(function (e) {
+        return e ? _authz.Grant.toAmino(e) : undefined;
+      });
+    } else {
+      obj.grants = [];
+    }
+    obj.pagination = message.pagination ? _pagination.PageResponse.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGrantsResponse.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryGrantsResponse",
+      value: QueryGrantsResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGrantsResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGrantsResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.QueryGrantsResponse",
+      value: QueryGrantsResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryGrantsResponse = QueryGrantsResponse;
 function createBaseQueryGranterGrantsRequest() {
   return {
     granter: "",
-    pagination: undefined
+    pagination: _pagination.PageRequest.fromPartial({})
   };
 }
 var QueryGranterGrantsRequest = {
+  typeUrl: "/cosmos.authz.v1beta1.QueryGranterGrantsRequest",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -174,7 +252,7 @@ var QueryGranterGrantsRequest = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGranterGrantsRequest();
     while (reader.pos < end) {
@@ -199,18 +277,52 @@ var QueryGranterGrantsRequest = {
     message.granter = (_object$granter2 = object.granter) !== null && _object$granter2 !== void 0 ? _object$granter2 : "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      granter: object.granter,
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.granter = message.granter;
+    obj.pagination = message.pagination ? _pagination.PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGranterGrantsRequest.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryGranterGrantsRequest",
+      value: QueryGranterGrantsRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGranterGrantsRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGranterGrantsRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.QueryGranterGrantsRequest",
+      value: QueryGranterGrantsRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryGranterGrantsRequest = QueryGranterGrantsRequest;
 function createBaseQueryGranterGrantsResponse() {
   return {
     grants: [],
-    pagination: undefined
+    pagination: _pagination.PageResponse.fromPartial({})
   };
 }
 var QueryGranterGrantsResponse = {
+  typeUrl: "/cosmos.authz.v1beta1.QueryGranterGrantsResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator2 = _createForOfIteratorHelper(message.grants),
       _step2;
     try {
@@ -229,7 +341,7 @@ var QueryGranterGrantsResponse = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGranterGrantsResponse();
     while (reader.pos < end) {
@@ -256,18 +368,60 @@ var QueryGranterGrantsResponse = {
     })) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageResponse.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      grants: Array.isArray(object === null || object === void 0 ? void 0 : object.grants) ? object.grants.map(function (e) {
+        return _authz.GrantAuthorization.fromAmino(e);
+      }) : [],
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageResponse.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.grants) {
+      obj.grants = message.grants.map(function (e) {
+        return e ? _authz.GrantAuthorization.toAmino(e) : undefined;
+      });
+    } else {
+      obj.grants = [];
+    }
+    obj.pagination = message.pagination ? _pagination.PageResponse.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGranterGrantsResponse.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryGranterGrantsResponse",
+      value: QueryGranterGrantsResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGranterGrantsResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGranterGrantsResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.QueryGranterGrantsResponse",
+      value: QueryGranterGrantsResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryGranterGrantsResponse = QueryGranterGrantsResponse;
 function createBaseQueryGranteeGrantsRequest() {
   return {
     grantee: "",
-    pagination: undefined
+    pagination: _pagination.PageRequest.fromPartial({})
   };
 }
 var QueryGranteeGrantsRequest = {
+  typeUrl: "/cosmos.authz.v1beta1.QueryGranteeGrantsRequest",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.grantee !== "") {
       writer.uint32(10).string(message.grantee);
     }
@@ -277,7 +431,7 @@ var QueryGranteeGrantsRequest = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGranteeGrantsRequest();
     while (reader.pos < end) {
@@ -302,18 +456,52 @@ var QueryGranteeGrantsRequest = {
     message.grantee = (_object$grantee2 = object.grantee) !== null && _object$grantee2 !== void 0 ? _object$grantee2 : "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      grantee: object.grantee,
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.grantee = message.grantee;
+    obj.pagination = message.pagination ? _pagination.PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGranteeGrantsRequest.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryGranteeGrantsRequest",
+      value: QueryGranteeGrantsRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGranteeGrantsRequest.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGranteeGrantsRequest.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.QueryGranteeGrantsRequest",
+      value: QueryGranteeGrantsRequest.encode(message).finish()
+    };
   }
 };
 exports.QueryGranteeGrantsRequest = QueryGranteeGrantsRequest;
 function createBaseQueryGranteeGrantsResponse() {
   return {
     grants: [],
-    pagination: undefined
+    pagination: _pagination.PageResponse.fromPartial({})
   };
 }
 var QueryGranteeGrantsResponse = {
+  typeUrl: "/cosmos.authz.v1beta1.QueryGranteeGrantsResponse",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator3 = _createForOfIteratorHelper(message.grants),
       _step3;
     try {
@@ -332,7 +520,7 @@ var QueryGranteeGrantsResponse = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseQueryGranteeGrantsResponse();
     while (reader.pos < end) {
@@ -359,6 +547,47 @@ var QueryGranteeGrantsResponse = {
     })) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? _pagination.PageResponse.fromPartial(object.pagination) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      grants: Array.isArray(object === null || object === void 0 ? void 0 : object.grants) ? object.grants.map(function (e) {
+        return _authz.GrantAuthorization.fromAmino(e);
+      }) : [],
+      pagination: object !== null && object !== void 0 && object.pagination ? _pagination.PageResponse.fromAmino(object.pagination) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.grants) {
+      obj.grants = message.grants.map(function (e) {
+        return e ? _authz.GrantAuthorization.toAmino(e) : undefined;
+      });
+    } else {
+      obj.grants = [];
+    }
+    obj.pagination = message.pagination ? _pagination.PageResponse.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return QueryGranteeGrantsResponse.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/QueryGranteeGrantsResponse",
+      value: QueryGranteeGrantsResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return QueryGranteeGrantsResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return QueryGranteeGrantsResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.QueryGranteeGrantsResponse",
+      value: QueryGranteeGrantsResponse.encode(message).finish()
+    };
   }
 };
 exports.QueryGranteeGrantsResponse = QueryGranteeGrantsResponse;

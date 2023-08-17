@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryEvidenceRequest, QueryEvidenceResponse, QueryAllEvidenceRequest, QueryAllEvidenceResponse } from "./query";
 /** Query defines the gRPC querier service. */
@@ -14,14 +14,14 @@ export class QueryClientImpl {
   evidence(request) {
     const data = QueryEvidenceRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.evidence.v1beta1.Query", "Evidence", data);
-    return promise.then(data => QueryEvidenceResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryEvidenceResponse.decode(new BinaryReader(data)));
   }
   allEvidence(request = {
     pagination: undefined
   }) {
     const data = QueryAllEvidenceRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.evidence.v1beta1.Query", "AllEvidence", data);
-    return promise.then(data => QueryAllEvidenceResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAllEvidenceResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

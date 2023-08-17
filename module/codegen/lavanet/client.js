@@ -35,7 +35,7 @@ export const getSigningLavanetClient = async ({
     defaultTypes
   });
   const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer, {
-    registry,
+    registry: registry,
     aminoTypes
   });
   return client;

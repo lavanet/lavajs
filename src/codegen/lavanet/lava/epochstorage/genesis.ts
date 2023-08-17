@@ -2,32 +2,32 @@ import { Params, ParamsSDKType } from "./params";
 import { StakeStorage, StakeStorageSDKType } from "./stake_storage";
 import { EpochDetails, EpochDetailsSDKType } from "./epoch_details";
 import { FixatedParams, FixatedParamsSDKType } from "./fixated_params";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** GenesisState defines the epochstorage module's genesis state. */
 export interface GenesisState {
-  params?: Params;
+  params: Params;
   stakeStorageList: StakeStorage[];
-  epochDetails?: EpochDetails;
+  epochDetails: EpochDetails;
   fixatedParamsList: FixatedParams[];
 }
 /** GenesisState defines the epochstorage module's genesis state. */
 export interface GenesisStateSDKType {
-  params?: ParamsSDKType;
+  params: ParamsSDKType;
   stakeStorageList: StakeStorageSDKType[];
-  epochDetails?: EpochDetailsSDKType;
+  epochDetails: EpochDetailsSDKType;
   fixatedParamsList: FixatedParamsSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
-    params: undefined,
+    params: Params.fromPartial({}),
     stakeStorageList: [],
-    epochDetails: undefined,
+    epochDetails: EpochDetails.fromPartial({}),
     fixatedParamsList: []
   };
 }
 export const GenesisState = {
-  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.epochstorage.GenesisState",
+  encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -42,8 +42,8 @@ export const GenesisState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -68,12 +68,51 @@ export const GenesisState = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenesisState>): GenesisState {
+  fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.stakeStorageList = object.stakeStorageList?.map(e => StakeStorage.fromPartial(e)) || [];
     message.epochDetails = object.epochDetails !== undefined && object.epochDetails !== null ? EpochDetails.fromPartial(object.epochDetails) : undefined;
     message.fixatedParamsList = object.fixatedParamsList?.map(e => FixatedParams.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      params: object?.params ? Params.fromAmino(object.params) : undefined,
+      stakeStorageList: Array.isArray(object?.stakeStorageList) ? object.stakeStorageList.map((e: any) => StakeStorage.fromAmino(e)) : [],
+      epochDetails: object?.epochDetails ? EpochDetails.fromAmino(object.epochDetails) : undefined,
+      fixatedParamsList: Array.isArray(object?.fixatedParamsList) ? object.fixatedParamsList.map((e: any) => FixatedParams.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    if (message.stakeStorageList) {
+      obj.stakeStorageList = message.stakeStorageList.map(e => e ? StakeStorage.toAmino(e) : undefined);
+    } else {
+      obj.stakeStorageList = [];
+    }
+    obj.epochDetails = message.epochDetails ? EpochDetails.toAmino(message.epochDetails) : undefined;
+    if (message.fixatedParamsList) {
+      obj.fixatedParamsList = message.fixatedParamsList.map(e => e ? FixatedParams.toAmino(e) : undefined);
+    } else {
+      obj.fixatedParamsList = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {
+    return GenesisState.fromAmino(object.value);
+  },
+  fromProtoMsg(message: GenesisStateProtoMsg): GenesisState {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message: GenesisState): Uint8Array {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message: GenesisState): GenesisStateProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.epochstorage.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };

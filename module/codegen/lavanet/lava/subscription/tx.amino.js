@@ -1,4 +1,3 @@
-import { Long } from "../../../helpers";
 import { sELECTED_PROVIDERS_MODEFromJSON } from "../plans/policy";
 export const AminoConverter = {
   "/lavanet.lava.subscription.MsgBuy": {
@@ -26,7 +25,7 @@ export const AminoConverter = {
         creator,
         consumer,
         index,
-        duration: Long.fromString(duration)
+        duration: BigInt(duration)
       };
     }
   },
@@ -96,10 +95,10 @@ export const AminoConverter = {
                 extensions: el3.extensions
               }))
             })),
-            geolocationProfile: Long.fromString(project_data.policy.geolocation_profile),
-            totalCuLimit: Long.fromString(project_data.policy.total_cu_limit),
-            epochCuLimit: Long.fromString(project_data.policy.epoch_cu_limit),
-            maxProvidersToPair: Long.fromString(project_data.policy.max_providers_to_pair),
+            geolocationProfile: BigInt(project_data.policy.geolocation_profile),
+            totalCuLimit: BigInt(project_data.policy.total_cu_limit),
+            epochCuLimit: BigInt(project_data.policy.epoch_cu_limit),
+            maxProvidersToPair: BigInt(project_data.policy.max_providers_to_pair),
             selectedProvidersMode: sELECTED_PROVIDERS_MODEFromJSON(project_data.policy.selected_providers_mode),
             selectedProviders: project_data.policy.selected_providers
           }

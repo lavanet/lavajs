@@ -1,5 +1,5 @@
 import { Rpc } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgAddKeys, MsgAddKeysResponse, MsgDelKeys, MsgDelKeysResponse, MsgSetPolicy, MsgSetPolicyResponse, MsgSetSubscriptionPolicy, MsgSetSubscriptionPolicyResponse } from "./tx";
 /** Msg defines the Msg service. */
 export interface Msg {
@@ -20,21 +20,21 @@ export class MsgClientImpl implements Msg {
   addKeys(request: MsgAddKeys): Promise<MsgAddKeysResponse> {
     const data = MsgAddKeys.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.projects.Msg", "AddKeys", data);
-    return promise.then(data => MsgAddKeysResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgAddKeysResponse.decode(new BinaryReader(data)));
   }
   delKeys(request: MsgDelKeys): Promise<MsgDelKeysResponse> {
     const data = MsgDelKeys.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.projects.Msg", "DelKeys", data);
-    return promise.then(data => MsgDelKeysResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDelKeysResponse.decode(new BinaryReader(data)));
   }
   setPolicy(request: MsgSetPolicy): Promise<MsgSetPolicyResponse> {
     const data = MsgSetPolicy.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.projects.Msg", "SetPolicy", data);
-    return promise.then(data => MsgSetPolicyResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSetPolicyResponse.decode(new BinaryReader(data)));
   }
   setSubscriptionPolicy(request: MsgSetSubscriptionPolicy): Promise<MsgSetSubscriptionPolicyResponse> {
     const data = MsgSetSubscriptionPolicy.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.projects.Msg", "SetSubscriptionPolicy", data);
-    return promise.then(data => MsgSetSubscriptionPolicyResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSetSubscriptionPolicyResponse.decode(new BinaryReader(data)));
   }
 }

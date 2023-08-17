@@ -1,18 +1,18 @@
 import { Minter, Params } from "./mint";
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** GenesisState defines the mint module's genesis state. */
 
 /** GenesisState defines the mint module's genesis state. */
 
 function createBaseGenesisState() {
   return {
-    minter: undefined,
-    params: undefined
+    minter: Minter.fromPartial({}),
+    params: Params.fromPartial({})
   };
 }
 export const GenesisState = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.mint.v1beta1.GenesisState",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.minter !== undefined) {
       Minter.encode(message.minter, writer.uint32(10).fork()).ldelim();
     }
@@ -22,7 +22,7 @@ export const GenesisState = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -46,5 +46,38 @@ export const GenesisState = {
     message.minter = object.minter !== undefined && object.minter !== null ? Minter.fromPartial(object.minter) : undefined;
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      minter: object !== null && object !== void 0 && object.minter ? Minter.fromAmino(object.minter) : undefined,
+      params: object !== null && object !== void 0 && object.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.minter = message.minter ? Minter.toAmino(message.minter) : undefined;
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GenesisState.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GenesisState",
+      value: GenesisState.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message) {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.mint.v1beta1.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };

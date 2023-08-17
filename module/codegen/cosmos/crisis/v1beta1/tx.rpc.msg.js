@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgVerifyInvariant, MsgVerifyInvariantResponse } from "./tx";
 /** Msg defines the bank Msg service. */
 
@@ -12,6 +12,6 @@ export class MsgClientImpl {
   verifyInvariant(request) {
     const data = MsgVerifyInvariant.encode(request).finish();
     const promise = this.rpc.request("cosmos.crisis.v1beta1.Msg", "VerifyInvariant", data);
-    return promise.then(data => MsgVerifyInvariantResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgVerifyInvariantResponse.decode(new BinaryReader(data)));
   }
 }

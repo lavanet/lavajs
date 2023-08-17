@@ -1,8 +1,8 @@
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Duration } from "../../../google/protobuf/duration";
 import { Any } from "../../../google/protobuf/any";
-import { Long, toTimestamp, fromTimestamp } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { toTimestamp, fromTimestamp, isSet } from "../../../helpers";
 /** VoteOption enumerates the valid vote options for a given proposal. */
 export let VoteOption = /*#__PURE__*/function (VoteOption) {
   VoteOption[VoteOption["VOTE_OPTION_UNSPECIFIED"] = 0] = "VOTE_OPTION_UNSPECIFIED";
@@ -260,11 +260,12 @@ function createBaseMember() {
     address: "",
     weight: "",
     metadata: "",
-    addedAt: undefined
+    addedAt: new Date()
   };
 }
 export const Member = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.group.v1.Member",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -280,7 +281,7 @@ export const Member = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMember();
     while (reader.pos < end) {
@@ -313,6 +314,43 @@ export const Member = {
     message.metadata = (_object$metadata = object.metadata) !== null && _object$metadata !== void 0 ? _object$metadata : "";
     message.addedAt = (_object$addedAt = object.addedAt) !== null && _object$addedAt !== void 0 ? _object$addedAt : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      address: object.address,
+      weight: object.weight,
+      metadata: object.metadata,
+      addedAt: object.added_at
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.address = message.address;
+    obj.weight = message.weight;
+    obj.metadata = message.metadata;
+    obj.added_at = message.addedAt;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Member.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Member",
+      value: Member.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return Member.decode(message.value);
+  },
+  toProto(message) {
+    return Member.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.Member",
+      value: Member.encode(message).finish()
+    };
   }
 };
 function createBaseMembers() {
@@ -321,14 +359,15 @@ function createBaseMembers() {
   };
 }
 export const Members = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.group.v1.Members",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.members) {
       Member.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMembers();
     while (reader.pos < end) {
@@ -349,16 +388,52 @@ export const Members = {
     const message = createBaseMembers();
     message.members = ((_object$members = object.members) === null || _object$members === void 0 ? void 0 : _object$members.map(e => Member.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      members: Array.isArray(object === null || object === void 0 ? void 0 : object.members) ? object.members.map(e => Member.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.members) {
+      obj.members = message.members.map(e => e ? Member.toAmino(e) : undefined);
+    } else {
+      obj.members = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Members.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Members",
+      value: Members.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return Members.decode(message.value);
+  },
+  toProto(message) {
+    return Members.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.Members",
+      value: Members.encode(message).finish()
+    };
   }
 };
 function createBaseThresholdDecisionPolicy() {
   return {
     threshold: "",
-    windows: undefined
+    windows: DecisionPolicyWindows.fromPartial({})
   };
 }
 export const ThresholdDecisionPolicy = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.group.v1.ThresholdDecisionPolicy",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.threshold !== "") {
       writer.uint32(10).string(message.threshold);
     }
@@ -368,7 +443,7 @@ export const ThresholdDecisionPolicy = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseThresholdDecisionPolicy();
     while (reader.pos < end) {
@@ -393,16 +468,50 @@ export const ThresholdDecisionPolicy = {
     message.threshold = (_object$threshold = object.threshold) !== null && _object$threshold !== void 0 ? _object$threshold : "";
     message.windows = object.windows !== undefined && object.windows !== null ? DecisionPolicyWindows.fromPartial(object.windows) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      threshold: object.threshold,
+      windows: object !== null && object !== void 0 && object.windows ? DecisionPolicyWindows.fromAmino(object.windows) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.threshold = message.threshold;
+    obj.windows = message.windows ? DecisionPolicyWindows.toAmino(message.windows) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ThresholdDecisionPolicy.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ThresholdDecisionPolicy",
+      value: ThresholdDecisionPolicy.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return ThresholdDecisionPolicy.decode(message.value);
+  },
+  toProto(message) {
+    return ThresholdDecisionPolicy.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.ThresholdDecisionPolicy",
+      value: ThresholdDecisionPolicy.encode(message).finish()
+    };
   }
 };
 function createBasePercentageDecisionPolicy() {
   return {
     percentage: "",
-    windows: undefined
+    windows: DecisionPolicyWindows.fromPartial({})
   };
 }
 export const PercentageDecisionPolicy = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.group.v1.PercentageDecisionPolicy",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.percentage !== "") {
       writer.uint32(10).string(message.percentage);
     }
@@ -412,7 +521,7 @@ export const PercentageDecisionPolicy = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePercentageDecisionPolicy();
     while (reader.pos < end) {
@@ -437,16 +546,50 @@ export const PercentageDecisionPolicy = {
     message.percentage = (_object$percentage = object.percentage) !== null && _object$percentage !== void 0 ? _object$percentage : "";
     message.windows = object.windows !== undefined && object.windows !== null ? DecisionPolicyWindows.fromPartial(object.windows) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      percentage: object.percentage,
+      windows: object !== null && object !== void 0 && object.windows ? DecisionPolicyWindows.fromAmino(object.windows) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.percentage = message.percentage;
+    obj.windows = message.windows ? DecisionPolicyWindows.toAmino(message.windows) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return PercentageDecisionPolicy.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/PercentageDecisionPolicy",
+      value: PercentageDecisionPolicy.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return PercentageDecisionPolicy.decode(message.value);
+  },
+  toProto(message) {
+    return PercentageDecisionPolicy.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.PercentageDecisionPolicy",
+      value: PercentageDecisionPolicy.encode(message).finish()
+    };
   }
 };
 function createBaseDecisionPolicyWindows() {
   return {
-    votingPeriod: undefined,
-    minExecutionPeriod: undefined
+    votingPeriod: Duration.fromPartial({}),
+    minExecutionPeriod: Duration.fromPartial({})
   };
 }
 export const DecisionPolicyWindows = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.group.v1.DecisionPolicyWindows",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.votingPeriod !== undefined) {
       Duration.encode(message.votingPeriod, writer.uint32(10).fork()).ldelim();
     }
@@ -456,7 +599,7 @@ export const DecisionPolicyWindows = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDecisionPolicyWindows();
     while (reader.pos < end) {
@@ -480,21 +623,55 @@ export const DecisionPolicyWindows = {
     message.votingPeriod = object.votingPeriod !== undefined && object.votingPeriod !== null ? Duration.fromPartial(object.votingPeriod) : undefined;
     message.minExecutionPeriod = object.minExecutionPeriod !== undefined && object.minExecutionPeriod !== null ? Duration.fromPartial(object.minExecutionPeriod) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      votingPeriod: object !== null && object !== void 0 && object.voting_period ? Duration.fromAmino(object.voting_period) : undefined,
+      minExecutionPeriod: object !== null && object !== void 0 && object.min_execution_period ? Duration.fromAmino(object.min_execution_period) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.voting_period = message.votingPeriod ? Duration.toAmino(message.votingPeriod) : undefined;
+    obj.min_execution_period = message.minExecutionPeriod ? Duration.toAmino(message.minExecutionPeriod) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return DecisionPolicyWindows.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/DecisionPolicyWindows",
+      value: DecisionPolicyWindows.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return DecisionPolicyWindows.decode(message.value);
+  },
+  toProto(message) {
+    return DecisionPolicyWindows.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.DecisionPolicyWindows",
+      value: DecisionPolicyWindows.encode(message).finish()
+    };
   }
 };
 function createBaseGroupInfo() {
   return {
-    id: Long.UZERO,
+    id: BigInt(0),
     admin: "",
     metadata: "",
-    version: Long.UZERO,
+    version: BigInt(0),
     totalWeight: "",
-    createdAt: undefined
+    createdAt: new Date()
   };
 }
 export const GroupInfo = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.id.isZero()) {
+  typeUrl: "/cosmos.group.v1.GroupInfo",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     if (message.admin !== "") {
@@ -503,7 +680,7 @@ export const GroupInfo = {
     if (message.metadata !== "") {
       writer.uint32(26).string(message.metadata);
     }
-    if (!message.version.isZero()) {
+    if (message.version !== BigInt(0)) {
       writer.uint32(32).uint64(message.version);
     }
     if (message.totalWeight !== "") {
@@ -515,7 +692,7 @@ export const GroupInfo = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGroupInfo();
     while (reader.pos < end) {
@@ -549,24 +726,66 @@ export const GroupInfo = {
   fromPartial(object) {
     var _object$admin, _object$metadata2, _object$totalWeight, _object$createdAt;
     const message = createBaseGroupInfo();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     message.admin = (_object$admin = object.admin) !== null && _object$admin !== void 0 ? _object$admin : "";
     message.metadata = (_object$metadata2 = object.metadata) !== null && _object$metadata2 !== void 0 ? _object$metadata2 : "";
-    message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.UZERO;
+    message.version = object.version !== undefined && object.version !== null ? BigInt(object.version.toString()) : BigInt(0);
     message.totalWeight = (_object$totalWeight = object.totalWeight) !== null && _object$totalWeight !== void 0 ? _object$totalWeight : "";
     message.createdAt = (_object$createdAt = object.createdAt) !== null && _object$createdAt !== void 0 ? _object$createdAt : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      id: BigInt(object.id),
+      admin: object.admin,
+      metadata: object.metadata,
+      version: BigInt(object.version),
+      totalWeight: object.total_weight,
+      createdAt: object.created_at
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.id = message.id ? message.id.toString() : undefined;
+    obj.admin = message.admin;
+    obj.metadata = message.metadata;
+    obj.version = message.version ? message.version.toString() : undefined;
+    obj.total_weight = message.totalWeight;
+    obj.created_at = message.createdAt;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GroupInfo.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GroupInfo",
+      value: GroupInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GroupInfo.decode(message.value);
+  },
+  toProto(message) {
+    return GroupInfo.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.GroupInfo",
+      value: GroupInfo.encode(message).finish()
+    };
   }
 };
 function createBaseGroupMember() {
   return {
-    groupId: Long.UZERO,
-    member: undefined
+    groupId: BigInt(0),
+    member: Member.fromPartial({})
   };
 }
 export const GroupMember = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.groupId.isZero()) {
+  typeUrl: "/cosmos.group.v1.GroupMember",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.groupId !== BigInt(0)) {
       writer.uint32(8).uint64(message.groupId);
     }
     if (message.member !== undefined) {
@@ -575,7 +794,7 @@ export const GroupMember = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGroupMember();
     while (reader.pos < end) {
@@ -596,28 +815,62 @@ export const GroupMember = {
   },
   fromPartial(object) {
     const message = createBaseGroupMember();
-    message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
+    message.groupId = object.groupId !== undefined && object.groupId !== null ? BigInt(object.groupId.toString()) : BigInt(0);
     message.member = object.member !== undefined && object.member !== null ? Member.fromPartial(object.member) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      groupId: BigInt(object.group_id),
+      member: object !== null && object !== void 0 && object.member ? Member.fromAmino(object.member) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.group_id = message.groupId ? message.groupId.toString() : undefined;
+    obj.member = message.member ? Member.toAmino(message.member) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GroupMember.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GroupMember",
+      value: GroupMember.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GroupMember.decode(message.value);
+  },
+  toProto(message) {
+    return GroupMember.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.GroupMember",
+      value: GroupMember.encode(message).finish()
+    };
   }
 };
 function createBaseGroupPolicyInfo() {
   return {
     address: "",
-    groupId: Long.UZERO,
+    groupId: BigInt(0),
     admin: "",
     metadata: "",
-    version: Long.UZERO,
-    decisionPolicy: undefined,
-    createdAt: undefined
+    version: BigInt(0),
+    decisionPolicy: Any.fromPartial({}),
+    createdAt: new Date()
   };
 }
 export const GroupPolicyInfo = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.group.v1.GroupPolicyInfo",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
-    if (!message.groupId.isZero()) {
+    if (message.groupId !== BigInt(0)) {
       writer.uint32(16).uint64(message.groupId);
     }
     if (message.admin !== "") {
@@ -626,7 +879,7 @@ export const GroupPolicyInfo = {
     if (message.metadata !== "") {
       writer.uint32(34).string(message.metadata);
     }
-    if (!message.version.isZero()) {
+    if (message.version !== BigInt(0)) {
       writer.uint32(40).uint64(message.version);
     }
     if (message.decisionPolicy !== undefined) {
@@ -638,7 +891,7 @@ export const GroupPolicyInfo = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGroupPolicyInfo();
     while (reader.pos < end) {
@@ -676,35 +929,79 @@ export const GroupPolicyInfo = {
     var _object$address2, _object$admin2, _object$metadata3, _object$createdAt2;
     const message = createBaseGroupPolicyInfo();
     message.address = (_object$address2 = object.address) !== null && _object$address2 !== void 0 ? _object$address2 : "";
-    message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
+    message.groupId = object.groupId !== undefined && object.groupId !== null ? BigInt(object.groupId.toString()) : BigInt(0);
     message.admin = (_object$admin2 = object.admin) !== null && _object$admin2 !== void 0 ? _object$admin2 : "";
     message.metadata = (_object$metadata3 = object.metadata) !== null && _object$metadata3 !== void 0 ? _object$metadata3 : "";
-    message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.UZERO;
+    message.version = object.version !== undefined && object.version !== null ? BigInt(object.version.toString()) : BigInt(0);
     message.decisionPolicy = object.decisionPolicy !== undefined && object.decisionPolicy !== null ? Any.fromPartial(object.decisionPolicy) : undefined;
     message.createdAt = (_object$createdAt2 = object.createdAt) !== null && _object$createdAt2 !== void 0 ? _object$createdAt2 : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      address: object.address,
+      groupId: BigInt(object.group_id),
+      admin: object.admin,
+      metadata: object.metadata,
+      version: BigInt(object.version),
+      decisionPolicy: object !== null && object !== void 0 && object.decision_policy ? Any.fromAmino(object.decision_policy) : undefined,
+      createdAt: object.created_at
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.address = message.address;
+    obj.group_id = message.groupId ? message.groupId.toString() : undefined;
+    obj.admin = message.admin;
+    obj.metadata = message.metadata;
+    obj.version = message.version ? message.version.toString() : undefined;
+    obj.decision_policy = message.decisionPolicy ? Any.toAmino(message.decisionPolicy) : undefined;
+    obj.created_at = message.createdAt;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GroupPolicyInfo.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GroupPolicyInfo",
+      value: GroupPolicyInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GroupPolicyInfo.decode(message.value);
+  },
+  toProto(message) {
+    return GroupPolicyInfo.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.GroupPolicyInfo",
+      value: GroupPolicyInfo.encode(message).finish()
+    };
   }
 };
 function createBaseProposal() {
   return {
-    id: Long.UZERO,
+    id: BigInt(0),
     address: "",
     metadata: "",
     proposers: [],
-    submitTime: undefined,
-    groupVersion: Long.UZERO,
-    groupPolicyVersion: Long.UZERO,
+    submitTime: new Date(),
+    groupVersion: BigInt(0),
+    groupPolicyVersion: BigInt(0),
     status: 0,
     result: 0,
-    finalTallyResult: undefined,
-    votingPeriodEnd: undefined,
+    finalTallyResult: TallyResult.fromPartial({}),
+    votingPeriodEnd: new Date(),
     executorResult: 0,
     messages: []
   };
 }
 export const Proposal = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.id.isZero()) {
+  typeUrl: "/cosmos.group.v1.Proposal",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     if (message.address !== "") {
@@ -719,10 +1016,10 @@ export const Proposal = {
     if (message.submitTime !== undefined) {
       Timestamp.encode(toTimestamp(message.submitTime), writer.uint32(42).fork()).ldelim();
     }
-    if (!message.groupVersion.isZero()) {
+    if (message.groupVersion !== BigInt(0)) {
       writer.uint32(48).uint64(message.groupVersion);
     }
-    if (!message.groupPolicyVersion.isZero()) {
+    if (message.groupPolicyVersion !== BigInt(0)) {
       writer.uint32(56).uint64(message.groupPolicyVersion);
     }
     if (message.status !== 0) {
@@ -746,7 +1043,7 @@ export const Proposal = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProposal();
     while (reader.pos < end) {
@@ -801,13 +1098,13 @@ export const Proposal = {
   fromPartial(object) {
     var _object$address3, _object$metadata4, _object$proposers, _object$submitTime, _object$status, _object$result, _object$votingPeriodE, _object$executorResul, _object$messages;
     const message = createBaseProposal();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     message.address = (_object$address3 = object.address) !== null && _object$address3 !== void 0 ? _object$address3 : "";
     message.metadata = (_object$metadata4 = object.metadata) !== null && _object$metadata4 !== void 0 ? _object$metadata4 : "";
     message.proposers = ((_object$proposers = object.proposers) === null || _object$proposers === void 0 ? void 0 : _object$proposers.map(e => e)) || [];
     message.submitTime = (_object$submitTime = object.submitTime) !== null && _object$submitTime !== void 0 ? _object$submitTime : undefined;
-    message.groupVersion = object.groupVersion !== undefined && object.groupVersion !== null ? Long.fromValue(object.groupVersion) : Long.UZERO;
-    message.groupPolicyVersion = object.groupPolicyVersion !== undefined && object.groupPolicyVersion !== null ? Long.fromValue(object.groupPolicyVersion) : Long.UZERO;
+    message.groupVersion = object.groupVersion !== undefined && object.groupVersion !== null ? BigInt(object.groupVersion.toString()) : BigInt(0);
+    message.groupPolicyVersion = object.groupPolicyVersion !== undefined && object.groupPolicyVersion !== null ? BigInt(object.groupPolicyVersion.toString()) : BigInt(0);
     message.status = (_object$status = object.status) !== null && _object$status !== void 0 ? _object$status : 0;
     message.result = (_object$result = object.result) !== null && _object$result !== void 0 ? _object$result : 0;
     message.finalTallyResult = object.finalTallyResult !== undefined && object.finalTallyResult !== null ? TallyResult.fromPartial(object.finalTallyResult) : undefined;
@@ -815,6 +1112,69 @@ export const Proposal = {
     message.executorResult = (_object$executorResul = object.executorResult) !== null && _object$executorResul !== void 0 ? _object$executorResul : 0;
     message.messages = ((_object$messages = object.messages) === null || _object$messages === void 0 ? void 0 : _object$messages.map(e => Any.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      id: BigInt(object.id),
+      address: object.address,
+      metadata: object.metadata,
+      proposers: Array.isArray(object === null || object === void 0 ? void 0 : object.proposers) ? object.proposers.map(e => e) : [],
+      submitTime: object.submit_time,
+      groupVersion: BigInt(object.group_version),
+      groupPolicyVersion: BigInt(object.group_policy_version),
+      status: isSet(object.status) ? proposalStatusFromJSON(object.status) : -1,
+      result: isSet(object.result) ? proposalResultFromJSON(object.result) : -1,
+      finalTallyResult: object !== null && object !== void 0 && object.final_tally_result ? TallyResult.fromAmino(object.final_tally_result) : undefined,
+      votingPeriodEnd: object.voting_period_end,
+      executorResult: isSet(object.executor_result) ? proposalExecutorResultFromJSON(object.executor_result) : -1,
+      messages: Array.isArray(object === null || object === void 0 ? void 0 : object.messages) ? object.messages.map(e => Any.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.id = message.id ? message.id.toString() : undefined;
+    obj.address = message.address;
+    obj.metadata = message.metadata;
+    if (message.proposers) {
+      obj.proposers = message.proposers.map(e => e);
+    } else {
+      obj.proposers = [];
+    }
+    obj.submit_time = message.submitTime;
+    obj.group_version = message.groupVersion ? message.groupVersion.toString() : undefined;
+    obj.group_policy_version = message.groupPolicyVersion ? message.groupPolicyVersion.toString() : undefined;
+    obj.status = message.status;
+    obj.result = message.result;
+    obj.final_tally_result = message.finalTallyResult ? TallyResult.toAmino(message.finalTallyResult) : undefined;
+    obj.voting_period_end = message.votingPeriodEnd;
+    obj.executor_result = message.executorResult;
+    if (message.messages) {
+      obj.messages = message.messages.map(e => e ? Any.toAmino(e) : undefined);
+    } else {
+      obj.messages = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Proposal.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Proposal",
+      value: Proposal.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return Proposal.decode(message.value);
+  },
+  toProto(message) {
+    return Proposal.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.Proposal",
+      value: Proposal.encode(message).finish()
+    };
   }
 };
 function createBaseTallyResult() {
@@ -826,7 +1186,8 @@ function createBaseTallyResult() {
   };
 }
 export const TallyResult = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.group.v1.TallyResult",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.yesCount !== "") {
       writer.uint32(10).string(message.yesCount);
     }
@@ -842,7 +1203,7 @@ export const TallyResult = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTallyResult();
     while (reader.pos < end) {
@@ -875,20 +1236,58 @@ export const TallyResult = {
     message.noCount = (_object$noCount = object.noCount) !== null && _object$noCount !== void 0 ? _object$noCount : "";
     message.noWithVetoCount = (_object$noWithVetoCou = object.noWithVetoCount) !== null && _object$noWithVetoCou !== void 0 ? _object$noWithVetoCou : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      yesCount: object.yes_count,
+      abstainCount: object.abstain_count,
+      noCount: object.no_count,
+      noWithVetoCount: object.no_with_veto_count
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.yes_count = message.yesCount;
+    obj.abstain_count = message.abstainCount;
+    obj.no_count = message.noCount;
+    obj.no_with_veto_count = message.noWithVetoCount;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return TallyResult.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/TallyResult",
+      value: TallyResult.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return TallyResult.decode(message.value);
+  },
+  toProto(message) {
+    return TallyResult.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.TallyResult",
+      value: TallyResult.encode(message).finish()
+    };
   }
 };
 function createBaseVote() {
   return {
-    proposalId: Long.UZERO,
+    proposalId: BigInt(0),
     voter: "",
     option: 0,
     metadata: "",
-    submitTime: undefined
+    submitTime: new Date()
   };
 }
 export const Vote = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.proposalId.isZero()) {
+  typeUrl: "/cosmos.group.v1.Vote",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.proposalId !== BigInt(0)) {
       writer.uint32(8).uint64(message.proposalId);
     }
     if (message.voter !== "") {
@@ -906,7 +1305,7 @@ export const Vote = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVote();
     while (reader.pos < end) {
@@ -937,11 +1336,50 @@ export const Vote = {
   fromPartial(object) {
     var _object$voter, _object$option, _object$metadata5, _object$submitTime2;
     const message = createBaseVote();
-    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
+    message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? BigInt(object.proposalId.toString()) : BigInt(0);
     message.voter = (_object$voter = object.voter) !== null && _object$voter !== void 0 ? _object$voter : "";
     message.option = (_object$option = object.option) !== null && _object$option !== void 0 ? _object$option : 0;
     message.metadata = (_object$metadata5 = object.metadata) !== null && _object$metadata5 !== void 0 ? _object$metadata5 : "";
     message.submitTime = (_object$submitTime2 = object.submitTime) !== null && _object$submitTime2 !== void 0 ? _object$submitTime2 : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      proposalId: BigInt(object.proposal_id),
+      voter: object.voter,
+      option: isSet(object.option) ? voteOptionFromJSON(object.option) : -1,
+      metadata: object.metadata,
+      submitTime: object.submit_time
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    obj.voter = message.voter;
+    obj.option = message.option;
+    obj.metadata = message.metadata;
+    obj.submit_time = message.submitTime;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Vote.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Vote",
+      value: Vote.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return Vote.decode(message.value);
+  },
+  toProto(message) {
+    return Vote.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.Vote",
+      value: Vote.encode(message).finish()
+    };
   }
 };

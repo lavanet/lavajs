@@ -1,4 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../binary";
 export let ScalarType = /*#__PURE__*/function (ScalarType) {
   ScalarType[ScalarType["SCALAR_TYPE_UNSPECIFIED"] = 0] = "SCALAR_TYPE_UNSPECIFIED";
   ScalarType[ScalarType["SCALAR_TYPE_STRING"] = 1] = "SCALAR_TYPE_STRING";
@@ -74,7 +74,8 @@ function createBaseInterfaceDescriptor() {
   };
 }
 export const InterfaceDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos_proto.InterfaceDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -84,7 +85,7 @@ export const InterfaceDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceDescriptor();
     while (reader.pos < end) {
@@ -109,6 +110,33 @@ export const InterfaceDescriptor = {
     message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
     message.description = (_object$description = object.description) !== null && _object$description !== void 0 ? _object$description : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      description: object.description
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.description = message.description;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return InterfaceDescriptor.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return InterfaceDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return InterfaceDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos_proto.InterfaceDescriptor",
+      value: InterfaceDescriptor.encode(message).finish()
+    };
   }
 };
 function createBaseScalarDescriptor() {
@@ -119,7 +147,8 @@ function createBaseScalarDescriptor() {
   };
 }
 export const ScalarDescriptor = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos_proto.ScalarDescriptor",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -134,7 +163,7 @@ export const ScalarDescriptor = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseScalarDescriptor();
     while (reader.pos < end) {
@@ -170,5 +199,38 @@ export const ScalarDescriptor = {
     message.description = (_object$description2 = object.description) !== null && _object$description2 !== void 0 ? _object$description2 : "";
     message.fieldType = ((_object$fieldType = object.fieldType) === null || _object$fieldType === void 0 ? void 0 : _object$fieldType.map(e => e)) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      name: object.name,
+      description: object.description,
+      fieldType: Array.isArray(object === null || object === void 0 ? void 0 : object.field_type) ? object.field_type.map(e => scalarTypeFromJSON(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.name = message.name;
+    obj.description = message.description;
+    if (message.fieldType) {
+      obj.field_type = message.fieldType.map(e => scalarTypeToJSON(e));
+    } else {
+      obj.field_type = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ScalarDescriptor.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return ScalarDescriptor.decode(message.value);
+  },
+  toProto(message) {
+    return ScalarDescriptor.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos_proto.ScalarDescriptor",
+      value: ScalarDescriptor.encode(message).finish()
+    };
   }
 };

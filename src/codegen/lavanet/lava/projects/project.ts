@@ -1,6 +1,5 @@
 import { Policy, PolicySDKType } from "../plans/policy";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 export enum ProjectKey_Type {
   NONE = 0,
   ADMIN = 1,
@@ -47,21 +46,21 @@ export interface Project {
   enabled: boolean;
   /** list of the projects keys */
   projectKeys: ProjectKey[];
-  adminPolicy?: Policy;
-  usedCu: Long;
-  subscriptionPolicy?: Policy;
+  adminPolicy: Policy;
+  usedCu: bigint;
+  subscriptionPolicy: Policy;
   /** snapshot id to uniquely identify snapshots */
-  snapshot: Long;
+  snapshot: bigint;
 }
 export interface ProjectSDKType {
   index: string;
   subscription: string;
   enabled: boolean;
   project_keys: ProjectKeySDKType[];
-  admin_policy?: PolicySDKType;
-  used_cu: Long;
-  subscription_policy?: PolicySDKType;
-  snapshot: Long;
+  admin_policy: PolicySDKType;
+  used_cu: bigint;
+  subscription_policy: PolicySDKType;
+  snapshot: bigint;
 }
 export interface ProjectKey {
   /** the address of the project key */
@@ -83,14 +82,14 @@ export interface ProjectData {
   name: string;
   enabled: boolean;
   projectKeys: ProjectKey[];
-  policy?: Policy;
+  policy: Policy;
 }
 /** used as a container struct for the subscription module */
 export interface ProjectDataSDKType {
   name: string;
   enabled: boolean;
   projectKeys: ProjectKeySDKType[];
-  policy?: PolicySDKType;
+  policy: PolicySDKType;
 }
 function createBaseProject(): Project {
   return {
@@ -98,14 +97,15 @@ function createBaseProject(): Project {
     subscription: "",
     enabled: false,
     projectKeys: [],
-    adminPolicy: undefined,
-    usedCu: Long.UZERO,
-    subscriptionPolicy: undefined,
-    snapshot: Long.UZERO
+    adminPolicy: Policy.fromPartial({}),
+    usedCu: BigInt(0),
+    subscriptionPolicy: Policy.fromPartial({}),
+    snapshot: BigInt(0)
   };
 }
 export const Project = {
-  encode(message: Project, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.projects.Project",
+  encode(message: Project, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
@@ -121,19 +121,19 @@ export const Project = {
     if (message.adminPolicy !== undefined) {
       Policy.encode(message.adminPolicy, writer.uint32(50).fork()).ldelim();
     }
-    if (!message.usedCu.isZero()) {
+    if (message.usedCu !== BigInt(0)) {
       writer.uint32(56).uint64(message.usedCu);
     }
     if (message.subscriptionPolicy !== undefined) {
       Policy.encode(message.subscriptionPolicy, writer.uint32(66).fork()).ldelim();
     }
-    if (!message.snapshot.isZero()) {
+    if (message.snapshot !== BigInt(0)) {
       writer.uint32(72).uint64(message.snapshot);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Project {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Project {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProject();
     while (reader.pos < end) {
@@ -155,13 +155,13 @@ export const Project = {
           message.adminPolicy = Policy.decode(reader, reader.uint32());
           break;
         case 7:
-          message.usedCu = (reader.uint64() as Long);
+          message.usedCu = reader.uint64();
           break;
         case 8:
           message.subscriptionPolicy = Policy.decode(reader, reader.uint32());
           break;
         case 9:
-          message.snapshot = (reader.uint64() as Long);
+          message.snapshot = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -170,17 +170,60 @@ export const Project = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<Project>): Project {
+  fromPartial(object: Partial<Project>): Project {
     const message = createBaseProject();
     message.index = object.index ?? "";
     message.subscription = object.subscription ?? "";
     message.enabled = object.enabled ?? false;
     message.projectKeys = object.projectKeys?.map(e => ProjectKey.fromPartial(e)) || [];
     message.adminPolicy = object.adminPolicy !== undefined && object.adminPolicy !== null ? Policy.fromPartial(object.adminPolicy) : undefined;
-    message.usedCu = object.usedCu !== undefined && object.usedCu !== null ? Long.fromValue(object.usedCu) : Long.UZERO;
+    message.usedCu = object.usedCu !== undefined && object.usedCu !== null ? BigInt(object.usedCu.toString()) : BigInt(0);
     message.subscriptionPolicy = object.subscriptionPolicy !== undefined && object.subscriptionPolicy !== null ? Policy.fromPartial(object.subscriptionPolicy) : undefined;
-    message.snapshot = object.snapshot !== undefined && object.snapshot !== null ? Long.fromValue(object.snapshot) : Long.UZERO;
+    message.snapshot = object.snapshot !== undefined && object.snapshot !== null ? BigInt(object.snapshot.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: ProjectAmino): Project {
+    return {
+      index: object.index,
+      subscription: object.subscription,
+      enabled: object.enabled,
+      projectKeys: Array.isArray(object?.project_keys) ? object.project_keys.map((e: any) => ProjectKey.fromAmino(e)) : [],
+      adminPolicy: object?.admin_policy ? Policy.fromAmino(object.admin_policy) : undefined,
+      usedCu: BigInt(object.used_cu),
+      subscriptionPolicy: object?.subscription_policy ? Policy.fromAmino(object.subscription_policy) : undefined,
+      snapshot: BigInt(object.snapshot)
+    };
+  },
+  toAmino(message: Project): ProjectAmino {
+    const obj: any = {};
+    obj.index = message.index;
+    obj.subscription = message.subscription;
+    obj.enabled = message.enabled;
+    if (message.projectKeys) {
+      obj.project_keys = message.projectKeys.map(e => e ? ProjectKey.toAmino(e) : undefined);
+    } else {
+      obj.project_keys = [];
+    }
+    obj.admin_policy = message.adminPolicy ? Policy.toAmino(message.adminPolicy) : undefined;
+    obj.used_cu = message.usedCu ? message.usedCu.toString() : undefined;
+    obj.subscription_policy = message.subscriptionPolicy ? Policy.toAmino(message.subscriptionPolicy) : undefined;
+    obj.snapshot = message.snapshot ? message.snapshot.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ProjectAminoMsg): Project {
+    return Project.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ProjectProtoMsg): Project {
+    return Project.decode(message.value);
+  },
+  toProto(message: Project): Uint8Array {
+    return Project.encode(message).finish();
+  },
+  toProtoMsg(message: Project): ProjectProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.projects.Project",
+      value: Project.encode(message).finish()
+    };
   }
 };
 function createBaseProjectKey(): ProjectKey {
@@ -190,7 +233,8 @@ function createBaseProjectKey(): ProjectKey {
   };
 }
 export const ProjectKey = {
-  encode(message: ProjectKey, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.projects.ProjectKey",
+  encode(message: ProjectKey, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -199,8 +243,8 @@ export const ProjectKey = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProjectKey {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProjectKey {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProjectKey();
     while (reader.pos < end) {
@@ -219,11 +263,38 @@ export const ProjectKey = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProjectKey>): ProjectKey {
+  fromPartial(object: Partial<ProjectKey>): ProjectKey {
     const message = createBaseProjectKey();
     message.key = object.key ?? "";
     message.kinds = object.kinds ?? 0;
     return message;
+  },
+  fromAmino(object: ProjectKeyAmino): ProjectKey {
+    return {
+      key: object.key,
+      kinds: object.kinds
+    };
+  },
+  toAmino(message: ProjectKey): ProjectKeyAmino {
+    const obj: any = {};
+    obj.key = message.key;
+    obj.kinds = message.kinds;
+    return obj;
+  },
+  fromAminoMsg(object: ProjectKeyAminoMsg): ProjectKey {
+    return ProjectKey.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ProjectKeyProtoMsg): ProjectKey {
+    return ProjectKey.decode(message.value);
+  },
+  toProto(message: ProjectKey): Uint8Array {
+    return ProjectKey.encode(message).finish();
+  },
+  toProtoMsg(message: ProjectKey): ProjectKeyProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.projects.ProjectKey",
+      value: ProjectKey.encode(message).finish()
+    };
   }
 };
 function createBaseProtoDeveloperData(): ProtoDeveloperData {
@@ -232,14 +303,15 @@ function createBaseProtoDeveloperData(): ProtoDeveloperData {
   };
 }
 export const ProtoDeveloperData = {
-  encode(message: ProtoDeveloperData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.projects.ProtoDeveloperData",
+  encode(message: ProtoDeveloperData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.projectID !== "") {
       writer.uint32(10).string(message.projectID);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProtoDeveloperData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProtoDeveloperData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProtoDeveloperData();
     while (reader.pos < end) {
@@ -255,10 +327,35 @@ export const ProtoDeveloperData = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProtoDeveloperData>): ProtoDeveloperData {
+  fromPartial(object: Partial<ProtoDeveloperData>): ProtoDeveloperData {
     const message = createBaseProtoDeveloperData();
     message.projectID = object.projectID ?? "";
     return message;
+  },
+  fromAmino(object: ProtoDeveloperDataAmino): ProtoDeveloperData {
+    return {
+      projectID: object.projectID
+    };
+  },
+  toAmino(message: ProtoDeveloperData): ProtoDeveloperDataAmino {
+    const obj: any = {};
+    obj.projectID = message.projectID;
+    return obj;
+  },
+  fromAminoMsg(object: ProtoDeveloperDataAminoMsg): ProtoDeveloperData {
+    return ProtoDeveloperData.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ProtoDeveloperDataProtoMsg): ProtoDeveloperData {
+    return ProtoDeveloperData.decode(message.value);
+  },
+  toProto(message: ProtoDeveloperData): Uint8Array {
+    return ProtoDeveloperData.encode(message).finish();
+  },
+  toProtoMsg(message: ProtoDeveloperData): ProtoDeveloperDataProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.projects.ProtoDeveloperData",
+      value: ProtoDeveloperData.encode(message).finish()
+    };
   }
 };
 function createBaseProjectData(): ProjectData {
@@ -266,11 +363,12 @@ function createBaseProjectData(): ProjectData {
     name: "",
     enabled: false,
     projectKeys: [],
-    policy: undefined
+    policy: Policy.fromPartial({})
   };
 }
 export const ProjectData = {
-  encode(message: ProjectData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.projects.ProjectData",
+  encode(message: ProjectData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -285,8 +383,8 @@ export const ProjectData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ProjectData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ProjectData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProjectData();
     while (reader.pos < end) {
@@ -311,12 +409,47 @@ export const ProjectData = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<ProjectData>): ProjectData {
+  fromPartial(object: Partial<ProjectData>): ProjectData {
     const message = createBaseProjectData();
     message.name = object.name ?? "";
     message.enabled = object.enabled ?? false;
     message.projectKeys = object.projectKeys?.map(e => ProjectKey.fromPartial(e)) || [];
     message.policy = object.policy !== undefined && object.policy !== null ? Policy.fromPartial(object.policy) : undefined;
     return message;
+  },
+  fromAmino(object: ProjectDataAmino): ProjectData {
+    return {
+      name: object.name,
+      enabled: object.enabled,
+      projectKeys: Array.isArray(object?.projectKeys) ? object.projectKeys.map((e: any) => ProjectKey.fromAmino(e)) : [],
+      policy: object?.policy ? Policy.fromAmino(object.policy) : undefined
+    };
+  },
+  toAmino(message: ProjectData): ProjectDataAmino {
+    const obj: any = {};
+    obj.name = message.name;
+    obj.enabled = message.enabled;
+    if (message.projectKeys) {
+      obj.projectKeys = message.projectKeys.map(e => e ? ProjectKey.toAmino(e) : undefined);
+    } else {
+      obj.projectKeys = [];
+    }
+    obj.policy = message.policy ? Policy.toAmino(message.policy) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: ProjectDataAminoMsg): ProjectData {
+    return ProjectData.fromAmino(object.value);
+  },
+  fromProtoMsg(message: ProjectDataProtoMsg): ProjectData {
+    return ProjectData.decode(message.value);
+  },
+  toProto(message: ProjectData): Uint8Array {
+    return ProjectData.encode(message).finish();
+  },
+  toProtoMsg(message: ProjectData): ProjectDataProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.projects.ProjectData",
+      value: ProjectData.encode(message).finish()
+    };
   }
 };

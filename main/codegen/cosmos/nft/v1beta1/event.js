@@ -1,13 +1,10 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.EventSend = exports.EventMint = exports.EventBurn = void 0;
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /** EventSend is emitted on Msg/Send */
 
 /** EventSend is emitted on Msg/Send */
@@ -29,8 +26,9 @@ function createBaseEventSend() {
   };
 }
 var EventSend = {
+  typeUrl: "/cosmos.nft.v1beta1.EventSend",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.classId !== "") {
       writer.uint32(10).string(message.classId);
     }
@@ -46,7 +44,7 @@ var EventSend = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEventSend();
     while (reader.pos < end) {
@@ -79,6 +77,43 @@ var EventSend = {
     message.sender = (_object$sender = object.sender) !== null && _object$sender !== void 0 ? _object$sender : "";
     message.receiver = (_object$receiver = object.receiver) !== null && _object$receiver !== void 0 ? _object$receiver : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      classId: object.class_id,
+      id: object.id,
+      sender: object.sender,
+      receiver: object.receiver
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.class_id = message.classId;
+    obj.id = message.id;
+    obj.sender = message.sender;
+    obj.receiver = message.receiver;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return EventSend.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/EventSend",
+      value: EventSend.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return EventSend.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return EventSend.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.nft.v1beta1.EventSend",
+      value: EventSend.encode(message).finish()
+    };
   }
 };
 exports.EventSend = EventSend;
@@ -90,8 +125,9 @@ function createBaseEventMint() {
   };
 }
 var EventMint = {
+  typeUrl: "/cosmos.nft.v1beta1.EventMint",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.classId !== "") {
       writer.uint32(10).string(message.classId);
     }
@@ -104,7 +140,7 @@ var EventMint = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEventMint();
     while (reader.pos < end) {
@@ -133,6 +169,41 @@ var EventMint = {
     message.id = (_object$id2 = object.id) !== null && _object$id2 !== void 0 ? _object$id2 : "";
     message.owner = (_object$owner = object.owner) !== null && _object$owner !== void 0 ? _object$owner : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      classId: object.class_id,
+      id: object.id,
+      owner: object.owner
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.class_id = message.classId;
+    obj.id = message.id;
+    obj.owner = message.owner;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return EventMint.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/EventMint",
+      value: EventMint.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return EventMint.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return EventMint.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.nft.v1beta1.EventMint",
+      value: EventMint.encode(message).finish()
+    };
   }
 };
 exports.EventMint = EventMint;
@@ -144,8 +215,9 @@ function createBaseEventBurn() {
   };
 }
 var EventBurn = {
+  typeUrl: "/cosmos.nft.v1beta1.EventBurn",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.classId !== "") {
       writer.uint32(10).string(message.classId);
     }
@@ -158,7 +230,7 @@ var EventBurn = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEventBurn();
     while (reader.pos < end) {
@@ -187,6 +259,41 @@ var EventBurn = {
     message.id = (_object$id3 = object.id) !== null && _object$id3 !== void 0 ? _object$id3 : "";
     message.owner = (_object$owner2 = object.owner) !== null && _object$owner2 !== void 0 ? _object$owner2 : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      classId: object.class_id,
+      id: object.id,
+      owner: object.owner
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.class_id = message.classId;
+    obj.id = message.id;
+    obj.owner = message.owner;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return EventBurn.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/EventBurn",
+      value: EventBurn.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return EventBurn.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return EventBurn.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.nft.v1beta1.EventBurn",
+      value: EventBurn.encode(message).finish()
+    };
   }
 };
 exports.EventBurn = EventBurn;

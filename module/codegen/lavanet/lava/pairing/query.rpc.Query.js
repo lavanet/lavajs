@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryParamsRequest, QueryParamsResponse, QueryProvidersRequest, QueryProvidersResponse, QueryGetPairingRequest, QueryGetPairingResponse, QueryVerifyPairingRequest, QueryVerifyPairingResponse, QueryGetUniquePaymentStorageClientProviderRequest, QueryGetUniquePaymentStorageClientProviderResponse, QueryAllUniquePaymentStorageClientProviderRequest, QueryAllUniquePaymentStorageClientProviderResponse, QueryGetProviderPaymentStorageRequest, QueryGetProviderPaymentStorageResponse, QueryAllProviderPaymentStorageRequest, QueryAllProviderPaymentStorageResponse, QueryGetEpochPaymentsRequest, QueryGetEpochPaymentsResponse, QueryAllEpochPaymentsRequest, QueryAllEpochPaymentsResponse, QueryUserEntryRequest, QueryUserEntryResponse, QueryStaticProvidersListRequest, QueryStaticProvidersListResponse, QueryEffectivePolicyRequest, QueryEffectivePolicyResponse } from "./query";
 /** Query defines the gRPC querier service. */
@@ -25,73 +25,73 @@ export class QueryClientImpl {
   params(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   providers(request) {
     const data = QueryProvidersRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "Providers", data);
-    return promise.then(data => QueryProvidersResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryProvidersResponse.decode(new BinaryReader(data)));
   }
   getPairing(request) {
     const data = QueryGetPairingRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "GetPairing", data);
-    return promise.then(data => QueryGetPairingResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetPairingResponse.decode(new BinaryReader(data)));
   }
   verifyPairing(request) {
     const data = QueryVerifyPairingRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "VerifyPairing", data);
-    return promise.then(data => QueryVerifyPairingResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryVerifyPairingResponse.decode(new BinaryReader(data)));
   }
   uniquePaymentStorageClientProvider(request) {
     const data = QueryGetUniquePaymentStorageClientProviderRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "UniquePaymentStorageClientProvider", data);
-    return promise.then(data => QueryGetUniquePaymentStorageClientProviderResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetUniquePaymentStorageClientProviderResponse.decode(new BinaryReader(data)));
   }
   uniquePaymentStorageClientProviderAll(request = {
     pagination: undefined
   }) {
     const data = QueryAllUniquePaymentStorageClientProviderRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "UniquePaymentStorageClientProviderAll", data);
-    return promise.then(data => QueryAllUniquePaymentStorageClientProviderResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAllUniquePaymentStorageClientProviderResponse.decode(new BinaryReader(data)));
   }
   providerPaymentStorage(request) {
     const data = QueryGetProviderPaymentStorageRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "ProviderPaymentStorage", data);
-    return promise.then(data => QueryGetProviderPaymentStorageResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetProviderPaymentStorageResponse.decode(new BinaryReader(data)));
   }
   providerPaymentStorageAll(request = {
     pagination: undefined
   }) {
     const data = QueryAllProviderPaymentStorageRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "ProviderPaymentStorageAll", data);
-    return promise.then(data => QueryAllProviderPaymentStorageResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAllProviderPaymentStorageResponse.decode(new BinaryReader(data)));
   }
   epochPayments(request) {
     const data = QueryGetEpochPaymentsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "EpochPayments", data);
-    return promise.then(data => QueryGetEpochPaymentsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetEpochPaymentsResponse.decode(new BinaryReader(data)));
   }
   epochPaymentsAll(request = {
     pagination: undefined
   }) {
     const data = QueryAllEpochPaymentsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "EpochPaymentsAll", data);
-    return promise.then(data => QueryAllEpochPaymentsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAllEpochPaymentsResponse.decode(new BinaryReader(data)));
   }
   userEntry(request) {
     const data = QueryUserEntryRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "UserEntry", data);
-    return promise.then(data => QueryUserEntryResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryUserEntryResponse.decode(new BinaryReader(data)));
   }
   staticProvidersList(request) {
     const data = QueryStaticProvidersListRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "StaticProvidersList", data);
-    return promise.then(data => QueryStaticProvidersListResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryStaticProvidersListResponse.decode(new BinaryReader(data)));
   }
   effectivePolicy(request) {
     const data = QueryEffectivePolicyRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.pairing.Query", "EffectivePolicy", data);
-    return promise.then(data => QueryEffectivePolicyResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryEffectivePolicyResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 /** BIP44Params is used as path field in ledger item in Record. */
 
 /** BIP44Params is used as path field in ledger item in Record. */
@@ -14,7 +13,8 @@ function createBaseBIP44Params() {
   };
 }
 export const BIP44Params = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.crypto.hd.v1.BIP44Params",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.purpose !== 0) {
       writer.uint32(8).uint32(message.purpose);
     }
@@ -33,7 +33,7 @@ export const BIP44Params = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBIP44Params();
     while (reader.pos < end) {
@@ -70,5 +70,44 @@ export const BIP44Params = {
     message.change = (_object$change = object.change) !== null && _object$change !== void 0 ? _object$change : false;
     message.addressIndex = (_object$addressIndex = object.addressIndex) !== null && _object$addressIndex !== void 0 ? _object$addressIndex : 0;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      purpose: object.purpose,
+      coinType: object.coin_type,
+      account: object.account,
+      change: object.change,
+      addressIndex: object.address_index
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.purpose = message.purpose;
+    obj.coin_type = message.coinType;
+    obj.account = message.account;
+    obj.change = message.change;
+    obj.address_index = message.addressIndex;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return BIP44Params.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/BIP44Params",
+      value: BIP44Params.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return BIP44Params.decode(message.value);
+  },
+  toProto(message) {
+    return BIP44Params.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.crypto.hd.v1.BIP44Params",
+      value: BIP44Params.encode(message).finish()
+    };
   }
 };

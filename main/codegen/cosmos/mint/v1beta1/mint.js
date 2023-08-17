@@ -1,14 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Params = exports.Minter = void 0;
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
+var _math = require("@cosmjs/math");
 /** Minter represents the minting state. */
 
 /** Minter represents the minting state. */
@@ -24,28 +21,29 @@ function createBaseMinter() {
   };
 }
 var Minter = {
+  typeUrl: "/cosmos.mint.v1beta1.Minter",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.inflation !== "") {
-      writer.uint32(10).string(message.inflation);
+      writer.uint32(10).string(_math.Decimal.fromUserInput(message.inflation, 18).atomics);
     }
     if (message.annualProvisions !== "") {
-      writer.uint32(18).string(message.annualProvisions);
+      writer.uint32(18).string(_math.Decimal.fromUserInput(message.annualProvisions, 18).atomics);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMinter();
     while (reader.pos < end) {
       var tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.inflation = reader.string();
+          message.inflation = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 2:
-          message.annualProvisions = reader.string();
+          message.annualProvisions = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -60,6 +58,39 @@ var Minter = {
     message.inflation = (_object$inflation = object.inflation) !== null && _object$inflation !== void 0 ? _object$inflation : "";
     message.annualProvisions = (_object$annualProvisi = object.annualProvisions) !== null && _object$annualProvisi !== void 0 ? _object$annualProvisi : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      inflation: object.inflation,
+      annualProvisions: object.annual_provisions
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.inflation = message.inflation;
+    obj.annual_provisions = message.annualProvisions;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Minter.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Minter",
+      value: Minter.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Minter.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Minter.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.mint.v1beta1.Minter",
+      value: Minter.encode(message).finish()
+    };
   }
 };
 exports.Minter = Minter;
@@ -70,34 +101,35 @@ function createBaseParams() {
     inflationMax: "",
     inflationMin: "",
     goalBonded: "",
-    blocksPerYear: _helpers.Long.UZERO
+    blocksPerYear: BigInt(0)
   };
 }
 var Params = {
+  typeUrl: "/cosmos.mint.v1beta1.Params",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.mintDenom !== "") {
       writer.uint32(10).string(message.mintDenom);
     }
     if (message.inflationRateChange !== "") {
-      writer.uint32(18).string(message.inflationRateChange);
+      writer.uint32(18).string(_math.Decimal.fromUserInput(message.inflationRateChange, 18).atomics);
     }
     if (message.inflationMax !== "") {
-      writer.uint32(26).string(message.inflationMax);
+      writer.uint32(26).string(_math.Decimal.fromUserInput(message.inflationMax, 18).atomics);
     }
     if (message.inflationMin !== "") {
-      writer.uint32(34).string(message.inflationMin);
+      writer.uint32(34).string(_math.Decimal.fromUserInput(message.inflationMin, 18).atomics);
     }
     if (message.goalBonded !== "") {
-      writer.uint32(42).string(message.goalBonded);
+      writer.uint32(42).string(_math.Decimal.fromUserInput(message.goalBonded, 18).atomics);
     }
-    if (!message.blocksPerYear.isZero()) {
+    if (message.blocksPerYear !== BigInt(0)) {
       writer.uint32(48).uint64(message.blocksPerYear);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseParams();
     while (reader.pos < end) {
@@ -107,16 +139,16 @@ var Params = {
           message.mintDenom = reader.string();
           break;
         case 2:
-          message.inflationRateChange = reader.string();
+          message.inflationRateChange = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
-          message.inflationMax = reader.string();
+          message.inflationMax = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 4:
-          message.inflationMin = reader.string();
+          message.inflationMin = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 5:
-          message.goalBonded = reader.string();
+          message.goalBonded = _math.Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 6:
           message.blocksPerYear = reader.uint64();
@@ -136,8 +168,49 @@ var Params = {
     message.inflationMax = (_object$inflationMax = object.inflationMax) !== null && _object$inflationMax !== void 0 ? _object$inflationMax : "";
     message.inflationMin = (_object$inflationMin = object.inflationMin) !== null && _object$inflationMin !== void 0 ? _object$inflationMin : "";
     message.goalBonded = (_object$goalBonded = object.goalBonded) !== null && _object$goalBonded !== void 0 ? _object$goalBonded : "";
-    message.blocksPerYear = object.blocksPerYear !== undefined && object.blocksPerYear !== null ? _helpers.Long.fromValue(object.blocksPerYear) : _helpers.Long.UZERO;
+    message.blocksPerYear = object.blocksPerYear !== undefined && object.blocksPerYear !== null ? BigInt(object.blocksPerYear.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      mintDenom: object.mint_denom,
+      inflationRateChange: object.inflation_rate_change,
+      inflationMax: object.inflation_max,
+      inflationMin: object.inflation_min,
+      goalBonded: object.goal_bonded,
+      blocksPerYear: BigInt(object.blocks_per_year)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.mint_denom = message.mintDenom;
+    obj.inflation_rate_change = message.inflationRateChange;
+    obj.inflation_max = message.inflationMax;
+    obj.inflation_min = message.inflationMin;
+    obj.goal_bonded = message.goalBonded;
+    obj.blocks_per_year = message.blocksPerYear ? message.blocksPerYear.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Params.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Params",
+      value: Params.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Params.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Params.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.mint.v1beta1.Params",
+      value: Params.encode(message).finish()
+    };
   }
 };
 exports.Params = Params;

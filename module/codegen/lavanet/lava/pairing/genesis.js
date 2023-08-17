@@ -3,8 +3,7 @@ import { UniquePaymentStorageClientProvider } from "./unique_payment_storage_cli
 import { ProviderPaymentStorage } from "./provider_payment_storage";
 import { EpochPayments } from "./epoch_payments";
 import { RawMessage } from "../common/fixationEntry";
-import { Long } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 
 /** GenesisState defines the pairing module's genesis state. */
 
@@ -13,21 +12,22 @@ import * as _m0 from "protobufjs/minimal";
 function createBaseBadgeUsedCu() {
   return {
     badgeUsedCuKey: new Uint8Array(),
-    usedCu: Long.UZERO
+    usedCu: BigInt(0)
   };
 }
 export const BadgeUsedCu = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.pairing.BadgeUsedCu",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.badgeUsedCuKey.length !== 0) {
       writer.uint32(10).bytes(message.badgeUsedCuKey);
     }
-    if (!message.usedCu.isZero()) {
+    if (message.usedCu !== BigInt(0)) {
       writer.uint32(16).uint64(message.usedCu);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBadgeUsedCu();
     while (reader.pos < end) {
@@ -50,13 +50,40 @@ export const BadgeUsedCu = {
     var _object$badgeUsedCuKe;
     const message = createBaseBadgeUsedCu();
     message.badgeUsedCuKey = (_object$badgeUsedCuKe = object.badgeUsedCuKey) !== null && _object$badgeUsedCuKe !== void 0 ? _object$badgeUsedCuKe : new Uint8Array();
-    message.usedCu = object.usedCu !== undefined && object.usedCu !== null ? Long.fromValue(object.usedCu) : Long.UZERO;
+    message.usedCu = object.usedCu !== undefined && object.usedCu !== null ? BigInt(object.usedCu.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      badgeUsedCuKey: object.badge_used_cu_key,
+      usedCu: BigInt(object.used_cu)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.badge_used_cu_key = message.badgeUsedCuKey;
+    obj.used_cu = message.usedCu ? message.usedCu.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return BadgeUsedCu.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return BadgeUsedCu.decode(message.value);
+  },
+  toProto(message) {
+    return BadgeUsedCu.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.pairing.BadgeUsedCu",
+      value: BadgeUsedCu.encode(message).finish()
+    };
   }
 };
 function createBaseGenesisState() {
   return {
-    params: undefined,
+    params: Params.fromPartial({}),
     uniquePaymentStorageClientProviderList: [],
     providerPaymentStorageList: [],
     epochPaymentsList: [],
@@ -65,7 +92,8 @@ function createBaseGenesisState() {
   };
 }
 export const GenesisState = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.pairing.GenesisState",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -87,7 +115,7 @@ export const GenesisState = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -128,5 +156,60 @@ export const GenesisState = {
     message.badgeUsedCuList = ((_object$badgeUsedCuLi = object.badgeUsedCuList) === null || _object$badgeUsedCuLi === void 0 ? void 0 : _object$badgeUsedCuLi.map(e => BadgeUsedCu.fromPartial(e))) || [];
     message.badgesTS = ((_object$badgesTS = object.badgesTS) === null || _object$badgesTS === void 0 ? void 0 : _object$badgesTS.map(e => RawMessage.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      params: object !== null && object !== void 0 && object.params ? Params.fromAmino(object.params) : undefined,
+      uniquePaymentStorageClientProviderList: Array.isArray(object === null || object === void 0 ? void 0 : object.uniquePaymentStorageClientProviderList) ? object.uniquePaymentStorageClientProviderList.map(e => UniquePaymentStorageClientProvider.fromAmino(e)) : [],
+      providerPaymentStorageList: Array.isArray(object === null || object === void 0 ? void 0 : object.providerPaymentStorageList) ? object.providerPaymentStorageList.map(e => ProviderPaymentStorage.fromAmino(e)) : [],
+      epochPaymentsList: Array.isArray(object === null || object === void 0 ? void 0 : object.epochPaymentsList) ? object.epochPaymentsList.map(e => EpochPayments.fromAmino(e)) : [],
+      badgeUsedCuList: Array.isArray(object === null || object === void 0 ? void 0 : object.badgeUsedCuList) ? object.badgeUsedCuList.map(e => BadgeUsedCu.fromAmino(e)) : [],
+      badgesTS: Array.isArray(object === null || object === void 0 ? void 0 : object.badgesTS) ? object.badgesTS.map(e => RawMessage.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    if (message.uniquePaymentStorageClientProviderList) {
+      obj.uniquePaymentStorageClientProviderList = message.uniquePaymentStorageClientProviderList.map(e => e ? UniquePaymentStorageClientProvider.toAmino(e) : undefined);
+    } else {
+      obj.uniquePaymentStorageClientProviderList = [];
+    }
+    if (message.providerPaymentStorageList) {
+      obj.providerPaymentStorageList = message.providerPaymentStorageList.map(e => e ? ProviderPaymentStorage.toAmino(e) : undefined);
+    } else {
+      obj.providerPaymentStorageList = [];
+    }
+    if (message.epochPaymentsList) {
+      obj.epochPaymentsList = message.epochPaymentsList.map(e => e ? EpochPayments.toAmino(e) : undefined);
+    } else {
+      obj.epochPaymentsList = [];
+    }
+    if (message.badgeUsedCuList) {
+      obj.badgeUsedCuList = message.badgeUsedCuList.map(e => e ? BadgeUsedCu.toAmino(e) : undefined);
+    } else {
+      obj.badgeUsedCuList = [];
+    }
+    if (message.badgesTS) {
+      obj.badgesTS = message.badgesTS.map(e => e ? RawMessage.toAmino(e) : undefined);
+    } else {
+      obj.badgesTS = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GenesisState.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message) {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.pairing.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };

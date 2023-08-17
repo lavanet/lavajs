@@ -1,15 +1,12 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MsgSetSubscriptionPolicyResponse = exports.MsgSetSubscriptionPolicy = exports.MsgSetPolicyResponse = exports.MsgSetPolicy = exports.MsgDelKeysResponse = exports.MsgDelKeys = exports.MsgAddKeysResponse = exports.MsgAddKeys = void 0;
 var _project = require("./project");
 var _policy = require("../plans/policy");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -21,8 +18,9 @@ function createBaseMsgAddKeys() {
   };
 }
 var MsgAddKeys = {
+  typeUrl: "/lavanet.lava.projects.MsgAddKeys",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -44,7 +42,7 @@ var MsgAddKeys = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgAddKeys();
     while (reader.pos < end) {
@@ -75,6 +73,43 @@ var MsgAddKeys = {
       return _project.ProjectKey.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      creator: object.creator,
+      project: object.project,
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.project_keys) ? object.project_keys.map(function (e) {
+        return _project.ProjectKey.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.creator = message.creator;
+    obj.project = message.project;
+    if (message.projectKeys) {
+      obj.project_keys = message.projectKeys.map(function (e) {
+        return e ? _project.ProjectKey.toAmino(e) : undefined;
+      });
+    } else {
+      obj.project_keys = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgAddKeys.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgAddKeys.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgAddKeys.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgAddKeys",
+      value: MsgAddKeys.encode(message).finish()
+    };
   }
 };
 exports.MsgAddKeys = MsgAddKeys;
@@ -82,12 +117,13 @@ function createBaseMsgAddKeysResponse() {
   return {};
 }
 var MsgAddKeysResponse = {
+  typeUrl: "/lavanet.lava.projects.MsgAddKeysResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgAddKeysResponse();
     while (reader.pos < end) {
@@ -103,6 +139,28 @@ var MsgAddKeysResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgAddKeysResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgAddKeysResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgAddKeysResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgAddKeysResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgAddKeysResponse",
+      value: MsgAddKeysResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgAddKeysResponse = MsgAddKeysResponse;
@@ -114,8 +172,9 @@ function createBaseMsgDelKeys() {
   };
 }
 var MsgDelKeys = {
+  typeUrl: "/lavanet.lava.projects.MsgDelKeys",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -137,7 +196,7 @@ var MsgDelKeys = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgDelKeys();
     while (reader.pos < end) {
@@ -168,6 +227,43 @@ var MsgDelKeys = {
       return _project.ProjectKey.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      creator: object.creator,
+      project: object.project,
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.project_keys) ? object.project_keys.map(function (e) {
+        return _project.ProjectKey.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.creator = message.creator;
+    obj.project = message.project;
+    if (message.projectKeys) {
+      obj.project_keys = message.projectKeys.map(function (e) {
+        return e ? _project.ProjectKey.toAmino(e) : undefined;
+      });
+    } else {
+      obj.project_keys = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgDelKeys.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgDelKeys.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgDelKeys.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgDelKeys",
+      value: MsgDelKeys.encode(message).finish()
+    };
   }
 };
 exports.MsgDelKeys = MsgDelKeys;
@@ -175,12 +271,13 @@ function createBaseMsgDelKeysResponse() {
   return {};
 }
 var MsgDelKeysResponse = {
+  typeUrl: "/lavanet.lava.projects.MsgDelKeysResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgDelKeysResponse();
     while (reader.pos < end) {
@@ -196,6 +293,28 @@ var MsgDelKeysResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgDelKeysResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgDelKeysResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgDelKeysResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgDelKeysResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgDelKeysResponse",
+      value: MsgDelKeysResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgDelKeysResponse = MsgDelKeysResponse;
@@ -203,12 +322,13 @@ function createBaseMsgSetPolicy() {
   return {
     creator: "",
     project: "",
-    policy: undefined
+    policy: _policy.Policy.fromPartial({})
   };
 }
 var MsgSetPolicy = {
+  typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -221,7 +341,7 @@ var MsgSetPolicy = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgSetPolicy();
     while (reader.pos < end) {
@@ -250,6 +370,35 @@ var MsgSetPolicy = {
     message.project = (_object$project3 = object.project) !== null && _object$project3 !== void 0 ? _object$project3 : "";
     message.policy = object.policy !== undefined && object.policy !== null ? _policy.Policy.fromPartial(object.policy) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      creator: object.creator,
+      project: object.project,
+      policy: object !== null && object !== void 0 && object.policy ? _policy.Policy.fromAmino(object.policy) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.creator = message.creator;
+    obj.project = message.project;
+    obj.policy = message.policy ? _policy.Policy.toAmino(message.policy) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgSetPolicy.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgSetPolicy.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgSetPolicy.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetPolicy",
+      value: MsgSetPolicy.encode(message).finish()
+    };
   }
 };
 exports.MsgSetPolicy = MsgSetPolicy;
@@ -257,12 +406,13 @@ function createBaseMsgSetPolicyResponse() {
   return {};
 }
 var MsgSetPolicyResponse = {
+  typeUrl: "/lavanet.lava.projects.MsgSetPolicyResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgSetPolicyResponse();
     while (reader.pos < end) {
@@ -278,6 +428,28 @@ var MsgSetPolicyResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgSetPolicyResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgSetPolicyResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgSetPolicyResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgSetPolicyResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetPolicyResponse",
+      value: MsgSetPolicyResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgSetPolicyResponse = MsgSetPolicyResponse;
@@ -285,12 +457,13 @@ function createBaseMsgSetSubscriptionPolicy() {
   return {
     creator: "",
     projects: [],
-    policy: undefined
+    policy: _policy.Policy.fromPartial({})
   };
 }
 var MsgSetSubscriptionPolicy = {
+  typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -312,7 +485,7 @@ var MsgSetSubscriptionPolicy = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgSetSubscriptionPolicy();
     while (reader.pos < end) {
@@ -343,6 +516,43 @@ var MsgSetSubscriptionPolicy = {
     })) || [];
     message.policy = object.policy !== undefined && object.policy !== null ? _policy.Policy.fromPartial(object.policy) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      creator: object.creator,
+      projects: Array.isArray(object === null || object === void 0 ? void 0 : object.projects) ? object.projects.map(function (e) {
+        return e;
+      }) : [],
+      policy: object !== null && object !== void 0 && object.policy ? _policy.Policy.fromAmino(object.policy) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.creator = message.creator;
+    if (message.projects) {
+      obj.projects = message.projects.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.projects = [];
+    }
+    obj.policy = message.policy ? _policy.Policy.toAmino(message.policy) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgSetSubscriptionPolicy.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgSetSubscriptionPolicy.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgSetSubscriptionPolicy.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicy",
+      value: MsgSetSubscriptionPolicy.encode(message).finish()
+    };
   }
 };
 exports.MsgSetSubscriptionPolicy = MsgSetSubscriptionPolicy;
@@ -350,12 +560,13 @@ function createBaseMsgSetSubscriptionPolicyResponse() {
   return {};
 }
 var MsgSetSubscriptionPolicyResponse = {
+  typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicyResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgSetSubscriptionPolicyResponse();
     while (reader.pos < end) {
@@ -371,6 +582,28 @@ var MsgSetSubscriptionPolicyResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgSetSubscriptionPolicyResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgSetSubscriptionPolicyResponse.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgSetSubscriptionPolicyResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgSetSubscriptionPolicyResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.MsgSetSubscriptionPolicyResponse",
+      value: MsgSetSubscriptionPolicyResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgSetSubscriptionPolicyResponse = MsgSetSubscriptionPolicyResponse;

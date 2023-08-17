@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryParamsRequest, QueryParamsResponse, QueryGetConflictVoteRequest, QueryGetConflictVoteResponse, QueryAllConflictVoteRequest, QueryAllConflictVoteResponse } from "./query";
 /** Query defines the gRPC querier service. */
@@ -15,19 +15,19 @@ export class QueryClientImpl {
   params(request = {}) {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Query", "Params", data);
-    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new BinaryReader(data)));
   }
   conflictVote(request) {
     const data = QueryGetConflictVoteRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Query", "ConflictVote", data);
-    return promise.then(data => QueryGetConflictVoteResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetConflictVoteResponse.decode(new BinaryReader(data)));
   }
   conflictVoteAll(request = {
     pagination: undefined
   }) {
     const data = QueryAllConflictVoteRequest.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.conflict.Query", "ConflictVoteAll", data);
-    return promise.then(data => QueryAllConflictVoteResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryAllConflictVoteResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = base => {

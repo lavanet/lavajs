@@ -1,17 +1,15 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.TxRaw = exports.TxBody = exports.Tx = exports.Tip = exports.SignerInfo = exports.SignDocDirectAux = exports.SignDoc = exports.ModeInfo_Single = exports.ModeInfo_Multi = exports.ModeInfo = exports.Fee = exports.AuxSignerData = exports.AuthInfo = void 0;
 var _any = require("../../../google/protobuf/any");
+var _signing = require("../signing/v1beta1/signing");
 var _multisig = require("../../crypto/multisig/v1beta1/multisig");
 var _coin = require("../../base/v1beta1/coin");
+var _binary = require("../../../binary");
 var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -141,14 +139,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 function createBaseTx() {
   return {
-    body: undefined,
-    authInfo: undefined,
+    body: TxBody.fromPartial({}),
+    authInfo: AuthInfo.fromPartial({}),
     signatures: []
   };
 }
 var Tx = {
+  typeUrl: "/cosmos.tx.v1beta1.Tx",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.body !== undefined) {
       TxBody.encode(message.body, writer.uint32(10).fork()).ldelim();
     }
@@ -170,7 +169,7 @@ var Tx = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTx();
     while (reader.pos < end) {
@@ -201,6 +200,49 @@ var Tx = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      body: object !== null && object !== void 0 && object.body ? TxBody.fromAmino(object.body) : undefined,
+      authInfo: object !== null && object !== void 0 && object.auth_info ? AuthInfo.fromAmino(object.auth_info) : undefined,
+      signatures: Array.isArray(object === null || object === void 0 ? void 0 : object.signatures) ? object.signatures.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.body = message.body ? TxBody.toAmino(message.body) : undefined;
+    obj.auth_info = message.authInfo ? AuthInfo.toAmino(message.authInfo) : undefined;
+    if (message.signatures) {
+      obj.signatures = message.signatures.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Tx.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Tx",
+      value: Tx.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Tx.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Tx.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.Tx",
+      value: Tx.encode(message).finish()
+    };
   }
 };
 exports.Tx = Tx;
@@ -212,8 +254,9 @@ function createBaseTxRaw() {
   };
 }
 var TxRaw = {
+  typeUrl: "/cosmos.tx.v1beta1.TxRaw",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.bodyBytes.length !== 0) {
       writer.uint32(10).bytes(message.bodyBytes);
     }
@@ -235,7 +278,7 @@ var TxRaw = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTxRaw();
     while (reader.pos < end) {
@@ -266,6 +309,49 @@ var TxRaw = {
       return e;
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      bodyBytes: object.body_bytes,
+      authInfoBytes: object.auth_info_bytes,
+      signatures: Array.isArray(object === null || object === void 0 ? void 0 : object.signatures) ? object.signatures.map(function (e) {
+        return e;
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.body_bytes = message.bodyBytes;
+    obj.auth_info_bytes = message.authInfoBytes;
+    if (message.signatures) {
+      obj.signatures = message.signatures.map(function (e) {
+        return e;
+      });
+    } else {
+      obj.signatures = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return TxRaw.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/TxRaw",
+      value: TxRaw.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return TxRaw.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return TxRaw.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.TxRaw",
+      value: TxRaw.encode(message).finish()
+    };
   }
 };
 exports.TxRaw = TxRaw;
@@ -274,12 +360,13 @@ function createBaseSignDoc() {
     bodyBytes: new Uint8Array(),
     authInfoBytes: new Uint8Array(),
     chainId: "",
-    accountNumber: _helpers.Long.UZERO
+    accountNumber: BigInt(0)
   };
 }
 var SignDoc = {
+  typeUrl: "/cosmos.tx.v1beta1.SignDoc",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.bodyBytes.length !== 0) {
       writer.uint32(10).bytes(message.bodyBytes);
     }
@@ -289,13 +376,13 @@ var SignDoc = {
     if (message.chainId !== "") {
       writer.uint32(26).string(message.chainId);
     }
-    if (!message.accountNumber.isZero()) {
+    if (message.accountNumber !== BigInt(0)) {
       writer.uint32(32).uint64(message.accountNumber);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSignDoc();
     while (reader.pos < end) {
@@ -326,24 +413,62 @@ var SignDoc = {
     message.bodyBytes = (_object$bodyBytes2 = object.bodyBytes) !== null && _object$bodyBytes2 !== void 0 ? _object$bodyBytes2 : new Uint8Array();
     message.authInfoBytes = (_object$authInfoBytes2 = object.authInfoBytes) !== null && _object$authInfoBytes2 !== void 0 ? _object$authInfoBytes2 : new Uint8Array();
     message.chainId = (_object$chainId = object.chainId) !== null && _object$chainId !== void 0 ? _object$chainId : "";
-    message.accountNumber = object.accountNumber !== undefined && object.accountNumber !== null ? _helpers.Long.fromValue(object.accountNumber) : _helpers.Long.UZERO;
+    message.accountNumber = object.accountNumber !== undefined && object.accountNumber !== null ? BigInt(object.accountNumber.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      bodyBytes: object.body_bytes,
+      authInfoBytes: object.auth_info_bytes,
+      chainId: object.chain_id,
+      accountNumber: BigInt(object.account_number)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.body_bytes = message.bodyBytes;
+    obj.auth_info_bytes = message.authInfoBytes;
+    obj.chain_id = message.chainId;
+    obj.account_number = message.accountNumber ? message.accountNumber.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return SignDoc.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/SignDoc",
+      value: SignDoc.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return SignDoc.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return SignDoc.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.SignDoc",
+      value: SignDoc.encode(message).finish()
+    };
   }
 };
 exports.SignDoc = SignDoc;
 function createBaseSignDocDirectAux() {
   return {
     bodyBytes: new Uint8Array(),
-    publicKey: undefined,
+    publicKey: _any.Any.fromPartial({}),
     chainId: "",
-    accountNumber: _helpers.Long.UZERO,
-    sequence: _helpers.Long.UZERO,
-    tip: undefined
+    accountNumber: BigInt(0),
+    sequence: BigInt(0),
+    tip: Tip.fromPartial({})
   };
 }
 var SignDocDirectAux = {
+  typeUrl: "/cosmos.tx.v1beta1.SignDocDirectAux",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.bodyBytes.length !== 0) {
       writer.uint32(10).bytes(message.bodyBytes);
     }
@@ -353,10 +478,10 @@ var SignDocDirectAux = {
     if (message.chainId !== "") {
       writer.uint32(26).string(message.chainId);
     }
-    if (!message.accountNumber.isZero()) {
+    if (message.accountNumber !== BigInt(0)) {
       writer.uint32(32).uint64(message.accountNumber);
     }
-    if (!message.sequence.isZero()) {
+    if (message.sequence !== BigInt(0)) {
       writer.uint32(40).uint64(message.sequence);
     }
     if (message.tip !== undefined) {
@@ -365,7 +490,7 @@ var SignDocDirectAux = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSignDocDirectAux();
     while (reader.pos < end) {
@@ -402,10 +527,51 @@ var SignDocDirectAux = {
     message.bodyBytes = (_object$bodyBytes3 = object.bodyBytes) !== null && _object$bodyBytes3 !== void 0 ? _object$bodyBytes3 : new Uint8Array();
     message.publicKey = object.publicKey !== undefined && object.publicKey !== null ? _any.Any.fromPartial(object.publicKey) : undefined;
     message.chainId = (_object$chainId2 = object.chainId) !== null && _object$chainId2 !== void 0 ? _object$chainId2 : "";
-    message.accountNumber = object.accountNumber !== undefined && object.accountNumber !== null ? _helpers.Long.fromValue(object.accountNumber) : _helpers.Long.UZERO;
-    message.sequence = object.sequence !== undefined && object.sequence !== null ? _helpers.Long.fromValue(object.sequence) : _helpers.Long.UZERO;
+    message.accountNumber = object.accountNumber !== undefined && object.accountNumber !== null ? BigInt(object.accountNumber.toString()) : BigInt(0);
+    message.sequence = object.sequence !== undefined && object.sequence !== null ? BigInt(object.sequence.toString()) : BigInt(0);
     message.tip = object.tip !== undefined && object.tip !== null ? Tip.fromPartial(object.tip) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      bodyBytes: object.body_bytes,
+      publicKey: object !== null && object !== void 0 && object.public_key ? _any.Any.fromAmino(object.public_key) : undefined,
+      chainId: object.chain_id,
+      accountNumber: BigInt(object.account_number),
+      sequence: BigInt(object.sequence),
+      tip: object !== null && object !== void 0 && object.tip ? Tip.fromAmino(object.tip) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.body_bytes = message.bodyBytes;
+    obj.public_key = message.publicKey ? _any.Any.toAmino(message.publicKey) : undefined;
+    obj.chain_id = message.chainId;
+    obj.account_number = message.accountNumber ? message.accountNumber.toString() : undefined;
+    obj.sequence = message.sequence ? message.sequence.toString() : undefined;
+    obj.tip = message.tip ? Tip.toAmino(message.tip) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return SignDocDirectAux.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/SignDocDirectAux",
+      value: SignDocDirectAux.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return SignDocDirectAux.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return SignDocDirectAux.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.SignDocDirectAux",
+      value: SignDocDirectAux.encode(message).finish()
+    };
   }
 };
 exports.SignDocDirectAux = SignDocDirectAux;
@@ -413,14 +579,15 @@ function createBaseTxBody() {
   return {
     messages: [],
     memo: "",
-    timeoutHeight: _helpers.Long.UZERO,
+    timeoutHeight: BigInt(0),
     extensionOptions: [],
     nonCriticalExtensionOptions: []
   };
 }
 var TxBody = {
+  typeUrl: "/cosmos.tx.v1beta1.TxBody",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator3 = _createForOfIteratorHelper(message.messages),
       _step3;
     try {
@@ -436,7 +603,7 @@ var TxBody = {
     if (message.memo !== "") {
       writer.uint32(18).string(message.memo);
     }
-    if (!message.timeoutHeight.isZero()) {
+    if (message.timeoutHeight !== BigInt(0)) {
       writer.uint32(24).uint64(message.timeoutHeight);
     }
     var _iterator4 = _createForOfIteratorHelper(message.extensionOptions),
@@ -466,7 +633,7 @@ var TxBody = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTxBody();
     while (reader.pos < end) {
@@ -501,7 +668,7 @@ var TxBody = {
       return _any.Any.fromPartial(e);
     })) || [];
     message.memo = (_object$memo = object.memo) !== null && _object$memo !== void 0 ? _object$memo : "";
-    message.timeoutHeight = object.timeoutHeight !== undefined && object.timeoutHeight !== null ? _helpers.Long.fromValue(object.timeoutHeight) : _helpers.Long.UZERO;
+    message.timeoutHeight = object.timeoutHeight !== undefined && object.timeoutHeight !== null ? BigInt(object.timeoutHeight.toString()) : BigInt(0);
     message.extensionOptions = ((_object$extensionOpti = object.extensionOptions) === null || _object$extensionOpti === void 0 ? void 0 : _object$extensionOpti.map(function (e) {
       return _any.Any.fromPartial(e);
     })) || [];
@@ -509,19 +676,83 @@ var TxBody = {
       return _any.Any.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      messages: Array.isArray(object === null || object === void 0 ? void 0 : object.messages) ? object.messages.map(function (e) {
+        return _any.Any.fromAmino(e);
+      }) : [],
+      memo: object.memo,
+      timeoutHeight: BigInt(object.timeout_height),
+      extensionOptions: Array.isArray(object === null || object === void 0 ? void 0 : object.extension_options) ? object.extension_options.map(function (e) {
+        return _any.Any.fromAmino(e);
+      }) : [],
+      nonCriticalExtensionOptions: Array.isArray(object === null || object === void 0 ? void 0 : object.non_critical_extension_options) ? object.non_critical_extension_options.map(function (e) {
+        return _any.Any.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.messages) {
+      obj.messages = message.messages.map(function (e) {
+        return e ? _any.Any.toAmino(e) : undefined;
+      });
+    } else {
+      obj.messages = [];
+    }
+    obj.memo = message.memo;
+    obj.timeout_height = message.timeoutHeight ? message.timeoutHeight.toString() : undefined;
+    if (message.extensionOptions) {
+      obj.extension_options = message.extensionOptions.map(function (e) {
+        return e ? _any.Any.toAmino(e) : undefined;
+      });
+    } else {
+      obj.extension_options = [];
+    }
+    if (message.nonCriticalExtensionOptions) {
+      obj.non_critical_extension_options = message.nonCriticalExtensionOptions.map(function (e) {
+        return e ? _any.Any.toAmino(e) : undefined;
+      });
+    } else {
+      obj.non_critical_extension_options = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return TxBody.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/TxBody",
+      value: TxBody.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return TxBody.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return TxBody.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: TxBody.encode(message).finish()
+    };
   }
 };
 exports.TxBody = TxBody;
 function createBaseAuthInfo() {
   return {
     signerInfos: [],
-    fee: undefined,
-    tip: undefined
+    fee: Fee.fromPartial({}),
+    tip: Tip.fromPartial({})
   };
 }
 var AuthInfo = {
+  typeUrl: "/cosmos.tx.v1beta1.AuthInfo",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator6 = _createForOfIteratorHelper(message.signerInfos),
       _step6;
     try {
@@ -543,7 +774,7 @@ var AuthInfo = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseAuthInfo();
     while (reader.pos < end) {
@@ -574,32 +805,76 @@ var AuthInfo = {
     message.fee = object.fee !== undefined && object.fee !== null ? Fee.fromPartial(object.fee) : undefined;
     message.tip = object.tip !== undefined && object.tip !== null ? Tip.fromPartial(object.tip) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      signerInfos: Array.isArray(object === null || object === void 0 ? void 0 : object.signer_infos) ? object.signer_infos.map(function (e) {
+        return SignerInfo.fromAmino(e);
+      }) : [],
+      fee: object !== null && object !== void 0 && object.fee ? Fee.fromAmino(object.fee) : undefined,
+      tip: object !== null && object !== void 0 && object.tip ? Tip.fromAmino(object.tip) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.signerInfos) {
+      obj.signer_infos = message.signerInfos.map(function (e) {
+        return e ? SignerInfo.toAmino(e) : undefined;
+      });
+    } else {
+      obj.signer_infos = [];
+    }
+    obj.fee = message.fee ? Fee.toAmino(message.fee) : undefined;
+    obj.tip = message.tip ? Tip.toAmino(message.tip) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return AuthInfo.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/AuthInfo",
+      value: AuthInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return AuthInfo.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return AuthInfo.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.AuthInfo",
+      value: AuthInfo.encode(message).finish()
+    };
   }
 };
 exports.AuthInfo = AuthInfo;
 function createBaseSignerInfo() {
   return {
-    publicKey: undefined,
-    modeInfo: undefined,
-    sequence: _helpers.Long.UZERO
+    publicKey: _any.Any.fromPartial({}),
+    modeInfo: ModeInfo.fromPartial({}),
+    sequence: BigInt(0)
   };
 }
 var SignerInfo = {
+  typeUrl: "/cosmos.tx.v1beta1.SignerInfo",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.publicKey !== undefined) {
       _any.Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
     if (message.modeInfo !== undefined) {
       ModeInfo.encode(message.modeInfo, writer.uint32(18).fork()).ldelim();
     }
-    if (!message.sequence.isZero()) {
+    if (message.sequence !== BigInt(0)) {
       writer.uint32(24).uint64(message.sequence);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSignerInfo();
     while (reader.pos < end) {
@@ -625,8 +900,43 @@ var SignerInfo = {
     var message = createBaseSignerInfo();
     message.publicKey = object.publicKey !== undefined && object.publicKey !== null ? _any.Any.fromPartial(object.publicKey) : undefined;
     message.modeInfo = object.modeInfo !== undefined && object.modeInfo !== null ? ModeInfo.fromPartial(object.modeInfo) : undefined;
-    message.sequence = object.sequence !== undefined && object.sequence !== null ? _helpers.Long.fromValue(object.sequence) : _helpers.Long.UZERO;
+    message.sequence = object.sequence !== undefined && object.sequence !== null ? BigInt(object.sequence.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      publicKey: object !== null && object !== void 0 && object.public_key ? _any.Any.fromAmino(object.public_key) : undefined,
+      modeInfo: object !== null && object !== void 0 && object.mode_info ? ModeInfo.fromAmino(object.mode_info) : undefined,
+      sequence: BigInt(object.sequence)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.public_key = message.publicKey ? _any.Any.toAmino(message.publicKey) : undefined;
+    obj.mode_info = message.modeInfo ? ModeInfo.toAmino(message.modeInfo) : undefined;
+    obj.sequence = message.sequence ? message.sequence.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return SignerInfo.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/SignerInfo",
+      value: SignerInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return SignerInfo.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return SignerInfo.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.SignerInfo",
+      value: SignerInfo.encode(message).finish()
+    };
   }
 };
 exports.SignerInfo = SignerInfo;
@@ -637,8 +947,9 @@ function createBaseModeInfo() {
   };
 }
 var ModeInfo = {
+  typeUrl: "/cosmos.tx.v1beta1.ModeInfo",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.single !== undefined) {
       ModeInfo_Single.encode(message.single, writer.uint32(10).fork()).ldelim();
     }
@@ -648,7 +959,7 @@ var ModeInfo = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseModeInfo();
     while (reader.pos < end) {
@@ -672,6 +983,39 @@ var ModeInfo = {
     message.single = object.single !== undefined && object.single !== null ? ModeInfo_Single.fromPartial(object.single) : undefined;
     message.multi = object.multi !== undefined && object.multi !== null ? ModeInfo_Multi.fromPartial(object.multi) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      single: object !== null && object !== void 0 && object.single ? ModeInfo_Single.fromAmino(object.single) : undefined,
+      multi: object !== null && object !== void 0 && object.multi ? ModeInfo_Multi.fromAmino(object.multi) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.single = message.single ? ModeInfo_Single.toAmino(message.single) : undefined;
+    obj.multi = message.multi ? ModeInfo_Multi.toAmino(message.multi) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ModeInfo.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/ModeInfo",
+      value: ModeInfo.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ModeInfo.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ModeInfo.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.ModeInfo",
+      value: ModeInfo.encode(message).finish()
+    };
   }
 };
 exports.ModeInfo = ModeInfo;
@@ -681,15 +1025,16 @@ function createBaseModeInfo_Single() {
   };
 }
 var ModeInfo_Single = {
+  typeUrl: "/cosmos.tx.v1beta1.Single",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.mode !== 0) {
       writer.uint32(8).int32(message.mode);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseModeInfo_Single();
     while (reader.pos < end) {
@@ -710,18 +1055,50 @@ var ModeInfo_Single = {
     var message = createBaseModeInfo_Single();
     message.mode = (_object$mode = object.mode) !== null && _object$mode !== void 0 ? _object$mode : 0;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      mode: (0, _helpers.isSet)(object.mode) ? (0, _signing.signModeFromJSON)(object.mode) : -1
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.mode = message.mode;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ModeInfo_Single.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Single",
+      value: ModeInfo_Single.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ModeInfo_Single.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ModeInfo_Single.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.Single",
+      value: ModeInfo_Single.encode(message).finish()
+    };
   }
 };
 exports.ModeInfo_Single = ModeInfo_Single;
 function createBaseModeInfo_Multi() {
   return {
-    bitarray: undefined,
+    bitarray: _multisig.CompactBitArray.fromPartial({}),
     modeInfos: []
   };
 }
 var ModeInfo_Multi = {
+  typeUrl: "/cosmos.tx.v1beta1.Multi",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.bitarray !== undefined) {
       _multisig.CompactBitArray.encode(message.bitarray, writer.uint32(10).fork()).ldelim();
     }
@@ -740,7 +1117,7 @@ var ModeInfo_Multi = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseModeInfo_Multi();
     while (reader.pos < end) {
@@ -767,20 +1144,62 @@ var ModeInfo_Multi = {
       return ModeInfo.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      bitarray: object !== null && object !== void 0 && object.bitarray ? _multisig.CompactBitArray.fromAmino(object.bitarray) : undefined,
+      modeInfos: Array.isArray(object === null || object === void 0 ? void 0 : object.mode_infos) ? object.mode_infos.map(function (e) {
+        return ModeInfo.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.bitarray = message.bitarray ? _multisig.CompactBitArray.toAmino(message.bitarray) : undefined;
+    if (message.modeInfos) {
+      obj.mode_infos = message.modeInfos.map(function (e) {
+        return e ? ModeInfo.toAmino(e) : undefined;
+      });
+    } else {
+      obj.mode_infos = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ModeInfo_Multi.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Multi",
+      value: ModeInfo_Multi.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ModeInfo_Multi.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ModeInfo_Multi.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.Multi",
+      value: ModeInfo_Multi.encode(message).finish()
+    };
   }
 };
 exports.ModeInfo_Multi = ModeInfo_Multi;
 function createBaseFee() {
   return {
     amount: [],
-    gasLimit: _helpers.Long.UZERO,
+    gasLimit: BigInt(0),
     payer: "",
     granter: ""
   };
 }
 var Fee = {
+  typeUrl: "/cosmos.tx.v1beta1.Fee",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator8 = _createForOfIteratorHelper(message.amount),
       _step8;
     try {
@@ -793,7 +1212,7 @@ var Fee = {
     } finally {
       _iterator8.f();
     }
-    if (!message.gasLimit.isZero()) {
+    if (message.gasLimit !== BigInt(0)) {
       writer.uint32(16).uint64(message.gasLimit);
     }
     if (message.payer !== "") {
@@ -805,7 +1224,7 @@ var Fee = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseFee();
     while (reader.pos < end) {
@@ -836,10 +1255,55 @@ var Fee = {
     message.amount = ((_object$amount = object.amount) === null || _object$amount === void 0 ? void 0 : _object$amount.map(function (e) {
       return _coin.Coin.fromPartial(e);
     })) || [];
-    message.gasLimit = object.gasLimit !== undefined && object.gasLimit !== null ? _helpers.Long.fromValue(object.gasLimit) : _helpers.Long.UZERO;
+    message.gasLimit = object.gasLimit !== undefined && object.gasLimit !== null ? BigInt(object.gasLimit.toString()) : BigInt(0);
     message.payer = (_object$payer = object.payer) !== null && _object$payer !== void 0 ? _object$payer : "";
     message.granter = (_object$granter = object.granter) !== null && _object$granter !== void 0 ? _object$granter : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : [],
+      gasLimit: BigInt(object.gas_limit),
+      payer: object.payer,
+      granter: object.granter
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.amount) {
+      obj.amount = message.amount.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.amount = [];
+    }
+    obj.gas_limit = message.gasLimit ? message.gasLimit.toString() : undefined;
+    obj.payer = message.payer;
+    obj.granter = message.granter;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Fee.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Fee",
+      value: Fee.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Fee.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Fee.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.Fee",
+      value: Fee.encode(message).finish()
+    };
   }
 };
 exports.Fee = Fee;
@@ -850,8 +1314,9 @@ function createBaseTip() {
   };
 }
 var Tip = {
+  typeUrl: "/cosmos.tx.v1beta1.Tip",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     var _iterator9 = _createForOfIteratorHelper(message.amount),
       _step9;
     try {
@@ -870,7 +1335,7 @@ var Tip = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseTip();
     while (reader.pos < end) {
@@ -897,20 +1362,62 @@ var Tip = {
     })) || [];
     message.tipper = (_object$tipper = object.tipper) !== null && _object$tipper !== void 0 ? _object$tipper : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      amount: Array.isArray(object === null || object === void 0 ? void 0 : object.amount) ? object.amount.map(function (e) {
+        return _coin.Coin.fromAmino(e);
+      }) : [],
+      tipper: object.tipper
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    if (message.amount) {
+      obj.amount = message.amount.map(function (e) {
+        return e ? _coin.Coin.toAmino(e) : undefined;
+      });
+    } else {
+      obj.amount = [];
+    }
+    obj.tipper = message.tipper;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Tip.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/Tip",
+      value: Tip.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Tip.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Tip.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.Tip",
+      value: Tip.encode(message).finish()
+    };
   }
 };
 exports.Tip = Tip;
 function createBaseAuxSignerData() {
   return {
     address: "",
-    signDoc: undefined,
+    signDoc: SignDocDirectAux.fromPartial({}),
     mode: 0,
     sig: new Uint8Array()
   };
 }
 var AuxSignerData = {
+  typeUrl: "/cosmos.tx.v1beta1.AuxSignerData",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -926,7 +1433,7 @@ var AuxSignerData = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseAuxSignerData();
     while (reader.pos < end) {
@@ -959,6 +1466,43 @@ var AuxSignerData = {
     message.mode = (_object$mode2 = object.mode) !== null && _object$mode2 !== void 0 ? _object$mode2 : 0;
     message.sig = (_object$sig = object.sig) !== null && _object$sig !== void 0 ? _object$sig : new Uint8Array();
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      address: object.address,
+      signDoc: object !== null && object !== void 0 && object.sign_doc ? SignDocDirectAux.fromAmino(object.sign_doc) : undefined,
+      mode: (0, _helpers.isSet)(object.mode) ? (0, _signing.signModeFromJSON)(object.mode) : -1,
+      sig: object.sig
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.address = message.address;
+    obj.sign_doc = message.signDoc ? SignDocDirectAux.toAmino(message.signDoc) : undefined;
+    obj.mode = message.mode;
+    obj.sig = message.sig;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return AuxSignerData.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/AuxSignerData",
+      value: AuxSignerData.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return AuxSignerData.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return AuxSignerData.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.tx.v1beta1.AuxSignerData",
+      value: AuxSignerData.encode(message).finish()
+    };
   }
 };
 exports.AuxSignerData = AuxSignerData;

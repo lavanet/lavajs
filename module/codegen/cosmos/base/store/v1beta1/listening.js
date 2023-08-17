@@ -1,5 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 /**
  * StoreKVPair is a KVStore KVPair used for listening to state changes (Sets and Deletes)
  * It optionally includes the StoreKey for the originating KVStore and a Boolean flag to distinguish between Sets and
@@ -25,7 +24,8 @@ function createBaseStoreKVPair() {
   };
 }
 export const StoreKVPair = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.base.store.v1beta1.StoreKVPair",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.storeKey !== "") {
       writer.uint32(10).string(message.storeKey);
     }
@@ -41,7 +41,7 @@ export const StoreKVPair = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStoreKVPair();
     while (reader.pos < end) {
@@ -74,5 +74,42 @@ export const StoreKVPair = {
     message.key = (_object$key = object.key) !== null && _object$key !== void 0 ? _object$key : new Uint8Array();
     message.value = (_object$value = object.value) !== null && _object$value !== void 0 ? _object$value : new Uint8Array();
     return message;
+  },
+  fromAmino(object) {
+    return {
+      storeKey: object.store_key,
+      delete: object.delete,
+      key: object.key,
+      value: object.value
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.store_key = message.storeKey;
+    obj.delete = message.delete;
+    obj.key = message.key;
+    obj.value = message.value;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return StoreKVPair.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/StoreKVPair",
+      value: StoreKVPair.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return StoreKVPair.decode(message.value);
+  },
+  toProto(message) {
+    return StoreKVPair.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.base.store.v1beta1.StoreKVPair",
+      value: StoreKVPair.encode(message).finish()
+    };
   }
 };

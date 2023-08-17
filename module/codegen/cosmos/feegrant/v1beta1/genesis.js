@@ -1,6 +1,5 @@
 import { Grant } from "./feegrant";
-import * as _m0 from "protobufjs/minimal";
-
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** GenesisState contains a set of fee allowances, persisted from the store */
 
 /** GenesisState contains a set of fee allowances, persisted from the store */
@@ -11,14 +10,15 @@ function createBaseGenesisState() {
   };
 }
 export const GenesisState = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/cosmos.feegrant.v1beta1.GenesisState",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.allowances) {
       Grant.encode(v, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -39,5 +39,40 @@ export const GenesisState = {
     const message = createBaseGenesisState();
     message.allowances = ((_object$allowances = object.allowances) === null || _object$allowances === void 0 ? void 0 : _object$allowances.map(e => Grant.fromPartial(e))) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      allowances: Array.isArray(object === null || object === void 0 ? void 0 : object.allowances) ? object.allowances.map(e => Grant.fromAmino(e)) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.allowances) {
+      obj.allowances = message.allowances.map(e => e ? Grant.toAmino(e) : undefined);
+    } else {
+      obj.allowances = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return GenesisState.fromAmino(object.value);
+  },
+  toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GenesisState",
+      value: GenesisState.toAmino(message)
+    };
+  },
+  fromProtoMsg(message) {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message) {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.feegrant.v1beta1.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };

@@ -1,6 +1,5 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -8,10 +7,7 @@ exports.ProtoDeveloperData = exports.ProjectKey_TypeSDKType = exports.ProjectKey
 exports.projectKey_TypeFromJSON = projectKey_TypeFromJSON;
 exports.projectKey_TypeToJSON = projectKey_TypeToJSON;
 var _policy = require("../plans/policy");
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -66,15 +62,16 @@ function createBaseProject() {
     subscription: "",
     enabled: false,
     projectKeys: [],
-    adminPolicy: undefined,
-    usedCu: _helpers.Long.UZERO,
-    subscriptionPolicy: undefined,
-    snapshot: _helpers.Long.UZERO
+    adminPolicy: _policy.Policy.fromPartial({}),
+    usedCu: BigInt(0),
+    subscriptionPolicy: _policy.Policy.fromPartial({}),
+    snapshot: BigInt(0)
   };
 }
 var Project = {
+  typeUrl: "/lavanet.lava.projects.Project",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
@@ -99,19 +96,19 @@ var Project = {
     if (message.adminPolicy !== undefined) {
       _policy.Policy.encode(message.adminPolicy, writer.uint32(50).fork()).ldelim();
     }
-    if (!message.usedCu.isZero()) {
+    if (message.usedCu !== BigInt(0)) {
       writer.uint32(56).uint64(message.usedCu);
     }
     if (message.subscriptionPolicy !== undefined) {
       _policy.Policy.encode(message.subscriptionPolicy, writer.uint32(66).fork()).ldelim();
     }
-    if (!message.snapshot.isZero()) {
+    if (message.snapshot !== BigInt(0)) {
       writer.uint32(72).uint64(message.snapshot);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseProject();
     while (reader.pos < end) {
@@ -158,10 +155,57 @@ var Project = {
       return ProjectKey.fromPartial(e);
     })) || [];
     message.adminPolicy = object.adminPolicy !== undefined && object.adminPolicy !== null ? _policy.Policy.fromPartial(object.adminPolicy) : undefined;
-    message.usedCu = object.usedCu !== undefined && object.usedCu !== null ? _helpers.Long.fromValue(object.usedCu) : _helpers.Long.UZERO;
+    message.usedCu = object.usedCu !== undefined && object.usedCu !== null ? BigInt(object.usedCu.toString()) : BigInt(0);
     message.subscriptionPolicy = object.subscriptionPolicy !== undefined && object.subscriptionPolicy !== null ? _policy.Policy.fromPartial(object.subscriptionPolicy) : undefined;
-    message.snapshot = object.snapshot !== undefined && object.snapshot !== null ? _helpers.Long.fromValue(object.snapshot) : _helpers.Long.UZERO;
+    message.snapshot = object.snapshot !== undefined && object.snapshot !== null ? BigInt(object.snapshot.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      index: object.index,
+      subscription: object.subscription,
+      enabled: object.enabled,
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.project_keys) ? object.project_keys.map(function (e) {
+        return ProjectKey.fromAmino(e);
+      }) : [],
+      adminPolicy: object !== null && object !== void 0 && object.admin_policy ? _policy.Policy.fromAmino(object.admin_policy) : undefined,
+      usedCu: BigInt(object.used_cu),
+      subscriptionPolicy: object !== null && object !== void 0 && object.subscription_policy ? _policy.Policy.fromAmino(object.subscription_policy) : undefined,
+      snapshot: BigInt(object.snapshot)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.index = message.index;
+    obj.subscription = message.subscription;
+    obj.enabled = message.enabled;
+    if (message.projectKeys) {
+      obj.project_keys = message.projectKeys.map(function (e) {
+        return e ? ProjectKey.toAmino(e) : undefined;
+      });
+    } else {
+      obj.project_keys = [];
+    }
+    obj.admin_policy = message.adminPolicy ? _policy.Policy.toAmino(message.adminPolicy) : undefined;
+    obj.used_cu = message.usedCu ? message.usedCu.toString() : undefined;
+    obj.subscription_policy = message.subscriptionPolicy ? _policy.Policy.toAmino(message.subscriptionPolicy) : undefined;
+    obj.snapshot = message.snapshot ? message.snapshot.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Project.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Project.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Project.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.Project",
+      value: Project.encode(message).finish()
+    };
   }
 };
 exports.Project = Project;
@@ -172,8 +216,9 @@ function createBaseProjectKey() {
   };
 }
 var ProjectKey = {
+  typeUrl: "/lavanet.lava.projects.ProjectKey",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -183,7 +228,7 @@ var ProjectKey = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseProjectKey();
     while (reader.pos < end) {
@@ -208,6 +253,33 @@ var ProjectKey = {
     message.key = (_object$key = object.key) !== null && _object$key !== void 0 ? _object$key : "";
     message.kinds = (_object$kinds = object.kinds) !== null && _object$kinds !== void 0 ? _object$kinds : 0;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      key: object.key,
+      kinds: object.kinds
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.key = message.key;
+    obj.kinds = message.kinds;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ProjectKey.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ProjectKey.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ProjectKey.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.ProjectKey",
+      value: ProjectKey.encode(message).finish()
+    };
   }
 };
 exports.ProjectKey = ProjectKey;
@@ -217,15 +289,16 @@ function createBaseProtoDeveloperData() {
   };
 }
 var ProtoDeveloperData = {
+  typeUrl: "/lavanet.lava.projects.ProtoDeveloperData",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.projectID !== "") {
       writer.uint32(10).string(message.projectID);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseProtoDeveloperData();
     while (reader.pos < end) {
@@ -246,6 +319,31 @@ var ProtoDeveloperData = {
     var message = createBaseProtoDeveloperData();
     message.projectID = (_object$projectID = object.projectID) !== null && _object$projectID !== void 0 ? _object$projectID : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      projectID: object.projectID
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.projectID = message.projectID;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ProtoDeveloperData.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ProtoDeveloperData.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ProtoDeveloperData.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.ProtoDeveloperData",
+      value: ProtoDeveloperData.encode(message).finish()
+    };
   }
 };
 exports.ProtoDeveloperData = ProtoDeveloperData;
@@ -254,12 +352,13 @@ function createBaseProjectData() {
     name: "",
     enabled: false,
     projectKeys: [],
-    policy: undefined
+    policy: _policy.Policy.fromPartial({})
   };
 }
 var ProjectData = {
+  typeUrl: "/lavanet.lava.projects.ProjectData",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -284,7 +383,7 @@ var ProjectData = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseProjectData();
     while (reader.pos < end) {
@@ -319,6 +418,45 @@ var ProjectData = {
     })) || [];
     message.policy = object.policy !== undefined && object.policy !== null ? _policy.Policy.fromPartial(object.policy) : undefined;
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      name: object.name,
+      enabled: object.enabled,
+      projectKeys: Array.isArray(object === null || object === void 0 ? void 0 : object.projectKeys) ? object.projectKeys.map(function (e) {
+        return ProjectKey.fromAmino(e);
+      }) : [],
+      policy: object !== null && object !== void 0 && object.policy ? _policy.Policy.fromAmino(object.policy) : undefined
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.name = message.name;
+    obj.enabled = message.enabled;
+    if (message.projectKeys) {
+      obj.projectKeys = message.projectKeys.map(function (e) {
+        return e ? ProjectKey.toAmino(e) : undefined;
+      });
+    } else {
+      obj.projectKeys = [];
+    }
+    obj.policy = message.policy ? _policy.Policy.toAmino(message.policy) : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return ProjectData.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return ProjectData.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return ProjectData.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.projects.ProjectData",
+      value: ProjectData.encode(message).finish()
+    };
   }
 };
 exports.ProjectData = ProjectData;

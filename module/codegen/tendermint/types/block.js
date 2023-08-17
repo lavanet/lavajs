@@ -1,16 +1,17 @@
 import { Header, Data, Commit } from "./types";
 import { EvidenceList } from "./evidence";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
 function createBaseBlock() {
   return {
-    header: undefined,
-    data: undefined,
-    evidence: undefined,
-    lastCommit: undefined
+    header: Header.fromPartial({}),
+    data: Data.fromPartial({}),
+    evidence: EvidenceList.fromPartial({}),
+    lastCommit: Commit.fromPartial({})
   };
 }
 export const Block = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/tendermint.types.Block",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.header !== undefined) {
       Header.encode(message.header, writer.uint32(10).fork()).ldelim();
     }
@@ -26,7 +27,7 @@ export const Block = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlock();
     while (reader.pos < end) {
@@ -58,5 +59,36 @@ export const Block = {
     message.evidence = object.evidence !== undefined && object.evidence !== null ? EvidenceList.fromPartial(object.evidence) : undefined;
     message.lastCommit = object.lastCommit !== undefined && object.lastCommit !== null ? Commit.fromPartial(object.lastCommit) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      header: object !== null && object !== void 0 && object.header ? Header.fromAmino(object.header) : undefined,
+      data: object !== null && object !== void 0 && object.data ? Data.fromAmino(object.data) : undefined,
+      evidence: object !== null && object !== void 0 && object.evidence ? EvidenceList.fromAmino(object.evidence) : undefined,
+      lastCommit: object !== null && object !== void 0 && object.last_commit ? Commit.fromAmino(object.last_commit) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.header = message.header ? Header.toAmino(message.header) : undefined;
+    obj.data = message.data ? Data.toAmino(message.data) : undefined;
+    obj.evidence = message.evidence ? EvidenceList.toAmino(message.evidence) : undefined;
+    obj.last_commit = message.lastCommit ? Commit.toAmino(message.lastCommit) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return Block.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return Block.decode(message.value);
+  },
+  toProto(message) {
+    return Block.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.Block",
+      value: Block.encode(message).finish()
+    };
   }
 };

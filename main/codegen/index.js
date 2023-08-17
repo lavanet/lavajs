@@ -102,3 +102,36 @@ Object.keys(_bundle7).forEach(function (key) {
     }
   });
 });
+var _varint = require("./varint");
+Object.keys(_varint).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _varint[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _varint[key];
+    }
+  });
+});
+var _utf = require("./utf8");
+Object.keys(_utf).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _utf[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _utf[key];
+    }
+  });
+});
+var _binary = require("./binary");
+Object.keys(_binary).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _binary[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _binary[key];
+    }
+  });
+});

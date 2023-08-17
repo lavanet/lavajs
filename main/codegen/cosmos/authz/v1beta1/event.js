@@ -1,13 +1,10 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.EventRevoke = exports.EventGrant = void 0;
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /** EventGrant is emitted on Msg/Grant */
 
 /** EventGrant is emitted on Msg/Grant */
@@ -24,8 +21,9 @@ function createBaseEventGrant() {
   };
 }
 var EventGrant = {
+  typeUrl: "/cosmos.authz.v1beta1.EventGrant",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.msgTypeUrl !== "") {
       writer.uint32(18).string(message.msgTypeUrl);
     }
@@ -38,7 +36,7 @@ var EventGrant = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEventGrant();
     while (reader.pos < end) {
@@ -67,6 +65,41 @@ var EventGrant = {
     message.granter = (_object$granter = object.granter) !== null && _object$granter !== void 0 ? _object$granter : "";
     message.grantee = (_object$grantee = object.grantee) !== null && _object$grantee !== void 0 ? _object$grantee : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      msgTypeUrl: object.msg_type_url,
+      granter: object.granter,
+      grantee: object.grantee
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.msg_type_url = message.msgTypeUrl;
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return EventGrant.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/EventGrant",
+      value: EventGrant.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return EventGrant.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return EventGrant.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.EventGrant",
+      value: EventGrant.encode(message).finish()
+    };
   }
 };
 exports.EventGrant = EventGrant;
@@ -78,8 +111,9 @@ function createBaseEventRevoke() {
   };
 }
 var EventRevoke = {
+  typeUrl: "/cosmos.authz.v1beta1.EventRevoke",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.msgTypeUrl !== "") {
       writer.uint32(18).string(message.msgTypeUrl);
     }
@@ -92,7 +126,7 @@ var EventRevoke = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseEventRevoke();
     while (reader.pos < end) {
@@ -121,6 +155,41 @@ var EventRevoke = {
     message.granter = (_object$granter2 = object.granter) !== null && _object$granter2 !== void 0 ? _object$granter2 : "";
     message.grantee = (_object$grantee2 = object.grantee) !== null && _object$grantee2 !== void 0 ? _object$grantee2 : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      msgTypeUrl: object.msg_type_url,
+      granter: object.granter,
+      grantee: object.grantee
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.msg_type_url = message.msgTypeUrl;
+    obj.granter = message.granter;
+    obj.grantee = message.grantee;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return EventRevoke.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/EventRevoke",
+      value: EventRevoke.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return EventRevoke.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return EventRevoke.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.authz.v1beta1.EventRevoke",
+      value: EventRevoke.encode(message).finish()
+    };
   }
 };
 exports.EventRevoke = EventRevoke;

@@ -1,5 +1,5 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader } from "../../../binary";
 import { MsgBuy, MsgBuyResponse, MsgAddProject, MsgAddProjectResponse, MsgDelProject, MsgDelProjectResponse } from "./tx";
 /** Msg defines the Msg service. */
 
@@ -14,16 +14,16 @@ export class MsgClientImpl {
   buy(request) {
     const data = MsgBuy.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.subscription.Msg", "Buy", data);
-    return promise.then(data => MsgBuyResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgBuyResponse.decode(new BinaryReader(data)));
   }
   addProject(request) {
     const data = MsgAddProject.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.subscription.Msg", "AddProject", data);
-    return promise.then(data => MsgAddProjectResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgAddProjectResponse.decode(new BinaryReader(data)));
   }
   delProject(request) {
     const data = MsgDelProject.encode(request).finish();
     const promise = this.rpc.request("lavanet.lava.subscription.Msg", "DelProject", data);
-    return promise.then(data => MsgDelProjectResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDelProjectResponse.decode(new BinaryReader(data)));
   }
 }

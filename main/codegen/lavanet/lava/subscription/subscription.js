@@ -1,65 +1,62 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Subscription = void 0;
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function createBaseSubscription() {
   return {
     creator: "",
     consumer: "",
-    block: _helpers.Long.UZERO,
+    block: BigInt(0),
     planIndex: "",
-    planBlock: _helpers.Long.UZERO,
-    durationTotal: _helpers.Long.UZERO,
-    durationLeft: _helpers.Long.UZERO,
-    monthExpiryTime: _helpers.Long.UZERO,
-    monthCuTotal: _helpers.Long.UZERO,
-    monthCuLeft: _helpers.Long.UZERO
+    planBlock: BigInt(0),
+    durationTotal: BigInt(0),
+    durationLeft: BigInt(0),
+    monthExpiryTime: BigInt(0),
+    monthCuTotal: BigInt(0),
+    monthCuLeft: BigInt(0)
   };
 }
 var Subscription = {
+  typeUrl: "/lavanet.lava.subscription.Subscription",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     if (message.consumer !== "") {
       writer.uint32(18).string(message.consumer);
     }
-    if (!message.block.isZero()) {
+    if (message.block !== BigInt(0)) {
       writer.uint32(24).uint64(message.block);
     }
     if (message.planIndex !== "") {
       writer.uint32(34).string(message.planIndex);
     }
-    if (!message.planBlock.isZero()) {
+    if (message.planBlock !== BigInt(0)) {
       writer.uint32(40).uint64(message.planBlock);
     }
-    if (!message.durationTotal.isZero()) {
+    if (message.durationTotal !== BigInt(0)) {
       writer.uint32(48).uint64(message.durationTotal);
     }
-    if (!message.durationLeft.isZero()) {
+    if (message.durationLeft !== BigInt(0)) {
       writer.uint32(56).uint64(message.durationLeft);
     }
-    if (!message.monthExpiryTime.isZero()) {
+    if (message.monthExpiryTime !== BigInt(0)) {
       writer.uint32(64).uint64(message.monthExpiryTime);
     }
-    if (!message.monthCuTotal.isZero()) {
+    if (message.monthCuTotal !== BigInt(0)) {
       writer.uint32(80).uint64(message.monthCuTotal);
     }
-    if (!message.monthCuLeft.isZero()) {
+    if (message.monthCuLeft !== BigInt(0)) {
       writer.uint32(88).uint64(message.monthCuLeft);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseSubscription();
     while (reader.pos < end) {
@@ -107,15 +104,58 @@ var Subscription = {
     var message = createBaseSubscription();
     message.creator = (_object$creator = object.creator) !== null && _object$creator !== void 0 ? _object$creator : "";
     message.consumer = (_object$consumer = object.consumer) !== null && _object$consumer !== void 0 ? _object$consumer : "";
-    message.block = object.block !== undefined && object.block !== null ? _helpers.Long.fromValue(object.block) : _helpers.Long.UZERO;
+    message.block = object.block !== undefined && object.block !== null ? BigInt(object.block.toString()) : BigInt(0);
     message.planIndex = (_object$planIndex = object.planIndex) !== null && _object$planIndex !== void 0 ? _object$planIndex : "";
-    message.planBlock = object.planBlock !== undefined && object.planBlock !== null ? _helpers.Long.fromValue(object.planBlock) : _helpers.Long.UZERO;
-    message.durationTotal = object.durationTotal !== undefined && object.durationTotal !== null ? _helpers.Long.fromValue(object.durationTotal) : _helpers.Long.UZERO;
-    message.durationLeft = object.durationLeft !== undefined && object.durationLeft !== null ? _helpers.Long.fromValue(object.durationLeft) : _helpers.Long.UZERO;
-    message.monthExpiryTime = object.monthExpiryTime !== undefined && object.monthExpiryTime !== null ? _helpers.Long.fromValue(object.monthExpiryTime) : _helpers.Long.UZERO;
-    message.monthCuTotal = object.monthCuTotal !== undefined && object.monthCuTotal !== null ? _helpers.Long.fromValue(object.monthCuTotal) : _helpers.Long.UZERO;
-    message.monthCuLeft = object.monthCuLeft !== undefined && object.monthCuLeft !== null ? _helpers.Long.fromValue(object.monthCuLeft) : _helpers.Long.UZERO;
+    message.planBlock = object.planBlock !== undefined && object.planBlock !== null ? BigInt(object.planBlock.toString()) : BigInt(0);
+    message.durationTotal = object.durationTotal !== undefined && object.durationTotal !== null ? BigInt(object.durationTotal.toString()) : BigInt(0);
+    message.durationLeft = object.durationLeft !== undefined && object.durationLeft !== null ? BigInt(object.durationLeft.toString()) : BigInt(0);
+    message.monthExpiryTime = object.monthExpiryTime !== undefined && object.monthExpiryTime !== null ? BigInt(object.monthExpiryTime.toString()) : BigInt(0);
+    message.monthCuTotal = object.monthCuTotal !== undefined && object.monthCuTotal !== null ? BigInt(object.monthCuTotal.toString()) : BigInt(0);
+    message.monthCuLeft = object.monthCuLeft !== undefined && object.monthCuLeft !== null ? BigInt(object.monthCuLeft.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      creator: object.creator,
+      consumer: object.consumer,
+      block: BigInt(object.block),
+      planIndex: object.plan_index,
+      planBlock: BigInt(object.plan_block),
+      durationTotal: BigInt(object.duration_total),
+      durationLeft: BigInt(object.duration_left),
+      monthExpiryTime: BigInt(object.month_expiry_time),
+      monthCuTotal: BigInt(object.month_cu_total),
+      monthCuLeft: BigInt(object.month_cu_left)
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.creator = message.creator;
+    obj.consumer = message.consumer;
+    obj.block = message.block ? message.block.toString() : undefined;
+    obj.plan_index = message.planIndex;
+    obj.plan_block = message.planBlock ? message.planBlock.toString() : undefined;
+    obj.duration_total = message.durationTotal ? message.durationTotal.toString() : undefined;
+    obj.duration_left = message.durationLeft ? message.durationLeft.toString() : undefined;
+    obj.month_expiry_time = message.monthExpiryTime ? message.monthExpiryTime.toString() : undefined;
+    obj.month_cu_total = message.monthCuTotal ? message.monthCuTotal.toString() : undefined;
+    obj.month_cu_left = message.monthCuLeft ? message.monthCuLeft.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return Subscription.fromAmino(object.value);
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return Subscription.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return Subscription.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.subscription.Subscription",
+      value: Subscription.encode(message).finish()
+    };
   }
 };
 exports.Subscription = Subscription;

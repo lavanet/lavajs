@@ -1,16 +1,16 @@
 import { ProjectData } from "../projects/project";
-import { Long } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 function createBaseMsgBuy() {
   return {
     creator: "",
     consumer: "",
     index: "",
-    duration: Long.UZERO
+    duration: BigInt(0)
   };
 }
 export const MsgBuy = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.subscription.MsgBuy",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -20,13 +20,13 @@ export const MsgBuy = {
     if (message.index !== "") {
       writer.uint32(26).string(message.index);
     }
-    if (!message.duration.isZero()) {
+    if (message.duration !== BigInt(0)) {
       writer.uint32(32).uint64(message.duration);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgBuy();
     while (reader.pos < end) {
@@ -57,19 +57,51 @@ export const MsgBuy = {
     message.creator = (_object$creator = object.creator) !== null && _object$creator !== void 0 ? _object$creator : "";
     message.consumer = (_object$consumer = object.consumer) !== null && _object$consumer !== void 0 ? _object$consumer : "";
     message.index = (_object$index = object.index) !== null && _object$index !== void 0 ? _object$index : "";
-    message.duration = object.duration !== undefined && object.duration !== null ? Long.fromValue(object.duration) : Long.UZERO;
+    message.duration = object.duration !== undefined && object.duration !== null ? BigInt(object.duration.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      consumer: object.consumer,
+      index: object.index,
+      duration: BigInt(object.duration)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.consumer = message.consumer;
+    obj.index = message.index;
+    obj.duration = message.duration ? message.duration.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgBuy.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgBuy.decode(message.value);
+  },
+  toProto(message) {
+    return MsgBuy.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.subscription.MsgBuy",
+      value: MsgBuy.encode(message).finish()
+    };
   }
 };
 function createBaseMsgBuyResponse() {
   return {};
 }
 export const MsgBuyResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.subscription.MsgBuyResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgBuyResponse();
     while (reader.pos < end) {
@@ -85,16 +117,39 @@ export const MsgBuyResponse = {
   fromPartial(_) {
     const message = createBaseMsgBuyResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgBuyResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgBuyResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgBuyResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.subscription.MsgBuyResponse",
+      value: MsgBuyResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgAddProject() {
   return {
     creator: "",
-    projectData: undefined
+    projectData: ProjectData.fromPartial({})
   };
 }
 export const MsgAddProject = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.subscription.MsgAddProject",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -104,7 +159,7 @@ export const MsgAddProject = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAddProject();
     while (reader.pos < end) {
@@ -129,17 +184,45 @@ export const MsgAddProject = {
     message.creator = (_object$creator2 = object.creator) !== null && _object$creator2 !== void 0 ? _object$creator2 : "";
     message.projectData = object.projectData !== undefined && object.projectData !== null ? ProjectData.fromPartial(object.projectData) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      projectData: object !== null && object !== void 0 && object.project_data ? ProjectData.fromAmino(object.project_data) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.project_data = message.projectData ? ProjectData.toAmino(message.projectData) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgAddProject.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgAddProject.decode(message.value);
+  },
+  toProto(message) {
+    return MsgAddProject.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.subscription.MsgAddProject",
+      value: MsgAddProject.encode(message).finish()
+    };
   }
 };
 function createBaseMsgAddProjectResponse() {
   return {};
 }
 export const MsgAddProjectResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.subscription.MsgAddProjectResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAddProjectResponse();
     while (reader.pos < end) {
@@ -155,6 +238,28 @@ export const MsgAddProjectResponse = {
   fromPartial(_) {
     const message = createBaseMsgAddProjectResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgAddProjectResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgAddProjectResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgAddProjectResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.subscription.MsgAddProjectResponse",
+      value: MsgAddProjectResponse.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDelProject() {
@@ -164,7 +269,8 @@ function createBaseMsgDelProject() {
   };
 }
 export const MsgDelProject = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.subscription.MsgDelProject",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -174,7 +280,7 @@ export const MsgDelProject = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDelProject();
     while (reader.pos < end) {
@@ -199,17 +305,45 @@ export const MsgDelProject = {
     message.creator = (_object$creator3 = object.creator) !== null && _object$creator3 !== void 0 ? _object$creator3 : "";
     message.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "";
     return message;
+  },
+  fromAmino(object) {
+    return {
+      creator: object.creator,
+      name: object.name
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.creator = message.creator;
+    obj.name = message.name;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDelProject.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgDelProject.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDelProject.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.subscription.MsgDelProject",
+      value: MsgDelProject.encode(message).finish()
+    };
   }
 };
 function createBaseMsgDelProjectResponse() {
   return {};
 }
 export const MsgDelProjectResponse = {
-  encode(_, writer = _m0.Writer.create()) {
+  typeUrl: "/lavanet.lava.subscription.MsgDelProjectResponse",
+  encode(_, writer = BinaryWriter.create()) {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDelProjectResponse();
     while (reader.pos < end) {
@@ -225,5 +359,27 @@ export const MsgDelProjectResponse = {
   fromPartial(_) {
     const message = createBaseMsgDelProjectResponse();
     return message;
+  },
+  fromAmino(_) {
+    return {};
+  },
+  toAmino(_) {
+    const obj = {};
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return MsgDelProjectResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return MsgDelProjectResponse.decode(message.value);
+  },
+  toProto(message) {
+    return MsgDelProjectResponse.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/lavanet.lava.subscription.MsgDelProjectResponse",
+      value: MsgDelProjectResponse.encode(message).finish()
+    };
   }
 };

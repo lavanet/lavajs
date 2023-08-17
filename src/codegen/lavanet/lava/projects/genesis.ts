@@ -1,28 +1,28 @@
 import { Params, ParamsSDKType } from "./params";
 import { RawMessage, RawMessageSDKType } from "../common/fixationEntry";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 /** GenesisState defines the projects module's genesis state. */
 export interface GenesisState {
-  params?: Params;
+  params: Params;
   projectsFS: RawMessage[];
   developerFS: RawMessage[];
 }
 /** GenesisState defines the projects module's genesis state. */
 export interface GenesisStateSDKType {
-  params?: ParamsSDKType;
+  params: ParamsSDKType;
   projectsFS: RawMessageSDKType[];
   developerFS: RawMessageSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
-    params: undefined,
+    params: Params.fromPartial({}),
     projectsFS: [],
     developerFS: []
   };
 }
 export const GenesisState = {
-  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/lavanet.lava.projects.GenesisState",
+  encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -34,8 +34,8 @@ export const GenesisState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -57,11 +57,48 @@ export const GenesisState = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenesisState>): GenesisState {
+  fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.projectsFS = object.projectsFS?.map(e => RawMessage.fromPartial(e)) || [];
     message.developerFS = object.developerFS?.map(e => RawMessage.fromPartial(e)) || [];
     return message;
+  },
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      params: object?.params ? Params.fromAmino(object.params) : undefined,
+      projectsFS: Array.isArray(object?.projectsFS) ? object.projectsFS.map((e: any) => RawMessage.fromAmino(e)) : [],
+      developerFS: Array.isArray(object?.developerFS) ? object.developerFS.map((e: any) => RawMessage.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    if (message.projectsFS) {
+      obj.projectsFS = message.projectsFS.map(e => e ? RawMessage.toAmino(e) : undefined);
+    } else {
+      obj.projectsFS = [];
+    }
+    if (message.developerFS) {
+      obj.developerFS = message.developerFS.map(e => e ? RawMessage.toAmino(e) : undefined);
+    } else {
+      obj.developerFS = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {
+    return GenesisState.fromAmino(object.value);
+  },
+  fromProtoMsg(message: GenesisStateProtoMsg): GenesisState {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message: GenesisState): Uint8Array {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message: GenesisState): GenesisStateProtoMsg {
+    return {
+      typeUrl: "/lavanet.lava.projects.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };

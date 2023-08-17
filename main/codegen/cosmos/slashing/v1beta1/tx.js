@@ -1,13 +1,10 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MsgUnjailResponse = exports.MsgUnjail = void 0;
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 /** MsgUnjail defines the Msg/Unjail request type */
 
 /** MsgUnjail defines the Msg/Unjail request type */
@@ -22,15 +19,16 @@ function createBaseMsgUnjail() {
   };
 }
 var MsgUnjail = {
+  typeUrl: "/cosmos.slashing.v1beta1.MsgUnjail",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     if (message.validatorAddr !== "") {
       writer.uint32(10).string(message.validatorAddr);
     }
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgUnjail();
     while (reader.pos < end) {
@@ -51,6 +49,37 @@ var MsgUnjail = {
     var message = createBaseMsgUnjail();
     message.validatorAddr = (_object$validatorAddr = object.validatorAddr) !== null && _object$validatorAddr !== void 0 ? _object$validatorAddr : "";
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      validatorAddr: object.validator_addr
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.validator_addr = message.validatorAddr;
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgUnjail.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgUnjail",
+      value: MsgUnjail.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgUnjail.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgUnjail.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.MsgUnjail",
+      value: MsgUnjail.encode(message).finish()
+    };
   }
 };
 exports.MsgUnjail = MsgUnjail;
@@ -58,12 +87,13 @@ function createBaseMsgUnjailResponse() {
   return {};
 }
 var MsgUnjailResponse = {
+  typeUrl: "/cosmos.slashing.v1beta1.MsgUnjailResponse",
   encode: function encode(_) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseMsgUnjailResponse();
     while (reader.pos < end) {
@@ -79,6 +109,34 @@ var MsgUnjailResponse = {
   fromPartial: function fromPartial(_) {
     var message = createBaseMsgUnjailResponse();
     return message;
+  },
+  fromAmino: function fromAmino(_) {
+    return {};
+  },
+  toAmino: function toAmino(_) {
+    var obj = {};
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return MsgUnjailResponse.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/MsgUnjailResponse",
+      value: MsgUnjailResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return MsgUnjailResponse.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return MsgUnjailResponse.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.slashing.v1beta1.MsgUnjailResponse",
+      value: MsgUnjailResponse.encode(message).finish()
+    };
   }
 };
 exports.MsgUnjailResponse = MsgUnjailResponse;

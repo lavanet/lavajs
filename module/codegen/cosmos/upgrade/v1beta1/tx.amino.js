@@ -1,4 +1,3 @@
-import { Long } from "../../../helpers";
 export const AminoConverter = {
   "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade": {
     aminoType: "cosmos-sdk/MsgSoftwareUpgrade",
@@ -29,7 +28,7 @@ export const AminoConverter = {
         plan: {
           name: plan.name,
           time: plan.time,
-          height: Long.fromString(plan.height),
+          height: BigInt(plan.height),
           info: plan.info,
           upgradedClientState: {
             typeUrl: plan.upgraded_client_state.type_url,

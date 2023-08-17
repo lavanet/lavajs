@@ -1,6 +1,5 @@
 import { Duration } from "../../google/protobuf/duration";
-import { Long } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
 /**
  * ConsensusParams contains consensus critical parameters that determine the
  * validity of blocks.
@@ -47,14 +46,15 @@ import * as _m0 from "protobufjs/minimal";
 
 function createBaseConsensusParams() {
   return {
-    block: undefined,
-    evidence: undefined,
-    validator: undefined,
-    version: undefined
+    block: BlockParams.fromPartial({}),
+    evidence: EvidenceParams.fromPartial({}),
+    validator: ValidatorParams.fromPartial({}),
+    version: VersionParams.fromPartial({})
   };
 }
 export const ConsensusParams = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/tendermint.types.ConsensusParams",
+  encode(message, writer = BinaryWriter.create()) {
     if (message.block !== undefined) {
       BlockParams.encode(message.block, writer.uint32(10).fork()).ldelim();
     }
@@ -70,7 +70,7 @@ export const ConsensusParams = {
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensusParams();
     while (reader.pos < end) {
@@ -102,30 +102,62 @@ export const ConsensusParams = {
     message.validator = object.validator !== undefined && object.validator !== null ? ValidatorParams.fromPartial(object.validator) : undefined;
     message.version = object.version !== undefined && object.version !== null ? VersionParams.fromPartial(object.version) : undefined;
     return message;
+  },
+  fromAmino(object) {
+    return {
+      block: object !== null && object !== void 0 && object.block ? BlockParams.fromAmino(object.block) : undefined,
+      evidence: object !== null && object !== void 0 && object.evidence ? EvidenceParams.fromAmino(object.evidence) : undefined,
+      validator: object !== null && object !== void 0 && object.validator ? ValidatorParams.fromAmino(object.validator) : undefined,
+      version: object !== null && object !== void 0 && object.version ? VersionParams.fromAmino(object.version) : undefined
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.block = message.block ? BlockParams.toAmino(message.block) : undefined;
+    obj.evidence = message.evidence ? EvidenceParams.toAmino(message.evidence) : undefined;
+    obj.validator = message.validator ? ValidatorParams.toAmino(message.validator) : undefined;
+    obj.version = message.version ? VersionParams.toAmino(message.version) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ConsensusParams.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return ConsensusParams.decode(message.value);
+  },
+  toProto(message) {
+    return ConsensusParams.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.ConsensusParams",
+      value: ConsensusParams.encode(message).finish()
+    };
   }
 };
 function createBaseBlockParams() {
   return {
-    maxBytes: Long.ZERO,
-    maxGas: Long.ZERO,
-    timeIotaMs: Long.ZERO
+    maxBytes: BigInt(0),
+    maxGas: BigInt(0),
+    timeIotaMs: BigInt(0)
   };
 }
 export const BlockParams = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.maxBytes.isZero()) {
+  typeUrl: "/tendermint.types.BlockParams",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.maxBytes !== BigInt(0)) {
       writer.uint32(8).int64(message.maxBytes);
     }
-    if (!message.maxGas.isZero()) {
+    if (message.maxGas !== BigInt(0)) {
       writer.uint32(16).int64(message.maxGas);
     }
-    if (!message.timeIotaMs.isZero()) {
+    if (message.timeIotaMs !== BigInt(0)) {
       writer.uint32(24).int64(message.timeIotaMs);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlockParams();
     while (reader.pos < end) {
@@ -149,34 +181,64 @@ export const BlockParams = {
   },
   fromPartial(object) {
     const message = createBaseBlockParams();
-    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? Long.fromValue(object.maxBytes) : Long.ZERO;
-    message.maxGas = object.maxGas !== undefined && object.maxGas !== null ? Long.fromValue(object.maxGas) : Long.ZERO;
-    message.timeIotaMs = object.timeIotaMs !== undefined && object.timeIotaMs !== null ? Long.fromValue(object.timeIotaMs) : Long.ZERO;
+    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? BigInt(object.maxBytes.toString()) : BigInt(0);
+    message.maxGas = object.maxGas !== undefined && object.maxGas !== null ? BigInt(object.maxGas.toString()) : BigInt(0);
+    message.timeIotaMs = object.timeIotaMs !== undefined && object.timeIotaMs !== null ? BigInt(object.timeIotaMs.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      maxBytes: BigInt(object.max_bytes),
+      maxGas: BigInt(object.max_gas),
+      timeIotaMs: BigInt(object.time_iota_ms)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.max_bytes = message.maxBytes ? message.maxBytes.toString() : undefined;
+    obj.max_gas = message.maxGas ? message.maxGas.toString() : undefined;
+    obj.time_iota_ms = message.timeIotaMs ? message.timeIotaMs.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return BlockParams.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return BlockParams.decode(message.value);
+  },
+  toProto(message) {
+    return BlockParams.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.BlockParams",
+      value: BlockParams.encode(message).finish()
+    };
   }
 };
 function createBaseEvidenceParams() {
   return {
-    maxAgeNumBlocks: Long.ZERO,
-    maxAgeDuration: undefined,
-    maxBytes: Long.ZERO
+    maxAgeNumBlocks: BigInt(0),
+    maxAgeDuration: Duration.fromPartial({}),
+    maxBytes: BigInt(0)
   };
 }
 export const EvidenceParams = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.maxAgeNumBlocks.isZero()) {
+  typeUrl: "/tendermint.types.EvidenceParams",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.maxAgeNumBlocks !== BigInt(0)) {
       writer.uint32(8).int64(message.maxAgeNumBlocks);
     }
     if (message.maxAgeDuration !== undefined) {
       Duration.encode(message.maxAgeDuration, writer.uint32(18).fork()).ldelim();
     }
-    if (!message.maxBytes.isZero()) {
+    if (message.maxBytes !== BigInt(0)) {
       writer.uint32(24).int64(message.maxBytes);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEvidenceParams();
     while (reader.pos < end) {
@@ -200,10 +262,39 @@ export const EvidenceParams = {
   },
   fromPartial(object) {
     const message = createBaseEvidenceParams();
-    message.maxAgeNumBlocks = object.maxAgeNumBlocks !== undefined && object.maxAgeNumBlocks !== null ? Long.fromValue(object.maxAgeNumBlocks) : Long.ZERO;
+    message.maxAgeNumBlocks = object.maxAgeNumBlocks !== undefined && object.maxAgeNumBlocks !== null ? BigInt(object.maxAgeNumBlocks.toString()) : BigInt(0);
     message.maxAgeDuration = object.maxAgeDuration !== undefined && object.maxAgeDuration !== null ? Duration.fromPartial(object.maxAgeDuration) : undefined;
-    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? Long.fromValue(object.maxBytes) : Long.ZERO;
+    message.maxBytes = object.maxBytes !== undefined && object.maxBytes !== null ? BigInt(object.maxBytes.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      maxAgeNumBlocks: BigInt(object.max_age_num_blocks),
+      maxAgeDuration: object !== null && object !== void 0 && object.max_age_duration ? Duration.fromAmino(object.max_age_duration) : undefined,
+      maxBytes: BigInt(object.max_bytes)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.max_age_num_blocks = message.maxAgeNumBlocks ? message.maxAgeNumBlocks.toString() : undefined;
+    obj.max_age_duration = message.maxAgeDuration ? Duration.toAmino(message.maxAgeDuration) : undefined;
+    obj.max_bytes = message.maxBytes ? message.maxBytes.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return EvidenceParams.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return EvidenceParams.decode(message.value);
+  },
+  toProto(message) {
+    return EvidenceParams.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.EvidenceParams",
+      value: EvidenceParams.encode(message).finish()
+    };
   }
 };
 function createBaseValidatorParams() {
@@ -212,14 +303,15 @@ function createBaseValidatorParams() {
   };
 }
 export const ValidatorParams = {
-  encode(message, writer = _m0.Writer.create()) {
+  typeUrl: "/tendermint.types.ValidatorParams",
+  encode(message, writer = BinaryWriter.create()) {
     for (const v of message.pubKeyTypes) {
       writer.uint32(10).string(v);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorParams();
     while (reader.pos < end) {
@@ -240,22 +332,52 @@ export const ValidatorParams = {
     const message = createBaseValidatorParams();
     message.pubKeyTypes = ((_object$pubKeyTypes = object.pubKeyTypes) === null || _object$pubKeyTypes === void 0 ? void 0 : _object$pubKeyTypes.map(e => e)) || [];
     return message;
+  },
+  fromAmino(object) {
+    return {
+      pubKeyTypes: Array.isArray(object === null || object === void 0 ? void 0 : object.pub_key_types) ? object.pub_key_types.map(e => e) : []
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    if (message.pubKeyTypes) {
+      obj.pub_key_types = message.pubKeyTypes.map(e => e);
+    } else {
+      obj.pub_key_types = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return ValidatorParams.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return ValidatorParams.decode(message.value);
+  },
+  toProto(message) {
+    return ValidatorParams.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.ValidatorParams",
+      value: ValidatorParams.encode(message).finish()
+    };
   }
 };
 function createBaseVersionParams() {
   return {
-    appVersion: Long.UZERO
+    appVersion: BigInt(0)
   };
 }
 export const VersionParams = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.appVersion.isZero()) {
+  typeUrl: "/tendermint.types.VersionParams",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.appVersion !== BigInt(0)) {
       writer.uint32(8).uint64(message.appVersion);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVersionParams();
     while (reader.pos < end) {
@@ -273,28 +395,54 @@ export const VersionParams = {
   },
   fromPartial(object) {
     const message = createBaseVersionParams();
-    message.appVersion = object.appVersion !== undefined && object.appVersion !== null ? Long.fromValue(object.appVersion) : Long.UZERO;
+    message.appVersion = object.appVersion !== undefined && object.appVersion !== null ? BigInt(object.appVersion.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      appVersion: BigInt(object.app_version)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.app_version = message.appVersion ? message.appVersion.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return VersionParams.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return VersionParams.decode(message.value);
+  },
+  toProto(message) {
+    return VersionParams.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.VersionParams",
+      value: VersionParams.encode(message).finish()
+    };
   }
 };
 function createBaseHashedParams() {
   return {
-    blockMaxBytes: Long.ZERO,
-    blockMaxGas: Long.ZERO
+    blockMaxBytes: BigInt(0),
+    blockMaxGas: BigInt(0)
   };
 }
 export const HashedParams = {
-  encode(message, writer = _m0.Writer.create()) {
-    if (!message.blockMaxBytes.isZero()) {
+  typeUrl: "/tendermint.types.HashedParams",
+  encode(message, writer = BinaryWriter.create()) {
+    if (message.blockMaxBytes !== BigInt(0)) {
       writer.uint32(8).int64(message.blockMaxBytes);
     }
-    if (!message.blockMaxGas.isZero()) {
+    if (message.blockMaxGas !== BigInt(0)) {
       writer.uint32(16).int64(message.blockMaxGas);
     }
     return writer;
   },
   decode(input, length) {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHashedParams();
     while (reader.pos < end) {
@@ -315,8 +463,35 @@ export const HashedParams = {
   },
   fromPartial(object) {
     const message = createBaseHashedParams();
-    message.blockMaxBytes = object.blockMaxBytes !== undefined && object.blockMaxBytes !== null ? Long.fromValue(object.blockMaxBytes) : Long.ZERO;
-    message.blockMaxGas = object.blockMaxGas !== undefined && object.blockMaxGas !== null ? Long.fromValue(object.blockMaxGas) : Long.ZERO;
+    message.blockMaxBytes = object.blockMaxBytes !== undefined && object.blockMaxBytes !== null ? BigInt(object.blockMaxBytes.toString()) : BigInt(0);
+    message.blockMaxGas = object.blockMaxGas !== undefined && object.blockMaxGas !== null ? BigInt(object.blockMaxGas.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object) {
+    return {
+      blockMaxBytes: BigInt(object.block_max_bytes),
+      blockMaxGas: BigInt(object.block_max_gas)
+    };
+  },
+  toAmino(message) {
+    const obj = {};
+    obj.block_max_bytes = message.blockMaxBytes ? message.blockMaxBytes.toString() : undefined;
+    obj.block_max_gas = message.blockMaxGas ? message.blockMaxGas.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object) {
+    return HashedParams.fromAmino(object.value);
+  },
+  fromProtoMsg(message) {
+    return HashedParams.decode(message.value);
+  },
+  toProto(message) {
+    return HashedParams.encode(message).finish();
+  },
+  toProtoMsg(message) {
+    return {
+      typeUrl: "/tendermint.types.HashedParams",
+      value: HashedParams.encode(message).finish()
+    };
   }
 };

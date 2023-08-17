@@ -1,15 +1,11 @@
 "use strict";
 
-var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.GenesisState = void 0;
 var _types = require("./types");
-var _helpers = require("../../../helpers");
-var _m0 = _interopRequireWildcard(require("protobufjs/minimal"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _binary = require("../../../binary");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -19,20 +15,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 function createBaseGenesisState() {
   return {
-    groupSeq: _helpers.Long.UZERO,
+    groupSeq: BigInt(0),
     groups: [],
     groupMembers: [],
-    groupPolicySeq: _helpers.Long.UZERO,
+    groupPolicySeq: BigInt(0),
     groupPolicies: [],
-    proposalSeq: _helpers.Long.UZERO,
+    proposalSeq: BigInt(0),
     proposals: [],
     votes: []
   };
 }
 var GenesisState = {
+  typeUrl: "/cosmos.group.v1.GenesisState",
   encode: function encode(message) {
-    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _m0.Writer.create();
-    if (!message.groupSeq.isZero()) {
+    var writer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _binary.BinaryWriter.create();
+    if (message.groupSeq !== BigInt(0)) {
       writer.uint32(8).uint64(message.groupSeq);
     }
     var _iterator = _createForOfIteratorHelper(message.groups),
@@ -59,7 +56,7 @@ var GenesisState = {
     } finally {
       _iterator2.f();
     }
-    if (!message.groupPolicySeq.isZero()) {
+    if (message.groupPolicySeq !== BigInt(0)) {
       writer.uint32(32).uint64(message.groupPolicySeq);
     }
     var _iterator3 = _createForOfIteratorHelper(message.groupPolicies),
@@ -74,7 +71,7 @@ var GenesisState = {
     } finally {
       _iterator3.f();
     }
-    if (!message.proposalSeq.isZero()) {
+    if (message.proposalSeq !== BigInt(0)) {
       writer.uint32(48).uint64(message.proposalSeq);
     }
     var _iterator4 = _createForOfIteratorHelper(message.proposals),
@@ -104,7 +101,7 @@ var GenesisState = {
     return writer;
   },
   decode: function decode(input, length) {
-    var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    var reader = input instanceof _binary.BinaryReader ? input : new _binary.BinaryReader(input);
     var end = length === undefined ? reader.len : reader.pos + length;
     var message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -144,18 +141,18 @@ var GenesisState = {
   fromPartial: function fromPartial(object) {
     var _object$groups, _object$groupMembers, _object$groupPolicies, _object$proposals, _object$votes;
     var message = createBaseGenesisState();
-    message.groupSeq = object.groupSeq !== undefined && object.groupSeq !== null ? _helpers.Long.fromValue(object.groupSeq) : _helpers.Long.UZERO;
+    message.groupSeq = object.groupSeq !== undefined && object.groupSeq !== null ? BigInt(object.groupSeq.toString()) : BigInt(0);
     message.groups = ((_object$groups = object.groups) === null || _object$groups === void 0 ? void 0 : _object$groups.map(function (e) {
       return _types.GroupInfo.fromPartial(e);
     })) || [];
     message.groupMembers = ((_object$groupMembers = object.groupMembers) === null || _object$groupMembers === void 0 ? void 0 : _object$groupMembers.map(function (e) {
       return _types.GroupMember.fromPartial(e);
     })) || [];
-    message.groupPolicySeq = object.groupPolicySeq !== undefined && object.groupPolicySeq !== null ? _helpers.Long.fromValue(object.groupPolicySeq) : _helpers.Long.UZERO;
+    message.groupPolicySeq = object.groupPolicySeq !== undefined && object.groupPolicySeq !== null ? BigInt(object.groupPolicySeq.toString()) : BigInt(0);
     message.groupPolicies = ((_object$groupPolicies = object.groupPolicies) === null || _object$groupPolicies === void 0 ? void 0 : _object$groupPolicies.map(function (e) {
       return _types.GroupPolicyInfo.fromPartial(e);
     })) || [];
-    message.proposalSeq = object.proposalSeq !== undefined && object.proposalSeq !== null ? _helpers.Long.fromValue(object.proposalSeq) : _helpers.Long.UZERO;
+    message.proposalSeq = object.proposalSeq !== undefined && object.proposalSeq !== null ? BigInt(object.proposalSeq.toString()) : BigInt(0);
     message.proposals = ((_object$proposals = object.proposals) === null || _object$proposals === void 0 ? void 0 : _object$proposals.map(function (e) {
       return _types.Proposal.fromPartial(e);
     })) || [];
@@ -163,6 +160,91 @@ var GenesisState = {
       return _types.Vote.fromPartial(e);
     })) || [];
     return message;
+  },
+  fromAmino: function fromAmino(object) {
+    return {
+      groupSeq: BigInt(object.group_seq),
+      groups: Array.isArray(object === null || object === void 0 ? void 0 : object.groups) ? object.groups.map(function (e) {
+        return _types.GroupInfo.fromAmino(e);
+      }) : [],
+      groupMembers: Array.isArray(object === null || object === void 0 ? void 0 : object.group_members) ? object.group_members.map(function (e) {
+        return _types.GroupMember.fromAmino(e);
+      }) : [],
+      groupPolicySeq: BigInt(object.group_policy_seq),
+      groupPolicies: Array.isArray(object === null || object === void 0 ? void 0 : object.group_policies) ? object.group_policies.map(function (e) {
+        return _types.GroupPolicyInfo.fromAmino(e);
+      }) : [],
+      proposalSeq: BigInt(object.proposal_seq),
+      proposals: Array.isArray(object === null || object === void 0 ? void 0 : object.proposals) ? object.proposals.map(function (e) {
+        return _types.Proposal.fromAmino(e);
+      }) : [],
+      votes: Array.isArray(object === null || object === void 0 ? void 0 : object.votes) ? object.votes.map(function (e) {
+        return _types.Vote.fromAmino(e);
+      }) : []
+    };
+  },
+  toAmino: function toAmino(message) {
+    var obj = {};
+    obj.group_seq = message.groupSeq ? message.groupSeq.toString() : undefined;
+    if (message.groups) {
+      obj.groups = message.groups.map(function (e) {
+        return e ? _types.GroupInfo.toAmino(e) : undefined;
+      });
+    } else {
+      obj.groups = [];
+    }
+    if (message.groupMembers) {
+      obj.group_members = message.groupMembers.map(function (e) {
+        return e ? _types.GroupMember.toAmino(e) : undefined;
+      });
+    } else {
+      obj.group_members = [];
+    }
+    obj.group_policy_seq = message.groupPolicySeq ? message.groupPolicySeq.toString() : undefined;
+    if (message.groupPolicies) {
+      obj.group_policies = message.groupPolicies.map(function (e) {
+        return e ? _types.GroupPolicyInfo.toAmino(e) : undefined;
+      });
+    } else {
+      obj.group_policies = [];
+    }
+    obj.proposal_seq = message.proposalSeq ? message.proposalSeq.toString() : undefined;
+    if (message.proposals) {
+      obj.proposals = message.proposals.map(function (e) {
+        return e ? _types.Proposal.toAmino(e) : undefined;
+      });
+    } else {
+      obj.proposals = [];
+    }
+    if (message.votes) {
+      obj.votes = message.votes.map(function (e) {
+        return e ? _types.Vote.toAmino(e) : undefined;
+      });
+    } else {
+      obj.votes = [];
+    }
+    return obj;
+  },
+  fromAminoMsg: function fromAminoMsg(object) {
+    return GenesisState.fromAmino(object.value);
+  },
+  toAminoMsg: function toAminoMsg(message) {
+    return {
+      type: "cosmos-sdk/GenesisState",
+      value: GenesisState.toAmino(message)
+    };
+  },
+  fromProtoMsg: function fromProtoMsg(message) {
+    return GenesisState.decode(message.value);
+  },
+  toProto: function toProto(message) {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg: function toProtoMsg(message) {
+    return {
+      typeUrl: "/cosmos.group.v1.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };
 exports.GenesisState = GenesisState;

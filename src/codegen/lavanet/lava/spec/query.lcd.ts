@@ -1,5 +1,5 @@
 import { setPaginationParams } from "../../../helpers";
-import { LCDClient } from "@osmonauts/lcd";
+import { LCDClient } from "@cosmology/lcd";
 import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetSpecRequest, QueryGetSpecResponseSDKType, QueryAllSpecRequest, QueryAllSpecResponseSDKType, QueryShowAllChainsRequest, QueryShowAllChainsResponseSDKType, QueryShowChainInfoRequest, QueryShowChainInfoResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;

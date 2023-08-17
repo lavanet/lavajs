@@ -1,5 +1,4 @@
 import { voteOptionFromJSON } from "./gov";
-import { Long } from "../../../helpers";
 export const AminoConverter = {
   "/cosmos.gov.v1beta1.MsgSubmitProposal": {
     aminoType: "cosmos-sdk/MsgSubmitProposal",
@@ -57,7 +56,7 @@ export const AminoConverter = {
       option
     }) => {
       return {
-        proposalId: Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         voter,
         option: voteOptionFromJSON(option)
       };
@@ -85,7 +84,7 @@ export const AminoConverter = {
       options
     }) => {
       return {
-        proposalId: Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         voter,
         options: options.map(el0 => ({
           option: voteOptionFromJSON(el0.option),
@@ -116,7 +115,7 @@ export const AminoConverter = {
       amount
     }) => {
       return {
-        proposalId: Long.fromString(proposal_id),
+        proposalId: BigInt(proposal_id),
         depositor,
         amount: amount.map(el0 => ({
           denom: el0.denom,
